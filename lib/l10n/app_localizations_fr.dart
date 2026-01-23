@@ -2833,4 +2833,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get replaceMp3FileDialogTitle => 'Remplacement du fichier MP3';
+
+  @override
+  String get extractAudioPlaySpeed => 'Vitesse de lecture';
+
+  @override
+  String get extractAudioPlaySpeedTooltip =>
+      'Définit la vitesse de lecture de cette partie d\'extraction du commentaire audio';
+
+  @override
+  String get invalidPlaySpeedError =>
+      'La vitesse de lecture définie n\'est pas utilisable';
+
+  @override
+  String get playSpeedLabel => 'Vitesse de lecture';
 }

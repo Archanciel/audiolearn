@@ -4512,6 +4512,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'MP3 File Replacement'**
   String get replaceMp3FileDialogTitle;
+
+  /// No description provided for @extractAudioPlaySpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Play speed'**
+  String get extractAudioPlaySpeed;
+
+  /// No description provided for @extractAudioPlaySpeedTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Defines the play speed of this comment audio extraction part'**
+  String get extractAudioPlaySpeedTooltip;
+
+  /// No description provided for @invalidPlaySpeedError.
+  ///
+  /// In en, this message translates to:
+  /// **'The defined play speed is not usable'**
+  String get invalidPlaySpeedError;
+
+  /// No description provided for @playSpeedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Play speed'**
+  String get playSpeedLabel;
 }
 
 class _AppLocalizationsDelegate

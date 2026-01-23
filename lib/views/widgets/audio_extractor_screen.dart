@@ -284,6 +284,20 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                           Tooltip(
                                             message:
                                                 AppLocalizations.of(context)!
+                                                    .extractAudioPlaySpeedTooltip,
+                                            child: Text(
+                                              "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 2),
+                                          Tooltip(
+                                            message:
+                                                AppLocalizations.of(context)!
                                                     .fadeStartPositionTooltip,
                                             child: Text(
                                               "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",

@@ -1632,5 +1632,9 @@
   "deleteInvalidCommentsMessage": "Supprimez le/les commentaire(s) invalide(s) en raison de leur position finale supérieure à la durée de l'audio, laquelle est {audioDuration}.",
   "fileNotExistError": "Le fichier n'existe pas",
   "errorTitle": "Erreur",
-  "replaceMp3FileDialogTitle": "Remplacement du fichier MP3"
+  "replaceMp3FileDialogTitle": "Remplacement du fichier MP3",
+  "extractAudioPlaySpeed": "Vitesse de lecture",
+  "extractAudioPlaySpeedTooltip": "Définit la vitesse de lecture de cette partie d'extraction du commentaire audio",
+  "invalidPlaySpeedError": "La vitesse de lecture définie n'est pas utilisable",
+  "playSpeedLabel": "Vitesse de lecture"
 }

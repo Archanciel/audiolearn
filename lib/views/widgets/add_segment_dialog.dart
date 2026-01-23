@@ -24,6 +24,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
   late final TextEditingController _startPositionController;
   late final TextEditingController _endPositionController;
   late final TextEditingController _silenceDurationController;
+  late final TextEditingController _playSpeedController;
   late final TextEditingController _fadeInDurationController; // NEW
   late final TextEditingController _soundReductionPositionController;
   late final TextEditingController _soundReductionDurationController;
@@ -46,6 +47,9 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         widget.existingSegment?.silenceDuration ?? 0,
       ),
     );
+    _playSpeedController = TextEditingController(
+      text: widget.existingSegment?.playSpeed.toString() ?? '1.0',
+      );
     _fadeInDurationController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.fadeInDuration ?? 0,
@@ -68,6 +72,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     _startPositionController.dispose();
     _endPositionController.dispose();
     _silenceDurationController.dispose();
+    _playSpeedController.dispose();
     _fadeInDurationController.dispose();
     _soundReductionPositionController.dispose();
     _soundReductionDurationController.dispose();
@@ -80,6 +85,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final silence = TimeFormatUtil.parseFlexible(
       _silenceDurationController.text,
     );
+    final playSpeed = double.tryParse(_playSpeedController.text) ?? 1.0;
     final fadeInDuration = TimeFormatUtil.parseFlexible(
       // NEW
       _fadeInDurationController.text,
@@ -108,6 +114,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     if (silence < 0) {
       _showError(
           "${AppLocalizations.of(context)!.negativeSilenceDurationError}.");
+      return;
+    }
+    if (playSpeed <= 0) {
+      _showError(
+          "${AppLocalizations.of(context)!.invalidPlaySpeedError}.");
       return;
     }
     if (fadeInDuration < 0) {
@@ -304,6 +315,18 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
                     decoration: InputDecoration(
                       labelText:
                           AppLocalizations.of(context)!.silenceDurationLabel,
+                      hintText: '0:00.0',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    key: const Key('playSpeedTextField'),
+                    controller: _playSpeedController,
+                    inputFormatters: [TimeTextInputFormatter()],
+                    decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.playSpeedLabel,
                       hintText: '0:00.0',
                       border: OutlineInputBorder(),
                     ),
