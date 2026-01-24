@@ -166,6 +166,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         startPosition: start,
         endPosition: end,
         silenceDuration: silence,
+        playSpeed: playSpeed,
         fadeInDuration: fadeInDuration,
         soundReductionPosition: soundReductionPosition,
         soundReductionDuration: soundReductionDuration,
