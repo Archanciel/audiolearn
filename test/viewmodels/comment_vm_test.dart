@@ -107,6 +107,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 0,
           commentEndPositionInTenthOfSeconds: 1810,
           silenceDuration: 1.0,
+          playSpeed: 1.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 170.0,
           soundReductionDuration: 11.0,
@@ -122,6 +123,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 1800,
           commentEndPositionInTenthOfSeconds: 2346,
           silenceDuration: 0.0,
+          playSpeed: 1.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -136,6 +138,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 2361,
           commentEndPositionInTenthOfSeconds: 3208,
           silenceDuration: 0.0,
+          playSpeed: 1.0,
           fadeInDuration: 9.0,
           soundReductionPosition: 311.0,
           soundReductionDuration: 9.8,
@@ -189,6 +192,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 600,
           commentEndPositionInTenthOfSeconds: 1800,
           silenceDuration: 0.0,
+          playSpeed: 1.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -204,6 +208,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 800,
           commentEndPositionInTenthOfSeconds: 2800,
           silenceDuration: 0.0,
+          playSpeed: 1.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -218,6 +223,7 @@ void main() {
           commentStartPositionInTenthOfSeconds: 3100,
           commentEndPositionInTenthOfSeconds: 5000,
           silenceDuration: 0.0,
+          playSpeed: 1.0,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -301,7 +307,7 @@ void main() {
       Playlist playlistS8FromJson = Playlist.fromJson(playlistJsonMap);
 
       // Correcting the download path which is wrong in the test JSON file
-      playlistS8FromJson.downloadPath = 
+      playlistS8FromJson.downloadPath =
           "$kPlaylistDownloadRootPathWindowsTest${path.separator}S8 audio";
 
       expect(
@@ -354,6 +360,7 @@ void main() {
         commentStartPositionInTenthOfSeconds: 6473,
         commentEndPositionInTenthOfSeconds: 6553,
         silenceDuration: 0.0,
+        playSpeed: 1.0,
         fadeInDuration: 0.0,
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
@@ -368,6 +375,7 @@ void main() {
         commentStartPositionInTenthOfSeconds: 46717,
         commentEndPositionInTenthOfSeconds: 46737,
         silenceDuration: 0.0,
+        playSpeed: 1.0,
         fadeInDuration: 0.0,
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
@@ -1211,6 +1219,7 @@ void validateComment(Comment actualComment, Comment expectedComment) {
   expect(actualComment.commentEndPositionInTenthOfSeconds,
       expectedComment.commentEndPositionInTenthOfSeconds);
   expect(actualComment.silenceDuration, expectedComment.silenceDuration);
+  expect(actualComment.playSpeed, expectedComment.playSpeed);
   expect(actualComment.fadeInDuration, expectedComment.fadeInDuration);
   expect(actualComment.soundReductionPosition,
       expectedComment.soundReductionPosition);

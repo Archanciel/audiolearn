@@ -87,6 +87,7 @@ class AudioExtractorVM extends ChangeNotifier {
       silenceDuration: TimeFormatUtil.normalizeToTenths(
         segment.silenceDuration,
       ),
+      playSpeed: segment.playSpeed,
       fadeInDuration: TimeFormatUtil.normalizeToTenths(
         // NEW
         segment.fadeInDuration,
@@ -122,6 +123,7 @@ class AudioExtractorVM extends ChangeNotifier {
         silenceDuration: TimeFormatUtil.normalizeToTenths(
           segment.silenceDuration,
         ),
+        playSpeed: segment.playSpeed,
         fadeInDuration: TimeFormatUtil.normalizeToTenths(
           // NEW
           segment.fadeInDuration,
@@ -151,6 +153,7 @@ class AudioExtractorVM extends ChangeNotifier {
       comment.commentEndPositionInTenthOfSeconds =
           (normalizedSegment.endPosition * 10).toInt();
       comment.silenceDuration = normalizedSegment.silenceDuration;
+      comment.playSpeed = normalizedSegment.playSpeed;
       comment.fadeInDuration = normalizedSegment.fadeInDuration;
       comment.soundReductionPosition = normalizedSegment.soundReductionPosition;
       comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
@@ -359,6 +362,7 @@ class AudioExtractorVM extends ChangeNotifier {
             silenceDuration: TimeFormatUtil.normalizeToTenths(
               s.silenceDuration,
             ),
+            playSpeed: s.playSpeed,
             fadeInDuration: TimeFormatUtil.normalizeToTenths(
               // NEW
               s.fadeInDuration,
@@ -426,6 +430,7 @@ class AudioExtractorVM extends ChangeNotifier {
             silenceDuration: TimeFormatUtil.normalizeToTenths(
               s.silenceDuration,
             ),
+            playSpeed: s.playSpeed,
             fadeInDuration: TimeFormatUtil.normalizeToTenths(
               // NEW
               s.fadeInDuration,

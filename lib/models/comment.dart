@@ -7,6 +7,7 @@ class Comment {
   int commentStartPositionInTenthOfSeconds;
   int commentEndPositionInTenthOfSeconds;
   double silenceDuration;
+  double playSpeed;
   double fadeInDuration;
   double soundReductionPosition;
   double soundReductionDuration;
@@ -20,6 +21,7 @@ class Comment {
     required this.commentStartPositionInTenthOfSeconds,
     this.commentEndPositionInTenthOfSeconds = 0,
     this.silenceDuration = 0.0,
+    this.playSpeed = 1.0,
     this.fadeInDuration = 0.0,
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
@@ -39,6 +41,7 @@ class Comment {
     required this.commentStartPositionInTenthOfSeconds,
     required this.commentEndPositionInTenthOfSeconds,
     required this.silenceDuration,
+    required this.playSpeed,
     required this.fadeInDuration,
     required this.soundReductionPosition,
     required this.soundReductionDuration,
@@ -57,6 +60,7 @@ class Comment {
       commentEndPositionInTenthOfSeconds:
           json['commentEndPositionInTenthOfSeconds'] ?? 0,
       silenceDuration: json['silenceDuration'] ?? 0.0,
+      playSpeed: json['playSpeed'] ?? 1.0,
       fadeInDuration: json['fadeInDuration'] ?? 0.0,
       soundReductionPosition: json['soundReductionPosition'] ?? 0.0,
       soundReductionDuration: json['soundReductionDuration'] ?? 0.0,
@@ -76,6 +80,7 @@ class Comment {
           commentStartPositionInTenthOfSeconds,
       'commentEndPositionInTenthOfSeconds': commentEndPositionInTenthOfSeconds,
       'silenceDuration': silenceDuration,
+      'playSpeed': playSpeed,
       'fadeInDuration': fadeInDuration,
       'soundReductionPosition': soundReductionPosition,
       'soundReductionDuration': soundReductionDuration,
