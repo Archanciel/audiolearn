@@ -404,7 +404,8 @@ class AudioExtractorService {
             '-y',
           ].join(' ');
 
-          final FFmpegSession reencodeSess = await FFmpegKit.execute(reencodeCmd);
+          final FFmpegSession reencodeSess =
+              await FFmpegKit.execute(reencodeCmd);
           if (!ReturnCode.isSuccess(
             await reencodeSess.getReturnCode(),
           )) {
@@ -528,14 +529,55 @@ class AudioExtractorService {
     }
   }
 
-  /// Builds fade filter for an already-extracted segment (timestamps start at 0)
+// lib/services/audio_extractor_service.dart
+
+// Add this helper method to build the atempo filter chain
+  /// Builds an atempo filter chain for a given speed.
+  /// FFmpeg's atempo filter accepts values between 0.5 and 2.0.
+  /// For speeds outside this range, we chain multiple atempo filters.
+  static String _buildAtempoFilterChain(double speed) {
+    if (speed <= 0) {
+      logger.w('Invalid play speed: $speed, using 1.0');
+      return '';
+    }
+
+    // If speed is 1.0, no filter needed
+    if ((speed - 1.0).abs() < 0.01) {
+      return '';
+    }
+
+    final List<String> atempoFilters = [];
+    double remainingSpeed = speed;
+
+    // atempo filter supports 0.5 to 2.0 range
+    // For speeds outside this range, we chain multiple atempo filters
+    while (remainingSpeed < 0.5) {
+      atempoFilters.add('atempo=0.5');
+      remainingSpeed /= 0.5;
+    }
+
+    while (remainingSpeed > 2.0) {
+      atempoFilters.add('atempo=2.0');
+      remainingSpeed /= 2.0;
+    }
+
+    // Add the final atempo filter for the remaining speed
+    if ((remainingSpeed - 1.0).abs() > 0.01) {
+      atempoFilters.add('atempo=${remainingSpeed.toStringAsFixed(2)}');
+    }
+
+    return atempoFilters.join(',');
+  }
+
+  /// Builds audio filter for an already-extracted segment (timestamps start at 0)
+  /// Filter order: volume → fade-in → fade-out → atempo (play speed)
   static String _buildFadeFilterForExtractedSegment({
     required AudioSegment segment,
     double gainDb = 0.0,
   }) {
     final List<String> filters = [];
 
-    // Add volume filter if gain is specified
+    // 1. Add volume filter if gain is specified
     if (gainDb.abs() > 1e-6) {
       filters.add('volume=${gainDb}dB');
     }
@@ -543,7 +585,7 @@ class AudioExtractorService {
     const double threshold = 0.05;
     final segmentDuration = segment.endPosition - segment.startPosition;
 
-    // Add fade-IN filter if configured (volume 0% → 100% at start)
+    // 2. Add fade-IN filter if configured (volume 0% → 100% at start)
     if (segment.fadeInDuration > threshold) {
       final fadeInDur = segment.fadeInDuration;
 
@@ -559,7 +601,7 @@ class AudioExtractorService {
       }
     }
 
-    // Add fade-OUT filter if configured (volume 100% → 0% at end)
+    // 3. Add fade-OUT filter if configured (volume 100% → 0% at end)
     if (segment.soundReductionDuration > threshold &&
         segment.soundReductionPosition > threshold) {
       // For an extracted segment, calculate fade start relative to segment start
@@ -589,6 +631,17 @@ class AudioExtractorService {
         logger.w(
           'Invalid fade: fadeStart=$fadeStartRelative > segmentDuration=$segmentDuration',
         );
+      }
+    }
+
+    // 4. Add atempo filter for play speed if different from 1.0
+    // This should come AFTER fades so that fade timings are based on original duration
+    if ((segment.playSpeed - 1.0).abs() > 0.01) {
+      final atempoFilters = _buildAtempoFilterChain(segment.playSpeed);
+      if (atempoFilters.isNotEmpty) {
+        filters.add(atempoFilters);
+        logger.i(
+            'Atempo filter: $atempoFilters for playSpeed=${segment.playSpeed}');
       }
     }
 
