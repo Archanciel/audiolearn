@@ -941,7 +941,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       }
     }
 
-    // ✅ NEW - Release on ALL platforms
+    // NEW - Release on ALL platforms
     if (audioPlayerVM.isLoaded) {
       if (Platform.isWindows) {
         ScaffoldMessenger.of(context).showSnackBar(
