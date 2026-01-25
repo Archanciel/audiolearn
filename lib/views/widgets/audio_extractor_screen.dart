@@ -872,6 +872,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               startPosition: start,
               endPosition: end,
               silenceDuration: silence,
+              playSpeed: comment.playSpeed,
               fadeInDuration: comment.fadeInDuration,
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,
