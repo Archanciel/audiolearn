@@ -42068,47 +42068,36 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   required String extractionSuccessMessage,
   required String extractionPlayingMessage,
 }) async {
-  // Verify the extract comments to MP3 success dialog message
   expect(
     find.text(extractionSuccessMessage),
     findsOneWidget,
   );
 
-  await tester.drag(
-    find.byType(AudioExtractorScreen),
-    const Offset(0, -200), // Negative value for vertical drag to scroll down
-  );
+  // Make the play button visible by scrolling to it
+  await tester.ensureVisible(find.byKey(const Key('playPauseButton')));
   await tester.pumpAndSettle();
 
   Finder playPauseButtonFinder = find.byKey(const Key('playPauseButton'));
 
-  expect(
-    playPauseButtonFinder,
-    findsOneWidget,
-  );
+  expect(playPauseButtonFinder, findsOneWidget);
 
-  // Tap the play button to start playback
+  // Tap the play button
   await tester.tap(playPauseButtonFinder);
   await tester.pumpAndSettle();
 
   await Future.delayed(const Duration(milliseconds: 500));
   await tester.pumpAndSettle();
 
-  // Then tap the pause button to stop playback
+  // Tap pause
   await tester.tap(playPauseButtonFinder);
   await tester.pumpAndSettle();
 
-  await tester.drag(
-    find.byType(AudioExtractorScreen),
-    const Offset(0, -200), // Negative value for vertical drag to scroll down
-  );
+  // Scroll to make the message visible
+  await tester.ensureVisible(find.text(extractionPlayingMessage));
   await tester.pumpAndSettle();
 
-  // Verify the playing comments to MP3 success dialog messa
   expect(
-    find.text(
-      extractionPlayingMessage,
-    ),
+    find.text(extractionPlayingMessage),
     findsOneWidget,
   );
 }
