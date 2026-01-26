@@ -2944,6 +2944,12 @@ class IntegrationTestUtil {
       );
       expect(endTime, findsOneWidget);
 
+      final Finder playSpeed = find.descendant(
+        of: firstSegmentCard,
+        matching: find.text(segmentDetails['playSpeed']),
+      );
+      expect(playSpeed, findsOneWidget);
+
       final Finder increaseDuration = find.descendant(
         of: firstSegmentCard,
         matching: find.text(segmentDetails['increaseDuration']),
