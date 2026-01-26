@@ -40143,6 +40143,176 @@ void main() {
       );
     });
     testWidgets(
+        '''Extract to dir with play speed modified and in music quality an audio with
+           3 comments. Comment 2 is removed before the extraction. The first comment play
+           speed is set to 0.7 and the third comment play speed is set to 1.25.''',
+        (WidgetTester tester) async {
+      const String audioTitle =
+          "Glorious - Laisse-moi te parler de Jésus #louange";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+      );
+
+      // First, find the '1 long music' playlist audio ListTile Text widget
+      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+      // Then obtain the audio ListTile widget enclosing the Text widget
+      // by finding its ancestor
+      final Finder audioTitleTileWidgetFinder = find.ancestor(
+        of: audioTitleTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now we want to tap the popup menu of the audioTitle ListTile
+
+      // Find the leading menu icon button of the audioTitle ListTile
+      // and tap on it
+      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+        of: audioTitleTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(audioTitleTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the 'Audio Comments ...' popup menu item and
+      // tap on it
+      final Finder audioCommentsPopupMenuItem =
+          find.byKey(const Key("popup_menu_audio_comment"));
+
+      await tester.tap(audioCommentsPopupMenuItem);
+      await tester.pumpAndSettle();
+
+      // Now open the extract comments to MP3 dialog
+
+      // Find the extract comments to MP3 text button of the comment
+      // add dialog and tap on it
+      final Finder extractCommentsToMp3ButtonFinder =
+          find.byKey(const Key('extractCommentsToMp3TextButton'));
+      await tester.tap(extractCommentsToMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now edit the 'First part' comment to modify its play speed
+
+      // Necessary to drag up vertically to make visible the edit
+      // icon button of the 1st comment
+      await tester.drag(
+        find.byType(AudioExtractorScreen),
+        const Offset(0, 300), // Negative value for vertical drag to scroll down
+      );
+      await tester.pumpAndSettle();
+
+      // This opens the edit comment dialog
+      Finder editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Modify the play speed to 0.7
+      await _correctPlaySpeedEnterCode(
+        tester: tester,
+        playSpeedValue: '0.7',
+      );
+
+      // Confirm the comment edition by tapping the save button
+      Finder saveEditedCommentButtonFinder =
+          find.byKey(const Key('saveEditedSegmentButton'));
+      await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now, delete the second comment
+
+      // This opens the delete comment confirmation dialog
+      final Finder deleteCommentIconButtonFinder =
+          find.byKey(const Key('deleteSegmentButtonKey_2'));
+      await tester.tap(deleteCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Confirm the deletion by tapping the delete button
+      final Finder deleteCommentButtonFinder =
+          find.byKey(const Key('confirmDeleteSegmentButton'));
+      await tester.tap(deleteCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now edit the third comment to save it after setting
+      // its play speed to 1.25.
+
+      // This opens the edit comment dialog
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_2'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Modify the play speed to 1.25
+      await _correctPlaySpeedEnterCode(
+        tester: tester,
+        playSpeedValue: '1.25',
+      );
+
+      // Confirm the comment edition by tapping the save button
+      saveEditedCommentButtonFinder =
+          find.byKey(const Key('saveEditedSegmentButton'));
+      await tester.tap(saveEditedCommentButtonFinder);
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.checkExtractionCommentDetails(
+        tester: tester,
+        segmentDetailsList: [
+          {
+            'number': 1,
+            'commentTitle': "First part",
+            'startPosition': '0:00.0',
+            'endPosition': '3:01.0',
+            'playSpeed': 'Play speed: 0.7',
+            'increaseDuration': 'Increase duration: 0:00.0',
+            'reductionPosition': 'Reduction position: 2:50.0',
+            'reductionDuration': 'Reduction duration: 0:11.0',
+            'duration': 'Duration: 3:01.0 + silence 0:01.0',
+          },
+          {
+            'number': 2,
+            'commentTitle':
+                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+            'startPosition': '3:56.1',
+            'endPosition': '5:20.8',
+            'playSpeed': 'Play speed: 1.25',
+            'increaseDuration': 'Increase duration: 0:09.0',
+            'reductionPosition': 'Reduction position: 5:11.0',
+            'reductionDuration': 'Reduction duration: 0:09.8',
+            'duration': 'Duration: 1:24.7',
+          },
+        ],
+      );
+
+      // Now, type on the Extract MP3 button
+      final Finder extractMp3ButtonFinder =
+          find.byKey(const Key('extractMp3Button'));
+      await tester.tap(extractMp3ButtonFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(const Duration(seconds: 4));
+      await tester.pumpAndSettle();
+
+      // Verify the extract comments to MP3 success dialog message
+      // and play and pause the extracted MP3 file
+      await _verifyAndPlayExtractedMp3Method(
+        tester: tester,
+        extractionSuccessMessage:
+            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+        extractionPlayingMessage:
+            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
         '''Extract to playlist in music quality an audio with 3 comments. 1 comment is
            removed before the extraction. Thev, verify in the playlist extracted audio
            the content of the audio info dialog. Also verify the URL relation presence
@@ -41084,9 +41254,6 @@ void main() {
       Finder saveEditedCommentButtonFinder =
           find.byKey(const Key('saveEditedSegmentButton'));
       await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
-
-      await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       // Verifying the first modified comment in the comments json file
