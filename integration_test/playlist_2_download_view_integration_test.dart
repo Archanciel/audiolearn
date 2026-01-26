@@ -41054,11 +41054,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Modify the play speed to 0.7
-      Finder commentPlaySpeedTextFieldFinder =
-          find.byKey(const Key('playSpeedTextField'));
-      await tester.tap(commentPlaySpeedTextFieldFinder);
-      await tester.enterText(commentPlaySpeedTextFieldFinder, '0.7');
-      await tester.pumpAndSettle();
+      await _correctPlaySpeedEnterCode(
+        tester: tester,
+        playSpeedValue: '0.7',
+      );
 
       // Modify the fade-in duration to 0:08.0
       Finder commentFadeInDurationTextFieldFinder =
@@ -41087,6 +41086,9 @@ void main() {
       await tester.tap(saveEditedCommentButtonFinder);
       await tester.pumpAndSettle();
 
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
       // Verifying the first modified comment in the comments json file
 
       commentsFile = File(commentsFilePath);
@@ -41102,7 +41104,7 @@ void main() {
       expect(firstComment['commentStartPositionInTenthOfSeconds'], 100);
       expect(firstComment['commentEndPositionInTenthOfSeconds'], 1400);
       expect(firstComment['silenceDuration'], 5.0);
-      expect(thirdComment['playSpeed'], 0.7);
+      expect(firstComment['playSpeed'], 0.7);
       expect(firstComment['fadeInDuration'], 8.0);
       expect(firstComment['soundReductionPosition'], 130.1);
       expect(firstComment['soundReductionDuration'], 9.9);
@@ -41180,7 +41182,7 @@ void main() {
             'commentTitle': "First part",
             'startPosition': '0:10.0',
             'endPosition': '2:20.0',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 0.7',
             'increaseDuration': 'Increase duration: 0:08.0',
             'reductionPosition': 'Reduction position: 2:10.1',
             'reductionDuration': 'Reduction duration: 0:09.9',
@@ -41881,6 +41883,28 @@ void main() {
       );
     });
   });
+}
+
+Future<void> _correctPlaySpeedEnterCode({
+  required WidgetTester tester,
+  required String playSpeedValue,
+}) async {
+  // Modify the play speed to 0.7
+  Finder commentPlaySpeedTextFieldFinder =
+      find.byKey(const Key('playSpeedTextField'));
+  await tester.tap(commentPlaySpeedTextFieldFinder);
+  await tester.pumpAndSettle();
+
+  // Clear the existing text first
+  await tester.enterText(commentPlaySpeedTextFieldFinder, '');
+  await tester.pumpAndSettle();
+
+  // Then enter the new value
+  await tester.enterText(
+    commentPlaySpeedTextFieldFinder,
+    playSpeedValue,
+  );
+  await tester.pumpAndSettle();
 }
 
 Future<void> _verifyExistenceOfErrorMessage({
