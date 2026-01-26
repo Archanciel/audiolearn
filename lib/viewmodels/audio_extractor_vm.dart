@@ -50,7 +50,7 @@ class AudioExtractorVM extends ChangeNotifier {
           0.0,
           (sum, s) =>
               sum +
-              TimeFormatUtil.normalizeToTenths(s.duration) +
+              TimeFormatUtil.normalizeToTenths(s.duration / s.playSpeed) +
               TimeFormatUtil.normalizeToTenths(s.silenceDuration),
         );
   }
