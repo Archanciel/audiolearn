@@ -1,1 +1,44 @@
-[{"id":"First part_1766333790797487","title":"First part","content":"","commentStartPositionInTenthOfSeconds":0,"commentEndPositionInTenthOfSeconds":1810,"silenceDuration":1.0,"fadeInDuration":0.0,"soundReductionPosition":170.0,"soundReductionDuration":11.0,"creationDateTime":"2025-12-21T17:16:30.000","lastUpdateDateTime":"2025-12-22T05:47:28.517838"},{"id":"1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148","title":"1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi","content":"A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.","commentStartPositionInTenthOfSeconds":1800,"commentEndPositionInTenthOfSeconds":2346,"silenceDuration":0.0,"fadeInDuration":0.0,"soundReductionPosition":0.0,"soundReductionDuration":0.0,"creationDateTime":"2025-12-22T11:41:48.000","lastUpdateDateTime":"2025-12-22T16:07:01.000"},{"id":"1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836","title":"2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi","content":"","commentStartPositionInTenthOfSeconds":2361,"commentEndPositionInTenthOfSeconds":3208,"silenceDuration":0.0,"fadeInDuration":9.0,"soundReductionPosition":311.0,"soundReductionDuration":9.8,"creationDateTime":"2025-12-21T17:25:17.000","lastUpdateDateTime":"2025-12-22T16:06:46.000"}]
+[
+    {
+        "id": "First part_1766333790797487",
+        "title": "First part",
+        "content": "",
+        "commentStartPositionInTenthOfSeconds": 0,
+        "commentEndPositionInTenthOfSeconds": 1810,
+        "silenceDuration": 1.0,
+        "playSpeed": 1.0,
+        "fadeInDuration": 0.0,
+        "soundReductionPosition": 170.0,
+        "soundReductionDuration": 11.0,
+        "creationDateTime": "2025-12-21T17:16:30.000",
+        "lastUpdateDateTime": "2025-12-22T05:47:28.517838"
+    },
+    {
+        "id": "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766400108231148",
+        "title": "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+        "content": "A remplacer par 2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi which is longer.",
+        "commentStartPositionInTenthOfSeconds": 1800,
+        "commentEndPositionInTenthOfSeconds": 2346,
+        "silenceDuration": 0.0,
+        "playSpeed": 1.0,
+        "fadeInDuration": 0.0,
+        "soundReductionPosition": 0.0,
+        "soundReductionDuration": 0.0,
+        "creationDateTime": "2025-12-22T11:41:48.000",
+        "lastUpdateDateTime": "2025-12-22T16:07:01.000"
+    },
+    {
+        "id": "1st ce qu'Il a fait pour Moïse, Il peut le faire pour toi_1766334317917836",
+        "title": "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+        "content": "",
+        "commentStartPositionInTenthOfSeconds": 2361,
+        "commentEndPositionInTenthOfSeconds": 3208,
+        "silenceDuration": 0.0,
+        "playSpeed": 1.0,
+        "fadeInDuration": 9.0,
+        "soundReductionPosition": 311.0,
+        "soundReductionDuration": 9.8,
+        "creationDateTime": "2025-12-21T17:25:17.000",
+        "lastUpdateDateTime": "2025-12-22T16:06:46.000"
+    }
+]
