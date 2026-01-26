@@ -40469,8 +40469,8 @@ void main() {
       );
     });
     testWidgets(
-        '''Delete and resave the extract comments. Modify their positions and verify that this is memorized and
-           is correctly stored in the comment json file.''',
+        '''Delete and resave the extract comments. Modify their play speed and positions and verify
+           that this is memorized and is correctly stored in the comment json file.''',
         (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
@@ -40604,6 +40604,7 @@ void main() {
       expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
       expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
       expect(firstComment['silenceDuration'], 1.0);
+      expect(firstComment['playSpeed'], 1.0);
       expect(firstComment['fadeInDuration'], 0.0);
       expect(firstComment['soundReductionPosition'], 170.0);
       expect(firstComment['soundReductionDuration'], 11.0);
@@ -40625,6 +40626,7 @@ void main() {
       expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
       expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
       expect(secondComment['silenceDuration'], 0.0);
+      expect(secondComment['playSpeed'], 1.0);
       expect(secondComment['fadeInDuration'], 0.0);
       expect(secondComment['soundReductionPosition'], 0.0);
       expect(secondComment['soundReductionDuration'], 0.0);
@@ -40644,6 +40646,7 @@ void main() {
       expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
       expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
       expect(thirdComment['silenceDuration'], 0.0);
+      expect(thirdComment['playSpeed'], 1.0);
       expect(thirdComment['fadeInDuration'], 9.0,
           reason: 'Should have 9 seconds fade-in');
       expect(thirdComment['soundReductionPosition'], 311.0);
@@ -40714,6 +40717,7 @@ void main() {
       expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
       expect(firstComment['commentEndPositionInTenthOfSeconds'], 1810);
       expect(firstComment['silenceDuration'], 1.0);
+      expect(firstComment['playSpeed'], 1.0);
       expect(firstComment['fadeInDuration'], 0.0);
       expect(firstComment['soundReductionPosition'], 170.0);
       expect(firstComment['soundReductionDuration'], 11.0);
@@ -40734,6 +40738,7 @@ void main() {
       expect(secondComment['commentStartPositionInTenthOfSeconds'], 1800);
       expect(secondComment['commentEndPositionInTenthOfSeconds'], 2346);
       expect(secondComment['silenceDuration'], 0.0);
+      expect(secondComment['playSpeed'], 1.0);
       expect(secondComment['fadeInDuration'], 0.0);
       expect(secondComment['soundReductionPosition'], 0.0);
       expect(secondComment['soundReductionDuration'], 0.0);
@@ -40765,6 +40770,7 @@ void main() {
       expect(thirdComment['commentStartPositionInTenthOfSeconds'], 2361);
       expect(thirdComment['commentEndPositionInTenthOfSeconds'], 3208);
       expect(thirdComment['silenceDuration'], 0.0);
+      expect(thirdComment['playSpeed'], 1.0);
       expect(thirdComment['fadeInDuration'], 9.0,
           reason: 'Should have 9 seconds fade-in');
       expect(thirdComment['soundReductionPosition'], 311.0);
@@ -41009,7 +41015,7 @@ void main() {
       );
 
       // Now edit the 'First part' comment to modify its start and
-      // end positions, its increase duration and reduction position
+      // end positions, its play speed, its increase duration and reduction position
       // and duration
 
       // Necessary to drag up vertically to make visible the edit
@@ -41020,7 +41026,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // This opens the edit comment confirmation dialog
+      // This opens the edit comment dialog
       Finder editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_1'));
       await tester.tap(editCommentIconButtonFinder);
@@ -41045,6 +41051,13 @@ void main() {
           find.byKey(const Key('silenceDurationTextField'));
       await tester.tap(commentSilenceDurationTextFieldFinder);
       await tester.enterText(commentSilenceDurationTextFieldFinder, '0:05.0');
+      await tester.pumpAndSettle();
+
+      // Modify the play speed to 0.7
+      Finder commentPlaySpeedTextFieldFinder =
+          find.byKey(const Key('playSpeedTextField'));
+      await tester.tap(commentPlaySpeedTextFieldFinder);
+      await tester.enterText(commentPlaySpeedTextFieldFinder, '0.7');
       await tester.pumpAndSettle();
 
       // Modify the fade-in duration to 0:08.0
@@ -41089,6 +41102,7 @@ void main() {
       expect(firstComment['commentStartPositionInTenthOfSeconds'], 100);
       expect(firstComment['commentEndPositionInTenthOfSeconds'], 1400);
       expect(firstComment['silenceDuration'], 5.0);
+      expect(thirdComment['playSpeed'], 0.7);
       expect(firstComment['fadeInDuration'], 8.0);
       expect(firstComment['soundReductionPosition'], 130.1);
       expect(firstComment['soundReductionDuration'], 9.9);
@@ -41112,7 +41126,7 @@ void main() {
       // Now edit the second comment to save it again without
       // modification to remove the 'Comment not included' message
 
-      // This opens the edit comment confirmation dialog
+      // This opens the edit comment dialog
       editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_2'));
       await tester.tap(editCommentIconButtonFinder);
@@ -41136,7 +41150,7 @@ void main() {
       // Now edit the third comment to save it again without
       // modification to remove the 'Comment not included' message
 
-      // This opens the edit comment confirmation dialog
+      // This opens the edit comment dialog
       editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_3'));
       await tester.tap(editCommentIconButtonFinder);
@@ -41237,7 +41251,7 @@ void main() {
             'commentTitle': "First part",
             'startPosition': '0:10.0',
             'endPosition': '2:20.0',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 0.7',
             'increaseDuration': 'Increase duration: 0:08.0',
             'reductionPosition': 'Reduction position: 2:10.1',
             'reductionDuration': 'Reduction duration: 0:09.9',
