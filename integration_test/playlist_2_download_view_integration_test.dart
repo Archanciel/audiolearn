@@ -41149,14 +41149,21 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Now edit the third comment to save it again without
-      // modification to remove the 'Comment not included' message
+      // Now edit the third comment to save it again after setting
+      // its play speed to 1.25. This modification removes the
+      // 'Comment not included' message
 
       // This opens the edit comment dialog
       editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_3'));
       await tester.tap(editCommentIconButtonFinder);
       await tester.pumpAndSettle();
+
+      // Modify the play speed to 1.25
+      await _correctPlaySpeedEnterCode(
+        tester: tester,
+        playSpeedValue: '1.25',
+      );
 
       // Confirm the comment edition by tapping the save button
       saveEditedCommentButtonFinder =
@@ -41206,7 +41213,7 @@ void main() {
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 1.25',
             'increaseDuration': 'Increase duration: 0:09.0',
             'reductionPosition': 'Reduction position: 5:11.0',
             'reductionDuration': 'Reduction duration: 0:09.8',
@@ -41277,7 +41284,7 @@ void main() {
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 1.25',
             'increaseDuration': 'Increase duration: 0:09.0',
             'reductionPosition': 'Reduction position: 5:11.0',
             'reductionDuration': 'Reduction duration: 0:09.8',
