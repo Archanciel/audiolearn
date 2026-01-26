@@ -324,11 +324,10 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
                   TextField(
                     key: const Key('playSpeedTextField'),
                     controller: _playSpeedController,
-                    inputFormatters: [TimeTextInputFormatter()],
                     decoration: InputDecoration(
                       labelText:
                           AppLocalizations.of(context)!.playSpeedLabel,
-                      hintText: '0:00.0',
+                      hintText: '1.0',
                       border: OutlineInputBorder(),
                     ),
                   ),
