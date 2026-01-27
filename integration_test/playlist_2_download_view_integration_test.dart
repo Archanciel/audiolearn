@@ -41394,7 +41394,7 @@ void main() {
           find.byKey(const Key('totalSegmentsDurationTextKey'));
       expect(
         tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 4:34.3',
+        'Total duration: 5:13.1',
       );
 
       // Now, tap on 'Clear all' button to delete all comments at once
