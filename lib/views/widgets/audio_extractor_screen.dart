@@ -1043,7 +1043,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           targetPlaylist: targetPlaylist!,
           extractedMp3FileName: extractedMp3FileName,
           inMusicQuality: _extractInMusicQuality,
-          totalDuration: audioExtractorVM.totalDuration,
+          totalDuration: audioExtractorVM.totalDuration, // duration corrected by play speed
         );
 
         if (!wasExtractedAudioAddedToTargetPlaylist) {
