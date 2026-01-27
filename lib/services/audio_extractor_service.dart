@@ -39,8 +39,9 @@ class InputSegments {
 class AudioExtractorService {
   static final Logger logger = Logger();
 
-  /// Default silence (seconds) appended between segments when user did not specify any.
-  static const double defaultSilenceDuration = 1.0;
+  /// Default silence (seconds) appended between segments when user did not
+  /// specify any. Can be zero to have no silence by default.
+  static const double defaultSilenceDuration = 0.0;
 
   // ────────────────────────────────────────────────────────────────────────────
   // Helper: Build audio filter for fade-out
