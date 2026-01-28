@@ -39955,8 +39955,6 @@ void main() {
     });
   });
   group('Extract audio comments to MP3 tests', () {
-    group('Extract one comments', () {
-    });
     group('Extract several comments', () {
       testWidgets(
           '''Extract to dir in music quality an audio with 3 comments. 1 comment is
@@ -40870,6 +40868,165 @@ void main() {
         expect(
           find.byKey(const Key('popup_copy_youtube_video_url')),
           findsOneWidget,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
+    group('Extract one comments', () {
+      testWidgets(
+          '''Extract to dir in spoken quality with play speed modified an audio with 1
+           comment. The unique comment play seed is set to 0.7.''',
+          (WidgetTester tester) async {
+        const String audioTitle =
+            "Quand Dieu transforme l’épreuve en victoire";
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+        );
+
+        // First, find the '1 long music' playlist audio ListTile Text widget
+        final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        final Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        final Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has 1 child widget
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        // Now open the extract comments to MP3 dialog
+
+        // Find the extract comments to MP3 text button of the comment
+        // add dialog and tap on it
+        final Finder extractCommentsToMp3ButtonFinder =
+            find.byKey(const Key('extractCommentsToMp3TextButton'));
+        await tester.tap(extractCommentsToMp3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the extract comments to MP3 dialog commentTitle
+        expect(find.text('Comments in MP3'), findsOneWidget);
+
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+        // Verify the Comments number commentTitle
+        expect(find.text('Comments (1)'), findsOneWidget);
+
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 1,
+              'commentTitle': "Prière à Dieu pour nos difficultés ",
+              'startPosition': '23:15.7',
+              'endPosition': '24:10.0',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 0:00.0',
+              'reductionDuration': 'Reduction duration: 0:00.0',
+              'duration': 'Duration: 0:54.3',
+            },
+          ],
+        );
+
+        // Now edit the 'Prière à Dieu pour nos difficultés ' comment to modify its
+        // play speed, its increase duration and reduction position and duration
+
+        // This opens the edit comment dialog
+        Finder editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Modify the play speed to 0.7
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '0.7',
+        );
+
+        // Modify the fade-in duration to 0:05.0
+        Finder commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction position to 24:06.5
+        Finder commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '24:06.5');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction duration to 0:03.5
+        Finder commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:03.5');
+        await tester.pumpAndSettle();
+
+        // Confirm the comment edition by tapping the save button
+        Finder saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now, type on the Extract MP3 button
+        final Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
+          extractionPlayingMessage:
+              'Playing: 260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
         );
 
         // Purge the test playlist directory so that the created test
