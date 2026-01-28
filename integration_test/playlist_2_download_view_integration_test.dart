@@ -39955,914 +39955,929 @@ void main() {
     });
   });
   group('Extract audio comments to MP3 tests', () {
-    testWidgets(
-        '''Extract to dir in music quality an audio with 3 comments. 1 comment is
+    group('Extract one comments', () {
+    });
+    group('Extract several comments', () {
+      testWidgets(
+          '''Extract to dir in music quality an audio with 3 comments. 1 comment is
            removed before the extraction. Verify that tapping on a directory/playlist
            checkbox to unselect it selects the other checkbox.''',
-        (WidgetTester tester) async {
-      const String audioTitle =
-          "Glorious - Laisse-moi te parler de Jésus #louange";
+          (WidgetTester tester) async {
+        const String audioTitle =
+            "Glorious - Laisse-moi te parler de Jésus #louange";
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'extract_comments_to_mp3_test',
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+        );
 
-      // First, find the '1 long music' playlist audio ListTile Text widget
-      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+        // First, find the '1 long music' playlist audio ListTile Text widget
+        final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now we want to tap the popup menu of the audioTitle ListTile
+        // Now we want to tap the popup menu of the audioTitle ListTile
 
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      final Finder audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        final Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
 
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
 
-      final Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
+        final Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
 
-      // Ensure the list has 3 child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        3,
-      );
+        // Ensure the list has 3 child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          3,
+        );
 
-      // Now open the extract comments to MP3 dialog
+        // Now open the extract comments to MP3 dialog
 
-      // Find the extract comments to MP3 text button of the comment
-      // add dialog and tap on it
-      final Finder extractCommentsToMp3ButtonFinder =
-          find.byKey(const Key('extractCommentsToMp3TextButton'));
-      await tester.tap(extractCommentsToMp3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Find the extract comments to MP3 text button of the comment
+        // add dialog and tap on it
+        final Finder extractCommentsToMp3ButtonFinder =
+            find.byKey(const Key('extractCommentsToMp3TextButton'));
+        await tester.tap(extractCommentsToMp3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 dialog commentTitle
-      expect(find.text('Comments in MP3'), findsOneWidget);
+        // Verify the extract comments to MP3 dialog commentTitle
+        expect(find.text('Comments in MP3'), findsOneWidget);
 
-      // Verify the presence of the help icon button
-      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
-      // Verify the Comments number commentTitle
-      expect(find.text('Comments (3)'), findsOneWidget);
+        // Verify the Comments number commentTitle
+        expect(find.text('Comments (3)'), findsOneWidget);
 
-      // Now, delete the second comment
+        // Now, delete the second comment
 
-      // This opens the delete comment confirmation dialog
-      final Finder deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_2'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the delete comment confirmation dialog
+        final Finder deleteCommentIconButtonFinder =
+            find.byKey(const Key('deleteSegmentButtonKey_2'));
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the delete comment confirmation dialog commentTitle
-      expect(find.text('Remove Comment'), findsOneWidget);
+        // Verify the delete comment confirmation dialog commentTitle
+        expect(find.text('Remove Comment'), findsOneWidget);
 
-      // Verify the delete comment confirmation dialog content
-      expect(find.text('Are you sure you want to remove this comment ?'),
-          findsOneWidget);
+        // Verify the delete comment confirmation dialog content
+        expect(find.text('Are you sure you want to remove this comment ?'),
+            findsOneWidget);
 
-      // Confirm the deletion by tapping the delete button
-      final Finder deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the deletion by tapping the delete button
+        final Finder deleteCommentButtonFinder =
+            find.byKey(const Key('confirmDeleteSegmentButton'));
+        await tester.tap(deleteCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the Comments number commentTitle
-      expect(find.text('Comments (2)'), findsOneWidget);
+        // Verify the Comments number commentTitle
+        expect(find.text('Comments (2)'), findsOneWidget);
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 1,
+              'commentTitle': "First part",
+              'startPosition': '0:00.0',
+              'endPosition': '3:01.0',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 2:50.0',
+              'reductionDuration': 'Reduction duration: 0:11.0',
+              'duration': 'Duration: 3:01.0 + silence 0:01.0',
+            },
+            {
+              'number': 2,
+              'commentTitle':
+                  "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+              'startPosition': '3:56.1',
+              'endPosition': '5:20.8',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:09.0',
+              'reductionPosition': 'Reduction position: 5:11.0',
+              'reductionDuration': 'Reduction duration: 0:09.8',
+              'duration': 'Duration: 1:24.7',
+            },
+          ],
+        );
 
-      // Type on 'In directory' checkbox to set the 'In playlist'
-      // checkbox to true and verify that
-      Finder onDirectoryCheckBoxFinder =
-          find.byKey(const Key('onDirectoryCheckBox'));
-      await tester.tap(onDirectoryCheckBoxFinder);
-      await tester.pumpAndSettle();
+        // Type on 'In directory' checkbox to set the 'In playlist'
+        // checkbox to true and verify that
+        Finder onDirectoryCheckBoxFinder =
+            find.byKey(const Key('onDirectoryCheckBox'));
+        await tester.tap(onDirectoryCheckBoxFinder);
+        await tester.pumpAndSettle();
 
-      // Get the 'In directory' Checkbox widget's value
-      Checkbox checkboxWidget =
-          tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
-      expect(checkboxWidget.value, isFalse,
-          reason: 'A directiry checkbox is unselected.');
+        // Get the 'In directory' Checkbox widget's value
+        Checkbox checkboxWidget =
+            tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+        expect(checkboxWidget.value, isFalse,
+            reason: 'A directiry checkbox is unselected.');
 
-      // Get the 'In playlist' Checkbox finder
-      Finder inPlaylistCheckBoxFinder =
-          find.byKey(const Key('inPlaylistCheckBox'));
+        // Get the 'In playlist' Checkbox finder
+        Finder inPlaylistCheckBoxFinder =
+            find.byKey(const Key('inPlaylistCheckBox'));
 
-      // Get the 'In playlist' Checkbox widget's value
-      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
-      expect(checkboxWidget.value, isTrue,
-          reason: 'A playlist checkbox is selected.');
+        // Get the 'In playlist' Checkbox widget's value
+        checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+        expect(checkboxWidget.value, isTrue,
+            reason: 'A playlist checkbox is selected.');
 
-      // Then type on 'In playlist' checkbox to set the 'In directory'
-      // checkbox to true and verify that
-      await tester.tap(inPlaylistCheckBoxFinder);
-      await tester.pumpAndSettle();
+        // Then type on 'In playlist' checkbox to set the 'In directory'
+        // checkbox to true and verify that
+        await tester.tap(inPlaylistCheckBoxFinder);
+        await tester.pumpAndSettle();
 
-      // Get the 'In directory' Checkbox widget's value
-      checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
-      expect(checkboxWidget.value, isTrue,
-          reason: 'A directiry checkbox is unselected.');
+        // Get the 'In directory' Checkbox widget's value
+        checkboxWidget = tester.widget<Checkbox>(onDirectoryCheckBoxFinder);
+        expect(checkboxWidget.value, isTrue,
+            reason: 'A directiry checkbox is unselected.');
 
-      // Get the 'In playlist' Checkbox widget's value
-      checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
-      expect(checkboxWidget.value, isFalse,
-          reason: 'A playlist checkbox is selected.');
+        // Get the 'In playlist' Checkbox widget's value
+        checkboxWidget = tester.widget<Checkbox>(inPlaylistCheckBoxFinder);
+        expect(checkboxWidget.value, isFalse,
+            reason: 'A playlist checkbox is selected.');
 
-      // Now edit the 'First part' comment to modify its start and
-      // end positions, its play speed, its increase duration and reduction position
-      // and duration
+        // Now edit the 'First part' comment to modify its start and
+        // end positions, its play speed, its increase duration and reduction position
+        // and duration
 
-      // Necessary to drag up vertically to make visible the edit
-      // icon button of the 1st comment
-      await tester.drag(
-        find.byType(AudioExtractorScreen),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
+        // Necessary to drag up vertically to make visible the edit
+        // icon button of the 1st comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, 300), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
 
-      // This opens the edit comment dialog
-      Finder editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the edit comment dialog
+        Finder editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, modify the start position to 0:10.0
-      Finder commentStartPositionTextFieldFinder =
-          find.byKey(const Key('startPositionTextField'));
-      await tester.tap(commentStartPositionTextFieldFinder);
-      await tester.enterText(commentStartPositionTextFieldFinder, '0:10.0');
-      await tester.pumpAndSettle();
+        // Now, modify the start position to 0:10.0
+        Finder commentStartPositionTextFieldFinder =
+            find.byKey(const Key('startPositionTextField'));
+        await tester.tap(commentStartPositionTextFieldFinder);
+        await tester.enterText(commentStartPositionTextFieldFinder, '0:10.0');
+        await tester.pumpAndSettle();
 
-      // Modify the end position to 0:30.0
-      Finder commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '0:30.0');
-      await tester.pumpAndSettle();
+        // Modify the end position to 0:30.0
+        Finder commentEndPositionTextFieldFinder =
+            find.byKey(const Key('endPositionTextField'));
+        await tester.tap(commentEndPositionTextFieldFinder);
+        await tester.enterText(commentEndPositionTextFieldFinder, '0:30.0');
+        await tester.pumpAndSettle();
 
-      // Modify the silence duration to 0:01.0
-      Finder commentSilenceDurationTextFieldFinder =
-          find.byKey(const Key('silenceDurationTextField'));
-      await tester.tap(commentSilenceDurationTextFieldFinder);
-      await tester.enterText(commentSilenceDurationTextFieldFinder, '0:01.0');
-      await tester.pumpAndSettle();
+        // Modify the silence duration to 0:01.0
+        Finder commentSilenceDurationTextFieldFinder =
+            find.byKey(const Key('silenceDurationTextField'));
+        await tester.tap(commentSilenceDurationTextFieldFinder);
+        await tester.enterText(commentSilenceDurationTextFieldFinder, '0:01.0');
+        await tester.pumpAndSettle();
 
-      // Modify the fade-in duration to 0:08.0
-      Finder commentFadeInDurationTextFieldFinder =
-          find.byKey(const Key('fadeInDurationTextField'));
-      await tester.tap(commentFadeInDurationTextFieldFinder);
-      await tester.enterText(commentFadeInDurationTextFieldFinder, '0:08.0');
-      await tester.pumpAndSettle();
+        // Modify the fade-in duration to 0:08.0
+        Finder commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:08.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction position to 0:25.0
-      Finder commentReductionPositionTextFieldFinder =
-          find.byKey(const Key('soundReductionPositionTextField'));
-      await tester.tap(commentReductionPositionTextFieldFinder);
-      await tester.enterText(commentReductionPositionTextFieldFinder, '0:25.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction position to 0:25.0
+        Finder commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '0:25.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction duration to 0:05.0
-      Finder commentReductionDurationTextFieldFinder =
-          find.byKey(const Key('soundReductionDurationTextField'));
-      await tester.tap(commentReductionDurationTextFieldFinder);
-      await tester.enterText(commentReductionDurationTextFieldFinder, '0:05.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction duration to 0:05.0
+        Finder commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
 
-      // Confirm the comment edition by tapping the save button
-      Finder saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the comment edition by tapping the save button
+        Finder saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now edit the third comment to save it again after setting
-      // its play speed to 1.25. This modification removes the
-      // 'Comment not included' message
+        // Now edit the third comment to save it again after setting
+        // its play speed to 1.25. This modification removes the
+        // 'Comment not included' message
 
-      // This opens the edit comment dialog
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_2'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the edit comment dialog
+        editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_2'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, modify the start position to 3:56.0
-      commentStartPositionTextFieldFinder =
-          find.byKey(const Key('startPositionTextField'));
-      await tester.tap(commentStartPositionTextFieldFinder);
-      await tester.enterText(commentStartPositionTextFieldFinder, '3:56.0');
-      await tester.pumpAndSettle();
+        // Now, modify the start position to 3:56.0
+        commentStartPositionTextFieldFinder =
+            find.byKey(const Key('startPositionTextField'));
+        await tester.tap(commentStartPositionTextFieldFinder);
+        await tester.enterText(commentStartPositionTextFieldFinder, '3:56.0');
+        await tester.pumpAndSettle();
 
-      // Modify the end position to 4:26.0
-      commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '4:26.0');
-      await tester.pumpAndSettle();
+        // Modify the end position to 4:26.0
+        commentEndPositionTextFieldFinder =
+            find.byKey(const Key('endPositionTextField'));
+        await tester.tap(commentEndPositionTextFieldFinder);
+        await tester.enterText(commentEndPositionTextFieldFinder, '4:26.0');
+        await tester.pumpAndSettle();
 
-      // Modify the fade-in duration to 0:05.0
-      commentFadeInDurationTextFieldFinder =
-          find.byKey(const Key('fadeInDurationTextField'));
-      await tester.tap(commentFadeInDurationTextFieldFinder);
-      await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
-      await tester.pumpAndSettle();
+        // Modify the fade-in duration to 0:05.0
+        commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction position to 4:20.0
-      commentReductionPositionTextFieldFinder =
-          find.byKey(const Key('soundReductionPositionTextField'));
-      await tester.tap(commentReductionPositionTextFieldFinder);
-      await tester.enterText(commentReductionPositionTextFieldFinder, '4:20.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction position to 4:20.0
+        commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '4:20.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction duration to 0:06.0
-      commentReductionDurationTextFieldFinder =
-          find.byKey(const Key('soundReductionDurationTextField'));
-      await tester.tap(commentReductionDurationTextFieldFinder);
-      await tester.enterText(commentReductionDurationTextFieldFinder, '0:06.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction duration to 0:06.0
+        commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:06.0');
+        await tester.pumpAndSettle();
 
-      // Confirm the comment edition by tapping the save button
-      saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the comment edition by tapping the save button
+        saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, type on the Extract MP3 button
-      final Finder extractMp3ButtonFinder =
-          find.byKey(const Key('extractMp3Button'));
-      await tester.tap(extractMp3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now, type on the Extract MP3 button
+        final Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 success dialog message
-      // and play and pause the extracted MP3 file
-      await _verifyAndPlayExtractedMp3Method(
-        tester: tester,
-        extractionSuccessMessage:
-            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
-        extractionPlayingMessage:
-            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
-      );
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+          extractionPlayingMessage:
+              'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Extract to dir with play speed modified and in music quality an audio with
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Extract to dir with play speed modified and in music quality an audio with
            3 comments. Comment 2 is removed before the extraction. The first comment play
            speed is set to 0.7 and the third comment play speed is set to 1.25.''',
-        (WidgetTester tester) async {
-      const String audioTitle =
-          "Glorious - Laisse-moi te parler de Jésus #louange";
+          (WidgetTester tester) async {
+        const String audioTitle =
+            "Glorious - Laisse-moi te parler de Jésus #louange";
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'extract_comments_to_mp3_test',
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+        );
 
-      // First, find the '1 long music' playlist audio ListTile Text widget
-      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+        // First, find the '1 long music' playlist audio ListTile Text widget
+        final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now we want to tap the popup menu of the audioTitle ListTile
+        // Now we want to tap the popup menu of the audioTitle ListTile
 
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      final Finder audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        final Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
 
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
 
-      final Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
+        final Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
 
-      // Ensure the list has 3 child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        3,
-      );
+        // Ensure the list has 3 child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          3,
+        );
 
-      // Now open the extract comments to MP3 dialog
+        // Now open the extract comments to MP3 dialog
 
-      // Find the extract comments to MP3 text button of the comment
-      // add dialog and tap on it
-      final Finder extractCommentsToMp3ButtonFinder =
-          find.byKey(const Key('extractCommentsToMp3TextButton'));
-      await tester.tap(extractCommentsToMp3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Find the extract comments to MP3 text button of the comment
+        // add dialog and tap on it
+        final Finder extractCommentsToMp3ButtonFinder =
+            find.byKey(const Key('extractCommentsToMp3TextButton'));
+        await tester.tap(extractCommentsToMp3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 dialog commentTitle
-      expect(find.text('Comments in MP3'), findsOneWidget);
+        // Verify the extract comments to MP3 dialog commentTitle
+        expect(find.text('Comments in MP3'), findsOneWidget);
 
-      // Verify the presence of the help icon button
-      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
-      // Verify the Comments number commentTitle
-      expect(find.text('Comments (3)'), findsOneWidget);
+        // Verify the Comments number commentTitle
+        expect(find.text('Comments (3)'), findsOneWidget);
 
-      // Now, delete the second comment
+        // Now, delete the second comment
 
-      // This opens the delete comment confirmation dialog
-      final Finder deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_2'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the delete comment confirmation dialog
+        final Finder deleteCommentIconButtonFinder =
+            find.byKey(const Key('deleteSegmentButtonKey_2'));
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the delete comment confirmation dialog commentTitle
-      expect(find.text('Remove Comment'), findsOneWidget);
+        // Verify the delete comment confirmation dialog commentTitle
+        expect(find.text('Remove Comment'), findsOneWidget);
 
-      // Verify the delete comment confirmation dialog content
-      expect(find.text('Are you sure you want to remove this comment ?'),
-          findsOneWidget);
+        // Verify the delete comment confirmation dialog content
+        expect(find.text('Are you sure you want to remove this comment ?'),
+            findsOneWidget);
 
-      // Confirm the deletion by tapping the delete button
-      final Finder deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the deletion by tapping the delete button
+        final Finder deleteCommentButtonFinder =
+            find.byKey(const Key('confirmDeleteSegmentButton'));
+        await tester.tap(deleteCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the Comments number commentTitle
-      expect(find.text('Comments (2)'), findsOneWidget);
+        // Verify the Comments number commentTitle
+        expect(find.text('Comments (2)'), findsOneWidget);
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 1,
+              'commentTitle': "First part",
+              'startPosition': '0:00.0',
+              'endPosition': '3:01.0',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 2:50.0',
+              'reductionDuration': 'Reduction duration: 0:11.0',
+              'duration': 'Duration: 3:01.0 + silence 0:01.0',
+            },
+            {
+              'number': 2,
+              'commentTitle':
+                  "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+              'startPosition': '3:56.1',
+              'endPosition': '5:20.8',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:09.0',
+              'reductionPosition': 'Reduction position: 5:11.0',
+              'reductionDuration': 'Reduction duration: 0:09.8',
+              'duration': 'Duration: 1:24.7',
+            },
+          ],
+        );
 
-      // Now edit the 'First part' comment to modify its start and
-      // end positions, its play speed, its increase duration and reduction position
-      // and duration
+        // Now edit the 'First part' comment to modify its start and
+        // end positions, its play speed, its increase duration and reduction position
+        // and duration
 
-      // Necessary to drag up vertically to make visible the edit
-      // icon button of the 1st comment
-      await tester.drag(
-        find.byType(AudioExtractorScreen),
-        const Offset(0, 300), // Negative value for vertical drag to scroll down
-      );
-      await tester.pumpAndSettle();
+        // Necessary to drag up vertically to make visible the edit
+        // icon button of the 1st comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, 300), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
 
-      // This opens the edit comment dialog
-      Finder editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the edit comment dialog
+        Finder editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, modify the start position to 0:10.0
-      Finder commentStartPositionTextFieldFinder =
-          find.byKey(const Key('startPositionTextField'));
-      await tester.tap(commentStartPositionTextFieldFinder);
-      await tester.enterText(commentStartPositionTextFieldFinder, '0:10.0');
-      await tester.pumpAndSettle();
+        // Now, modify the start position to 0:10.0
+        Finder commentStartPositionTextFieldFinder =
+            find.byKey(const Key('startPositionTextField'));
+        await tester.tap(commentStartPositionTextFieldFinder);
+        await tester.enterText(commentStartPositionTextFieldFinder, '0:10.0');
+        await tester.pumpAndSettle();
 
-      // Modify the end position to 0:30.0
-      Finder commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '0:30.0');
-      await tester.pumpAndSettle();
+        // Modify the end position to 0:30.0
+        Finder commentEndPositionTextFieldFinder =
+            find.byKey(const Key('endPositionTextField'));
+        await tester.tap(commentEndPositionTextFieldFinder);
+        await tester.enterText(commentEndPositionTextFieldFinder, '0:30.0');
+        await tester.pumpAndSettle();
 
-      // Modify the silence duration to 0:01.0
-      Finder commentSilenceDurationTextFieldFinder =
-          find.byKey(const Key('silenceDurationTextField'));
-      await tester.tap(commentSilenceDurationTextFieldFinder);
-      await tester.enterText(commentSilenceDurationTextFieldFinder, '0:01.0');
-      await tester.pumpAndSettle();
+        // Modify the silence duration to 0:01.0
+        Finder commentSilenceDurationTextFieldFinder =
+            find.byKey(const Key('silenceDurationTextField'));
+        await tester.tap(commentSilenceDurationTextFieldFinder);
+        await tester.enterText(commentSilenceDurationTextFieldFinder, '0:01.0');
+        await tester.pumpAndSettle();
 
-      // Modify the play speed to 0.7
-      await _correctPlaySpeedEnterCode(
-        tester: tester,
-        playSpeedValue: '0.7',
-      );
+        // Modify the play speed to 0.7
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '0.7',
+        );
 
-      // Modify the fade-in duration to 0:08.0
-      Finder commentFadeInDurationTextFieldFinder =
-          find.byKey(const Key('fadeInDurationTextField'));
-      await tester.tap(commentFadeInDurationTextFieldFinder);
-      await tester.enterText(commentFadeInDurationTextFieldFinder, '0:08.0');
-      await tester.pumpAndSettle();
+        // Modify the fade-in duration to 0:08.0
+        Finder commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:08.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction position to 0:25.0
-      Finder commentReductionPositionTextFieldFinder =
-          find.byKey(const Key('soundReductionPositionTextField'));
-      await tester.tap(commentReductionPositionTextFieldFinder);
-      await tester.enterText(commentReductionPositionTextFieldFinder, '0:25.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction position to 0:25.0
+        Finder commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '0:25.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction duration to 0:05.0
-      Finder commentReductionDurationTextFieldFinder =
-          find.byKey(const Key('soundReductionDurationTextField'));
-      await tester.tap(commentReductionDurationTextFieldFinder);
-      await tester.enterText(commentReductionDurationTextFieldFinder, '0:05.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction duration to 0:05.0
+        Finder commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
 
-      // Confirm the comment edition by tapping the save button
-      Finder saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the comment edition by tapping the save button
+        Finder saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now edit the third comment to save it again after setting
-      // its play speed to 1.25. This modification removes the
-      // 'Comment not included' message
+        // Now edit the third comment to save it again after setting
+        // its play speed to 1.25. This modification removes the
+        // 'Comment not included' message
 
-      // This opens the edit comment dialog
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_2'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the edit comment dialog
+        editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_2'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, modify the start position to 3:56.0
-      commentStartPositionTextFieldFinder =
-          find.byKey(const Key('startPositionTextField'));
-      await tester.tap(commentStartPositionTextFieldFinder);
-      await tester.enterText(commentStartPositionTextFieldFinder, '3:56.0');
-      await tester.pumpAndSettle();
+        // Now, modify the start position to 3:56.0
+        commentStartPositionTextFieldFinder =
+            find.byKey(const Key('startPositionTextField'));
+        await tester.tap(commentStartPositionTextFieldFinder);
+        await tester.enterText(commentStartPositionTextFieldFinder, '3:56.0');
+        await tester.pumpAndSettle();
 
-      // Modify the end position to 4:26.0
-      commentEndPositionTextFieldFinder =
-          find.byKey(const Key('endPositionTextField'));
-      await tester.tap(commentEndPositionTextFieldFinder);
-      await tester.enterText(commentEndPositionTextFieldFinder, '4:26.0');
-      await tester.pumpAndSettle();
+        // Modify the end position to 4:26.0
+        commentEndPositionTextFieldFinder =
+            find.byKey(const Key('endPositionTextField'));
+        await tester.tap(commentEndPositionTextFieldFinder);
+        await tester.enterText(commentEndPositionTextFieldFinder, '4:26.0');
+        await tester.pumpAndSettle();
 
-      // Modify the play speed to 1.25
-      await _correctPlaySpeedEnterCode(
-        tester: tester,
-        playSpeedValue: '1.25',
-      );
+        // Modify the play speed to 1.25
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '1.25',
+        );
 
-      // Modify the fade-in duration to 0:05.0
-      commentFadeInDurationTextFieldFinder =
-          find.byKey(const Key('fadeInDurationTextField'));
-      await tester.tap(commentFadeInDurationTextFieldFinder);
-      await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
-      await tester.pumpAndSettle();
+        // Modify the fade-in duration to 0:05.0
+        commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction position to 4:20.0
-      commentReductionPositionTextFieldFinder =
-          find.byKey(const Key('soundReductionPositionTextField'));
-      await tester.tap(commentReductionPositionTextFieldFinder);
-      await tester.enterText(commentReductionPositionTextFieldFinder, '4:20.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction position to 4:20.0
+        commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '4:20.0');
+        await tester.pumpAndSettle();
 
-      // Modify the reduction duration to 0:06.0
-      commentReductionDurationTextFieldFinder =
-          find.byKey(const Key('soundReductionDurationTextField'));
-      await tester.tap(commentReductionDurationTextFieldFinder);
-      await tester.enterText(commentReductionDurationTextFieldFinder, '0:06.0');
-      await tester.pumpAndSettle();
+        // Modify the reduction duration to 0:06.0
+        commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:06.0');
+        await tester.pumpAndSettle();
 
-      // Confirm the comment edition by tapping the save button
-      saveEditedCommentButtonFinder =
-          find.byKey(const Key('saveEditedSegmentButton'));
-      await tester.tap(saveEditedCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the comment edition by tapping the save button
+        saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, type on the Extract MP3 button
-      final Finder extractMp3ButtonFinder =
-          find.byKey(const Key('extractMp3Button'));
-      await tester.tap(extractMp3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now, type on the Extract MP3 button
+        final Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
 
-      // Verify the extract comments to MP3 success dialog message
-      // and play and pause the extracted MP3 file
-      await _verifyAndPlayExtractedMp3Method(
-        tester: tester,
-        extractionSuccessMessage:
-            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
-        extractionPlayingMessage:
-            'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
-      );
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+          extractionPlayingMessage:
+              'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Extract to playlist in music quality an audio with 3 comments. 1 comment is
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Extract to playlist in music quality an audio with 3 comments. 1 comment is
            removed before the extraction. Thev, verify in the playlist extracted audio
            the content of the audio info dialog. Also verify the URL relation presence
            in the audio menu as well as in the audio player view left appbar menu.''',
-        (WidgetTester tester) async {
-      const String audioTitle =
-          "Glorious - Laisse-moi te parler de Jésus #louange";
+          (WidgetTester tester) async {
+        const String audioTitle =
+            "Glorious - Laisse-moi te parler de Jésus #louange";
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'extract_comments_to_mp3_test',
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+        );
 
-      // First, find the '1 long music' playlist audio ListTile Text widget
-      final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
+        // First, find the '1 long music' playlist audio ListTile Text widget
+        final Finder audioTitleTileTextWidgetFinder = find.text(audioTitle);
 
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      final Finder audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        final Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Now we want to tap the popup menu of the audioTitle ListTile
+        // Now we want to tap the popup menu of the audioTitle ListTile
 
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        final Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      final Finder audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        final Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
 
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
 
-      final Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
+        final Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
 
-      // Ensure the list has 3 child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        3,
-      );
+        // Ensure the list has 3 child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          3,
+        );
 
-      // Now open the extract comments to MP3 dialog
+        // Now open the extract comments to MP3 dialog
 
-      // Find the extract comments to MP3 text button of the comment
-      // add dialog and tap on it
-      final Finder extractCommentsToMp3ButtonFinder =
-          find.byKey(const Key('extractCommentsToMp3TextButton'));
-      await tester.tap(extractCommentsToMp3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Find the extract comments to MP3 text button of the comment
+        // add dialog and tap on it
+        final Finder extractCommentsToMp3ButtonFinder =
+            find.byKey(const Key('extractCommentsToMp3TextButton'));
+        await tester.tap(extractCommentsToMp3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the total duration text
-      Finder totalDurationTextFinder =
-          find.byKey(const Key('totalSegmentsDurationTextKey'));
-      expect(
-        tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 5:21.3',
-      );
+        // Verify the total duration text
+        Finder totalDurationTextFinder =
+            find.byKey(const Key('totalSegmentsDurationTextKey'));
+        expect(
+          tester.widget<Text>(totalDurationTextFinder).data,
+          'Total duration: 5:21.3',
+        );
 
-      // Now, delete the second comment
+        // Now, delete the second comment
 
-      // This opens the delete comment confirmation dialog
-      final Finder deleteCommentIconButtonFinder =
-          find.byKey(const Key('deleteSegmentButtonKey_2'));
-      await tester.tap(deleteCommentIconButtonFinder);
-      await tester.pumpAndSettle();
+        // This opens the delete comment confirmation dialog
+        final Finder deleteCommentIconButtonFinder =
+            find.byKey(const Key('deleteSegmentButtonKey_2'));
+        await tester.tap(deleteCommentIconButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Confirm the deletion by tapping the delete button
-      final Finder deleteCommentButtonFinder =
-          find.byKey(const Key('confirmDeleteSegmentButton'));
-      await tester.tap(deleteCommentButtonFinder);
-      await tester.pumpAndSettle();
+        // Confirm the deletion by tapping the delete button
+        final Finder deleteCommentButtonFinder =
+            find.byKey(const Key('confirmDeleteSegmentButton'));
+        await tester.tap(deleteCommentButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the total duration text
-      totalDurationTextFinder =
-          find.byKey(const Key('totalSegmentsDurationTextKey'));
-      expect(
-        tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 4:26.7',
-      );
+        // Verify the total duration text
+        totalDurationTextFinder =
+            find.byKey(const Key('totalSegmentsDurationTextKey'));
+        expect(
+          tester.widget<Text>(totalDurationTextFinder).data,
+          'Total duration: 4:26.7',
+        );
 
-      await IntegrationTestUtil.checkExtractionCommentDetails(
-        tester: tester,
-        segmentDetailsList: [
-          {
-            'number': 1,
-            'commentTitle': "First part",
-            'startPosition': '0:00.0',
-            'endPosition': '3:01.0',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:00.0',
-            'reductionPosition': 'Reduction position: 2:50.0',
-            'reductionDuration': 'Reduction duration: 0:11.0',
-            'duration': 'Duration: 3:01.0 + silence 0:01.0',
-          },
-          {
-            'number': 2,
-            'commentTitle':
-                "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-            'startPosition': '3:56.1',
-            'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
-            'increaseDuration': 'Increase duration: 0:09.0',
-            'reductionPosition': 'Reduction position: 5:11.0',
-            'reductionDuration': 'Reduction duration: 0:09.8',
-            'duration': 'Duration: 1:24.7',
-          },
-        ],
-      );
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 1,
+              'commentTitle': "First part",
+              'startPosition': '0:00.0',
+              'endPosition': '3:01.0',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 2:50.0',
+              'reductionDuration': 'Reduction duration: 0:11.0',
+              'duration': 'Duration: 3:01.0 + silence 0:01.0',
+            },
+            {
+              'number': 2,
+              'commentTitle':
+                  "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+              'startPosition': '3:56.1',
+              'endPosition': '5:20.8',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:09.0',
+              'reductionPosition': 'Reduction position: 5:11.0',
+              'reductionDuration': 'Reduction duration: 0:09.8',
+              'duration': 'Duration: 1:24.7',
+            },
+          ],
+        );
 
-      // Type on 'In playlist' checkbox to set it
-      final Finder inPlaylistCheckboxFinder =
-          find.byKey(const Key('inPlaylistCheckBox'));
-      await tester.tap(inPlaylistCheckboxFinder);
-      await tester.pumpAndSettle();
+        // Type on 'In playlist' checkbox to set it
+        final Finder inPlaylistCheckboxFinder =
+            find.byKey(const Key('inPlaylistCheckBox'));
+        await tester.tap(inPlaylistCheckboxFinder);
+        await tester.pumpAndSettle();
 
-      // Now, type on the Extract MP3 button. This opens the playlist
-      // selection dialog
+        // Now, type on the Extract MP3 button. This opens the playlist
+        // selection dialog
 
-      final Finder extractMp3ButtonFinder =
-          find.byKey(const Key('extractMp3Button'));
-      await tester.tap(extractMp3ButtonFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+        final Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
-      // Find the RadioListTile target playlist to which the
-      // extracted audio will be moved
+        // Find the RadioListTile target playlist to which the
+        // extracted audio will be moved
 
-      final Finder radioListTile = find
-          .ancestor(
-            of: find.text('local with no comment'),
-            matching: find.byType(ListTile),
-          )
-          .last;
+        final Finder radioListTile = find
+            .ancestor(
+              of: find.text('local with no comment'),
+              matching: find.byType(ListTile),
+            )
+            .last;
 
-      // Tap the target playlist RadioListTile to select it
-      await tester.tap(radioListTile);
-      await tester.pumpAndSettle();
+        // Tap the target playlist RadioListTile to select it
+        await tester.tap(radioListTile);
+        await tester.pumpAndSettle();
 
-      // Now find the confirm button and tap on it
-      await tester.tap(find.byKey(const Key('confirmButton')));
-      await tester.pumpAndSettle();
+        // Now find the confirm button and tap on it
+        await tester.tap(find.byKey(const Key('confirmButton')));
+        await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 4));
-      await tester.pumpAndSettle();
+        await Future.delayed(const Duration(seconds: 4));
+        await tester.pumpAndSettle();
 
-      final DateTime now = DateTime.now();
+        final DateTime now = DateTime.now();
 
-      // Verify the extract comments to MP3 success dialog message
-      // and play and pause the extracted MP3 file
-      await _verifyAndPlayExtractedMp3Method(
-        tester: tester,
-        extractionSuccessMessage:
-            'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
-        extractionPlayingMessage:
-            'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
-      );
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+          extractionPlayingMessage:
+              'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+        );
 
-      // Find the back button widget
-      final backButtonFinder = find.byType(BackButton);
-      expect(backButtonFinder, findsOneWidget);
+        // Find the back button widget
+        final backButtonFinder = find.byType(BackButton);
+        expect(backButtonFinder, findsOneWidget);
 
-      // Tap on it to quit the audio extractor dialog
-      await tester.tap(backButtonFinder);
-      await tester.pumpAndSettle();
+        // Tap on it to quit the audio extractor dialog
+        await tester.tap(backButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
+        // Tap the 'Toggle List' button to show the list of playlist's.
+        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+        await tester.pumpAndSettle();
 
-      const String targetPlaylistTitle = 'local with no comment';
+        const String targetPlaylistTitle = 'local with no comment';
 
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: targetPlaylistTitle,
-      );
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: targetPlaylistTitle,
+        );
 
-      const String extractedAudioTitle =
-          "Glorious - Laisse-moi te parler de Jésus #louange";
+        const String extractedAudioTitle =
+            "Glorious - Laisse-moi te parler de Jésus #louange";
 
-      DateTime nowMinusOneMinute = now.subtract(const Duration(minutes: 1));
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioType: AudioType.extracted,
-        validVideoTitleOrAudioTitle: extractedAudioTitle,
-        audioDownloadDateTimeOne:
-            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the extracted date time
-        audioDownloadDateTimeTwo:
-            '${DateFormat('dd/MM/yyyy').format(nowMinusOneMinute)} ${DateFormat('HH:mm').format(nowMinusOneMinute)}', // this is the extracted date time
-        isAudioPlayable: true,
-        videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
-        audioEnclosingPlaylistTitle: targetPlaylistTitle,
-        extractedFromPlaylistTitle: '1 long music',
-        audioDuration: '0:04:26.7',
-        audioPosition: '0:00:00',
-        audioState: 'Not listened',
-        lastListenDateTime: '',
-        audioFileName:
-            '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
-        audioFileSize: '6.40 MB',
-        isMusicQuality: true, // Is music quality
-        audioPlaySpeed: '1.0',
-        audioVolume: '50.0 %',
-        audioCommentNumber: 3,
-      );
+        DateTime nowMinusOneMinute = now.subtract(const Duration(minutes: 1));
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.extracted,
+          validVideoTitleOrAudioTitle: extractedAudioTitle,
+          audioDownloadDateTimeOne:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the extracted date time
+          audioDownloadDateTimeTwo:
+              '${DateFormat('dd/MM/yyyy').format(nowMinusOneMinute)} ${DateFormat('HH:mm').format(nowMinusOneMinute)}', // this is the extracted date time
+          isAudioPlayable: true,
+          videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
+          audioEnclosingPlaylistTitle: targetPlaylistTitle,
+          extractedFromPlaylistTitle: '1 long music',
+          audioDuration: '0:04:26.7',
+          audioPosition: '0:00:00',
+          audioState: 'Not listened',
+          lastListenDateTime: '',
+          audioFileName:
+              '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+          audioFileSize: '6.40 MB',
+          isMusicQuality: true, // Is music quality
+          audioPlaySpeed: '1.0',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 3,
+        );
 
-      const String pictureFileName = "Screenshot_20250829_123429.jpg";
-      const String audioForPictureTitle =
-          'Glorious - Laisse-moi te parler de Jésus #louange';
-      const String audioForPictureTitleDurationStr = '4:27';
-      const List<String> audioForPictureTitleLstJesusJeTaime = [
-        "1 long music|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
-        "local with no comment|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
-      ];
-      String playlistPictureJsonFilesDir =
-          "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName";
-      const List<String> pictureFileNamesLst = [
-        "250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.json",
-      ];
-      final String applicationPictureDir =
-          "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
+        const String pictureFileName = "Screenshot_20250829_123429.jpg";
+        const String audioForPictureTitle =
+            'Glorious - Laisse-moi te parler de Jésus #louange';
+        const String audioForPictureTitleDurationStr = '4:27';
+        const List<String> audioForPictureTitleLstJesusJeTaime = [
+          "1 long music|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
+          "local with no comment|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
+        ];
+        String playlistPictureJsonFilesDir =
+            "$kApplicationPathWindowsTest${path.separator}playlists${path.separator}$targetPlaylistTitle${path.separator}$kPictureDirName";
+        const List<String> pictureFileNamesLst = [
+          "250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.json",
+        ];
+        final String applicationPictureDir =
+            "$kApplicationPathWindowsTest${path.separator}$kPictureDirName";
 
-      // Now verifying the audio picture addition result
-      await IntegrationTestUtil.verifyPictureAddition(
-        tester: tester,
-        applicationPictureDir: applicationPictureDir,
-        playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
-        pictureFileNameOne: pictureFileName,
-        audioForPictureTitle: audioForPictureTitle,
-        audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
-        playlistAudioPictureJsonFileNameLst: pictureFileNamesLst,
-        audioForPictureTitleOneLst: audioForPictureTitleLstJesusJeTaime,
-        mustPlayableAudioListBeUsed: true,
-      );
+        // Now verifying the audio picture addition result
+        await IntegrationTestUtil.verifyPictureAddition(
+          tester: tester,
+          applicationPictureDir: applicationPictureDir,
+          playlistPictureJsonFilesDir: playlistPictureJsonFilesDir,
+          pictureFileNameOne: pictureFileName,
+          audioForPictureTitle: audioForPictureTitle,
+          audioForPictureTitleDurationStr: audioForPictureTitleDurationStr,
+          playlistAudioPictureJsonFileNameLst: pictureFileNamesLst,
+          audioForPictureTitleOneLst: audioForPictureTitleLstJesusJeTaime,
+          mustPlayableAudioListBeUsed: true,
+        );
 
-      // Then return to playlist download view in order to execute
-      // the playlist JSON files update
-      Finder applicationViewNavButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(applicationViewNavButton);
-      await tester.pumpAndSettle();
+        // Then return to playlist download view in order to execute
+        // the playlist JSON files update
+        Finder applicationViewNavButton =
+            find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+        await tester.tap(applicationViewNavButton);
+        await tester.pumpAndSettle();
 
-      // First, find the Audio sublist ListTile Text widget
-      final Finder audioTitleTextWidgetFinder = find.text(extractedAudioTitle);
+        // First, find the Audio sublist ListTile Text widget
+        final Finder audioTitleTextWidgetFinder =
+            find.text(extractedAudioTitle);
 
-      // Then obtain the Audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      final Finder audioListTileWidgetFinder = find.ancestor(
-        of: audioTitleTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
+        // Then obtain the Audio ListTile widget enclosing the Text widget by
+        // finding its ancestor
+        final Finder audioListTileWidgetFinder = find.ancestor(
+          of: audioTitleTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
 
-      // Verify that the extracted audio URL is available in the audio
-      // item menu
+        // Verify that the extracted audio URL is available in the audio
+        // item menu
 
-      // Find the leading menu icon button of the Audio ListTile and tap
-      // on it
-      final Finder audioListTileLeadingMenuIconButton = find.descendant(
-        of: audioListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
+        // Find the leading menu icon button of the Audio ListTile and tap
+        // on it
+        final Finder audioListTileLeadingMenuIconButton = find.descendant(
+          of: audioListTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
 
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioListTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const Key('popup_menu_open_youtube_video')),
-        findsOneWidget,
-      );
+        expect(
+          find.byKey(const Key('popup_menu_open_youtube_video')),
+          findsOneWidget,
+        );
 
-      expect(
-        find.byKey(const Key('popup_copy_youtube_video_url')),
-        findsOneWidget,
-      );
+        expect(
+          find.byKey(const Key('popup_copy_youtube_video_url')),
+          findsOneWidget,
+        );
 
-      // Go to the audio player view to verify that the extracted
-      // audio URL is available in the audio player view left appbar
-      // menu
+        // Go to the audio player view to verify that the extracted
+        // audio URL is available in the audio player view left appbar
+        // menu
 
-      applicationViewNavButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+        applicationViewNavButton =
+            find.byKey(const ValueKey('audioPlayerViewIconButton'));
 
-      // To close the audio menu
-      await tester.tap(applicationViewNavButton);
-      await tester.pumpAndSettle();
+        // To close the audio menu
+        await tester.tap(applicationViewNavButton);
+        await tester.pumpAndSettle();
 
-      // Tap the extracted audio ListTile to open the Audio Player view
-      await tester.tap(audioTitleTextWidgetFinder);
-      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
-        tester: tester,
-      );
+        // Tap the extracted audio ListTile to open the Audio Player view
+        await tester.tap(audioTitleTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
 
-      // Tap the appbar leading popup menu button to verify the
-      // presence of the extracted audio URL menu items
-      await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
-      await tester.pumpAndSettle();
+        // Tap the appbar leading popup menu button to verify the
+        // presence of the extracted audio URL menu items
+        await tester.tap(find.byKey(const Key('appBarLeadingPopupMenuWidget')));
+        await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const Key('popup_menu_open_youtube_video')),
-        findsOneWidget,
-      );
+        expect(
+          find.byKey(const Key('popup_menu_open_youtube_video')),
+          findsOneWidget,
+        );
 
-      expect(
-        find.byKey(const Key('popup_copy_youtube_video_url')),
-        findsOneWidget,
-      );
+        expect(
+          find.byKey(const Key('popup_copy_youtube_video_url')),
+          findsOneWidget,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
     testWidgets(
         '''Delete and resave the extract comments. Modify their play speed and positions and verify
