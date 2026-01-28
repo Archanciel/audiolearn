@@ -2713,8 +2713,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sound reduction position must be before the comment end position';
 
   @override
-  String get soundPositionPlusDurationBeyondEndError =>
-      'Sound reduction must complete before or at the comment end';
+  String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
+    return 'Sound reduction of $value1 + $value2 must complete before or at the comment end';
+  }
 
   @override
   String get emptyTitleError => 'Title cannot be empty';
@@ -2734,13 +2735,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fadeInExceedsCommentDurationError =>
-      'Fade-in duration cannot exceed comment duration';
+      'Increase duration cannot exceed comment duration';
 
   @override
   String get volumeFadeInOptional => 'Volume Fade-In (optional)';
 
   @override
-  String get fadeInDurationLabel => 'Fade-In Duration (h:mm:ss.t)';
+  String get fadeInDurationLabel => 'Increase Duration (h:mm:ss.t)';
 
   @override
   String get fadeInDurationHelperText =>

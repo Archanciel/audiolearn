@@ -4366,8 +4366,8 @@ abstract class AppLocalizations {
   /// No description provided for @soundPositionPlusDurationBeyondEndError.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction must complete before or at the comment end'**
-  String get soundPositionPlusDurationBeyondEndError;
+  /// **'Sound reduction of {value1} + {value2} must complete before or at the comment end'**
+  String soundPositionPlusDurationBeyondEndError(Object value1, Object value2);
 
   /// No description provided for @emptyTitleError.
   ///
@@ -4396,7 +4396,7 @@ abstract class AppLocalizations {
   /// No description provided for @fadeInExceedsCommentDurationError.
   ///
   /// In en, this message translates to:
-  /// **'Fade-in duration cannot exceed comment duration'**
+  /// **'Increase duration cannot exceed comment duration'**
   String get fadeInExceedsCommentDurationError;
 
   /// No description provided for @volumeFadeInOptional.
@@ -4408,7 +4408,7 @@ abstract class AppLocalizations {
   /// No description provided for @fadeInDurationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Fade-In Duration (h:mm:ss.t)'**
+  /// **'Increase Duration (h:mm:ss.t)'**
   String get fadeInDurationLabel;
 
   /// No description provided for @fadeInDurationHelperText.

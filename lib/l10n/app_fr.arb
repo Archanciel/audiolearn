@@ -1608,7 +1608,7 @@
   "negativeSoundDurationError": "La durée de la baisse du son ne peut pas être négative",
   "negativeSoundPositionError": "La position de la baisse du son doit être dans le commentaire (>= position de début)",
   "soundPositionBeyondEndError": "La position de la baisse du son doit être avant la position de fin du commentaire",
-  "soundPositionPlusDurationBeyondEndError": "La baisse doit se terminer avant ou à la fin du commentaire",
+  "soundPositionPlusDurationBeyondEndError": "La diminution de {value1} + {value2} doit se terminer avant ou à la fin du commentaire",
   "emptyTitleError": "Le titre ne peut pas être vide",
   "loadedComments": "Chargé {commentNumber} commentaire(s)",
   "skippedComments": "({commentNumber} ignoré(s))",

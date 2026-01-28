@@ -152,7 +152,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       }
       if (soundReductionPosition + soundReductionDuration > end) {
         _showError(
-            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError}.");
+            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(TimeFormatUtil.formatSeconds(soundReductionPosition), TimeFormatUtil.formatSeconds(soundReductionDuration))}.");
         return;
       }
     }

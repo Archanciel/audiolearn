@@ -2758,10 +2758,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Sound reduction position must be before the end position";
 
   @override
-  String get soundPositionPlusDurationBeyondEndError =>
-      "Sound reduction must complete before the segment ends";
-
-  @override
   String get emptyTitleError => "Title cannot be empty";
 
   @override
@@ -2917,4 +2913,11 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get playSpeedLabel => "Play speed";
+
+  @override
+  String soundPositionPlusDurationBeyondEndError(
+    Object value1,
+    Object value2,
+  ) =>
+      "Sound reduction of $value1 + $value2 must complete before or at the comment end";
 }
