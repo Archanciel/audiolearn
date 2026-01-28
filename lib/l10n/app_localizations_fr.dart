@@ -2742,8 +2742,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'La position de la baisse du son doit être avant la position de fin du commentaire';
 
   @override
-  String get soundPositionPlusDurationBeyondEndError =>
-      'La baisse doit se terminer avant ou à la fin du commentaire';
+  String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
+    return 'La diminution de $value1 + $value2 doit se terminer avant ou à la fin du commentaire';
+  }
 
   @override
   String get emptyTitleError => 'Le titre ne peut pas être vide';
