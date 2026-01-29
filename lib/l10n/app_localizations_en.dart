@@ -2714,7 +2714,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
-    return 'Sound reduction of $value1 + $value2 must complete before or at the comment end';
+    return 'Sound reduction of $value1 must complete before or at the comment end position ($value2)';
   }
 
   @override
