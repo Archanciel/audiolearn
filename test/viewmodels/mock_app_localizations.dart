@@ -2919,5 +2919,5 @@ class MockAppLocalizations extends AppLocalizations {
     Object value1,
     Object value2,
   ) =>
-      "Sound reduction of $value1 + $value2 must complete before or at the comment end";
+      "Sound reduction of $value1 must complete before or at the comment end ($value2)";
 }

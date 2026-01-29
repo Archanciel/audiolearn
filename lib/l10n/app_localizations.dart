@@ -4366,7 +4366,7 @@ abstract class AppLocalizations {
   /// No description provided for @soundPositionPlusDurationBeyondEndError.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction of {value1} + {value2} must complete before or at the comment end'**
+  /// **'Sound reduction of {value1} must complete before or at the comment end position ({value2})'**
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2);
 
   /// No description provided for @emptyTitleError.

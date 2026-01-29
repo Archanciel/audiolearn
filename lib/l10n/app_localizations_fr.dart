@@ -2743,7 +2743,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
-    return 'La diminution de $value1 + $value2 doit se terminer avant ou à la fin du commentaire';
+    return 'La diminution de $value1 doit se terminer avant ou à la fin du commentaire ($value2)';
   }
 
   @override

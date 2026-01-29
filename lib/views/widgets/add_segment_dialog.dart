@@ -150,9 +150,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             "${AppLocalizations.of(context)!.soundPositionBeyondEndError}.");
         return;
       }
-      if (soundReductionPosition + soundReductionDuration > end) {
+      double soundReductionEnd = soundReductionPosition + soundReductionDuration;
+      if (soundReductionEnd > end) {
+        String errorDetail = "${TimeFormatUtil.formatSeconds(soundReductionPosition)} + ${TimeFormatUtil.formatSeconds(soundReductionDuration)} = ${TimeFormatUtil.formatSeconds(soundReductionEnd)}";
         _showError(
-            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(TimeFormatUtil.formatSeconds(soundReductionPosition), TimeFormatUtil.formatSeconds(soundReductionDuration))}.");
+            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(errorDetail, "${TimeFormatUtil.formatSeconds(end)}")}.");
         return;
       }
     }
