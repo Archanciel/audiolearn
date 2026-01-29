@@ -17829,7 +17829,7 @@ void main() {
 
           const String enteredFileNameNoExt = 'aaa';
           Finder mp3FileNameTextFieldFinder =
-              find.byKey(const Key('textToConvertTextField'));
+              find.byKey(const Key('mp3FileNameTextFieldKey'));
 
           await tester.enterText(
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
@@ -18243,7 +18243,7 @@ void main() {
 
           const String enteredFileNameNoExt = 'aaa';
           Finder mp3FileNameTextFieldFinder =
-              find.byKey(const Key('textToConvertTextField'));
+              find.byKey(const Key('mp3FileNameTextFieldKey'));
 
           await tester.enterText(
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
@@ -18658,7 +18658,7 @@ void main() {
 
           const String enteredFileNameNoExt = 'aaa';
           Finder mp3FileNameTextFieldFinder =
-              find.byKey(const Key('textToConvertTextField'));
+              find.byKey(const Key('mp3FileNameTextFieldKey'));
 
           await tester.enterText(
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
@@ -19052,7 +19052,7 @@ void main() {
 
           const String enteredFileNameNoExt = 'aaa';
           Finder mp3FileNameTextFieldFinder =
-              find.byKey(const Key('textToConvertTextField'));
+              find.byKey(const Key('mp3FileNameTextFieldKey'));
 
           await tester.enterText(
               mp3FileNameTextFieldFinder, enteredFileNameNoExt);
@@ -36717,7 +36717,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -36900,7 +36900,7 @@ void main() {
 
       // Enter the same mp3 file name as before
       mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -37133,7 +37133,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -37399,7 +37399,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pumpAndSettle();
@@ -37585,7 +37585,7 @@ void main() {
 
       // Enter the same mp3 file name as before
       mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -37816,7 +37816,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -37915,7 +37915,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -38028,7 +38028,7 @@ void main() {
 
       const String enteredFileNameNoExt = 'convertedAudio';
       Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pumpAndSettle();
@@ -38106,7 +38106,7 @@ void main() {
 
       // Enter the same mp3 file name as before
       mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+          find.byKey(const Key('mp3FileNameTextFieldKey'));
 
       await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
       await tester.pump();
@@ -38207,7 +38207,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 7; i++) {
+      for (int i = 0; i < 8; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
@@ -38278,7 +38278,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         await Future.delayed(const Duration(milliseconds: 1500));
         await tester.pumpAndSettle();
       }
