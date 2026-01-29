@@ -2920,4 +2920,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object value2,
   ) =>
       "Sound reduction of $value1 must complete before or at the comment end ($value2)";
+
+  @override
+  String get savingMultiplePlaylists => "Saving multiple playlists to ZIP ...";
 }

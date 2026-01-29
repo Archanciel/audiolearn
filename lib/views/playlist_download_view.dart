@@ -198,6 +198,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
         // informations or nothing.
         _buildDisplayDownloadProgressionInfo(),
 
+        // displaying the currently playlists saved to ZIP
+        // informations or nothing.
+        _buildDisplayPlaylistsSaveToZipProgressionInfo(),
+
         // displaying the currently playlist(s) audio MP3 saved to
         // ZIP informations or nothing.
         _buildDisplayPlaylistsMp3SaveToZipProgressionInfo(),
@@ -629,6 +633,44 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 ),
               ]),
             ]),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  /// If playlists are saved to a ZIP file, the save progression is displayed.
+  /// Otherwise, nothing is displayed.
+  Consumer<PlaylistListVM> _buildDisplayPlaylistsSaveToZipProgressionInfo() {
+    return Consumer<PlaylistListVM>(
+      builder: (context, playlistListVMlistenTrue, child) {
+        if (playlistListVMlistenTrue.isSavingPlaylists) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  key: const Key('saving_playlists_audio_mp3_to_zip'),
+                  AppLocalizations.of(context)!.savingMultiplePlaylists,
+                  textAlign: TextAlign.center, // Centered multi lines text
+                  maxLines: 2,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10.0),
+                LinearProgressIndicator(), // Indeterminate progress bar
+                const SizedBox(height: 10.0),
+                Text(
+                  key: const Key('saving_please_wait'),
+                  AppLocalizations.of(context)!.savingApproximativeTime(
+                      playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
+                          .HHmmss(),
+                      playlistListVMlistenTrue.numberOfCreatedZipFiles),
+                ),
+              ],
+            ),
           );
         } else {
           return const SizedBox.shrink();

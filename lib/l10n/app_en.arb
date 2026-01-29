@@ -974,6 +974,7 @@
   "emptyDateErrorMessage": "Defining an empty date or date/time download date is not possible.",
   "savingUniquePlaylistAudioMp3": "Saving {playlistTitle} audio files to ZIP ...",
   "savingMultiplePlaylistsAudioMp3": "Saving multiple playlists audio files to ZIP ...",
+  "savingMultiplePlaylists": "Saving all playlists to ZIP ...",
   "savingApproximativeTime": "Should approxim. take {saveTime}. ZIP number: {zipNumber}",
   "savingUpToHalfHour": "Please wait, this may take 10 to 30 minutes or more ...",
   "savingAudioToZipTime": "Saving the audio MP3 in one or several ZIP file(s) will take this estimated duration (hh:mm:ss): {evaluatedSaveTime}.",
