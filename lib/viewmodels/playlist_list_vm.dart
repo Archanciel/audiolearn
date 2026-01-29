@@ -251,6 +251,12 @@ class PlaylistListVM extends ChangeNotifier {
   // Playlist(s) MP3 save progression display on playlist
   // download view fields.
 
+  bool _isSavingPlaylists = false;
+  bool get isSavingPlaylists => _isSavingPlaylists;
+
+  // Playlist(s) MP3 save progression display on playlist
+  // download view fields.
+
   bool _isSavingMp3 = false;
   bool get isSavingMp3 => _isSavingMp3;
 
@@ -2888,10 +2894,17 @@ class PlaylistListVM extends ChangeNotifier {
       pathStr: targetDirectoryPath,
     );
 
+    // Start the timer and saving state before processing files
+    _isSavingPlaylists = true;
+    notifyListeners();
+
     List<dynamic> returnedResults = await _saveAllJsonFilesToZip(
       targetDir: targetDirectoryPath,
       addPictureJpgFilesToZip: addPictureJpgFilesToZip,
     );
+
+    _isSavingPlaylists = false;
+    notifyListeners();
 
     if (returnedResults.isEmpty) {
       // The case if the target directory does not exist or is invalid.

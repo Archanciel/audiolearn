@@ -3347,6 +3347,12 @@ abstract class AppLocalizations {
   /// **'Saving multiple playlists audio files to ZIP ...'**
   String get savingMultiplePlaylistsAudioMp3;
 
+  /// No description provided for @savingMultiplePlaylists.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving all playlists to ZIP ...'**
+  String get savingMultiplePlaylists;
+
   /// No description provided for @savingApproximativeTime.
   ///
   /// In en, this message translates to:
