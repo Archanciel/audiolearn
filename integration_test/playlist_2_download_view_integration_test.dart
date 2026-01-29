@@ -38207,7 +38207,7 @@ void main() {
       );
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 8; i++) {
+      for (int i = 0; i < 9; i++) {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
       }
