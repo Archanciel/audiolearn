@@ -64,7 +64,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
             'audioInfoDialogTitleKey',
           ),
           textAlign: TextAlign.center,
-          maxLines: 2,
+          maxLines: 3,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
