@@ -42735,10 +42735,6 @@ void main() {
       await tester.tap(audioCommentsPopupMenuItem);
       await tester.pumpAndSettle();
 
-      Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
-
       // Now open the extract comments to MP3 dialog
 
       // Find the extract comments to MP3 text button of the comment
@@ -42747,6 +42743,13 @@ void main() {
           find.byKey(const Key('extractCommentsToMp3TextButton'));
       await tester.tap(extractCommentsToMp3ButtonFinder);
       await tester.pumpAndSettle();
+
+      // Verify the presence of the invalid comment error message
+      expect(
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
+      );
 
       // Now, delete the third comment whose end position is greater
       // than the audio duration
@@ -42772,6 +42775,13 @@ void main() {
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
 
+      // Verify the presence of the invalid comment error message
+      expect(
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsOneWidget,
+      );
+
       // Now, delete the second comment whose end position is greater
       // than the audio duration
 
@@ -42786,6 +42796,13 @@ void main() {
           find.byKey(const Key('confirmDeleteSegmentButton'));
       await tester.tap(deleteCommentButtonFinder);
       await tester.pumpAndSettle();
+
+      // Verify the absence of the invalid comment error message
+      expect(
+        find.text(
+            "Delete invalid comment(s) with end position greater than audio duration which is 2:56.8."),
+        findsNothing,
+      );
 
       // Verify the Comments number title
       expect(find.text('Comments (1)'), findsOneWidget);
@@ -42858,6 +42875,49 @@ void main() {
       await tester.tap(editCommentIconButtonFinder);
       await tester.pumpAndSettle();
 
+      // Now modify the end position to 0:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '0:00.0',
+        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+      );
+
+      // Now modify the end position to 3:12.8 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '3:12.8',
+        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+      );
+
+      // Now modify the end position to 3:12.8 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '3:12.8',
+        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+      );
+
+      // Now modify the end position to 2:12.8 and verify
+      // the absence of error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '2:12.8',
+        expectedErrorMessage: "",
+      );
+
+      // Re-opens the edit 1st comment dialog which was closed
+      // after entering -0:00.0 as silence duration
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
       // Now modify the silence duration to -0:00.1 and verify
       // the error message
       await _verifyExistenceOfErrorMessage(
@@ -42906,7 +42966,7 @@ void main() {
       );
 
       // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as start position
+      // after entering -0:00.0 as silence duration
       editCommentIconButtonFinder =
           find.byKey(const Key('editSegmentButtonKey_1'));
       await tester.tap(editCommentIconButtonFinder);
@@ -42914,6 +42974,110 @@ void main() {
 
       // Verify the presence of the Extract MP3 elements
       _verifyPresenceOfExtractMp3Widgets(tester);
+
+      // Now modify the play speed to -1.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'playSpeedTextField',
+        enteredValue: '-1.0',
+        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+      );
+
+      // Now modify the play speed to 0.4 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'playSpeedTextField',
+        enteredValue: '0.4',
+        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+      );
+
+      // Now modify the play speed to 2.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'playSpeedTextField',
+        enteredValue: '2.1',
+        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+      );
+
+      // Now modify the play speed to 1.0 and verify
+      // the absence of the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'playSpeedTextField',
+        enteredValue: '1.0',
+        expectedErrorMessage: "",
+      );
+
+      // Re-opens the edit 1st comment dialog which was closed
+      // after entering -0:00.0 as silence duration
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Now modify the Volume fade-in duration to -0:00.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '-0:00.1',
+        expectedErrorMessage: 'Increase duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-in duration to -0:01.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '-0:01.0',
+        expectedErrorMessage: 'Increase duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-in duration to -0:10.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '-0:10.0',
+        expectedErrorMessage: 'Increase duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-in duration to -1:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '-1:00.0',
+        expectedErrorMessage: 'Increase duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-in duration to 2:12.9 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '2:12.9',
+        expectedErrorMessage: "Increase duration cannot exceed comment duration.",
+      );
+
+      // Now modify the Volume fade-in duration to 0:12.1 and verify
+      // the absence of error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '0:12.1',
+        expectedErrorMessage: "",
+      );
+
+      // Re-opens the edit 1st comment dialog which was closed
+      // after entering -0:00.0 as silence duration
+      editCommentIconButtonFinder =
+          find.byKey(const Key('editSegmentButtonKey_1'));
+      await tester.tap(editCommentIconButtonFinder);
+      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -42952,10 +43116,10 @@ Future<void> _verifyExistenceOfErrorMessage({
   required String enteredValue,
   required String expectedErrorMessage,
 }) async {
-  Finder commentStartPositionTextFieldFinder =
+  Finder textFieldFinder =
       find.byKey(Key(positionTextFieldKey));
-  await tester.tap(commentStartPositionTextFieldFinder);
-  await tester.enterText(commentStartPositionTextFieldFinder, enteredValue);
+  await tester.tap(textFieldFinder);
+  await tester.enterText(textFieldFinder, enteredValue);
   await tester.pumpAndSettle();
 
   // Confirm the comment edition by tapping the save button
@@ -43024,6 +43188,17 @@ Future<void> _selectExistingMp3File({
 }
 
 void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
+  // Verify the presence of the Clear all button
+  expect(
+    find.byIcon(
+      Icons.clear_all),
+    findsOneWidget,
+  );
+  expect(
+    find.text("Clear all"),
+    findsOneWidget,
+  );
+
   // Verify the presence of the Extract MP3 button
   expect(
     find.byKey(const Key('extractMp3Button')),
