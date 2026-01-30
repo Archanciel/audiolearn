@@ -2738,10 +2738,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Duration to fade volume from 100% to 0%";
 
   @override
-  String get endPositionError =>
-      "End position must be after start and not exceed";
-
-  @override
   String get negativeSilenceDurationError =>
       "Silence duration cannot be negative";
 
@@ -2923,4 +2919,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get savingMultiplePlaylists => "Saving multiple playlists to ZIP ...";
+
+  @override
+  String endPositionError(
+    Object startPosition,
+  ) =>
+      "End position must be after start position ($startPosition) and not exceed";
 }

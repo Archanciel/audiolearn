@@ -107,7 +107,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     }
     if (end <= start || end > widget.maxDuration) {
       _showError(
-        "${AppLocalizations.of(context)!.endPositionError} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}.",
+        "${AppLocalizations.of(context)!.endPositionError(TimeFormatUtil.formatSeconds(start))} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}.",
       );
       return;
     }
@@ -116,7 +116,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
           "${AppLocalizations.of(context)!.negativeSilenceDurationError}.");
       return;
     }
-    if (playSpeed <= 0) {
+    if (playSpeed < 0.5 || playSpeed > 2.0) {
       _showError(
           "${AppLocalizations.of(context)!.invalidPlaySpeedError}.");
       return;
@@ -131,6 +131,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       // NEW validation
       _showError(
           "${AppLocalizations.of(context)!.fadeInExceedsCommentDurationError}.");
+      return;
+    }
+    if (soundReductionPosition < 0) {
+      _showError(
+          "${AppLocalizations.of(context)!.negativeSoundPositionError}.");
       return;
     }
     if (soundReductionDuration < 0) {
