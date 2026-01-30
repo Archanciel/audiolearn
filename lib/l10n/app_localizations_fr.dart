@@ -2721,8 +2721,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Durée pour faire baisser le volume de 100% à 0%';
 
   @override
-  String get endPositionError =>
-      'La position de fin doit être après la position de début sans dépasser';
+  String endPositionError(Object startPosition) {
+    return 'La position de fin doit être après la position de début ($startPosition) sans dépasser';
+  }
 
   @override
   String startPositionError(Object inclusive) {
@@ -2848,7 +2849,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invalidPlaySpeedError =>
-      'La vitesse de lecture définie n\'est pas utilisable';
+      'La vitesse de lecture définie doit être entre 0.5 et 2.0';
 
   @override
   String get playSpeedLabel => 'Vitesse de lecture';

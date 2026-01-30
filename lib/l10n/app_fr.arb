@@ -1604,7 +1604,7 @@
   "fadeDurationLabel": "Durée de la diminution (h:mm:ss.d)",
   "fadeDurationHelperText": "Durée pour faire baisser le volume de 100% à 0%",
   "startPositionError": "La position de début doit être comprise entre 0 et {inclusive}",
-  "endPositionError": "La position de fin doit être après la position de début sans dépasser",
+  "endPositionError": "La position de fin doit être après la position de début ({startPosition}) sans dépasser",
   "negativeSilenceDurationError": "La durée du silence doit être positive",
   "negativeSoundDurationError": "La durée de la baisse du son ne peut pas être négative",
   "negativeSoundPositionError": "La position de la baisse du son doit être dans le commentaire (>= position de début)",
@@ -1636,6 +1636,6 @@
   "replaceMp3FileDialogTitle": "Remplacement du fichier MP3",
   "extractAudioPlaySpeed": "Vitesse de lecture",
   "extractAudioPlaySpeedTooltip": "Définit la vitesse de lecture de cette partie d'extraction du commentaire audio",
-  "invalidPlaySpeedError": "La vitesse de lecture définie n'est pas utilisable",
+  "invalidPlaySpeedError": "La vitesse de lecture définie doit être entre 0.5 et 2.0",
   "playSpeedLabel": "Vitesse de lecture"
 }

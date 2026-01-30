@@ -530,9 +530,6 @@ class AudioExtractorService {
     }
   }
 
-// lib/services/audio_extractor_service.dart
-
-// Add this helper method to build the atempo filter chain
   /// Builds an atempo filter chain for a given speed.
   /// FFmpeg's atempo filter accepts values between 0.5 and 2.0.
   /// For speeds outside this range, we chain multiple atempo filters.

@@ -4336,8 +4336,8 @@ abstract class AppLocalizations {
   /// No description provided for @endPositionError.
   ///
   /// In en, this message translates to:
-  /// **'End position must be after start position and not exceed'**
-  String get endPositionError;
+  /// **'End position must be after start position ({startPosition}) and not exceed'**
+  String endPositionError(Object startPosition);
 
   /// No description provided for @startPositionError.
   ///
@@ -4396,7 +4396,7 @@ abstract class AppLocalizations {
   /// No description provided for @fadeInDurationError.
   ///
   /// In en, this message translates to:
-  /// **'Fade-in duration cannot be negative'**
+  /// **'Increase duration cannot be negative'**
   String get fadeInDurationError;
 
   /// No description provided for @fadeInExceedsCommentDurationError.
@@ -4408,13 +4408,13 @@ abstract class AppLocalizations {
   /// No description provided for @volumeFadeInOptional.
   ///
   /// In en, this message translates to:
-  /// **'Volume Fade-In (optional)'**
+  /// **'Volume fade-in (optional)'**
   String get volumeFadeInOptional;
 
   /// No description provided for @fadeInDurationLabel.
   ///
   /// In en, this message translates to:
-  /// **'Increase Duration (h:mm:ss.t)'**
+  /// **'Increase duration (h:mm:ss.t)'**
   String get fadeInDurationLabel;
 
   /// No description provided for @fadeInDurationHelperText.
@@ -4534,7 +4534,7 @@ abstract class AppLocalizations {
   /// No description provided for @invalidPlaySpeedError.
   ///
   /// In en, this message translates to:
-  /// **'The defined play speed is not usable'**
+  /// **'The defined play speed must be between 0.5 and 2.0'**
   String get invalidPlaySpeedError;
 
   /// No description provided for @playSpeedLabel.

@@ -2691,8 +2691,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Duration to fade volume from 100% to 0%';
 
   @override
-  String get endPositionError =>
-      'End position must be after start position and not exceed';
+  String endPositionError(Object startPosition) {
+    return 'End position must be after start position ($startPosition) and not exceed';
+  }
 
   @override
   String startPositionError(Object inclusive) {
@@ -2734,17 +2735,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get fadeInDurationError => 'Fade-in duration cannot be negative';
+  String get fadeInDurationError => 'Increase duration cannot be negative';
 
   @override
   String get fadeInExceedsCommentDurationError =>
       'Increase duration cannot exceed comment duration';
 
   @override
-  String get volumeFadeInOptional => 'Volume Fade-In (optional)';
+  String get volumeFadeInOptional => 'Volume fade-in (optional)';
 
   @override
-  String get fadeInDurationLabel => 'Increase Duration (h:mm:ss.t)';
+  String get fadeInDurationLabel => 'Increase duration (h:mm:ss.t)';
 
   @override
   String get fadeInDurationHelperText =>
@@ -2814,7 +2815,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Defines the play speed of this comment audio extraction part';
 
   @override
-  String get invalidPlaySpeedError => 'The defined play speed is not usable';
+  String get invalidPlaySpeedError =>
+      'The defined play speed must be between 0.5 and 2.0';
 
   @override
   String get playSpeedLabel => 'Play speed';
