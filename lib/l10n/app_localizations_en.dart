@@ -2823,5 +2823,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne =>
-      'Extraction to playlist not possible when play speed is different from 1.0 in an extracted comment.';
+      'Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments.';
 }
