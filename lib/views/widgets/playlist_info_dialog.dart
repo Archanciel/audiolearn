@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../viewmodels/comment_vm.dart';
 import '../../viewmodels/picture_vm.dart';
-import '../../viewmodels/warning_message_vm.dart';
 import '/../utils/duration_expansion.dart';
 import '../../constants.dart';
 import '../../models/playlist.dart';
@@ -33,11 +32,6 @@ class PlaylistInfoDialog extends StatelessWidget with ScreenMixin {
     final ThemeProviderVM themeProviderVM =
         Provider.of<ThemeProviderVM>(context); // by default, listen is true
     final DateFormatVM dateFormatVMlistenFalse = Provider.of<DateFormatVM>(
-      context,
-      listen: false,
-    );
-    final WarningMessageVM warningMessageVMlistenFalse =
-        Provider.of<WarningMessageVM>(
       context,
       listen: false,
     );
