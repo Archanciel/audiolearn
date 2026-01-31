@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../l10n/app_localizations.dart';
-import '../../constants.dart';
 import '../../models/help_category.dart';
 import '../../services/help_data_service.dart';
 import '../../viewmodels/help_categories_viewmodel.dart';
