@@ -1230,5 +1230,6 @@
   "extractAudioPlaySpeed": "Play speed",
   "extractAudioPlaySpeedTooltip": "Defines the play speed of this comment audio extraction part",
   "invalidPlaySpeedError": "The defined play speed must be between 0.5 and 2.0",
-  "playSpeedLabel": "Play speed"
+  "playSpeedLabel": "Play speed",
+  "extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne": "Extraction to playlist not possible when play speed is different from 1.0 in an extracted comment."
 }
