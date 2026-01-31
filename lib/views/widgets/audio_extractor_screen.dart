@@ -282,9 +282,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                           ),
                                           const SizedBox(height: 2),
                                           Tooltip(
-                                            message:
-                                                AppLocalizations.of(context)!
-                                                    .extractAudioPlaySpeedTooltip,
+                                            message: AppLocalizations.of(
+                                                    context)!
+                                                .extractAudioPlaySpeedTooltip,
                                             child: Text(
                                               "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
                                               style: const TextStyle(
@@ -648,11 +648,14 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     audioPlayerVM.position,
                   ),
                 ),
-                Text(
-                  TimeFormatUtil.formatDuration(
-                    audioPlayerVM.duration,
-                  ),
-                ),
+                (Platform.isWindows)
+                    ? Text(TimeFormatUtil.formatSeconds(audioExtractorVM
+                        .totalDuration)) // On Windows, audioPlayerVM.duration is 0.1 second too big
+                    : Text(
+                        TimeFormatUtil.formatDuration(
+                          audioPlayerVM.duration,
+                        ),
+                      ),
               ],
             ),
           ),
@@ -1043,7 +1046,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           targetPlaylist: targetPlaylist!,
           extractedMp3FileName: extractedMp3FileName,
           inMusicQuality: _extractInMusicQuality,
-          totalDuration: audioExtractorVM.totalDuration, // duration corrected by play speed
+          totalDuration: audioExtractorVM
+              .totalDuration, // duration corrected by play speed
         );
 
         if (!wasExtractedAudioAddedToTargetPlaylist) {
