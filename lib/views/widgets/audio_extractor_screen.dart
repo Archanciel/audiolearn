@@ -649,9 +649,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   ),
                 ),
                 (Platform.isWindows)
-                    ? Text(TimeFormatUtil.formatSeconds(audioExtractorVM
-                        .totalDuration)) // On Windows, audioPlayerVM.duration is 0.1 second too big
+                    ? Text(
+                        key: const Key('extractedAudioDurationTextKey'),
+                        TimeFormatUtil.formatSeconds(
+                            audioExtractorVM.totalDuration),
+                      ) // On Windows, audioPlayerVM.duration is 0.1 second too big
                     : Text(
+                        key: const Key('extractedAudioDurationTextKey'),
                         TimeFormatUtil.formatDuration(
                           audioPlayerVM.duration,
                         ),
