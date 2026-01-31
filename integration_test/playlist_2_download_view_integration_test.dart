@@ -42857,23 +42857,14 @@ void main() {
             'Start position must be between 0 and 2:56.7 inclusive.',
       );
 
-      // Now modify the start position to -0:00.0 and verify
-      // that the error message is not displayed. Since no error
-      // message is displayed, the edit segment dialog is closed
-      // and so must be re-opened again to continue the tests
+      // Now modify the start position to -0:00.0 
       await _verifyExistenceOfErrorMessage(
         tester: tester,
         positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-0:00.0',
         expectedErrorMessage: '',
+        doNotTapOnSaveButton: true
       );
-
-      // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as start position
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
 
       // Now modify the end position to 0:00.0 and verify
       // the error message
@@ -42902,21 +42893,14 @@ void main() {
         expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
       );
 
-      // Now modify the end position to 2:12.8 and verify
-      // the absence of error message
+      // Now modify the end position to 2:12.8
       await _verifyExistenceOfErrorMessage(
         tester: tester,
         positionTextFieldKey: 'endPositionTextField',
         enteredValue: '2:12.8',
         expectedErrorMessage: "",
+        doNotTapOnSaveButton: true
       );
-
-      // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as silence duration
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
 
       // Now modify the silence duration to -0:00.1 and verify
       // the error message
@@ -42954,23 +42938,14 @@ void main() {
         expectedErrorMessage: 'Silence duration cannot be negative.',
       );
 
-      // Now modify the silnceposition to -0:00.0 and verify
-      // that the error message is not displayed. Since no error
-      // message is displayed, the edit segment dialog is closed
-      // and so must be re-opened again to continue the tests
+      // Now modify the silnceposition to -0:00.0 
       await _verifyExistenceOfErrorMessage(
         tester: tester,
         positionTextFieldKey: 'silenceDurationTextField',
         enteredValue: '-0:00.0',
         expectedErrorMessage: '',
+        doNotTapOnSaveButton: true
       );
-
-      // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as silence duration
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
 
       // Verify the presence of the Extract MP3 elements
       _verifyPresenceOfExtractMp3Widgets(tester);
@@ -43002,21 +42977,14 @@ void main() {
         expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
       );
 
-      // Now modify the play speed to 1.0 and verify
-      // the absence of the error message
+      // Now modify the play speed to 1.0
       await _verifyExistenceOfErrorMessage(
         tester: tester,
         positionTextFieldKey: 'playSpeedTextField',
         enteredValue: '1.0',
         expectedErrorMessage: "",
+        doNotTapOnSaveButton: true
       );
-
-      // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as silence duration
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
 
       // Now modify the Volume fade-in duration to -0:00.1 and verify
       // the error message
@@ -43063,21 +43031,14 @@ void main() {
         expectedErrorMessage: "Increase duration cannot exceed comment duration.",
       );
 
-      // Now modify the Volume fade-in duration to 0:12.1 and verify
-      // the absence of error message
+      // Now modify the Volume fade-in duration to 0:12.1 
       await _verifyExistenceOfErrorMessage(
         tester: tester,
         positionTextFieldKey: 'fadeInDurationTextField',
         enteredValue: '0:12.1',
         expectedErrorMessage: "",
+        doNotTapOnSaveButton: true
       );
-
-      // Re-opens the edit 1st comment dialog which was closed
-      // after entering -0:00.0 as silence duration
-      editCommentIconButtonFinder =
-          find.byKey(const Key('editSegmentButtonKey_1'));
-      await tester.tap(editCommentIconButtonFinder);
-      await tester.pumpAndSettle();
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -43115,12 +43076,17 @@ Future<void> _verifyExistenceOfErrorMessage({
   required String positionTextFieldKey,
   required String enteredValue,
   required String expectedErrorMessage,
+  bool doNotTapOnSaveButton = false,
 }) async {
   Finder textFieldFinder =
       find.byKey(Key(positionTextFieldKey));
   await tester.tap(textFieldFinder);
   await tester.enterText(textFieldFinder, enteredValue);
   await tester.pumpAndSettle();
+
+  if (doNotTapOnSaveButton) {
+    return;
+  }
 
   // Confirm the comment edition by tapping the save button
   Finder saveEditedCommentButtonFinder =
