@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:audiolearn/constants.dart';
 import 'package:audiolearn/services/settings_data_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
+import '../l10n/app_localizations.dart';
 import '../models/audio.dart';
 import '../models/comment.dart';
 import '../models/extract_mp3_audio_file.dart';
@@ -230,7 +232,7 @@ class AudioExtractorVM extends ChangeNotifier {
       startProcessing();
 
       final String actualTargetDir =
-        "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+          "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
       final Directory targetDirectory = Directory(actualTargetDir);
 
@@ -269,6 +271,7 @@ class AudioExtractorVM extends ChangeNotifier {
   /// target playlist, false otherwise. False is returned if the audio
   /// file to add already exists in the target playlist directory.
   Future<bool> extractMP3ToPlaylist({
+    required BuildContext context,
     required AudioDownloadVM audioDownloadVMlistenFalse,
     required Audio currentAudio,
     required Playlist targetPlaylist,
@@ -276,6 +279,20 @@ class AudioExtractorVM extends ChangeNotifier {
     required bool inMusicQuality,
     required double totalDuration,
   }) async {
+    AudioSegment? existingAudio = _segments.firstWhereOrNull(
+      (segment) => segment.playSpeed != 1.0,
+    );
+
+    if (existingAudio != null) {
+      _extractionResult = ExtractionResult.error(
+        AppLocalizations.of(context)!
+                  .extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne,
+      );
+      notifyListeners();
+      
+      return true;
+    }
+
     final String outputPathFileName =
         '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
 

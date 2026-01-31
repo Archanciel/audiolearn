@@ -1637,5 +1637,6 @@
   "extractAudioPlaySpeed": "Vitesse de lecture",
   "extractAudioPlaySpeedTooltip": "Définit la vitesse de lecture de cette partie d'extraction du commentaire audio",
   "invalidPlaySpeedError": "La vitesse de lecture définie doit être entre 0.5 et 2.0",
-  "playSpeedLabel": "Vitesse de lecture"
+  "playSpeedLabel": "Vitesse de lecture",
+  "extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne": "L'extraction dans une playlist n'est pas possible si un des commentaires extraits comporte une vitese de lecture différente de 1.0."
 }

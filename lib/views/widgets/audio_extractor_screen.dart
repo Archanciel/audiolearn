@@ -1041,6 +1041,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
         bool wasExtractedAudioAddedToTargetPlaylist =
             await audioExtractorVM.extractMP3ToPlaylist(
+          context: context,
           audioDownloadVMlistenFalse: audioDownloadVMlistenFalse,
           currentAudio: widget.currentAudio,
           targetPlaylist: targetPlaylist!,

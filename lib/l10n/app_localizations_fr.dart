@@ -2853,4 +2853,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playSpeedLabel => 'Vitesse de lecture';
+
+  @override
+  String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne =>
+      'L\'extraction dans une playlist n\'est pas possible si un des commentaires extraits comporte une vitese de lecture différente de 1.0.';
 }
