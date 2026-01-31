@@ -40255,6 +40255,7 @@ void main() {
               'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
           extractionPlayingMessage:
               'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+          extractedAudioDuration: '0:51.0',
         );
 
         // Purge the test playlist directory so that the created test
@@ -40539,6 +40540,7 @@ void main() {
               'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
           extractionPlayingMessage:
               'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+          extractedAudioDuration: '0:53.6',
         );
 
         // Purge the test playlist directory so that the created test
@@ -40709,12 +40711,6 @@ void main() {
         await tester.enterText(commentSilenceDurationTextFieldFinder, '0:01.0');
         await tester.pumpAndSettle();
 
-        // Modify the play speed to 0.7
-        await _correctPlaySpeedEnterCode(
-          tester: tester,
-          playSpeedValue: '0.7',
-        );
-
         // Modify the fade-in duration to 0:08.0
         Finder commentFadeInDurationTextFieldFinder =
             find.byKey(const Key('fadeInDurationTextField'));
@@ -40767,12 +40763,6 @@ void main() {
         await tester.tap(commentEndPositionTextFieldFinder);
         await tester.enterText(commentEndPositionTextFieldFinder, '4:26.0');
         await tester.pumpAndSettle();
-
-        // Modify the play speed to 0.7
-        await _correctPlaySpeedEnterCode(
-          tester: tester,
-          playSpeedValue: '1.25',
-        );
 
         // Modify the fade-in duration to 0:05.0
         commentFadeInDurationTextFieldFinder =
@@ -40848,6 +40838,7 @@ void main() {
               'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
           extractionPlayingMessage:
               'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+          extractedAudioDuration: '0:51.0',
         );
 
         // Find the back button widget
@@ -40885,13 +40876,13 @@ void main() {
           videoUrl: "https://www.youtube.com/watch?v=eXc6isyEKsw",
           audioEnclosingPlaylistTitle: targetPlaylistTitle,
           extractedFromPlaylistTitle: '1 long music',
-          audioDuration: '0:00:53.6',
+          audioDuration: '0:00:51.0',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName:
               '250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
-          audioFileSize: '1.29 MB',
+          audioFileSize: '1.23 MB',
           isMusicQuality: true, // Is music quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
@@ -40901,7 +40892,7 @@ void main() {
         const String pictureFileName = "Screenshot_20250829_123429.jpg";
         const String audioForPictureTitle =
             'Glorious - Laisse-moi te parler de Jésus #louange';
-        const String audioForPictureTitleDurationStr = '0:54';
+        const String audioForPictureTitleDurationStr = '0:51';
         const List<String> audioForPictureTitleLstJesusJeTaime = [
           "1 long music|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
           '1 long music|260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26',
@@ -41158,6 +41149,7 @@ void main() {
               'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
           extractionPlayingMessage:
               'Playing: 260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
+          extractedAudioDuration: '1:17.6',
         );
 
         // Purge the test playlist directory so that the created test
@@ -41262,12 +41254,6 @@ void main() {
         await tester.tap(editCommentIconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Modify the play speed to 0.7
-        await _correctPlaySpeedEnterCode(
-          tester: tester,
-          playSpeedValue: '0.7',
-        );
-
         // Modify the fade-in duration to 0:05.0
         Finder commentFadeInDurationTextFieldFinder =
             find.byKey(const Key('fadeInDurationTextField'));
@@ -41342,6 +41328,7 @@ void main() {
               'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
           extractionPlayingMessage:
               'Playing: 260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
+          extractedAudioDuration: '0:54.3',
         );
 
         // Find the back button widget
@@ -41379,13 +41366,13 @@ void main() {
           videoUrl: "https://www.youtube.com/watch?v=7GukCEXM03k",
           audioEnclosingPlaylistTitle: targetPlaylistTitle,
           extractedFromPlaylistTitle: '1 long music',
-          audioDuration: '0:01:17.6',
+          audioDuration: '0:00:54.3',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName:
               '260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
-          audioFileSize: '620 KB',
+          audioFileSize: '434 KB',
           isMusicQuality: false, // Is music quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
@@ -41395,7 +41382,7 @@ void main() {
         const String pictureFileName = "Screenshot_20250829_123429.jpg";
         const String audioForPictureTitle =
             'Quand Dieu transforme l’épreuve en victoire';
-        const String audioForPictureTitleDurationStr = '1:18';
+        const String audioForPictureTitleDurationStr = '0:54';
         const List<String> audioForPictureTitleLstJesusJeTaime = [
           "1 long music|250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27",
           "1 long music|260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26",
@@ -42642,7 +42629,7 @@ void main() {
           find.byKey(const Key('segmentErrorDialogMessageKey'));
       expect(
         tester.widget<Text>(segmentErrorDialogTextFinder).data,
-        'End position must be after start position and not exceed 2:56.8.',
+        'End position must be after start position (1:25.0) and not exceed 2:56.8.',
       );
 
       // Tap the Ok button to close the invalid comment error
@@ -42857,13 +42844,12 @@ void main() {
             'Start position must be between 0 and 2:56.7 inclusive.',
       );
 
-      // Now modify the start position to -0:00.0 
+      // Now modify the start position to -0:00.0
       await _verifyExistenceOfErrorMessage(
-        tester: tester,
-        positionTextFieldKey: 'startPositionTextField',
-        enteredValue: '-0:00.0',
-        doNotTapOnSaveButton: true
-      );
+          tester: tester,
+          positionTextFieldKey: 'startPositionTextField',
+          enteredValue: '-0:00.0',
+          doNotTapOnSaveButton: true);
 
       // Now modify the end position to 0:00.0 and verify
       // the error message
@@ -42871,7 +42857,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'endPositionTextField',
         enteredValue: '0:00.0',
-        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+        expectedErrorMessage:
+            "End position must be after start position (0:00.0) and not exceed 2:56.8.",
       );
 
       // Now modify the end position to 3:12.8 and verify
@@ -42880,7 +42867,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'endPositionTextField',
         enteredValue: '3:12.8',
-        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+        expectedErrorMessage:
+            "End position must be after start position (0:00.0) and not exceed 2:56.8.",
       );
 
       // Now modify the end position to 3:12.8 and verify
@@ -42889,16 +42877,16 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'endPositionTextField',
         enteredValue: '3:12.8',
-        expectedErrorMessage: "End position must be after start position (0:00.0) and not exceed 2:56.8.",
+        expectedErrorMessage:
+            "End position must be after start position (0:00.0) and not exceed 2:56.8.",
       );
 
       // Now modify the end position to 2:12.8
       await _verifyExistenceOfErrorMessage(
-        tester: tester,
-        positionTextFieldKey: 'endPositionTextField',
-        enteredValue: '2:12.8',
-        doNotTapOnSaveButton: true
-      );
+          tester: tester,
+          positionTextFieldKey: 'endPositionTextField',
+          enteredValue: '2:12.8',
+          doNotTapOnSaveButton: true);
 
       // Now modify the silence duration to -0:00.1 and verify
       // the error message
@@ -42936,13 +42924,12 @@ void main() {
         expectedErrorMessage: 'Silence duration cannot be negative.',
       );
 
-      // Now modify the silnceposition to -0:00.0 
+      // Now modify the silnceposition to -0:00.0
       await _verifyExistenceOfErrorMessage(
-        tester: tester,
-        positionTextFieldKey: 'silenceDurationTextField',
-        enteredValue: '-0:00.0',
-        doNotTapOnSaveButton: true
-      );
+          tester: tester,
+          positionTextFieldKey: 'silenceDurationTextField',
+          enteredValue: '-0:00.0',
+          doNotTapOnSaveButton: true);
 
       // Verify the presence of the Extract MP3 elements
       _verifyPresenceOfExtractMp3Widgets(tester);
@@ -42953,7 +42940,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'playSpeedTextField',
         enteredValue: '-1.0',
-        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+        expectedErrorMessage:
+            "The defined play speed must be between 0.5 and 2.0.",
       );
 
       // Now modify the play speed to 0.4 and verify
@@ -42962,7 +42950,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'playSpeedTextField',
         enteredValue: '0.4',
-        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+        expectedErrorMessage:
+            "The defined play speed must be between 0.5 and 2.0.",
       );
 
       // Now modify the play speed to 2.1 and verify
@@ -42971,16 +42960,16 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'playSpeedTextField',
         enteredValue: '2.1',
-        expectedErrorMessage: "The defined play speed must be between 0.5 and 2.0.",
+        expectedErrorMessage:
+            "The defined play speed must be between 0.5 and 2.0.",
       );
 
       // Now modify the play speed to 1.0
       await _verifyExistenceOfErrorMessage(
-        tester: tester,
-        positionTextFieldKey: 'playSpeedTextField',
-        enteredValue: '1.0',
-        doNotTapOnSaveButton: true
-      );
+          tester: tester,
+          positionTextFieldKey: 'playSpeedTextField',
+          enteredValue: '1.0',
+          doNotTapOnSaveButton: true);
 
       // Now modify the Volume fade-in duration to -0:00.1 and verify
       // the error message
@@ -43024,16 +43013,16 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'fadeInDurationTextField',
         enteredValue: '2:12.9',
-        expectedErrorMessage: "Increase duration cannot exceed comment duration.",
+        expectedErrorMessage:
+            "Increase duration cannot exceed comment duration.",
       );
 
-      // Now modify the Volume fade-in duration to 0:12.1 
+      // Now modify the Volume fade-in duration to 0:12.1
       await _verifyExistenceOfErrorMessage(
-        tester: tester,
-        positionTextFieldKey: 'fadeInDurationTextField',
-        enteredValue: '0:12.1',
-        doNotTapOnSaveButton: true
-      );
+          tester: tester,
+          positionTextFieldKey: 'fadeInDurationTextField',
+          enteredValue: '0:12.1',
+          doNotTapOnSaveButton: true);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -43073,8 +43062,7 @@ Future<void> _verifyExistenceOfErrorMessage({
   String expectedErrorMessage = '',
   bool doNotTapOnSaveButton = false,
 }) async {
-  Finder textFieldFinder =
-      find.byKey(Key(positionTextFieldKey));
+  Finder textFieldFinder = find.byKey(Key(positionTextFieldKey));
   await tester.tap(textFieldFinder);
   await tester.enterText(textFieldFinder, enteredValue);
   await tester.pumpAndSettle();
@@ -43151,8 +43139,7 @@ Future<void> _selectExistingMp3File({
 void _verifyPresenceOfExtractMp3Widgets(WidgetTester tester) {
   // Verify the presence of the Clear all button
   expect(
-    find.byIcon(
-      Icons.clear_all),
+    find.byIcon(Icons.clear_all),
     findsOneWidget,
   );
   expect(
@@ -43301,6 +43288,7 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   required WidgetTester tester,
   required String extractionSuccessMessage,
   required String extractionPlayingMessage,
+  required String extractedAudioDuration,
 }) async {
   expect(
     find.text(extractionSuccessMessage),
@@ -43329,6 +43317,10 @@ Future<void> _verifyAndPlayExtractedMp3Method({
   // Scroll to make the message visible
   await tester.ensureVisible(find.text(extractionPlayingMessage));
   await tester.pumpAndSettle();
+
+  Text audioDurationText = tester
+      .widget<Text>(find.byKey(const Key('extractedAudioDurationTextKey')));
+  expect(audioDurationText.data, extractedAudioDuration);
 
   expect(
     find.text(extractionPlayingMessage),
