@@ -42862,7 +42862,6 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'startPositionTextField',
         enteredValue: '-0:00.0',
-        expectedErrorMessage: '',
         doNotTapOnSaveButton: true
       );
 
@@ -42898,7 +42897,6 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'endPositionTextField',
         enteredValue: '2:12.8',
-        expectedErrorMessage: "",
         doNotTapOnSaveButton: true
       );
 
@@ -42943,7 +42941,6 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'silenceDurationTextField',
         enteredValue: '-0:00.0',
-        expectedErrorMessage: '',
         doNotTapOnSaveButton: true
       );
 
@@ -42982,7 +42979,6 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'playSpeedTextField',
         enteredValue: '1.0',
-        expectedErrorMessage: "",
         doNotTapOnSaveButton: true
       );
 
@@ -43036,7 +43032,6 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'fadeInDurationTextField',
         enteredValue: '0:12.1',
-        expectedErrorMessage: "",
         doNotTapOnSaveButton: true
       );
 
@@ -43075,7 +43070,7 @@ Future<void> _verifyExistenceOfErrorMessage({
   required WidgetTester tester,
   required String positionTextFieldKey,
   required String enteredValue,
-  required String expectedErrorMessage,
+  String expectedErrorMessage = '',
   bool doNotTapOnSaveButton = false,
 }) async {
   Finder textFieldFinder =
