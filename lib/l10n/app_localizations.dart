@@ -4360,14 +4360,20 @@ abstract class AppLocalizations {
   /// No description provided for @negativeSoundPositionError.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction position must be within the comment (>= start position)'**
+  /// **'Sound reduction position cannot be negative'**
   String get negativeSoundPositionError;
+
+  /// No description provided for @soundPositionBeforeStartError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sound reduction position ({value}) must be after or at the comment start position'**
+  String soundPositionBeforeStartError(Object value);
 
   /// No description provided for @soundPositionBeyondEndError.
   ///
   /// In en, this message translates to:
-  /// **'Sound reduction position must be before the comment end position'**
-  String get soundPositionBeyondEndError;
+  /// **'Sound reduction position ({value}) must be before the comment end position'**
+  String soundPositionBeyondEndError(Object value);
 
   /// No description provided for @soundPositionPlusDurationBeyondEndError.
   ///
@@ -4402,8 +4408,8 @@ abstract class AppLocalizations {
   /// No description provided for @fadeInExceedsCommentDurationError.
   ///
   /// In en, this message translates to:
-  /// **'Increase duration cannot exceed comment duration'**
-  String get fadeInExceedsCommentDurationError;
+  /// **'Increase duration end ({detail}) cannot exceed comment end position'**
+  String fadeInExceedsCommentDurationError(Object detail);
 
   /// No description provided for @volumeFadeInOptional.
   ///

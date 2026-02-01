@@ -129,8 +129,9 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final segmentDuration = end - start;
     if (fadeInDuration > segmentDuration) {
       // NEW validation
+      String errorDetail = "${TimeFormatUtil.formatSeconds(start)} + ${TimeFormatUtil.formatSeconds(fadeInDuration)} = ${TimeFormatUtil.formatSeconds(start + fadeInDuration)}";
       _showError(
-          "${AppLocalizations.of(context)!.fadeInExceedsCommentDurationError}.");
+          "${AppLocalizations.of(context)!.fadeInExceedsCommentDurationError(errorDetail)} (${TimeFormatUtil.formatSeconds(end)}).");
       return;
     }
     if (soundReductionPosition < 0) {
@@ -147,19 +148,19 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     if (soundReductionPosition > 0 && soundReductionDuration > 0) {
       if (soundReductionPosition < start) {
         _showError(
-            "${AppLocalizations.of(context)!.negativeSoundPositionError}.");
+            "${AppLocalizations.of(context)!.soundPositionBeforeStartError(TimeFormatUtil.formatSeconds(soundReductionPosition))} (${TimeFormatUtil.formatSeconds(start)}).");
         return;
       }
       if (soundReductionPosition >= end) {
         _showError(
-            "${AppLocalizations.of(context)!.soundPositionBeyondEndError}.");
+            "${AppLocalizations.of(context)!.soundPositionBeyondEndError(TimeFormatUtil.formatSeconds(soundReductionPosition))} (${TimeFormatUtil.formatSeconds(end)}).");
         return;
       }
       double soundReductionEnd = soundReductionPosition + soundReductionDuration;
       if (soundReductionEnd > end) {
         String errorDetail = "${TimeFormatUtil.formatSeconds(soundReductionPosition)} + ${TimeFormatUtil.formatSeconds(soundReductionDuration)} = ${TimeFormatUtil.formatSeconds(soundReductionEnd)}";
         _showError(
-            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(errorDetail, "${TimeFormatUtil.formatSeconds(end)}")}.");
+            "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(errorDetail, TimeFormatUtil.formatSeconds(end))}.");
         return;
       }
     }
