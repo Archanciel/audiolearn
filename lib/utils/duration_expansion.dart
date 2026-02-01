@@ -49,8 +49,8 @@ extension DurationExpansion on Duration {
       // the case when the method is called in the CommentAddEditDialog
       // when the user is defining a comment position in tenth of seconds
       int remainingOneDigitTenthOfSecond =
-          inMilliseconds.remainder(1000).abs() ~/
-              100; // the remaining tenth of second
+          (inMilliseconds.remainder(1000).abs() / 100)
+              .round(); // the remaining tenth of second
 
       return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}.$remainingOneDigitTenthOfSecond";
     }
