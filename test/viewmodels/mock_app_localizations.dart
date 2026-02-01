@@ -2750,9 +2750,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Sound reduction position must be within the segment (>= start position)";
 
   @override
-  String get emptyTitleError => "Title cannot be empty";
-
-  @override
   String loadedComments(
     Object commentNumber,
   ) =>

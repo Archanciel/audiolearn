@@ -2758,9 +2758,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get emptyTitleError => 'Le titre ne peut pas être vide';
-
-  @override
   String loadedComments(Object commentNumber) {
     return 'Chargé $commentNumber commentaire(s)';
   }

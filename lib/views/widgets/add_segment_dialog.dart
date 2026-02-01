@@ -164,10 +164,6 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
         return;
       }
     }
-    if (commentTitle.isEmpty) {
-      _showError("${AppLocalizations.of(context)!.emptyTitleError}.");
-      return;
-    }
 
     Navigator.of(context).pop(
       AudioSegment(

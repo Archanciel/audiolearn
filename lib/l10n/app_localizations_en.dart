@@ -2728,9 +2728,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get emptyTitleError => 'Title cannot be empty';
-
-  @override
   String loadedComments(Object commentNumber) {
     return 'Loaded $commentNumber comment(s)';
   }
