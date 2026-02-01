@@ -43315,10 +43315,11 @@ void main() {
 
       // Now modify the start position to -0:00.0
       await _verifyExistenceOfErrorMessage(
-          tester: tester,
-          positionTextFieldKey: 'startPositionTextField',
-          enteredValue: '-0:00.0',
-          doNotTapOnSaveButton: true);
+        tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
+        enteredValue: '-0:00.0',
+        doNotTapOnSaveButton: true,
+      );
 
       // Now modify the end position to 0:00.0 and verify
       // the error message
@@ -43352,10 +43353,11 @@ void main() {
 
       // Now modify the end position to 2:12.8
       await _verifyExistenceOfErrorMessage(
-          tester: tester,
-          positionTextFieldKey: 'endPositionTextField',
-          enteredValue: '2:12.8',
-          doNotTapOnSaveButton: true);
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '2:12.8',
+        doNotTapOnSaveButton: true,
+      );
 
       // Now modify the silence duration to -0:00.1 and verify
       // the error message
@@ -43395,10 +43397,11 @@ void main() {
 
       // Now modify the silnceposition to -0:00.0
       await _verifyExistenceOfErrorMessage(
-          tester: tester,
-          positionTextFieldKey: 'silenceDurationTextField',
-          enteredValue: '-0:00.0',
-          doNotTapOnSaveButton: true);
+        tester: tester,
+        positionTextFieldKey: 'silenceDurationTextField',
+        enteredValue: '-0:00.0',
+        doNotTapOnSaveButton: true,
+      );
 
       // Verify the presence of the Extract MP3 elements
       _verifyPresenceOfExtractMp3Widgets(tester);
@@ -43435,10 +43438,11 @@ void main() {
 
       // Now modify the play speed to 1.0
       await _verifyExistenceOfErrorMessage(
-          tester: tester,
-          positionTextFieldKey: 'playSpeedTextField',
-          enteredValue: '1.0',
-          doNotTapOnSaveButton: true);
+        tester: tester,
+        positionTextFieldKey: 'playSpeedTextField',
+        enteredValue: '1.0',
+        doNotTapOnSaveButton: true,
+      );
 
       // Now modify the Volume fade-in duration to -0:00.1 and verify
       // the error message
@@ -43483,15 +43487,166 @@ void main() {
         positionTextFieldKey: 'fadeInDurationTextField',
         enteredValue: '2:12.9',
         expectedErrorMessage:
-            "Increase duration cannot exceed comment duration.",
+            "Increase duration end (0:00.0 + 2:12.9 = 2:12.9) cannot exceed comment end position (2:12.8).",
       );
 
-      // Now modify the Volume fade-in duration to 0:12.1
+      // Now modify the start position to 0:16.0
       await _verifyExistenceOfErrorMessage(
-          tester: tester,
-          positionTextFieldKey: 'fadeInDurationTextField',
-          enteredValue: '0:12.1',
-          doNotTapOnSaveButton: true);
+        tester: tester,
+        positionTextFieldKey: 'startPositionTextField',
+        enteredValue: '0:16.0',
+        doNotTapOnSaveButton: true,
+      );
+
+      // Now modify the end position to 0:32.0
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'endPositionTextField',
+        enteredValue: '0:32.0',
+        doNotTapOnSaveButton: true,
+      );
+
+      // Now modify the Volume fade-in duration to 0:18.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '0:18.0',
+        expectedErrorMessage:
+            "Increase duration end (0:16.0 + 0:18.0 = 0:34.0) cannot exceed comment end position (0:32.0).",
+      );
+
+      // Now modify the Volume fade-in duration to 0:00.0
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'fadeInDurationTextField',
+        enteredValue: '0:00.0',
+        doNotTapOnSaveButton: true,
+      );
+
+      // Now modify the Volume fade-out position to -0:00.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '-0:00.1',
+        expectedErrorMessage: 'Sound reduction position cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out position to -0:01.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '-0:01.0',
+        expectedErrorMessage: 'Sound reduction position cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out position to -0:10.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '-0:10.0',
+        expectedErrorMessage: 'Sound reduction position cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out position to -1:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '-1:00.0',
+        expectedErrorMessage: 'Sound reduction position cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out position to 0:20.0
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '0:20.0',
+        doNotTapOnSaveButton: true,
+      );
+
+      // Now modify the Volume fade-out duration to -0:00.1 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionDurationTextField',
+        enteredValue: '-0:00.1',
+        expectedErrorMessage: 'Sound reduction duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out duration to -0:01.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionDurationTextField',
+        enteredValue: '-0:01.0',
+        expectedErrorMessage: 'Sound reduction duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out duration to -0:10.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionDurationTextField',
+        enteredValue: '-0:10.0',
+        expectedErrorMessage: 'Sound reduction duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out duration to -1:00.0 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionDurationTextField',
+        enteredValue: '-1:00.0',
+        expectedErrorMessage: 'Sound reduction duration cannot be negative.',
+      );
+
+      // Now modify the Volume fade-out duration to 0:05.0
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionDurationTextField',
+        enteredValue: '0:05.0',
+        doNotTapOnSaveButton: true,
+      );
+
+      // Now modify the Volume fade-out position to 0:15.9 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '0:33.0',
+        expectedErrorMessage: 'Sound reduction position (0:33.0) must be before the comment end position (0:32.0).',
+      );
+
+      // Now modify the Volume fade-out position to 0:15.9 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '0:15.9',
+        expectedErrorMessage: 'Sound reduction position (0:15.9) must be after or at the comment start position (0:16.0).',
+      );
+
+      // Now modify the Volume fade-out position to 1:08.8 and verify
+      // the error message
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '0:28.0',
+        expectedErrorMessage: 'Sound reduction of 0:28.0 + 0:05.0 = 0:33.0 must complete before or at the comment end position (0:32.0).',
+      );
+
+      // Now modify the Volume fade-out position to 0:16.0 and verify
+      // the no message is shown
+      await _verifyExistenceOfErrorMessage(
+        tester: tester,
+        positionTextFieldKey: 'soundReductionPositionTextField',
+        enteredValue: '0:16.0',
+        expectedErrorMessage: '',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub

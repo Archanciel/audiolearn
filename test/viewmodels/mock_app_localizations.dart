@@ -2750,10 +2750,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Sound reduction position must be within the segment (>= start position)";
 
   @override
-  String get soundPositionBeyondEndError =>
-      "Sound reduction position must be before the end position";
-
-  @override
   String get emptyTitleError => "Title cannot be empty";
 
   @override
@@ -2770,10 +2766,6 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get fadeInDurationError => "Fade-in duration cannot be negative";
-
-  @override
-  String get fadeInExceedsCommentDurationError =>
-      "Fade-in duration cannot exceed comment duration";
 
   @override
   String get volumeFadeInOptional => "Volume Fade-In (optional)";
@@ -2929,4 +2921,22 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne =>
       "Extraction to playlist not possible when play speed is different from 1.0 in an extracted comment.";
+
+  @override
+  String fadeInExceedsCommentDurationError(
+    Object detail,
+  ) =>
+      "Increase duration end ($detail) cannot exceed comment end position";
+
+  @override
+  String soundPositionBeforeStartError(
+    Object value,
+  ) =>
+      "Sound reduction position must ($value) be after the comment start position";
+
+  @override
+  String soundPositionBeyondEndError(
+    Object value,
+  ) =>
+      "Sound reduction position ($value) must be before the comment end position";
 }

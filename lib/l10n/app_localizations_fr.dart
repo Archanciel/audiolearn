@@ -2740,15 +2740,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get negativeSoundPositionError =>
-      'La position de la baisse du son doit être dans le commentaire (>= position de début)';
+      'La position de la baisse du son ne peut pas être négative';
 
   @override
-  String get soundPositionBeyondEndError =>
-      'La position de la baisse du son doit être avant la position de fin du commentaire';
+  String soundPositionBeforeStartError(Object value) {
+    return 'La position de réduction du son ($value) doit être postérieure ou égale à la position de début du commentaire';
+  }
+
+  @override
+  String soundPositionBeyondEndError(Object value) {
+    return 'La position de la baisse du son ($value) doit être avant la position de fin du commentaire';
+  }
 
   @override
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
-    return 'La diminution de $value1 doit se terminer avant ou à la fin du commentaire ($value2)';
+    return 'La diminution du son de $value1 doit se terminer avant ou à la fin du commentaire ($value2)';
   }
 
   @override
@@ -2769,8 +2775,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'La durée d\'augmentation de volume ne peut être négative';
 
   @override
-  String get fadeInExceedsCommentDurationError =>
-      'La durée d\'augmentation de volume ne peut excéder la durée du commentaire';
+  String fadeInExceedsCommentDurationError(Object detail) {
+    return 'La fin de la durée d\'augmentation de volume ($detail) ne peut excéder la position de fin du commentaire';
+  }
 
   @override
   String get volumeFadeInOptional =>

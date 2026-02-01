@@ -2710,11 +2710,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get negativeSoundPositionError =>
-      'Sound reduction position must be within the comment (>= start position)';
+      'Sound reduction position cannot be negative';
 
   @override
-  String get soundPositionBeyondEndError =>
-      'Sound reduction position must be before the comment end position';
+  String soundPositionBeforeStartError(Object value) {
+    return 'Sound reduction position ($value) must be after or at the comment start position';
+  }
+
+  @override
+  String soundPositionBeyondEndError(Object value) {
+    return 'Sound reduction position ($value) must be before the comment end position';
+  }
 
   @override
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2) {
@@ -2738,8 +2744,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fadeInDurationError => 'Increase duration cannot be negative';
 
   @override
-  String get fadeInExceedsCommentDurationError =>
-      'Increase duration cannot exceed comment duration';
+  String fadeInExceedsCommentDurationError(Object detail) {
+    return 'Increase duration end ($detail) cannot exceed comment end position';
+  }
 
   @override
   String get volumeFadeInOptional => 'Volume fade-in (optional)';
