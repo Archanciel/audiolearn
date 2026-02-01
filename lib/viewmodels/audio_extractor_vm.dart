@@ -520,11 +520,11 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   bool existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration() {
-    final double audioDuration =
-        _currentAudio.audioDuration.inMilliseconds / 1000;
+    final int audioDuration =
+        (_currentAudio.audioDuration.inMilliseconds / 100).round();
 
     for (final segment in _segments) {
-      if (!segment.deleted && segment.endPosition > audioDuration) {
+      if (!segment.deleted && segment.endPosition * 10 > audioDuration) {
         return true;
       }
     }
