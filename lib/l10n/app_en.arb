@@ -1204,7 +1204,6 @@
   "soundPositionBeforeStartError": "Sound reduction position ({value}) must be after or at the comment start position",
   "soundPositionBeyondEndError": "Sound reduction position ({value}) must be before the comment end position",
   "soundPositionPlusDurationBeyondEndError": "Sound reduction of {value1} must complete before or at the comment end position ({value2})",
-  "emptyTitleError": "Title cannot be empty",
   "loadedComments": "Loaded {commentNumber} comment(s)",
   "skippedComments": "({commentNumber} skipped)",
   "fadeInDurationError": "Increase duration cannot be negative",

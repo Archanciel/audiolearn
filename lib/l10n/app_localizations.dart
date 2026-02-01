@@ -4381,12 +4381,6 @@ abstract class AppLocalizations {
   /// **'Sound reduction of {value1} must complete before or at the comment end position ({value2})'**
   String soundPositionPlusDurationBeyondEndError(Object value1, Object value2);
 
-  /// No description provided for @emptyTitleError.
-  ///
-  /// In en, this message translates to:
-  /// **'Title cannot be empty'**
-  String get emptyTitleError;
-
   /// No description provided for @loadedComments.
   ///
   /// In en, this message translates to:

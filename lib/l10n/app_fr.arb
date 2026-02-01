@@ -1611,7 +1611,6 @@
   "soundPositionBeforeStartError": "La position de réduction du son ({value}) doit être postérieure ou égale à la position de début du commentaire",
   "soundPositionBeyondEndError": "La position de la baisse du son ({value}) doit être avant la position de fin du commentaire",
   "soundPositionPlusDurationBeyondEndError": "La diminution du son de {value1} doit se terminer avant ou à la fin du commentaire ({value2})",
-  "emptyTitleError": "Le titre ne peut pas être vide",
   "loadedComments": "Chargé {commentNumber} commentaire(s)",
   "skippedComments": "({commentNumber} ignoré(s))",
   "fadeInDurationError": "La durée d'augmentation de volume ne peut être négative",
