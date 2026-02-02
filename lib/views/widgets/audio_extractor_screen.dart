@@ -31,11 +31,16 @@ class AudioExtractorScreen extends StatefulWidget {
   final Audio currentAudio;
   final CommentVM commentVMlistenTrue;
 
+  // This list is used to extract multiple audios in one
+  // MP3 file
+  final List<Audio> multipleAudiosLst;
+
   const AudioExtractorScreen({
     super.key,
     required this.settingsDataService,
     required this.currentAudio,
     required this.commentVMlistenTrue,
+    this.multipleAudiosLst = const [],
   });
 
   @override
