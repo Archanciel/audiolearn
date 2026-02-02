@@ -1862,7 +1862,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:07.1 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -1877,7 +1877,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:07.0',
+          audioDuration: '0:00:07.1',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
@@ -2055,7 +2055,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.9 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2070,7 +2070,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:00.8',
+          audioDuration: '0:00:00.9',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
@@ -2364,7 +2364,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:07.0 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:07.1 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2379,7 +2379,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-          audioDuration: '0:00:07.0',
+          audioDuration: '0:00:07.1',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
@@ -2598,7 +2598,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.8 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.9 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2613,7 +2613,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-          audioDuration: '0:00:00.8',
+          audioDuration: '0:00:00.9',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',

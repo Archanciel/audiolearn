@@ -13673,7 +13673,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:19.3 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:19.4 155 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13836,7 +13836,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:19.3 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:19.4 155 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
