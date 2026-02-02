@@ -661,14 +661,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                 ),
                 const SizedBox(height: 10.0),
                 LinearProgressIndicator(), // Indeterminate progress bar
-                const SizedBox(height: 10.0),
-                Text(
-                  key: const Key('saving_please_wait'),
-                  AppLocalizations.of(context)!.savingApproximativeTime(
-                      playlistListVMlistenTrue.savingAudioMp3FileToZipDuration
-                          .HHmmss(),
-                      playlistListVMlistenTrue.numberOfCreatedZipFiles),
-                ),
               ],
             ),
           );
