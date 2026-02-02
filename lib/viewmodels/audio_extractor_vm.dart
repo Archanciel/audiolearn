@@ -9,6 +9,7 @@ import 'package:path/path.dart' as path;
 
 import '../l10n/app_localizations.dart';
 import '../models/audio.dart';
+import '../models/audio_with_segments.dart';
 import '../models/comment.dart';
 import '../models/extract_mp3_audio_file.dart';
 import '../models/audio_segment.dart';
@@ -58,6 +59,10 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   int get segmentCount => _segments.length;
+
+  final List<AudioWithSegments> _multiAudios = [];
+  List<AudioWithSegments> get multiAudios => List.unmodifiable(_multiAudios);
+  bool get isMultiAudioMode => _multiAudios.isNotEmpty;
 
   void setAudioFile({
     required String path,
@@ -286,10 +291,10 @@ class AudioExtractorVM extends ChangeNotifier {
     if (existingAudio != null) {
       _extractionResult = ExtractionResult.error(
         AppLocalizations.of(context)!
-                  .extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne,
+            .extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne,
       );
       notifyListeners();
-      
+
       return true;
     }
 
@@ -350,6 +355,158 @@ class AudioExtractorVM extends ChangeNotifier {
   void resetExtractionResult() {
     _extractionResult = ExtractionResult.initial();
     notifyListeners();
+  }
+
+  void setMultiAudios(List<AudioWithSegments> audiosWithSegments) {
+    _multiAudios.clear();
+    _multiAudios.addAll(audiosWithSegments);
+    notifyListeners();
+  }
+
+  void addMultiAudio(AudioWithSegments audioWithSegments) {
+    _multiAudios.add(audioWithSegments);
+    notifyListeners();
+  }
+
+  void updateMultiAudioSegments(int audioIndex, List<AudioSegment> segments) {
+    if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
+      _multiAudios[audioIndex] = _multiAudios[audioIndex].copyWith(
+        segments: segments,
+      );
+      notifyListeners();
+    }
+  }
+
+  void updateMultiAudioSegment({
+    required int audioIndex,
+    required int segmentIndex,
+    required AudioSegment segment,
+  }) {
+    if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
+      final audioWithSegments = _multiAudios[audioIndex];
+      if (segmentIndex >= 0 &&
+          segmentIndex < audioWithSegments.segments.length) {
+        final updatedSegments =
+            List<AudioSegment>.from(audioWithSegments.segments);
+
+        final normalized = AudioSegment(
+          startPosition:
+              TimeFormatUtil.normalizeToTenths(segment.startPosition),
+          endPosition: TimeFormatUtil.normalizeToTenths(segment.endPosition),
+          silenceDuration:
+              TimeFormatUtil.normalizeToTenths(segment.silenceDuration),
+          playSpeed: segment.playSpeed,
+          fadeInDuration:
+              TimeFormatUtil.normalizeToTenths(segment.fadeInDuration),
+          soundReductionPosition:
+              TimeFormatUtil.normalizeToTenths(segment.soundReductionPosition),
+          soundReductionDuration:
+              TimeFormatUtil.normalizeToTenths(segment.soundReductionDuration),
+          commentId: segment.commentId,
+          commentTitle: segment.commentTitle,
+          deleted: segment.deleted,
+        );
+
+        updatedSegments[segmentIndex] = normalized;
+        _multiAudios[audioIndex] =
+            audioWithSegments.copyWith(segments: updatedSegments);
+        notifyListeners();
+      }
+    }
+  }
+
+  void removeMultiAudioSegment({
+    required int audioIndex,
+    required int segmentIndex,
+  }) {
+    if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
+      final audioWithSegments = _multiAudios[audioIndex];
+      if (segmentIndex >= 0 &&
+          segmentIndex < audioWithSegments.segments.length) {
+        final updatedSegments =
+            List<AudioSegment>.from(audioWithSegments.segments);
+        updatedSegments[segmentIndex] =
+            updatedSegments[segmentIndex].copyWith(deleted: true);
+        updatedSegments.removeAt(segmentIndex);
+        _multiAudios[audioIndex] =
+            audioWithSegments.copyWith(segments: updatedSegments);
+        notifyListeners();
+      }
+    }
+  }
+
+  void clearMultiAudios() {
+    _multiAudios.clear();
+    notifyListeners();
+  }
+
+  double get totalDurationMultiAudio {
+    return _multiAudios.fold(
+      0.0,
+      (sum, audioWithSeg) => sum + audioWithSeg.totalDuration,
+    );
+  }
+
+  int get totalSegmentCountMultiAudio {
+    return _multiAudios.fold(
+      0,
+      (sum, audioWithSeg) => sum + audioWithSeg.activeSegmentCount,
+    );
+  }
+
+  /// Extract multiple audios into a single MP3 file
+  Future<void> extractMultiAudioToDirectory({
+    required SettingsDataService settingsDataService,
+    required bool inMusicQuality,
+    required String extractedMp3FileName,
+  }) async {
+    try {
+      startProcessing();
+
+      final String actualTargetDir =
+          "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+
+      final Directory targetDirectory = Directory(actualTargetDir);
+
+      if (!targetDirectory.existsSync()) {
+        targetDirectory.createSync(recursive: true);
+      }
+
+      final String outputPathFileName =
+          "$actualTargetDir${path.separator}$extractedMp3FileName";
+
+      // Convert AudioWithSegments to InputSegments for the service
+      final List<InputSegments> inputs = _multiAudios.map((audioWithSeg) {
+        return InputSegments(
+          inputPath: audioWithSeg.audio.filePathName,
+          segments: audioWithSeg.segments,
+          gainDb: audioWithSeg.gainDb,
+        );
+      }).toList();
+
+      final bitrate = inMusicQuality ? '192k' : '64k';
+
+      final Map<String, dynamic> result =
+          await AudioExtractorService.extractFromMultipleInputs(
+        inputs: inputs,
+        outputPath: outputPathFileName,
+        encoderBitrate: bitrate,
+      );
+
+      if (result['success'] == true) {
+        _extractionResult = ExtractionResult.success(
+          result['outputPath']!,
+        );
+      } else {
+        _extractionResult = ExtractionResult.error(result['message']);
+      }
+      notifyListeners();
+    } catch (e) {
+      _extractionResult = ExtractionResult.error(
+        'Error during extraction: $e',
+      );
+      notifyListeners();
+    }
   }
 
   // ── Multi-input mode (with per-input gain) ─────────────────────────────────
