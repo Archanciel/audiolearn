@@ -17,6 +17,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/audio.dart';
 import '../../models/comment.dart';
 import '../../models/playlist.dart';
+import '../../models/audio_with_segments.dart';
 import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
@@ -64,15 +65,24 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     audioExtractorVM.commentVMlistenTrue = widget.commentVMlistenTrue;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _pickMP3File(
-        context: context,
-        audioExtractorVM: audioExtractorVM,
-      );
+      // Check if we're in multi-audio mode
+      if (widget.multipleAudiosLst.isNotEmpty) {
+        await _loadMultipleAudios(
+          context: context,
+          audioExtractorVM: audioExtractorVM,
+        );
+      } else {
+        await _pickMP3File(
+          context: context,
+          audioExtractorVM: audioExtractorVM,
+        );
 
-      await _loadSegmentsFromCommentFile(
-        context: context,
-        audioExtractorVM: audioExtractorVM,
-      );
+        await _loadSegmentsFromCommentFile(
+          context: context,
+          audioExtractorVM: audioExtractorVM,
+        );
+      }
+
       _helpItemsLst = [
         HelpItem(
           helpTitle: AppLocalizations.of(context)!.playlistRestorationHelpTitle,
@@ -176,264 +186,34 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                       ],
                     ),
                     const SizedBox(height: 8),
-                    (audioExtractorVM.segments.isEmpty)
-                        ? const SizedBox.shrink() // ← Renders nothing
-                        : Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 400,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Scrollbar(
-                              controller: _segmentsScrollController,
-                              thumbVisibility: true,
-                              child: ListView.builder(
-                                controller: _segmentsScrollController,
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: audioExtractorVM.segments.length,
-                                itemBuilder: (context, index) {
-                                  final AudioSegment segment =
-                                      audioExtractorVM.segments[index];
-                                  final String displayedIndex =
-                                      (index + 1).toString();
-                                  return Card(
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        child: Text(displayedIndex),
-                                      ),
-                                      title: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            segment.commentTitle,
-                                            maxLines: 4,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontWeight:
-                                                  FontWeight.w700, // bold
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          (segment.deleted)
-                                              ? Tooltip(
-                                                  message: AppLocalizations.of(
-                                                          context)!
-                                                      .commentWasDeletedTooltip,
-                                                  child: Text(
-                                                    key: Key(
-                                                        'commentDeletedTextKey_$displayedIndex'),
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .commentWasDeleted,
-                                                    maxLines: 2,
-                                                    style: const TextStyle(
-                                                      fontWeight: FontWeight
-                                                          .w700, // bold
-                                                      fontSize: 14,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                )
-                                              : const SizedBox.shrink(),
-                                          Row(
-                                            children: [
-                                              Tooltip(
-                                                message: AppLocalizations.of(
-                                                        context)!
-                                                    .commentStartPositionTooltip,
-                                                child: Text(
-                                                  TimeFormatUtil.formatSeconds(
-                                                      segment.startPosition),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14,
-                                                    color: Colors.white70,
-                                                  ),
-                                                ),
-                                              ),
-                                              const Icon(
-                                                Icons
-                                                    .arrow_forward, // or Icons.arrow_right_alt
-                                                size: 15, // ← Control size
-                                                color: Colors.white70,
-                                              ),
-                                            ],
-                                          ),
-                                          Tooltip(
-                                            message:
-                                                AppLocalizations.of(context)!
-                                                    .commentEndPositionTooltip,
-                                            child: Text(
-                                              TimeFormatUtil.formatSeconds(
-                                                  segment.endPosition),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Tooltip(
-                                            message: AppLocalizations.of(
-                                                    context)!
-                                                .extractAudioPlaySpeedTooltip,
-                                            child: Text(
-                                              "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Tooltip(
-                                            message:
-                                                AppLocalizations.of(context)!
-                                                    .fadeStartPositionTooltip,
-                                            child: Text(
-                                              "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Tooltip(
-                                            message: AppLocalizations.of(
-                                                    context)!
-                                                .soundReductionPositionTooltip,
-                                            child: Text(
-                                              "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          Tooltip(
-                                            message: AppLocalizations.of(
-                                                    context)!
-                                                .soundReductionDurationTooltip,
-                                            child: Text(
-                                              "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      subtitle: Text(
-                                        "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
-                                        "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
-                                        style: const TextStyle(
-                                            fontSize: 12), // ← Smaller font
-                                      ),
-                                      trailing: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                            key: Key(
-                                                'editSegmentButtonKey_$displayedIndex'),
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              size: 20,
-                                            ),
-                                            onPressed: () async {
-                                              // After pressing 'Edit' icon button, show
-                                              // the AddSegmentDialog to edit the segment
-                                              final AudioSegment?
-                                                  updatedSegment =
-                                                  await showDialog<
-                                                      AudioSegment>(
-                                                context: context,
-                                                builder: (
-                                                  _,
-                                                ) =>
-                                                    AddSegmentDialog(
-                                                  maxDuration: audioExtractorVM
-                                                      .audioFile.duration,
-                                                  existingSegment: segment,
-                                                ),
-                                              );
-
-                                              if (updatedSegment != null) {
-                                                audioExtractorVM.updateSegment(
-                                                  index: index,
-                                                  segment: updatedSegment,
-                                                );
-                                              }
-                                            },
-                                          ),
-                                          IconButton(
-                                            key: Key(
-                                                'deleteSegmentButtonKey_$displayedIndex'),
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              size: 20,
-                                              color: Colors.red,
-                                            ),
-                                            onPressed: () =>
-                                                _confirmDeleteSegment(
-                                              context: context,
-                                              audioExtractorVM:
-                                                  audioExtractorVM,
-                                              segmentToDeleteIndex: index,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                    if (audioExtractorVM.segments.isNotEmpty) ...[
+                    (audioExtractorVM.isMultiAudioMode)
+                        ? _buildMultiAudioList(context, audioExtractorVM)
+                        : (audioExtractorVM.segments.isEmpty)
+                            ? const SizedBox.shrink()
+                            : _buildSingleAudioList(context, audioExtractorVM),
+                    if (audioExtractorVM.isMultiAudioMode
+                        ? audioExtractorVM.multiAudios.isNotEmpty
+                        : audioExtractorVM.segments.isNotEmpty) ...[
                       const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${AppLocalizations.of(context)!.totalDuration}: ${TimeFormatUtil.formatSeconds(audioExtractorVM.totalDuration)}",
+                            "${AppLocalizations.of(context)!.totalDuration}: ${TimeFormatUtil.formatSeconds(audioExtractorVM.isMultiAudioMode ? audioExtractorVM.totalDurationMultiAudio : audioExtractorVM.totalDuration)}",
                             key: const Key('totalSegmentsDurationTextKey'),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          TextButton.icon(
-                            key: const Key('clearAllSegmentsButton'),
-                            onPressed: () => _confirmClearSegments(
-                              context,
-                              audioExtractorVM,
+                          if (!audioExtractorVM.isMultiAudioMode)
+                            TextButton.icon(
+                              key: const Key('clearAllSegmentsButton'),
+                              onPressed: () => _confirmClearSegments(
+                                  context, audioExtractorVM),
+                              icon: const Icon(Icons.clear_all, size: 18),
+                              label: Text(
+                                  AppLocalizations.of(context)!.clearAllButton),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red),
                             ),
-                            icon: const Icon(Icons.clear_all, size: 18),
-                            label: Text(
-                                AppLocalizations.of(context)!.clearAllButton),
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.red,
-                            ),
-                          ),
                         ],
                       ),
                     ],
@@ -581,6 +361,458 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> _loadMultipleAudios({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+  }) async {
+    try {
+      final List<AudioWithSegments> audiosWithSegments = [];
+
+      for (final Audio audio in widget.multipleAudiosLst) {
+        // Load comments for this audio
+        final List<Comment> commentsLst =
+            widget.commentVMlistenTrue.loadAudioComments(audio: audio);
+
+        // Convert comments to segments
+        final List<AudioSegment> segments = [];
+
+        for (final Comment comment in commentsLst) {
+          final double start =
+              comment.commentStartPositionInTenthOfSeconds / 10.0;
+          final double end = comment.commentEndPositionInTenthOfSeconds / 10.0;
+
+          if (start >= 0 && end > start) {
+            double silence = comment.silenceDuration;
+            if (silence == 0.0) {
+              silence = kDefaultSilenceDuration;
+            }
+
+            segments.add(
+              AudioSegment(
+                startPosition: start,
+                endPosition: end,
+                silenceDuration: silence,
+                playSpeed: comment.playSpeed,
+                fadeInDuration: comment.fadeInDuration,
+                soundReductionPosition: comment.soundReductionPosition,
+                soundReductionDuration: comment.soundReductionDuration,
+                commentId: comment.id,
+                commentTitle: comment.title,
+                deleted: comment.deleted,
+              ),
+            );
+          }
+        }
+
+        if (segments.isNotEmpty) {
+          audiosWithSegments.add(
+            AudioWithSegments(
+              audio: audio,
+              segments: segments,
+            ),
+          );
+        }
+      }
+
+      audioExtractorVM.setMultiAudios(audiosWithSegments);
+
+      if (!context.mounted) return;
+
+      final int totalSegments = audiosWithSegments.fold(
+        0,
+        (sum, audioWithSeg) => sum + audioWithSeg.segments.length,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context)!.loadedCommentsFromMultipleAudios(
+              widget.multipleAudiosLst.length,
+              totalSegments,
+            ),
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } catch (e) {
+      audioExtractorVM.setError('Error loading multiple audios: $e');
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error loading multiple audios: $e'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    }
+  }
+
+  Widget _buildSingleAudioList(
+    BuildContext context,
+    AudioExtractorVM audioExtractorVM,
+  ) {
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 400),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Scrollbar(
+        controller: _segmentsScrollController,
+        thumbVisibility: true,
+        child: ListView.builder(
+          controller: _segmentsScrollController,
+          primary: false,
+          shrinkWrap: true,
+          itemCount: audioExtractorVM.segments.length,
+          itemBuilder: (context, index) {
+            final AudioSegment segment = audioExtractorVM.segments[index];
+            final String displayedIndex = (index + 1).toString();
+
+            return _buildSegmentCard(
+              context: context,
+              segment: segment,
+              displayedIndex: displayedIndex,
+              onEdit: () async {
+                final AudioSegment? updatedSegment =
+                    await showDialog<AudioSegment>(
+                  context: context,
+                  builder: (_) => AddSegmentDialog(
+                    maxDuration: audioExtractorVM.audioFile.duration,
+                    existingSegment: segment,
+                  ),
+                );
+
+                if (updatedSegment != null) {
+                  audioExtractorVM.updateSegment(
+                    index: index,
+                    segment: updatedSegment,
+                  );
+                }
+              },
+              onDelete: () => _confirmDeleteSegment(
+                context: context,
+                audioExtractorVM: audioExtractorVM,
+                segmentToDeleteIndex: index,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMultiAudioList(
+    BuildContext context,
+    AudioExtractorVM audioExtractorVM,
+  ) {
+    return Container(
+      constraints: const BoxConstraints(maxHeight: 500),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Scrollbar(
+        controller: _segmentsScrollController,
+        thumbVisibility: true,
+        child: ListView.builder(
+          controller: _segmentsScrollController,
+          primary: false,
+          shrinkWrap: true,
+          itemCount: audioExtractorVM.multiAudios.length,
+          itemBuilder: (context, audioIndex) {
+            final AudioWithSegments audioWithSegments =
+                audioExtractorVM.multiAudios[audioIndex];
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Audio header
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  color: Colors.grey.shade800,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.deepPurple,
+                        child: Text(
+                          '${audioIndex + 1}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              audioWithSegments.audio.validVideoTitle,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '${audioWithSegments.activeSegmentCount} segment(s) - ${TimeFormatUtil.formatSeconds(audioWithSegments.totalDuration)}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Segments for this audio
+                ...List.generate(
+                  audioWithSegments.segments.length,
+                  (segmentIndex) {
+                    final segment = audioWithSegments.segments[segmentIndex];
+                    final displayedIndex =
+                        '${audioIndex + 1}.${segmentIndex + 1}';
+
+                    return _buildSegmentCard(
+                      context: context,
+                      segment: segment,
+                      displayedIndex: displayedIndex,
+                      onEdit: () async {
+                        final AudioSegment? updatedSegment =
+                            await showDialog<AudioSegment>(
+                          context: context,
+                          builder: (_) => AddSegmentDialog(
+                            maxDuration: audioWithSegments
+                                    .audio.audioDuration.inMilliseconds /
+                                1000.0,
+                            existingSegment: segment,
+                          ),
+                        );
+
+                        if (updatedSegment != null) {
+                          audioExtractorVM.updateMultiAudioSegment(
+                            audioIndex: audioIndex,
+                            segmentIndex: segmentIndex,
+                            segment: updatedSegment,
+                          );
+                        }
+                      },
+                      onDelete: () => _confirmDeleteMultiAudioSegment(
+                        context: context,
+                        audioExtractorVM: audioExtractorVM,
+                        audioIndex: audioIndex,
+                        segmentIndex: segmentIndex,
+                      ),
+                    );
+                  },
+                ),
+                const Divider(height: 1, thickness: 2),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+// 6. Add this helper method to build individual segment cards:
+
+  Widget _buildSegmentCard({
+    required BuildContext context,
+    required AudioSegment segment,
+    required String displayedIndex,
+    required VoidCallback onEdit,
+    required VoidCallback onDelete,
+  }) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(displayedIndex),
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              segment.commentTitle,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+              ),
+            ),
+            if (segment.deleted)
+              Tooltip(
+                message: AppLocalizations.of(context)!.commentWasDeletedTooltip,
+                child: Text(
+                  AppLocalizations.of(context)!.commentWasDeleted,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            Row(
+              children: [
+                Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.commentStartPositionTooltip,
+                  child: Text(
+                    TimeFormatUtil.formatSeconds(segment.startPosition),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: 15,
+                  color: Colors.white70,
+                ),
+              ],
+            ),
+            Tooltip(
+              message: AppLocalizations.of(context)!.commentEndPositionTooltip,
+              child: Text(
+                TimeFormatUtil.formatSeconds(segment.endPosition),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            const SizedBox(height: 2),
+            Tooltip(
+              message:
+                  AppLocalizations.of(context)!.extractAudioPlaySpeedTooltip,
+              child: Text(
+                "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            if (segment.fadeInDuration > 0) ...[
+              const SizedBox(height: 2),
+              Tooltip(
+                message: AppLocalizations.of(context)!.fadeStartPositionTooltip,
+                child: Text(
+                  "${AppLocalizations.of(context)!.fadeInDuration}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+            if (segment.soundReductionPosition > 0) ...[
+              const SizedBox(height: 2),
+              Tooltip(
+                message:
+                    AppLocalizations.of(context)!.soundReductionPositionTooltip,
+                child: Text(
+                  "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+            if (segment.soundReductionDuration > 0) ...[
+              const SizedBox(height: 2),
+              Tooltip(
+                message:
+                    AppLocalizations.of(context)!.soundReductionDurationTooltip,
+                child: Text(
+                  "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+        subtitle: Text(
+          "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
+          "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
+          style: const TextStyle(fontSize: 12),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit, size: 20),
+              onPressed: onEdit,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete, size: 20, color: Colors.red),
+              onPressed: onDelete,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// 7. Add method to delete multi-audio segments:
+
+  void _confirmDeleteMultiAudioSegment({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+    required int audioIndex,
+    required int segmentIndex,
+  }) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
+        content: Text(AppLocalizations.of(context)!.deleteCommentExplanation),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              audioExtractorVM.removeMultiAudioSegment(
+                audioIndex: audioIndex,
+                segmentIndex: segmentIndex,
+              );
+              Navigator.of(dialogContext).pop();
+            },
+            child: Text(AppLocalizations.of(context)!.delete),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
+          ),
+        ],
       ),
     );
   }
@@ -936,7 +1168,42 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
     final ExtractMp3AudioPlayerVM audioPlayerVM =
         context.read<ExtractMp3AudioPlayerVM>();
+    // Handle multi-audio mode
+    if (audioExtractorVM.isMultiAudioMode) {
+      if (audioExtractorVM.multiAudios.isEmpty) {
+        audioExtractorVM.setError('No audios loaded');
+        return;
+      }
 
+      // Release player if needed
+      if (audioPlayerVM.isLoaded) {
+        await audioPlayerVM.releaseCurrentFile();
+        if (Platform.isWindows) {
+          await Future.delayed(const Duration(milliseconds: 500));
+        }
+      }
+
+      // Generate filename for multi-audio extraction
+      final int totalSegments = audioExtractorVM.totalSegmentCountMultiAudio;
+      String extractedMp3FileName =
+          'multi_${audioExtractorVM.multiAudios.length}_audios_${totalSegments}_segments.mp3';
+
+      if (_extractInMusicQuality) {
+        extractedMp3FileName =
+            "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
+      }
+
+      extractedMp3FileName = PathUtil.sanitizeFileName(extractedMp3FileName);
+
+      await audioExtractorVM.extractMultiAudioToDirectory(
+        settingsDataService: settingsDataService,
+        inMusicQuality: _extractInMusicQuality,
+        extractedMp3FileName: extractedMp3FileName,
+      );
+
+      return;
+    }
+    
     if (audioExtractorVM.multiInputs.isEmpty) {
       if (audioExtractorVM.audioFile.path == null) {
         audioExtractorVM.setError('Please select an MP3 file first');

@@ -4548,6 +4548,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments.'**
   String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne;
+
+  /// No description provided for @loadedCommentsFromMultipleAudios.
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded {audioCount} audios with {segmentCount} total segments.'**
+  String loadedCommentsFromMultipleAudios(
+      Object audioCount, Object segmentCount);
+
+  /// No description provided for @fadeInDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume fade-in'**
+  String get fadeInDuration;
 }
 
 class _AppLocalizationsDelegate

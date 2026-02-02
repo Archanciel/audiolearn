@@ -2936,4 +2936,14 @@ class MockAppLocalizations extends AppLocalizations {
     Object value,
   ) =>
       "Sound reduction position ($value) must be before the comment end position";
+
+  @override
+  String loadedCommentsFromMultipleAudios(
+    Object audioCount,
+    Object segmentCount,
+  ) =>
+      "Loaded $audioCount audios with $segmentCount total segments.";
+
+  @override
+  String get fadeInDuration => "Volume fade-in";
 }
