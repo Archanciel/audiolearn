@@ -1043,9 +1043,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               return;
             }
 
-            // First, close the current dialog/menu
-            Navigator.of(context).pop();
-
             // Then navigate to the AudioExtractorScreen
             CommentVM commentVMlistenFalse =
                 Provider.of<CommentVM>(context, listen: false);
