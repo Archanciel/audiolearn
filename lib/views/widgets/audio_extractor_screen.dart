@@ -65,13 +65,17 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     audioExtractorVM.commentVMlistenTrue = widget.commentVMlistenTrue;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // Check if we're in multi-audio mode
+      // ✅ CRITICAL: Determine mode and clear opposite mode's state
       if (widget.multipleAudiosLst.isNotEmpty) {
+        // Multi-audio mode: clear single-audio segments
+        audioExtractorVM.clearAllSegments();
         await _loadMultipleAudios(
           context: context,
           audioExtractorVM: audioExtractorVM,
         );
       } else {
+        // Single-audio mode: clear multi-audio state
+        audioExtractorVM.clearMultiAudios();
         await _pickMP3File(
           context: context,
           audioExtractorVM: audioExtractorVM,
@@ -110,6 +114,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   @override
   void dispose() {
     _segmentsScrollController.dispose();
+
+    // Clear both modes' state to prevent retention
+    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    audioExtractorVM.clearMultiAudios();
+    audioExtractorVM.clearAllSegments();
 
     super.dispose();
   }
