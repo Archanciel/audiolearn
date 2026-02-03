@@ -415,7 +415,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Playable audios total file size';
 
   @override
-  String get updatePlaylistPlayableAudioList => 'Update playable Audio\'s List';
+  String get updatePlaylistPlayableAudioList => 'Update playable Audios List';
 
   @override
   String updatedPlayableAudioLst(Object number, Object title) {
@@ -926,7 +926,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appSettingsDialogTitle => 'Application Settings';
 
   @override
-  String get setAudioPlaySpeed => 'Set Audio\'s Play Speed ...';
+  String get setAudioPlaySpeed => 'Set Audios Play Speed ...';
 
   @override
   String get applyToAlreadyDownloadedAudio =>
@@ -988,7 +988,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpTitle =>
-      'Apply to already downloaded or imported Audio\'s';
+      'Apply to already downloaded or imported Audios';
 
   @override
   String get alreadyDownloadedAudiosPlaylistHelpContent =>
@@ -1345,7 +1345,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get rewindAudioToStart => 'Rewind all Audio\'s to Start';
+  String get rewindAudioToStart => 'Rewind all Audios to Start';
 
   @override
   String get rewindAudioToStartTooltip =>
@@ -1378,7 +1378,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
       Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration) {
-    return 'Audio\'s to delete number: $deleteAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
+    return 'Audios to delete number: $deleteAudioNumber,\nCorresponding total file size: $deleteAudioTotalFileSize,\nCorresponding total duration: $deleteAudioTotalDuration.';
   }
 
   @override
@@ -1442,23 +1442,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle =>
-      'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"';
+      'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audios Actions ...\" and then on \"Delete filtered Audios ...\"';
 
   @override
   String get commentedAudioDeletionApplyingNewSFParmHelpContent =>
       'This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.';
 
   @override
-  String get filteredAudioActions => 'Filtered Audio\'s Actions ...';
+  String get filteredAudioActions => 'Filtered Audios Actions ...';
 
   @override
-  String get moveFilteredAudio => 'Move filtered Audio\'s to Playlist ...';
+  String get moveFilteredAudio => 'Move filtered Audios to Playlist ...';
 
   @override
-  String get copyFilteredAudio => 'Copy filtered Audio\'s to Playlist ...';
+  String get copyFilteredAudio => 'Copy filtered Audios to Playlist ...';
 
   @override
-  String get deleteFilteredAudio => 'Delete filtered Audio\'s ...';
+  String get extractFilteredAudio =>
+      'Extract filtered Audios to unique MP3 ...';
+
+  @override
+  String get deleteFilteredAudio => 'Delete filtered Audios ...';
 
   @override
   String confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist(
@@ -1767,7 +1771,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteFilteredAudioFromPlaylistAsWell =>
-      'Delete filtered Audio\'s from Playlist as well ...';
+      'Delete filtered Audios from Playlist as well ...';
 
   @override
   String deleteFilteredAudioFromPlaylistAsWellConfirmationTitle(
@@ -1776,7 +1780,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get redownloadFilteredAudio => 'Redownload filtered Audio\'s';
+  String get redownloadFilteredAudio => 'Redownload filtered Audios';
 
   @override
   String get redownloadFilteredAudioTooltip =>
@@ -1996,7 +2000,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePlaylistsAudioMp3FilesToZipMenu =>
-      'Save Playlists Audio\'s MP3 to ZIP File(s) ...';
+      'Save Playlists Audios MP3 to ZIP File(s) ...';
 
   @override
   String get savePlaylistsAudioMp3FilesToZipTooltip =>
@@ -2029,7 +2033,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savePlaylistAudioMp3FilesToZipMenu =>
-      'Save the Playlist Audio\'s MP3 to 1 or n ZIP File(s) ...';
+      'Save the Playlist Audios MP3 to 1 or n ZIP File(s) ...';
 
   @override
   String get savePlaylistAudioMp3FilesToZipTooltip =>
@@ -2111,7 +2115,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipMenu =>
-      'Restore Playlists Audio\'s MP3 from one or several ZIP File(s)  ...';
+      'Restore Playlists Audios MP3 from one or several ZIP File(s)  ...';
 
   @override
   String get restorePlaylistsAudioMp3FilesFromZipTooltip =>
@@ -2126,7 +2130,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipMenu =>
-      'Restore Playlist Audio\'s MP3 from one or several ZIP File(s) ...';
+      'Restore Playlist Audios MP3 from one or several ZIP File(s) ...';
 
   @override
   String get restorePlaylistAudioMp3FilesFromZipTooltip =>
@@ -2226,7 +2230,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get obtainMostRecentAudioDownloadDateTimeTooltip =>
-      'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audio\'s MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.';
+      'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audios MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.';
 
   @override
   String get displayNewestAudioDownloadDateTimeTitle =>
@@ -2560,7 +2564,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get convertingMp4ToMP3 => 'Converting imported MP4 to MP3 ...';
 
   @override
-  String get addPositionToAudioTitleMenu => 'Add Position to Audio\'s Title';
+  String get addPositionToAudioTitleMenu => 'Add Position to Audios Title';
 
   @override
   String get moveAudioToPositionMenu => 'Move Audio to Position ...';

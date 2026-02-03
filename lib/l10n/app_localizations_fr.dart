@@ -1469,6 +1469,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Copier les audios filtrés dans une playlist ...';
 
   @override
+  String get extractFilteredAudio =>
+      'Extraire les audios filtrés dans un unique MP3 ...';
+
+  @override
   String get deleteFilteredAudio => 'Supprimer les audios filtrés ...';
 
   @override

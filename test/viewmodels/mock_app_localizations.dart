@@ -2946,4 +2946,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get fadeInDuration => "Volume fade-in";
+
+  @override
+  String get extractFilteredAudio =>
+      "Extract filtered Audios to unique MP3 ...";
 }
