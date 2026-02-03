@@ -463,6 +463,10 @@ class AudioExtractorVM extends ChangeNotifier {
     try {
       startProcessing();
 
+      if (!await validateMultiAudioFiles()) {
+        return; // Error already set in validation method
+      }
+
       final String actualTargetDir =
           "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
@@ -699,5 +703,37 @@ class AudioExtractorVM extends ChangeNotifier {
     }
 
     return count;
+  }
+
+  /// Validate all source audio files before extraction
+  Future<bool> validateMultiAudioFiles() async {
+    for (final audioWithSegments in _multiAudios) {
+      final String filePath = audioWithSegments.audio.filePathName;
+
+      // Check file exists
+      if (!File(filePath).existsSync()) {
+        _extractionResult = ExtractionResult.error(
+          'Audio file not found: ${audioWithSegments.audio.validVideoTitle}',
+        );
+        notifyListeners();
+        return false;
+      }
+
+      // Validate segments don't exceed audio duration
+      final double audioDurationSeconds =
+          audioWithSegments.audio.audioDuration.inMilliseconds / 1000.0;
+
+      for (final segment in audioWithSegments.segments) {
+        if (!segment.deleted && segment.endPosition > audioDurationSeconds) {
+          _extractionResult = ExtractionResult.error(
+            'Segment end position (${segment.endPosition}s) exceeds audio duration (${audioDurationSeconds}s) for: ${audioWithSegments.audio.validVideoTitle}',
+          );
+          notifyListeners();
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }
