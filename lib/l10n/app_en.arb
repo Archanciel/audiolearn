@@ -223,7 +223,7 @@
   "playlistPlayableAudioTotalDurationLabel": "Playable audios total duration",
   "playlistPlayableAudioTotalRemainingDurationLabel": "Playable audios total remaining duration",
   "playlistPlayableAudioTotalSizeLabel": "Playable audios total file size",
-  "updatePlaylistPlayableAudioList": "Update playable Audio's List",
+  "updatePlaylistPlayableAudioList": "Update playable Audios List",
   "updatedPlayableAudioLst": "Playable audio list for playlist \"{title}\" was updated. {number} audio(s) were removed.",
   "addYoutubePlaylistDialogTitle": "Add Youtube Playlist",
   "addLocalPlaylistDialogTitle": "Add Local Playlist",
@@ -434,7 +434,7 @@
   "sortFilterParametersDownloadButtonHint": "Sel sort/filter",
   "appBarMenuOpenSettingsDialog": "Application Settings ...",
   "appSettingsDialogTitle": "Application Settings",
-  "setAudioPlaySpeed": "Set Audio's Play Speed ...",
+  "setAudioPlaySpeed": "Set Audios Play Speed ...",
   "applyToAlreadyDownloadedAudio": "Apply to already downloaded,\nimported or converted audios",
   "applyToAlreadyDownloadedAudioTooltip": "Apply the playback speed to audios in all existing playlists. If not set, apply it only to newly added playlists.",
   "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Apply the playback speed to audios in the current playlist. If not set, apply it only to newly downloaded or imported audio.",
@@ -451,7 +451,7 @@
   "alreadyDownloadedAudiosHelpContent": "Selecting the second checkbox allows you to change the playback speed for audio files already present on the device.",
   "excludingFutureDownloadsHelpTitle": "Excluding Future Downloads",
   "excludingFutureDownloadsHelpContent": "If only the second checkbox is checked, the playback speed will not be modified for audios that will be downloaded later in existing playlists. However, as mentioned previously, new playlists will use the newly defined playback speed for all downloaded audio.",
-  "alreadyDownloadedAudiosPlaylistHelpTitle": "Apply to already downloaded or imported Audio's",
+  "alreadyDownloadedAudiosPlaylistHelpTitle": "Apply to already downloaded or imported Audios",
   "alreadyDownloadedAudiosPlaylistHelpContent": "Selecting this checkbox allows you to change the playback speed for the playlist audio files already present on the device.",
   "commentsIconButtonTooltip": "Show or insert comments at specific points in the audio.",
   "commentsDialogTitle": "Comments",
@@ -572,7 +572,7 @@
       "numberOfModifiedPlayableAudio": {}
     }
   },
-  "rewindAudioToStart": "Rewind all Audio's to Start",
+  "rewindAudioToStart": "Rewind all Audios to Start",
   "rewindAudioToStartTooltip": "Rewind all playlist audios to start position. This is useful if you wish to replay all the audios.",
   "rewindedPlayableAudioNumber": "{number} playlist audios were repositioned to start and the first listenable audio was selected.",
   "dateFormat": "Select Date Format ...",
@@ -587,7 +587,7 @@
       "playlistTitle": {}
     }
   },
-  "deleteFilteredAudioConfirmation": "Audio's to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
+  "deleteFilteredAudioConfirmation": "Audios to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.",
   "@deleteFilteredAudioConfirmation": {
     "description": "Confirmation message for deleting filtered audio",
     "placeholders": {
@@ -625,12 +625,13 @@
   "commentedAudioDeletionCreateSFParmHelpContent": "In the \"Save as\" field, enter a name for the Sort/Filter parameter (e.g., FullyListenedUncom). Uncheck the checkboxes for \"Partially listened\", \"Not listened\" and \"Commented\". Then click on \"Save\".",
   "commentedAudioDeletionSelectSFParmHelpTitle": "Once saved, the Sort/Filter parameter is applied to the playlist, reducing the displayed audios list.",
   "commentedAudioDeletionSelectSFParmHelpContent": "Click on the \"Playlists\" button to hide the playlist list. You’ll see your newly created SF parameter selected in the dropdown menu. You can apply this parameter or another one to any playlist ...",
-  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio's Actions ...\" and then on \"Delete filtered Audio's ...\"",
+  "commentedAudioDeletionApplyingNewSFParmHelpTitle": "Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audios Actions ...\" and then on \"Delete filtered Audios ...\"",
   "commentedAudioDeletionApplyingNewSFParmHelpContent": "This time, since a correct SF parameter is applied, no warning will be displayed when deleting the selected uncommented audio.",
-  "filteredAudioActions": "Filtered Audio's Actions ...",
-  "moveFilteredAudio": "Move filtered Audio's to Playlist ...",
-  "copyFilteredAudio": "Copy filtered Audio's to Playlist ...",
-  "deleteFilteredAudio": "Delete filtered Audio's ...",
+  "filteredAudioActions": "Filtered Audios Actions ...",
+  "moveFilteredAudio": "Move filtered Audios to Playlist ...",
+  "copyFilteredAudio": "Copy filtered Audios to Playlist ...",
+  "extractFilteredAudio": "Extract filtered Audios to unique MP3 ...",
+  "deleteFilteredAudio": "Delete filtered Audios ...",
   "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "Applying Sort/Filter parms \"{sortedFilterParmsName}\", from Youtube playlist \"{sourcePlaylistTitle}\" to Youtube playlist \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) were moved from which {movedCommentedAudioNumber} were commented, and {unmovedAudioNumber} audio(s) were unmoved.",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {
     "description": "Confirmation message indicating how many audios were moved and unmoved",
@@ -849,7 +850,7 @@
   "restorePlaylistAndCommentsFromZipMenu": "Restore Playlist(s), Comments, Pictures and Settings from ZIP File ...",
   "restorePlaylistAndCommentsFromZipTooltip": "According to the content of the selected ZIP file, restoring a unique or multiple playlists, their audio comments, pictures and, if awailable, the application settings. The audio files are not included in the ZIP file.",
   "appDataCouldNotBeRestoredFromZip": "Playlist, comment and picture JSON files as well as application settings could not be restored from ZIP.",
-  "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audio's from Playlist as well ...",
+  "deleteFilteredAudioFromPlaylistAsWell": "Delete filtered Audios from Playlist as well ...",
   "deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": "Delete audios filtered by \"{sortFilterParmsName}\" parms from playlist \"{playlistTitle}\" as well (will be re-downloadable)",
   "@deleteFilteredAudioFromPlaylistAsWellConfirmationTitle": {
     "description": "Confirmation title for deleting filtered audio",
@@ -858,7 +859,7 @@
       "playlistTitle": {}
     }
   },
-  "redownloadFilteredAudio": "Redownload filtered Audio's",
+  "redownloadFilteredAudio": "Redownload filtered Audios",
   "redownloadFilteredAudioTooltip": "Filtered audio files are re-downloaded using their original file names.",
   "redownloadedAudioNumbersConfirmation": "\"{redownloadedAudioNumber}\" audios were redownloaded to the playlist \"{playlistTitle}\". \"{notRedownloadedAudioNumber}\" audios were not redownloaded since they are already present in the playlist directory.",
   "@redownloadedAudioNumbersConfirmation": {
@@ -958,7 +959,7 @@
   "restoredElementsHelpContent": "N playlist: number of new playlist JSON files created by the restoration.\n\nN comment: number of new comment JSON files created by the restoration. This happens only if the commented audio had no comment before the restoration. Otherwise, the new comment is added to the existing audio comment JSON file.\n\nN picture: number of new picture JSON files created by the restoration. This happens only if the pictured audio had no picture before the restoration. Otherwise, the new picture is added to the existing audio picture JSON file.\n\nN audio reference: number of playable audio elements contained in the unique or multiple new playlist json file(s) created by the restoration. If the restored playlist number is 0, then the audio reference(s) number correspond to the number of audio element(s) added to their enclosing playlist JSON file by the restoration. The restoration does not add MP3 files since no MP3 is contained in the ZIP file. The added referenced audios can be downloaded after the restoration.\n\nN added comment: number of comments added by the restoration to the existing audio comment JSON files.\n\nN modified comment: number of comments modified by the restoration in the existing audio comment JSON files.",
   "playlistInfoDownloadAudio": "Download audio",
   "playlistInfoAudioPlayer": "Play audio",
-  "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists Audio's MP3 to ZIP File(s) ...",
+  "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists Audios MP3 to ZIP File(s) ...",
   "savePlaylistsAudioMp3FilesToZipTooltip": "Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.",
   "setAudioDownloadFromDateTimeTitle": "Set the Download Date",
   "audioDownloadFromDateTimeAllPlaylistsExplanation": "The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.",
@@ -966,7 +967,7 @@
   "audioDownloadFromDateTimeAllPlaylistsTooltip": "Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.",
   "audioDownloadFromDateTimeSinglePlaylistTooltip": "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.",
   "noAudioMp3WereSavedToZip": "No audio MP3 file was saved to ZIP since no audio was downloaded on or after {audioDownloadFromDateTime}.",
-  "savePlaylistAudioMp3FilesToZipMenu": "Save the Playlist Audio's MP3 to 1 or n ZIP File(s) ...",
+  "savePlaylistAudioMp3FilesToZipMenu": "Save the Playlist Audios MP3 to 1 or n ZIP File(s) ...",
   "savePlaylistAudioMp3FilesToZipTooltip": "Saving the playlist audio MP3 files to one or several ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.",
   "audioDownloadFromDateTimeUniquePlaylistExplanation": "The default specified download date corresponds to the oldest audio download date from the playlist. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.",
   "audioDownloadFromDateTimeUniquePlaylistTooltip": "Since the current date/time value corresponds to the playlist oldest date/time downladed audio value, if the date/time is not modified, all the playlist audio MP3 files will be included in the ZIP file.",
@@ -1009,11 +1010,11 @@
       "zipTooLargeFileInfo": {}
     }
   },
-  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audio's MP3 from one or several ZIP File(s)  ...",
+  "restorePlaylistsAudioMp3FilesFromZipMenu": "Restore Playlists Audios MP3 from one or several ZIP File(s)  ...",
   "restorePlaylistsAudioMp3FilesFromZipTooltip": "Restoring audios MP3 not yet present in the playlists from a saved ZIP file. Only the MP3 relative to the audios listed in the playlists are restorable.",
   "audioMp3RestorationDialogTitle": "MP3 Restoration",
   "audioMp3RestorationExplanation": "Only the MP3 relative to the audios listed in the playlists which are not already present in the playlists are restorable.",
-  "restorePlaylistAudioMp3FilesFromZipMenu": "Restore Playlist Audio's MP3 from one or several ZIP File(s) ...",
+  "restorePlaylistAudioMp3FilesFromZipMenu": "Restore Playlist Audios MP3 from one or several ZIP File(s) ...",
   "restorePlaylistAudioMp3FilesFromZipTooltip": "Restoring audios MP3 not yet present in the playlist from a saved ZIP file. Only the MP3 relative to the audios listed in the playlist are restorable.",
   "audioMp3UniquePlaylistRestorationDialogTitle": "MP3 Restoration",
   "audioMp3UniquePlaylistRestorationExplanation": "Only the MP3 relative to the audios listed in the playlist which are not already present in the playlist are restorable.",
@@ -1037,7 +1038,7 @@
   "zipTooLargeOneFileInfoLabel": "This file is too large to be included in the MP3 saved ZIP file and so was not saved:\n",
   "androidZipFileCreationError": "Error saving the ZIP file {zipFileName}. This is due to its too large size: {zipFileSize}.\n\nSolution: in the application settings, reduce the maximum ZIP file size and re-run the save MP3 to ZIP function.",
   "obtainMostRecentAudioDownloadDateTimeMenu": "Get latest Audio download Date",
-  "obtainMostRecentAudioDownloadDateTimeTooltip": "Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the 'Save Playlists Audio's MP3 to ZIP File(s)' menu to ensure you capture only the newest audio files for restoring them to the current app version.",
+  "obtainMostRecentAudioDownloadDateTimeTooltip": "Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the 'Save Playlists Audios MP3 to ZIP File(s)' menu to ensure you capture only the newest audio files for restoring them to the current app version.",
   "displayNewestAudioDownloadDateTimeTitle": "Latest Audio Download Date",
   "displayNewestAudioDownloadDateTime": "This is the latest audio download date/time: {newestAudioDownloadDateTime}.",
   "audioTitleModificationHelpTitle": "Using Audio Title Modification",
@@ -1156,7 +1157,7 @@
     }
   },
   "convertingMp4ToMP3":"Converting imported MP4 to MP3 ...",
-  "addPositionToAudioTitleMenu": "Add Position to Audio's Title",
+  "addPositionToAudioTitleMenu": "Add Position to Audios Title",
   "moveAudioToPositionMenu": "Move Audio to Position ...",
   "moveAudioToPosition": "Move Audio to Int Position",
   "audioIntPositionLabel": "Audio int position",

@@ -766,6 +766,7 @@
   "filteredAudioActions": "Traiter les audios filtrés ...",
   "moveFilteredAudio": "Déplacer les audios filtrés dans une playlist ...",
   "copyFilteredAudio": "Copier les audios filtrés dans une playlist ...",
+  "extractFilteredAudio": "Extraire les audios filtrés dans un unique MP3 ...",
   "deleteFilteredAudio": "Supprimer les audios filtrés ...",
   "confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": "En appliquant le filtre \"{sortedFilterParmsName}\", de la playlist Youtube \"{sourcePlaylistTitle}\" à la playlist Youtube \"{targetPlaylistTitle}\", {movedAudioNumber} audio(s) ont été déplacé(s) dont {movedCommentedAudioNumber} commenté(s), et {unmovedAudioNumber} audio(s) n'ont pu être déplacé(s).",
   "@confirmMovedUnmovedAudioNumberFromYoutubeToYoutubePlaylist": {

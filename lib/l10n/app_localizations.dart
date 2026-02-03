@@ -819,7 +819,7 @@ abstract class AppLocalizations {
   /// No description provided for @updatePlaylistPlayableAudioList.
   ///
   /// In en, this message translates to:
-  /// **'Update playable Audio\'s List'**
+  /// **'Update playable Audios List'**
   String get updatePlaylistPlayableAudioList;
 
   /// No description provided for @updatedPlayableAudioLst.
@@ -1642,7 +1642,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioPlaySpeed.
   ///
   /// In en, this message translates to:
-  /// **'Set Audio\'s Play Speed ...'**
+  /// **'Set Audios Play Speed ...'**
   String get setAudioPlaySpeed;
 
   /// No description provided for @applyToAlreadyDownloadedAudio.
@@ -1744,7 +1744,7 @@ abstract class AppLocalizations {
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Apply to already downloaded or imported Audio\'s'**
+  /// **'Apply to already downloaded or imported Audios'**
   String get alreadyDownloadedAudiosPlaylistHelpTitle;
 
   /// No description provided for @alreadyDownloadedAudiosPlaylistHelpContent.
@@ -2285,7 +2285,7 @@ abstract class AppLocalizations {
   /// No description provided for @rewindAudioToStart.
   ///
   /// In en, this message translates to:
-  /// **'Rewind all Audio\'s to Start'**
+  /// **'Rewind all Audios to Start'**
   String get rewindAudioToStart;
 
   /// No description provided for @rewindAudioToStartTooltip.
@@ -2334,7 +2334,7 @@ abstract class AppLocalizations {
   /// Confirmation message for deleting filtered audio
   ///
   /// In en, this message translates to:
-  /// **'Audio\'s to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
+  /// **'Audios to delete number: {deleteAudioNumber},\nCorresponding total file size: {deleteAudioTotalFileSize},\nCorresponding total duration: {deleteAudioTotalDuration}.'**
   String deleteFilteredAudioConfirmation(Object deleteAudioNumber,
       Object deleteAudioTotalFileSize, Object deleteAudioTotalDuration);
 
@@ -2424,7 +2424,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpTitle.
   ///
   /// In en, this message translates to:
-  /// **'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audio\'s Actions ...\" and then on \"Delete filtered Audio\'s ...\"'**
+  /// **'Finally, reclick on the \"Playlists\" button to display the playlist list, open the source playlist menu and click on \"Filtered Audios Actions ...\" and then on \"Delete filtered Audios ...\"'**
   String get commentedAudioDeletionApplyingNewSFParmHelpTitle;
 
   /// No description provided for @commentedAudioDeletionApplyingNewSFParmHelpContent.
@@ -2436,25 +2436,31 @@ abstract class AppLocalizations {
   /// No description provided for @filteredAudioActions.
   ///
   /// In en, this message translates to:
-  /// **'Filtered Audio\'s Actions ...'**
+  /// **'Filtered Audios Actions ...'**
   String get filteredAudioActions;
 
   /// No description provided for @moveFilteredAudio.
   ///
   /// In en, this message translates to:
-  /// **'Move filtered Audio\'s to Playlist ...'**
+  /// **'Move filtered Audios to Playlist ...'**
   String get moveFilteredAudio;
 
   /// No description provided for @copyFilteredAudio.
   ///
   /// In en, this message translates to:
-  /// **'Copy filtered Audio\'s to Playlist ...'**
+  /// **'Copy filtered Audios to Playlist ...'**
   String get copyFilteredAudio;
+
+  /// No description provided for @extractFilteredAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract filtered Audios to unique MP3 ...'**
+  String get extractFilteredAudio;
 
   /// No description provided for @deleteFilteredAudio.
   ///
   /// In en, this message translates to:
-  /// **'Delete filtered Audio\'s ...'**
+  /// **'Delete filtered Audios ...'**
   String get deleteFilteredAudio;
 
   /// Confirmation message indicating how many audios were moved and unmoved
@@ -2887,7 +2893,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteFilteredAudioFromPlaylistAsWell.
   ///
   /// In en, this message translates to:
-  /// **'Delete filtered Audio\'s from Playlist as well ...'**
+  /// **'Delete filtered Audios from Playlist as well ...'**
   String get deleteFilteredAudioFromPlaylistAsWell;
 
   /// Confirmation title for deleting filtered audio
@@ -2900,7 +2906,7 @@ abstract class AppLocalizations {
   /// No description provided for @redownloadFilteredAudio.
   ///
   /// In en, this message translates to:
-  /// **'Redownload filtered Audio\'s'**
+  /// **'Redownload filtered Audios'**
   String get redownloadFilteredAudio;
 
   /// No description provided for @redownloadFilteredAudioTooltip.
@@ -3254,7 +3260,7 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistsAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save Playlists Audio\'s MP3 to ZIP File(s) ...'**
+  /// **'Save Playlists Audios MP3 to ZIP File(s) ...'**
   String get savePlaylistsAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistsAudioMp3FilesToZipTooltip.
@@ -3302,7 +3308,7 @@ abstract class AppLocalizations {
   /// No description provided for @savePlaylistAudioMp3FilesToZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Save the Playlist Audio\'s MP3 to 1 or n ZIP File(s) ...'**
+  /// **'Save the Playlist Audios MP3 to 1 or n ZIP File(s) ...'**
   String get savePlaylistAudioMp3FilesToZipMenu;
 
   /// No description provided for @savePlaylistAudioMp3FilesToZipTooltip.
@@ -3410,7 +3416,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Restore Playlists Audio\'s MP3 from one or several ZIP File(s)  ...'**
+  /// **'Restore Playlists Audios MP3 from one or several ZIP File(s)  ...'**
   String get restorePlaylistsAudioMp3FilesFromZipMenu;
 
   /// No description provided for @restorePlaylistsAudioMp3FilesFromZipTooltip.
@@ -3434,7 +3440,7 @@ abstract class AppLocalizations {
   /// No description provided for @restorePlaylistAudioMp3FilesFromZipMenu.
   ///
   /// In en, this message translates to:
-  /// **'Restore Playlist Audio\'s MP3 from one or several ZIP File(s) ...'**
+  /// **'Restore Playlist Audios MP3 from one or several ZIP File(s) ...'**
   String get restorePlaylistAudioMp3FilesFromZipMenu;
 
   /// No description provided for @restorePlaylistAudioMp3FilesFromZipTooltip.
@@ -3581,7 +3587,7 @@ abstract class AppLocalizations {
   /// No description provided for @obtainMostRecentAudioDownloadDateTimeTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audio\'s MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.'**
+  /// **'Finds the most recent audio download date across all playlists. Use this date when creating ZIP backups with the \'Save Playlists Audios MP3 to ZIP File(s)\' menu to ensure you capture only the newest audio files for restoring them to the current app version.'**
   String get obtainMostRecentAudioDownloadDateTimeTooltip;
 
   /// No description provided for @displayNewestAudioDownloadDateTimeTitle.
@@ -4096,7 +4102,7 @@ abstract class AppLocalizations {
   /// No description provided for @addPositionToAudioTitleMenu.
   ///
   /// In en, this message translates to:
-  /// **'Add Position to Audio\'s Title'**
+  /// **'Add Position to Audios Title'**
   String get addPositionToAudioTitleMenu;
 
   /// No description provided for @moveAudioToPositionMenu.
