@@ -4,12 +4,14 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
+import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../../models/audio.dart';
 import '../../models/help_item.dart';
 import '../../models/playlist.dart';
 import '../../services/settings_data_service.dart';
@@ -20,6 +22,7 @@ import '../../viewmodels/playlist_list_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../screen_mixin.dart';
 import 'application_snackbar.dart';
+import 'audio_extractor_screen.dart';
 import 'confirm_action_dialog.dart';
 import 'convert_text_to_audio_dialog.dart';
 import 'playlist_comment_list_dialog.dart';
@@ -54,6 +57,7 @@ enum PlaylistPopupMenuAction {
 enum FilteredAudioAction {
   moveFilteredAudio,
   copyFilteredAudio,
+  extractFilteredAudio,
   deleteFilteredAudio,
   deleteFilteredAudioFromPlaylistAsWell,
   redownloadFilteredAudio,
@@ -847,6 +851,12 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               'Copy Filtered Audio'),
         ),
         PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_copy_filtered_audio'),
+          value: FilteredAudioAction.extractFilteredAudio,
+          child: Text(AppLocalizations.of(context)?.extractFilteredAudio ??
+              'Extract Filtered Audio'),
+        ),
+        PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_delete_filtered_audio'),
           value: FilteredAudioAction.deleteFilteredAudio,
           child: Text(AppLocalizations.of(context)!.deleteFilteredAudio),
@@ -1023,6 +1033,34 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 notCopiedAudioNumber: copiedNotCopiedAudioNumberLst[2],
               );
             });
+            break;
+          case FilteredAudioAction.extractFilteredAudio:
+            List<Audio>? sortFilteredAudioLst = playlistListVMlistenFalse
+                .sortedFilteredSelectedPlaylistPlayableAudioLst;
+
+            if (sortFilteredAudioLst == null || sortFilteredAudioLst.isEmpty) {
+              // No audio to extract
+              return;
+            }
+
+            showDialog<void>(
+              context: context,
+              barrierDismissible: false, // This line prevents the dialog from
+              // closing when tapping outside the dialog
+              builder: (BuildContext context) {
+                CommentVM commentVMlistenFalse =
+                    Provider.of<CommentVM>(context, listen: false);
+                return AudioExtractorScreen(
+                  settingsDataService: settingsDataService,
+                  currentAudio: sortFilteredAudioLst[1],
+                  commentVMlistenTrue: commentVMlistenFalse,
+                  multipleAudiosLst: sortFilteredAudioLst,
+                );
+              },
+            );
+
+            // Otherwise, close the normal dialog
+            Navigator.of(context).pop();
             break;
           case FilteredAudioAction.deleteFilteredAudio:
             _selectPlaylistAndDisplaySnackbar(
