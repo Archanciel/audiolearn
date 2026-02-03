@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/ffprobe_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:path/path.dart' as path;
 
 import '../models/audio_segment.dart';
 import '../constants.dart'; // for kDefaultSilenceDurationBetweenMp3
@@ -356,6 +357,8 @@ class AudioExtractorService {
         final String tempSegPath = '${tmp.path}/temp_seg_$i.mp3';
 
         final extractCmd = [
+          '-err_detect',
+          'ignore_err', // ✅ ADD: Ignore minor errors
           '-ss',
           s.startPosition.toString(),
           '-t',
@@ -366,6 +369,10 @@ class AudioExtractorService {
           'libmp3lame', // Re-encode instead of copy to ensure valid MP3
           '-b:a',
           encoderBitrate,
+          '-ar',
+          '44100', // ✅ ADD: Force sample rate
+          '-ac',
+          '2', // ✅ ADD: Force stereo
           _q(tempSegPath),
           '-y',
         ].join(' ');
@@ -376,10 +383,21 @@ class AudioExtractorService {
         if (!ReturnCode.isSuccess(
           await extractSess.getReturnCode(),
         )) {
+          final logs = await extractSess.getAllLogsAsString();
+          return {
+            'success': false,
+            'message': 'FFmpeg extract failed @segment ${i + 1}:\n$logs',
+            'outputPath': null,
+          };
+        }
+
+        // ✅ ADD: Validate temporary file
+        final tempFile = File(tempSegPath);
+        if (!tempFile.existsSync() || tempFile.lengthSync() < 1000) {
           return {
             'success': false,
             'message':
-                'FFmpeg extract failed @segment ${i + 1}:\n${await extractSess.getAllLogsAsString()}',
+                'Invalid temporary file created for segment ${i + 1}. The source audio may be corrupted.',
             'outputPath': null,
           };
         }
@@ -410,10 +428,10 @@ class AudioExtractorService {
           if (!ReturnCode.isSuccess(
             await reencodeSess.getReturnCode(),
           )) {
+            final logs = await reencodeSess.getAllLogsAsString();
             return {
               'success': false,
-              'message':
-                  'FFmpeg re-encode failed @segment ${i + 1}:\n${await reencodeSess.getAllLogsAsString()}',
+              'message': 'FFmpeg re-encode failed @segment ${i + 1}:\n$logs',
               'outputPath': null,
             };
           }
@@ -440,10 +458,10 @@ class AudioExtractorService {
           if (!ReturnCode.isSuccess(
             await filterSess.getReturnCode(),
           )) {
+            final logs = await filterSess.getAllLogsAsString();
             return {
               'success': false,
-              'message':
-                  'FFmpeg filter failed @segment ${i + 1}:\n${await filterSess.getAllLogsAsString()}',
+              'message': 'FFmpeg filter failed @segment ${i + 1}:\n$logs',
               'outputPath': null,
             };
           }
@@ -474,10 +492,10 @@ class AudioExtractorService {
           ].join(' ');
           final silSess = await FFmpegKit.execute(silCmd);
           if (!ReturnCode.isSuccess(await silSess.getReturnCode())) {
+            final logs = await silSess.getAllLogsAsString();
             return {
               'success': false,
-              'message':
-                  'FFmpeg silence failed:\n${await silSess.getAllLogsAsString()}',
+              'message': 'FFmpeg silence failed:\n$logs',
               'outputPath': null,
             };
           }
@@ -485,6 +503,7 @@ class AudioExtractorService {
         }
       }
 
+      // Rest of concatenation code...
       final listFile = File('${tmp.path}/concat.txt')
         ..writeAsStringSync(
           parts.map((p) => "file '${p.replaceAll("'", "'\\''")}'").join('\n'),
@@ -513,10 +532,10 @@ class AudioExtractorService {
           'outputPath': outputPath,
         };
       } else {
+        final logs = await concatSess.getAllLogsAsString();
         return {
           'success': false,
-          'message':
-              'FFmpeg concat failed:\n${await concatSess.getAllLogsAsString()}',
+          'message': 'FFmpeg concat failed:\n$logs',
           'outputPath': null,
         };
       }
@@ -667,6 +686,7 @@ class AudioExtractorService {
               '${tempDir.path}${Platform.pathSeparator}temp_seg_$i.mp3';
 
           final extractArgs = [
+            '-err_detect', 'ignore_err', // ✅ ADD
             '-ss',
             s.startPosition.toString(),
             '-t',
@@ -674,9 +694,11 @@ class AudioExtractorService {
             '-i',
             inputPath,
             '-c:a',
-            'libmp3lame', // Re-encode instead of copy to ensure valid MP3
+            'libmp3lame',
             '-b:a',
             encoderBitrate,
+            '-ar', '44100', // ✅ ADD
+            '-ac', '2', // ✅ ADD
             tempSegPath,
             '-y',
             '-v',
@@ -914,26 +936,31 @@ class AudioExtractorService {
       for (int i = 0; i < inputs.length; i++) {
         final inp = inputs[i];
 
+        // ✅ ADD: Log which audio is being processed
+        logger
+            .i('Processing audio ${i + 1}/${inputs.length}: ${inp.inputPath}');
+
         for (int j = 0; j < inp.segments.length; j++) {
           final s = inp.segments[j];
 
-          // Two-step extraction for multi-input too
+          // ✅ ADD: Log segment being extracted
+          logger.i(
+              '  Extracting segment ${j + 1}/${inp.segments.length}: ${s.startPosition}-${s.endPosition}');
+
           final tempCutPath = '${tmp.path}/m_temp_$partIndex.mp3';
           final cutPath = '${tmp.path}/m_cut_${partIndex++}.mp3';
 
           // Step 1: Extract segment without filters
           final extractCmd = [
+            '-err_detect',
+            'ignore_err', // ← AJOUTER
             '-ss',
-            s.startPosition.toString(),
-            '-t',
-            (s.endPosition - s.startPosition).toString(),
-            '-i',
-            _q(inp.inputPath),
-            '-c:a',
-            'libmp3lame',
-            '-b:a',
-            encoderBitrate,
-            _q(tempCutPath),
+            // ...
+            '-ar',
+            '44100', // ← AJOUTER
+            '-ac',
+            '2', // ← AJOUTER
+            _q(tempCutPath), // ou _q(tempSegPath)
             '-y',
           ].join(' ');
 
@@ -941,10 +968,23 @@ class AudioExtractorService {
           if (!ReturnCode.isSuccess(
             await extractSess.getReturnCode(),
           )) {
+            // ✅ IMPROVED: Better error message with audio info
+            final logs = await extractSess.getAllLogsAsString();
             return {
               'success': false,
               'message':
-                  'FFmpeg extract failed @input ${i + 1}, segment ${j + 1}:\n${await extractSess.getAllLogsAsString()}',
+                  'FFmpeg extract failed @audio ${i + 1} (${inp.inputPath}), segment ${j + 1}:\n$logs',
+              'outputPath': null,
+            };
+          }
+
+          // ✅ ADD: Validate temporary file was created and is valid
+          final tempFile = File(tempCutPath);
+          if (!tempFile.existsSync() || tempFile.lengthSync() < 1000) {
+            return {
+              'success': false,
+              'message':
+                  'Invalid temporary file created for audio ${i + 1} (${inp.inputPath}), segment ${j + 1}. The source audio may be corrupted.',
               'outputPath': null,
             };
           }
@@ -956,10 +996,10 @@ class AudioExtractorService {
           );
 
           if (audioFilter.isEmpty) {
-            // No filters, just rename temp file
-            final tempFile = File(tempCutPath);
-            await tempFile.copy(cutPath);
-            await tempFile.delete();
+            // No filters, just copy temp file
+            final tempFileObj = File(tempCutPath);
+            await tempFileObj.copy(cutPath);
+            await tempFileObj.delete();
           } else {
             // Apply filters
             final filterCmd = [
@@ -979,10 +1019,11 @@ class AudioExtractorService {
             if (!ReturnCode.isSuccess(
               await filterSess.getReturnCode(),
             )) {
+              final logs = await filterSess.getAllLogsAsString();
               return {
                 'success': false,
                 'message':
-                    'FFmpeg filter failed @input ${i + 1}, segment ${j + 1}:\n${await filterSess.getAllLogsAsString()}',
+                    'FFmpeg filter failed @audio ${i + 1}, segment ${j + 1}:\n$logs',
                 'outputPath': null,
               };
             }
@@ -1120,10 +1161,17 @@ class AudioExtractorService {
       for (int i = 0; i < inputs.length; i++) {
         final inp = inputs[i];
 
+        // ✅ ADD: Log which audio is being processed
+        logger
+            .i('Processing audio ${i + 1}/${inputs.length}: ${inp.inputPath}');
+
         for (int j = 0; j < inp.segments.length; j++) {
           final s = inp.segments[j];
 
-          // Two-step extraction for multi-input
+          // ✅ ADD: Log segment being extracted
+          logger.i(
+              '  Extracting segment ${j + 1}/${inp.segments.length}: ${s.startPosition}-${s.endPosition}');
+
           final tempCutPath =
               '${tempDir.path}${Platform.pathSeparator}m_temp_$idx.mp3';
           final cutPath =
@@ -1131,6 +1179,7 @@ class AudioExtractorService {
 
           // Step 1: Extract segment without filters
           final extractArgs = [
+            '-err_detect', 'ignore_err', // ✅ ADD
             '-ss',
             s.startPosition.toString(),
             '-t',
@@ -1141,6 +1190,8 @@ class AudioExtractorService {
             'libmp3lame',
             '-b:a',
             encoderBitrate,
+            '-ar', '44100', // ✅ ADD
+            '-ac', '2', // ✅ ADD
             tempCutPath,
             '-y',
             '-v',
@@ -1151,10 +1202,24 @@ class AudioExtractorService {
             'ffmpeg',
             extractArgs,
           );
+
           if (extractResult.exitCode != 0) {
+            // ✅ IMPROVED: Better error message with audio info
             return {
               'success': false,
-              'message': 'Extract failed: ${extractResult.stderr}',
+              'message':
+                  'Failed to extract audio ${i + 1} ("${path.basename(inp.inputPath)}"), segment ${j + 1}: ${extractResult.stderr}',
+              'outputPath': null,
+            };
+          }
+
+          // ✅ ADD: Validate temporary file was created and is valid
+          final tempFile = File(tempCutPath);
+          if (!tempFile.existsSync() || tempFile.lengthSync() < 1000) {
+            return {
+              'success': false,
+              'message':
+                  'Invalid temporary file created for audio ${i + 1} ("${path.basename(inp.inputPath)}"), segment ${j + 1}. The source audio may be corrupted.',
               'outputPath': null,
             };
           }
@@ -1192,7 +1257,8 @@ class AudioExtractorService {
             if (filterResult.exitCode != 0) {
               return {
                 'success': false,
-                'message': 'Filter failed: ${filterResult.stderr}',
+                'message':
+                    'Filter failed for audio ${i + 1}, segment ${j + 1}: ${filterResult.stderr}',
                 'outputPath': null,
               };
             }
