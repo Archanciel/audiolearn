@@ -1043,24 +1043,27 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               return;
             }
 
-            showDialog<void>(
-              context: context,
-              barrierDismissible: false, // This line prevents the dialog from
-              // closing when tapping outside the dialog
-              builder: (BuildContext context) {
-                CommentVM commentVMlistenFalse =
-                    Provider.of<CommentVM>(context, listen: false);
-                return AudioExtractorScreen(
-                  settingsDataService: settingsDataService,
-                  currentAudio: sortFilteredAudioLst[1],
-                  commentVMlistenTrue: commentVMlistenFalse,
-                  multipleAudiosLst: sortFilteredAudioLst,
-                );
-              },
-            );
-
-            // Otherwise, close the normal dialog
+            // First, close the current dialog/menu
             Navigator.of(context).pop();
+
+            // Then navigate to the AudioExtractorScreen
+            CommentVM commentVMlistenFalse =
+                Provider.of<CommentVM>(context, listen: false);
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return AudioExtractorScreen(
+                    settingsDataService: settingsDataService,
+                    currentAudio:
+                        sortFilteredAudioLst.first, // Use first, not [1]
+                    commentVMlistenTrue: commentVMlistenFalse,
+                    multipleAudiosLst: sortFilteredAudioLst,
+                  );
+                },
+              ),
+            );
             break;
           case FilteredAudioAction.deleteFilteredAudio:
             _selectPlaylistAndDisplaySnackbar(

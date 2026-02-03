@@ -128,6 +128,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           : ScreenMixin.themeDataLight,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
           title: Text(
             AppLocalizations.of(context)!.audioExtractorDialogTitle,
             textAlign: TextAlign.center, // Centered multi lines text
@@ -889,8 +894,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     ? Text(
                         key: const Key('extractedAudioDurationTextKey'),
                         TimeFormatUtil.formatSeconds(
-                            audioExtractorVM.totalDuration),
-                      ) // On Windows, audioPlayerVM.duration is 0.1 second too big
+                          audioExtractorVM.isMultiAudioMode
+                              ? audioExtractorVM.totalDurationMultiAudio
+                              : audioExtractorVM.totalDuration,
+                        ),
+                      )
                     : Text(
                         key: const Key('extractedAudioDurationTextKey'),
                         TimeFormatUtil.formatDuration(
@@ -1203,7 +1211,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
       return;
     }
-    
+
     if (audioExtractorVM.multiInputs.isEmpty) {
       if (audioExtractorVM.audioFile.path == null) {
         audioExtractorVM.setError('Please select an MP3 file first');
