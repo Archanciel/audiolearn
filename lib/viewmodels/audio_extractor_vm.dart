@@ -736,4 +736,11 @@ class AudioExtractorVM extends ChangeNotifier {
 
     return true;
   }
+
+  /// Clear segments without updating comment list
+  /// (Used when switching modes or when _commentsLst is not initialized)
+  void clearSegmentsOnly() {
+    _segments.clear();
+    notifyListeners();
+  }
 }

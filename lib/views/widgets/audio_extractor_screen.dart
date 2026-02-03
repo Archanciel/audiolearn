@@ -67,8 +67,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // ✅ CRITICAL: Determine mode and clear opposite mode's state
       if (widget.multipleAudiosLst.isNotEmpty) {
-        // Multi-audio mode: clear single-audio segments
-        audioExtractorVM.clearAllSegments();
+        // Multi-audio mode: clear single-audio segments WITHOUT updating comments
+        // (because _commentsLst hasn't been initialized for multi-audio mode)
+        audioExtractorVM.clearSegmentsOnly(); // ← NOUVELLE MÉTHODE
         await _loadMultipleAudios(
           context: context,
           audioExtractorVM: audioExtractorVM,
