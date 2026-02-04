@@ -105,7 +105,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       );
       return;
     }
-    if (end <= start || end > widget.maxDuration) {
+    if (end <= start || end > (widget.maxDuration * 10).round() / 10) {
       _showError(
         "${AppLocalizations.of(context)!.endPositionError(TimeFormatUtil.formatSeconds(start))} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}.",
       );

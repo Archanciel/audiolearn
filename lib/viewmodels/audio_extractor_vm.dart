@@ -721,12 +721,12 @@ class AudioExtractorVM extends ChangeNotifier {
 
       // Validate segments don't exceed audio duration
       final double audioDurationSeconds =
-          audioWithSegments.audio.audioDuration.inMilliseconds / 1000.0;
+          ((audioWithSegments.audio.audioDuration.inMilliseconds / 100).round()) / 10;
 
       for (final segment in audioWithSegments.segments) {
         if (!segment.deleted && segment.endPosition > audioDurationSeconds) {
           _extractionResult = ExtractionResult.error(
-            'Segment end position (${segment.endPosition}s) exceeds audio duration (${audioDurationSeconds}s) for: ${audioWithSegments.audio.validVideoTitle}',
+            'Segment end position (${TimeFormatUtil.formatSeconds(segment.endPosition)}) exceeds audio duration (${TimeFormatUtil.formatSeconds(audioDurationSeconds)}) for: ${audioWithSegments.audio.validVideoTitle}',
           );
           notifyListeners();
           return false;
