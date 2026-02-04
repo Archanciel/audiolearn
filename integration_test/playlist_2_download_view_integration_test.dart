@@ -40550,6 +40550,13 @@ void main() {
           extractedAudioDuration: '0:53.6',
         );
 
+        // Then, tap the back button to go back to the playlist
+        // download screen
+        Finder audioExtractorScreenBackButton =
+            find.byKey(const Key('audioExtractorBackButton'));
+        await tester.tap(audioExtractorScreenBackButton);
+        await tester.pumpAndSettle();
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -40848,12 +40855,11 @@ void main() {
           extractedAudioDuration: '0:51.0',
         );
 
-        // Find the back button widget
-        final backButtonFinder = find.byType(BackButton);
-        expect(backButtonFinder, findsOneWidget);
-
-        // Tap on it to quit the audio extractor dialog
-        await tester.tap(backButtonFinder);
+        // Then, tap the back button to go back to the playlist
+        // download screen
+        Finder audioExtractorScreenBackButton =
+            find.byKey(const Key('audioExtractorBackButton'));
+        await tester.tap(audioExtractorScreenBackButton);
         await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to show the list of playlist's.
@@ -41632,12 +41638,11 @@ void main() {
           extractedAudioDuration: '0:54.3',
         );
 
-        // Find the back button widget
-        final backButtonFinder = find.byType(BackButton);
-        expect(backButtonFinder, findsOneWidget);
-
-        // Tap on it to quit the audio extractor dialog
-        await tester.tap(backButtonFinder);
+        // Then, tap the back button to go back to the playlist
+        // download screen
+        Finder audioExtractorScreenBackButton =
+            find.byKey(const Key('audioExtractorBackButton'));
+        await tester.tap(audioExtractorScreenBackButton);
         await tester.pumpAndSettle();
 
         // Tap the 'Toggle List' button to show the list of playlist's.
@@ -42278,12 +42283,11 @@ void main() {
       expect(thirdComment['creationDateTime'], '2025-12-21T17:25:17.000');
       expect(thirdComment['lastUpdateDateTime'], '2025-12-22T16:06:46.000');
 
-      // Find the back button widget
-      Finder backButtonFinder = find.byType(BackButton);
-      expect(backButtonFinder, findsOneWidget);
-
-      // Tap on it to quit the audio extractor dialog
-      await tester.tap(backButtonFinder);
+      // Then, tap the back button to go back to the playlist
+      // download screen
+      Finder audioExtractorScreenBackButton =
+          find.byKey(const Key('audioExtractorBackButton'));
+      await tester.tap(audioExtractorScreenBackButton);
       await tester.pumpAndSettle();
 
       // Now re-open the audio extractor dialog to verify that the
@@ -42452,7 +42456,7 @@ void main() {
         tester: tester,
         commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
         audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
+        backButtonFinder: audioExtractorScreenBackButton,
         audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
         audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
         audioTitleTileLeadingMenuIconButton:
@@ -42670,7 +42674,7 @@ void main() {
         tester: tester,
         commentNumberTitleBeforeQuittingDialog: 'Comments (3)',
         audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
+        backButtonFinder: audioExtractorScreenBackButton,
         audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
         audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
         audioTitleTileLeadingMenuIconButton:
@@ -42741,7 +42745,7 @@ void main() {
         tester: tester,
         commentNumberTitleBeforeQuittingDialog: 'Comments (0)',
         audioTitle: audioTitle,
-        backButtonFinder: backButtonFinder,
+        backButtonFinder: audioExtractorScreenBackButton,
         audioTitleTileTextWidgetFinder: audioTitleTileTextWidgetFinder,
         audioTitleTileWidgetFinder: audioTitleTileWidgetFinder,
         audioTitleTileLeadingMenuIconButton:
@@ -42926,12 +42930,11 @@ void main() {
       // MP3 button and 3 checkboxes)
       _verifyPresenceOfExtractMp3Widgets(tester);
 
-      // Find the back button widget
-      Finder backButtonFinder = find.byType(BackButton);
-      expect(backButtonFinder, findsOneWidget);
-
-      // Tap on it to quit the audio extractor dialog
-      await tester.tap(backButtonFinder);
+      // Then, tap the back button to go back to the playlist
+      // download screen
+      Finder audioExtractorScreenBackButton =
+          find.byKey(const Key('audioExtractorBackButton'));
+      await tester.tap(audioExtractorScreenBackButton);
       await tester.pumpAndSettle();
 
       // Now re-open the audio extractor dialog to verify that the
@@ -43848,7 +43851,6 @@ Future<void> _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog({
   expect(find.text(commentNumberTitleBeforeQuittingDialog), findsOneWidget);
 
   // Find the back button widget
-  backButtonFinder = find.byType(BackButton);
   expect(backButtonFinder, findsOneWidget);
 
   // Tap on it to quit the audio extractor dialog
