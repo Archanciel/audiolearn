@@ -139,6 +139,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
             tooltip: 'Back',
@@ -675,6 +676,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               Tooltip(
                 message: AppLocalizations.of(context)!.commentWasDeletedTooltip,
                 child: Text(
+                  key: Key('commentDeletedTextKey_$displayedIndex'),
                   AppLocalizations.of(context)!.commentWasDeleted,
                   maxLines: 2,
                   style: const TextStyle(
@@ -730,12 +732,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 ),
               ),
             ),
-            if (segment.fadeInDuration > 0) ...[
               const SizedBox(height: 2),
               Tooltip(
                 message: AppLocalizations.of(context)!.fadeStartPositionTooltip,
                 child: Text(
-                  "${AppLocalizations.of(context)!.fadeInDuration}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
+                  "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -743,8 +744,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   ),
                 ),
               ),
-            ],
-            if (segment.soundReductionPosition > 0) ...[
               const SizedBox(height: 2),
               Tooltip(
                 message:
@@ -758,22 +757,19 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   ),
                 ),
               ),
-            ],
-            if (segment.soundReductionDuration > 0) ...[
-              const SizedBox(height: 2),
-              Tooltip(
-                message:
-                    AppLocalizations.of(context)!.soundReductionDurationTooltip,
-                child: Text(
-                  "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+            const SizedBox(height: 2),
+            Tooltip(
+              message:
+                  AppLocalizations.of(context)!.soundReductionDurationTooltip,
+              child: Text(
+                "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Colors.white70,
                 ),
               ),
-            ],
+            ),
           ],
         ),
         subtitle: Text(
@@ -785,10 +781,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
+              key: Key('editSegmentButtonKey_$displayedIndex'),
               icon: const Icon(Icons.edit, size: 20),
               onPressed: onEdit,
             ),
             IconButton(
+              key: Key('deleteSegmentButtonKey_$displayedIndex'),
               icon: const Icon(Icons.delete, size: 20, color: Colors.red),
               onPressed: onDelete,
             ),
