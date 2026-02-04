@@ -40258,6 +40258,13 @@ void main() {
           extractedAudioDuration: '0:51.0',
         );
 
+        // Then, tap the back button to go back to the playlist
+        // download screen
+        Finder audioExtractorScreenBackButton =
+            find.byKey(const Key('audioExtractorBackButton'));
+        await tester.tap(audioExtractorScreenBackButton);
+        await tester.pumpAndSettle();
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -43618,7 +43625,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'soundReductionPositionTextField',
         enteredValue: '0:33.0',
-        expectedErrorMessage: 'Sound reduction position (0:33.0) must be before the comment end position (0:32.0).',
+        expectedErrorMessage:
+            'Sound reduction position (0:33.0) must be before the comment end position (0:32.0).',
       );
 
       // Now modify the Volume fade-out position to 0:15.9 and verify
@@ -43627,7 +43635,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'soundReductionPositionTextField',
         enteredValue: '0:15.9',
-        expectedErrorMessage: 'Sound reduction position (0:15.9) must be after or at the comment start position (0:16.0).',
+        expectedErrorMessage:
+            'Sound reduction position (0:15.9) must be after or at the comment start position (0:16.0).',
       );
 
       // Now modify the Volume fade-out position to 1:08.8 and verify
@@ -43636,7 +43645,8 @@ void main() {
         tester: tester,
         positionTextFieldKey: 'soundReductionPositionTextField',
         enteredValue: '0:28.0',
-        expectedErrorMessage: 'Sound reduction of 0:28.0 + 0:05.0 = 0:33.0 must complete before or at the comment end position (0:32.0).',
+        expectedErrorMessage:
+            'Sound reduction of 0:28.0 + 0:05.0 = 0:33.0 must complete before or at the comment end position (0:32.0).',
       );
 
       // Now modify the Volume fade-out position to 0:16.0 and verify
