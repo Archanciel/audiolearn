@@ -727,31 +727,31 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 ),
               ),
             ),
-              const SizedBox(height: 2),
-              Tooltip(
-                message: AppLocalizations.of(context)!.fadeStartPositionTooltip,
-                child: Text(
-                  "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+            const SizedBox(height: 2),
+            Tooltip(
+              message: AppLocalizations.of(context)!.fadeStartPositionTooltip,
+              child: Text(
+                "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Colors.white70,
                 ),
               ),
-              const SizedBox(height: 2),
-              Tooltip(
-                message:
-                    AppLocalizations.of(context)!.soundReductionPositionTooltip,
-                child: Text(
-                  "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+            ),
+            const SizedBox(height: 2),
+            Tooltip(
+              message:
+                  AppLocalizations.of(context)!.soundReductionPositionTooltip,
+              child: Text(
+                "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: Colors.white70,
                 ),
               ),
+            ),
             const SizedBox(height: 2),
             Tooltip(
               message:
@@ -801,26 +801,54 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
-        content: Text(AppLocalizations.of(context)!.deleteCommentExplanation),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            onPressed: () {
+      builder: (dialogContext) => Actions(
+        // Using Actions to enable clicking on Enter to apply the
+        // action of clicking on the 'Delete' button
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              // executing the same code as in the 'Delete'
+              // TextButton onPressed callback
               audioExtractorVM.removeMultiAudioSegment(
                 audioIndex: audioIndex,
                 segmentIndex: segmentIndex,
               );
               Navigator.of(dialogContext).pop();
             },
-            child: Text(AppLocalizations.of(context)!.delete),
           ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
+        },
+        child: Shortcuts(
+          shortcuts: const {
+            SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
+            SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
+          },
+          child: Focus(
+            autofocus: true,
+            child: AlertDialog(
+              title:
+                  Text(AppLocalizations.of(context)!.deleteCommentDialogTitle),
+              content:
+                  Text(AppLocalizations.of(context)!.deleteCommentExplanation),
+              actions: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () {
+                    audioExtractorVM.removeMultiAudioSegment(
+                      audioIndex: audioIndex,
+                      segmentIndex: segmentIndex,
+                    );
+                    Navigator.of(dialogContext).pop();
+                  },
+                  child: Text(AppLocalizations.of(context)!.delete),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(AppLocalizations.of(context)!.cancelButton),
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
