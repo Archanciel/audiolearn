@@ -116,11 +116,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   void dispose() {
     _segmentsScrollController.dispose();
 
-    // Clear both modes' state to prevent retention
-    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
-    audioExtractorVM.clearMultiAudios();
-    audioExtractorVM.clearAllSegments();
-
     super.dispose();
   }
 
