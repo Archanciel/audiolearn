@@ -2841,4 +2841,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fadeInDuration => 'Volume fade-in';
+
+  @override
+  String get audioFileNotFoundError => 'Audio file not found';
+
+  @override
+  String segmentEndPositionError(
+      Object segmentEndPosition, Object zAudioDuration) {
+    return 'Comment end position ($segmentEndPosition) exceeds audio duration ($zAudioDuration) for';
+  }
 }

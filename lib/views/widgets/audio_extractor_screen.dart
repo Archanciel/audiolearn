@@ -1235,6 +1235,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       extractedMp3FileName = PathUtil.sanitizeFileName(extractedMp3FileName);
 
       await audioExtractorVM.extractMultiAudioToDirectory(
+        context: context,
         settingsDataService: settingsDataService,
         inMusicQuality: _extractInMusicQuality,
         extractedMp3FileName: extractedMp3FileName,

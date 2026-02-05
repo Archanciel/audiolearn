@@ -4567,6 +4567,19 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Volume fade-in'**
   String get fadeInDuration;
+
+  /// No description provided for @audioFileNotFoundError.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio file not found'**
+  String get audioFileNotFoundError;
+
+  /// No description provided for @segmentEndPositionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for'**
+  String segmentEndPositionError(
+      Object segmentEndPosition, Object zAudioDuration);
 }
 
 class _AppLocalizationsDelegate

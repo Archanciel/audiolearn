@@ -1641,5 +1641,7 @@
   "playSpeedLabel": "Vitesse de lecture",
   "extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne": "L'extraction dans une playlist n'est pas possible si un des commentaires extraits comporte une vitese de lecture différente de 1.0.",
   "loadedCommentsFromMultipleAudios": "{audioCount} audios chargés avec {segmentCount} segments.",
-  "fadeInDuration": "Durée d'augmentation du volume"
+  "fadeInDuration": "Durée d'augmentation du volume",
+  "audioFileNotFoundError": "Fichier audio non trouvé",
+  "segmentEndPositionError": "La position finale du commentaire ({segmentEndPosition}) dépasse la durée de l'audio ({zAudioDuration}) concernant"
 }

@@ -2950,4 +2950,14 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get extractFilteredAudio =>
       "Extract filtered Audios to unique MP3 ...";
+
+  @override
+  String get audioFileNotFoundError => "Audio file not found";
+
+  @override
+  String segmentEndPositionError(
+    Object segmentEndPosition,
+    Object zAudioDuration,
+  ) =>
+      "Comment end position ($segmentEndPosition) exceeds audio duration ($zAudioDuration) for";
 }

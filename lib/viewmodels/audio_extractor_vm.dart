@@ -456,6 +456,7 @@ class AudioExtractorVM extends ChangeNotifier {
 
   /// Extract multiple audios into a single MP3 file
   Future<void> extractMultiAudioToDirectory({
+    required BuildContext context,
     required SettingsDataService settingsDataService,
     required bool inMusicQuality,
     required String extractedMp3FileName,
@@ -463,7 +464,9 @@ class AudioExtractorVM extends ChangeNotifier {
     try {
       startProcessing();
 
-      if (!await validateMultiAudioFiles()) {
+      if (!await validateMultiAudioFiles(
+        context: context,
+      )) {
         return; // Error already set in validation method
       }
 
@@ -706,14 +709,16 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   /// Validate all source audio files before extraction
-  Future<bool> validateMultiAudioFiles() async {
+  Future<bool> validateMultiAudioFiles({
+    required BuildContext context,
+  }) async {
     for (final audioWithSegments in _multiAudios) {
       final String filePath = audioWithSegments.audio.filePathName;
 
       // Check file exists
       if (!File(filePath).existsSync()) {
         _extractionResult = ExtractionResult.error(
-          'Audio file not found: ${audioWithSegments.audio.validVideoTitle}',
+          "${AppLocalizations.of(context)!.audioFileNotFoundError}: ${audioWithSegments.audio.validVideoTitle}",
         );
         notifyListeners();
         return false;
@@ -721,12 +726,14 @@ class AudioExtractorVM extends ChangeNotifier {
 
       // Validate segments don't exceed audio duration
       final double audioDurationSeconds =
-          ((audioWithSegments.audio.audioDuration.inMilliseconds / 100).round()) / 10;
+          ((audioWithSegments.audio.audioDuration.inMilliseconds / 100)
+                  .round()) /
+              10;
 
       for (final segment in audioWithSegments.segments) {
         if (!segment.deleted && segment.endPosition > audioDurationSeconds) {
           _extractionResult = ExtractionResult.error(
-            'Segment end position (${TimeFormatUtil.formatSeconds(segment.endPosition)}) exceeds audio duration (${TimeFormatUtil.formatSeconds(audioDurationSeconds)}) for: ${audioWithSegments.audio.validVideoTitle}',
+            "${AppLocalizations.of(context)!.segmentEndPositionError(TimeFormatUtil.formatSeconds(segment.endPosition), TimeFormatUtil.formatSeconds(audioDurationSeconds))} ${audioWithSegments.audio.validVideoTitle}.",
           );
           notifyListeners();
           return false;
