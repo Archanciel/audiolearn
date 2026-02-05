@@ -405,11 +405,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistPlayableAudioTotalDurationLabel =>
-      'Durée totale audio jouable';
+      'Durée audio jouable totale';
 
   @override
   String get playlistPlayableAudioTotalRemainingDurationLabel =>
-      'Durée totale audio non écoutée';
+      'Durée audio non écoutée totale';
 
   @override
   String get playlistPlayableAudioTotalSizeLabel =>
