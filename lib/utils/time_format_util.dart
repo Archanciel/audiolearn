@@ -91,4 +91,17 @@ class TimeFormatUtil {
     final int t = (seconds * 10).round() + deltaTenths;
     return t / 10.0;
   }
+
+  /// Arrondir une valeur en secondes au dixième le plus proche.
+  /// (561.741 * 10).round() / 10 = 561.7
+  /// (561.75 * 10).round() / 10 = 561.8  
+  /// (561.749 * 10).round() / 10 = 561.7
+  /// (561.751 * 10).round() / 10 = 561.8
+  /// (561.79999 * 10).round() / 10 = 561.8
+  static double roundToTenthOfSecond({
+    required double toBeRounded,
+  }) {
+    return (toBeRounded * 10).round() / 10;
+  }
+
 }
