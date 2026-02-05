@@ -49,7 +49,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     );
     _playSpeedController = TextEditingController(
       text: widget.existingSegment?.playSpeed.toString() ?? '1.0',
-      );
+    );
     _fadeInDurationController = TextEditingController(
       text: TimeFormatUtil.formatSeconds(
         widget.existingSegment?.fadeInDuration ?? 0,
@@ -105,7 +105,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       );
       return;
     }
-    if (end <= start || end > (widget.maxDuration * 10).round() / 10) {
+    if (end <= start ||
+        end >
+            TimeFormatUtil.roundToTenthOfSecond(
+              toBeRounded: widget.maxDuration,
+            )) {
       _showError(
         "${AppLocalizations.of(context)!.endPositionError(TimeFormatUtil.formatSeconds(start))} ${TimeFormatUtil.formatSeconds(widget.maxDuration)}.",
       );
@@ -117,8 +121,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
       return;
     }
     if (playSpeed < 0.5 || playSpeed > 2.0) {
-      _showError(
-          "${AppLocalizations.of(context)!.invalidPlaySpeedError}.");
+      _showError("${AppLocalizations.of(context)!.invalidPlaySpeedError}.");
       return;
     }
     if (fadeInDuration < 0) {
@@ -129,7 +132,8 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
     final segmentDuration = end - start;
     if (fadeInDuration > segmentDuration) {
       // NEW validation
-      String errorDetail = "${TimeFormatUtil.formatSeconds(start)} + ${TimeFormatUtil.formatSeconds(fadeInDuration)} = ${TimeFormatUtil.formatSeconds(start + fadeInDuration)}";
+      String errorDetail =
+          "${TimeFormatUtil.formatSeconds(start)} + ${TimeFormatUtil.formatSeconds(fadeInDuration)} = ${TimeFormatUtil.formatSeconds(start + fadeInDuration)}";
       _showError(
           "${AppLocalizations.of(context)!.fadeInExceedsCommentDurationError(errorDetail)} (${TimeFormatUtil.formatSeconds(end)}).");
       return;
@@ -156,9 +160,11 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
             "${AppLocalizations.of(context)!.soundPositionBeyondEndError(TimeFormatUtil.formatSeconds(soundReductionPosition))} (${TimeFormatUtil.formatSeconds(end)}).");
         return;
       }
-      double soundReductionEnd = soundReductionPosition + soundReductionDuration;
+      double soundReductionEnd =
+          soundReductionPosition + soundReductionDuration;
       if (soundReductionEnd > end) {
-        String errorDetail = "${TimeFormatUtil.formatSeconds(soundReductionPosition)} + ${TimeFormatUtil.formatSeconds(soundReductionDuration)} = ${TimeFormatUtil.formatSeconds(soundReductionEnd)}";
+        String errorDetail =
+            "${TimeFormatUtil.formatSeconds(soundReductionPosition)} + ${TimeFormatUtil.formatSeconds(soundReductionDuration)} = ${TimeFormatUtil.formatSeconds(soundReductionEnd)}";
         _showError(
             "${AppLocalizations.of(context)!.soundPositionPlusDurationBeyondEndError(errorDetail, TimeFormatUtil.formatSeconds(end))}.");
         return;
@@ -329,8 +335,7 @@ class _AddSegmentDialogState extends State<AddSegmentDialog> {
                     key: const Key('playSpeedTextField'),
                     controller: _playSpeedController,
                     decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.playSpeedLabel,
+                      labelText: AppLocalizations.of(context)!.playSpeedLabel,
                       hintText: '1.0',
                       border: OutlineInputBorder(),
                     ),
