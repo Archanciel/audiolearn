@@ -1036,7 +1036,10 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             break;
           case FilteredAudioAction.extractFilteredAudio:
             List<Audio>? sortFilteredAudioLst = playlistListVMlistenFalse
-                .sortedFilteredSelectedPlaylistPlayableAudioLst;
+                .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+              audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+              playlist: playlist,
+            );
 
             if (sortFilteredAudioLst == null || sortFilteredAudioLst.isEmpty) {
               // No audio to extract
