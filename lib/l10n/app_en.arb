@@ -1234,5 +1234,7 @@
   "playSpeedLabel": "Play speed",
   "extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne": "Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments.",
   "loadedCommentsFromMultipleAudios": "Loaded {audioCount} audios with {segmentCount} total segments.",
-  "fadeInDuration": "Volume fade-in"
+  "fadeInDuration": "Volume fade-in",
+  "audioFileNotFoundError": "Audio file not found",
+  "segmentEndPositionError": "Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for"
 }
