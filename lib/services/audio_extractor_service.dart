@@ -107,7 +107,7 @@ class AudioExtractorService {
         }
       } else {
         logger.w(
-          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}',
+          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}. Solution: remove all comments of the audio containing ${segment.commentTitle} and reexecute the multiple audios extraction.',
         );
       }
     }
@@ -647,7 +647,7 @@ class AudioExtractorService {
         }
       } else {
         logger.w(
-          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}',
+          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}. Solution: remove all comments of the audio containing ${segment.commentTitle} and reexecute the multiple audios extraction.',
         );
       }
     }
