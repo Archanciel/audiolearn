@@ -1236,5 +1236,7 @@
   "loadedCommentsFromMultipleAudios": "Loaded {audioCount} audios with {segmentCount} total segments.",
   "fadeInDuration": "Volume fade-in",
   "audioFileNotFoundError": "Audio file not found",
-  "segmentEndPositionError": "Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for"
+  "segmentEndPositionError": "Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for",
+  "audios": "Audios",
+  "audioExtractorMultiAudiosDialogTitle": "Audios in MP3"
 }

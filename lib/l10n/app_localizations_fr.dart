@@ -2883,4 +2883,10 @@ class AppLocalizationsFr extends AppLocalizations {
       Object segmentEndPosition, Object zAudioDuration) {
     return 'La position finale du commentaire ($segmentEndPosition) dépasse la durée de l\'audio ($zAudioDuration) concernant';
   }
+
+  @override
+  String get audios => 'Audios';
+
+  @override
+  String get audioExtractorMultiAudiosDialogTitle => 'Audios->MP3';
 }
