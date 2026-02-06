@@ -55,6 +55,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   bool _extractInMusicQuality = false;
   bool _extractInDirectory = true;
   bool _extractInPlaylist = false;
+  bool _extractingMultipleAudios = false;
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       if (widget.multipleAudiosLst.isNotEmpty) {
         // Multi-audio mode: clear single-audio segments WITHOUT updating comments
         // (because _commentsLst hasn't been initialized for multi-audio mode)
+        _extractingMultipleAudios = true;
         audioExtractorVM.clearSegmentsOnly(); // ← NOUVELLE MÉTHODE
         await _loadMultipleAudios(
           context: context,
@@ -285,56 +287,64 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  createCheckboxRowFunction(
-                                    // displaying music quality checkbox
-                                    checkBoxWidgetKey:
-                                        const Key('onDirectoryCheckBox'),
-                                    context: context,
-                                    label: AppLocalizations.of(context)!
-                                        .inDirectoryLabel,
-                                    labelTooltip: AppLocalizations.of(context)!
-                                        .inDirectoryLabelTooltip,
-                                    value: _extractInDirectory,
-                                    onChangedFunction: (bool? value) {
-                                      setState(() {
-                                        _extractInDirectory = value ?? false;
-                                        _extractInPlaylist =
-                                            !_extractInDirectory;
-                                      });
+                              (_extractingMultipleAudios)
+                                  ? const SizedBox
+                                      .shrink() // multiple audios are extracted in saved/MP3 dir.
+                                      //           No playlist option is displayed.
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        createCheckboxRowFunction(
+                                          // displaying music quality checkbox
+                                          checkBoxWidgetKey:
+                                              const Key('onDirectoryCheckBox'),
+                                          context: context,
+                                          label: AppLocalizations.of(context)!
+                                              .inDirectoryLabel,
+                                          labelTooltip:
+                                              AppLocalizations.of(context)!
+                                                  .inDirectoryLabelTooltip,
+                                          value: _extractInDirectory,
+                                          onChangedFunction: (bool? value) {
+                                            setState(() {
+                                              _extractInDirectory =
+                                                  value ?? false;
+                                              _extractInPlaylist =
+                                                  !_extractInDirectory;
+                                            });
 
-                                      if (!_extractInDirectory) {
-                                        // Clear the directory not selected error
-                                        audioExtractorVM.setError('');
-                                      }
-                                    },
-                                  ),
-                                  createCheckboxRowFunction(
-                                    // displaying music quality checkbox
-                                    checkBoxWidgetKey:
-                                        const Key('inPlaylistCheckBox'),
-                                    context: context,
-                                    label: AppLocalizations.of(context)!
-                                        .inPlaylistLabel,
-                                    labelTooltip: AppLocalizations.of(context)!
-                                        .inPlaylistLabelTooltip,
-                                    value: _extractInPlaylist,
-                                    onChangedFunction: (bool? value) {
-                                      setState(() {
-                                        _extractInPlaylist = value ?? false;
-                                        _extractInDirectory =
-                                            !_extractInPlaylist;
-                                      });
+                                            if (!_extractInDirectory) {
+                                              // Clear the directory not selected error
+                                              audioExtractorVM.setError('');
+                                            }
+                                          },
+                                        ),
+                                        createCheckboxRowFunction(
+                                          // displaying music quality checkbox
+                                          checkBoxWidgetKey:
+                                              const Key('inPlaylistCheckBox'),
+                                          context: context,
+                                          label: AppLocalizations.of(context)!
+                                              .inPlaylistLabel,
+                                          labelTooltip:
+                                              AppLocalizations.of(context)!
+                                                  .inPlaylistLabelTooltip,
+                                          value: _extractInPlaylist,
+                                          onChangedFunction: (bool? value) {
+                                            setState(() {
+                                              _extractInPlaylist =
+                                                  value ?? false;
+                                              _extractInDirectory =
+                                                  !_extractInPlaylist;
+                                            });
 
-                                      // Clear the directory not selected error
-                                      audioExtractorVM.setError('');
-                                    },
-                                  ),
-                                ],
-                              ),
+                                            // Clear the directory not selected error
+                                            audioExtractorVM.setError('');
+                                          },
+                                        ),
+                                      ],
+                                    ),
                               const SizedBox(height: 16),
                             ],
                           ),
@@ -419,14 +429,36 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           }
         }
 
-        if (segments.isNotEmpty) {
-          audiosWithSegments.add(
-            AudioWithSegments(
-              audio: audio,
-              segments: segments,
+        // If no segments were created from comments, create a default full-audio segment
+        if (segments.isEmpty) {
+          // Round to tenth of second to match validation logic
+          final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
+              toBeRounded: audio.audioDuration.inMilliseconds / 1000.0);
+
+          segments.add(
+            AudioSegment(
+              startPosition: 0.0,
+              endPosition: roundedEndPosition,
+              silenceDuration: 1.0,
+              playSpeed: 1.0,
+              fadeInDuration: 0.0,
+              soundReductionPosition: 0.0,
+              soundReductionDuration: 0.0,
+              commentId:
+                  'full_audio_${audio.audioFileName}_${DateTime.now().microsecondsSinceEpoch}',
+              commentTitle: audio.validVideoTitle,
+              deleted: false,
             ),
           );
         }
+
+        // Always add the audio, whether it has comments or a default segment
+        audiosWithSegments.add(
+          AudioWithSegments(
+            audio: audio,
+            segments: segments,
+          ),
+        );
       }
 
       audioExtractorVM.setMultiAudios(audiosWithSegments);
@@ -1110,8 +1142,25 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       audioExtractorVM.commentsLst = commentsLst;
 
       if (commentsLst.isEmpty) {
-        // Useful if in the audio extractor dialog the red 'Clear all'
-        // button was pressed
+        // Create a default segment spanning the entire audio duration
+
+        // Round to tenth of second to match validation logic
+        final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
+            toBeRounded: currentAudio.audioDuration.inMilliseconds / 1000.0);
+
+        AudioSegment(
+          startPosition: 0.0,
+          endPosition: roundedEndPosition,
+          silenceDuration: 1.0,
+          playSpeed: 1.0,
+          fadeInDuration: 0.0,
+          soundReductionPosition: 0.0,
+          soundReductionDuration: 0.0,
+          commentId: 'full_audio_${DateTime.now().microsecondsSinceEpoch}',
+          commentTitle: currentAudio.validVideoTitle,
+          deleted: false,
+        );
+
         if (!context.mounted) {
           return;
         }
@@ -1119,10 +1168,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              AppLocalizations.of(context)!.noCommentFoundInAudioMessage,
+              "${AppLocalizations.of(context)!.noCommentFoundInAudioMessage} Full audio segment created.",
               style: const TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.w700, // bold
+                fontWeight: FontWeight.w700,
               ),
             ),
             backgroundColor: Colors.orange,
@@ -1180,7 +1229,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             "${AppLocalizations.of(context)!.loadedComments(added)}${skipped > 0 ? ' ${AppLocalizations.of(context)!.skippedComments(skipped)}' : ''}",
             style: const TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.w700, // bold
+              fontWeight: FontWeight.w700,
             ),
           ),
           backgroundColor: Colors.green,
