@@ -1643,5 +1643,7 @@
   "loadedCommentsFromMultipleAudios": "{audioCount} audios chargés avec {segmentCount} segments.",
   "fadeInDuration": "Durée d'augmentation du volume",
   "audioFileNotFoundError": "Fichier audio non trouvé",
-  "segmentEndPositionError": "La position finale du commentaire ({segmentEndPosition}) dépasse la durée de l'audio ({zAudioDuration}) concernant"
+  "segmentEndPositionError": "La position finale du commentaire ({segmentEndPosition}) dépasse la durée de l'audio ({zAudioDuration}) concernant",
+  "audios": "Audios",
+  "audioExtractorMultiAudiosDialogTitle": "Audios->MP3"
 }

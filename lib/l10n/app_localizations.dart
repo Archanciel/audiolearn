@@ -4580,6 +4580,18 @@ abstract class AppLocalizations {
   /// **'Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for'**
   String segmentEndPositionError(
       Object segmentEndPosition, Object zAudioDuration);
+
+  /// No description provided for @audios.
+  ///
+  /// In en, this message translates to:
+  /// **'Audios'**
+  String get audios;
+
+  /// No description provided for @audioExtractorMultiAudiosDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Audios in MP3'**
+  String get audioExtractorMultiAudiosDialogTitle;
 }
 
 class _AppLocalizationsDelegate

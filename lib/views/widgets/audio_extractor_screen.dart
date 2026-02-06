@@ -128,6 +128,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       context,
       listen: false,
     ); // by default, listen is true
+    final AudioExtractorVM audioExtractorVM =
+        Provider.of<AudioExtractorVM>(context);
 
     return Theme(
       data: themeProviderVMlistenFalse.currentTheme == AppTheme.dark
@@ -142,7 +144,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             tooltip: 'Back',
           ),
           title: Text(
-            AppLocalizations.of(context)!.audioExtractorDialogTitle,
+            (audioExtractorVM.isMultiAudioMode)
+                ? AppLocalizations.of(context)!
+                    .audioExtractorMultiAudiosDialogTitle
+                : AppLocalizations.of(context)!.audioExtractorDialogTitle,
             textAlign: TextAlign.center, // Centered multi lines text
             maxLines: 2,
           ),
@@ -172,8 +177,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Consumer2<AudioExtractorVM, ExtractMp3AudioPlayerVM>(
-            builder: (context, audioExtractorVM, audioPlayerVM, _) {
+          child: Consumer<ExtractMp3AudioPlayerVM>(
+            builder: (context, audioPlayerVM, _) {
               String extractionResultMessage =
                   audioExtractorVM.extractionResult.message;
               if (extractionResultMessage.contains('Extracted MP3 saved to')) {
@@ -190,7 +195,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${AppLocalizations.of(context)!.commentsDialogTitle} (${audioExtractorVM.segmentCount})",
+                          (audioExtractorVM.isMultiAudioMode)
+                              ? "${AppLocalizations.of(context)!.audios} (${audioExtractorVM.multiAudios.length})"
+                              : "${AppLocalizations.of(context)!.commentsDialogTitle} (${audioExtractorVM.segmentCount})",
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -290,7 +297,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                               (_extractingMultipleAudios)
                                   ? const SizedBox
                                       .shrink() // multiple audios are extracted in saved/MP3 dir.
-                                      //           No playlist option is displayed.
+                                  //           No playlist option is displayed.
                                   : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,

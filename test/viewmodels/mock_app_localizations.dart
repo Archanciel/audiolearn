@@ -2960,4 +2960,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object zAudioDuration,
   ) =>
       "Comment end position ($segmentEndPosition) exceeds audio duration ($zAudioDuration) for";
+
+  @override
+  String get audios => "Audios";
+
+  @override
+  String get audioExtractorMultiAudiosDialogTitle => "Audios in MP3";
 }

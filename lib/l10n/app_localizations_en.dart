@@ -2850,4 +2850,10 @@ class AppLocalizationsEn extends AppLocalizations {
       Object segmentEndPosition, Object zAudioDuration) {
     return 'Comment end position ($segmentEndPosition) exceeds audio duration ($zAudioDuration) for';
   }
+
+  @override
+  String get audios => 'Audios';
+
+  @override
+  String get audioExtractorMultiAudiosDialogTitle => 'Audios in MP3';
 }
