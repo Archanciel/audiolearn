@@ -147,6 +147,27 @@ class AudioExtractorService {
     }
   }
 
+  /// Validates all segments for invalid fade configurations
+  /// Returns error message if validation fails, null if all valid
+  static String? validateSegments(List<AudioSegment> segments) {
+    for (final segment in segments) {
+      const double threshold = 0.05;
+
+      if (segment.soundReductionDuration > threshold &&
+          segment.soundReductionPosition > threshold) {
+        final segmentDuration = segment.endPosition - segment.startPosition;
+        final fadeStartRelative =
+            segment.soundReductionPosition - segment.startPosition;
+
+        if (fadeStartRelative >= segmentDuration - threshold) {
+          return '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}. Solution: remove all comments of the audio containing ${segment.commentTitle} and reexecute the multiple audios extraction.';
+        }
+      }
+    }
+
+    return null;
+  }
+
   static Future<double> _probeDurationDesktop({
     required String filePath,
   }) async {
@@ -903,6 +924,18 @@ class AudioExtractorService {
       };
     }
 
+    // ✅ ADD: Validate all segments before extraction
+    for (final input in inputs) {
+      final validationError = validateSegments(input.segments);
+      if (validationError != null) {
+        return {
+          'success': false,
+          'message': validationError,
+          'outputPath': null,
+        };
+      }
+    }
+    
     if (Platform.isAndroid || Platform.isIOS) {
       return _extractMultipleMobile(
         inputs: inputs,
