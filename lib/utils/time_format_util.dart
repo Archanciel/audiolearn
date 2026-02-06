@@ -93,8 +93,10 @@ class TimeFormatUtil {
   }
 
   /// Arrondir une valeur en secondes au dixième le plus proche.
+  /// 
+  /// Exemples :
   /// (561.741 * 10).round() / 10 = 561.7
-  /// (561.75 * 10).round() / 10 = 561.8  
+  /// (561.75 * 10).round() / 10 = 561.8
   /// (561.749 * 10).round() / 10 = 561.7
   /// (561.751 * 10).round() / 10 = 561.8
   /// (561.79999 * 10).round() / 10 = 561.8
@@ -103,5 +105,4 @@ class TimeFormatUtil {
   }) {
     return (toBeRounded * 10).round() / 10;
   }
-
 }
