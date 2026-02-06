@@ -10,7 +10,8 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:path/path.dart' as path;
 
 import '../models/audio_segment.dart';
-import '../constants.dart'; // for kDefaultSilenceDurationBetweenMp3
+import '../constants.dart';
+import '../utils/time_format_util.dart'; // for kDefaultSilenceDurationBetweenMp3
 
 /// Represents one input file with its segments and an optional gain (in dB).
 class InputSegments {
@@ -106,7 +107,7 @@ class AudioExtractorService {
         }
       } else {
         logger.w(
-          'Invalid fade: fadeStart=$fadeStartRelative segDur=$segmentDuration',
+          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}',
         );
       }
     }
@@ -646,7 +647,7 @@ class AudioExtractorService {
         }
       } else {
         logger.w(
-          'Invalid fade: fadeStart=$fadeStartRelative > segmentDuration=$segmentDuration',
+          '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}',
         );
       }
     }
