@@ -464,10 +464,8 @@ class AudioExtractorVM extends ChangeNotifier {
     try {
       startProcessing();
 
-      if (!await validateMultiAudioFiles(
-        context: context,
-      )) {
-        return; // Error already set in validation method
+      if (!await validateMultiAudioFiles(context: context)) {
+        return;
       }
 
       final String actualTargetDir =
@@ -501,17 +499,16 @@ class AudioExtractorVM extends ChangeNotifier {
 
       if (result['success'] == true) {
         _extractionResult = ExtractionResult.success(
-          '${AppLocalizations.of(context)!.extractedMp3Saved} $outputPathFileName',
+          outputPathFileName, // ✅ FIX: Pass only the path, not the formatted message
         );
       } else {
         final message = result['message'] as String;
 
-// ✅ Check if it's a validation error
+        // Check if it's a validation error
         if (message == 'VALIDATION_ERROR' &&
             result['validationError'] != null) {
           final error = result['validationError'] as SegmentValidationError;
 
-          // ✅ Format with localization - ALL 6 PARAMETERS
           final localizedMessage =
               AppLocalizations.of(context)!.invalidReductionPositionError(
             error.commentTitle,
