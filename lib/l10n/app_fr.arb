@@ -530,7 +530,7 @@
   "appSettingsDialogTitle": "Paramètres de l'application",
   "setAudioPlaySpeed": "Définir la vitesse de lecture ...",
   "applyToAlreadyDownloadedAudio": "Appliquer aux audios déjà\ntéléchargés, importés ou\nconvertis",
-  "applyToAlreadyDownloadedAudioTooltip": "Appliquer la vitesse de lecture aux audios dans toutes les playlists existantes. Si non défini, l'appliquer uniquement aux nouvelles playlists ajoutées.",
+  "applyToAlreadyDownloadedAudioTooltip": "Appliquer la vitesse de lecture aux audios dans toutes les playlists existantes. Si non défini, l'appliquer uniquement aux audios nouvellement téléchargés, importés ou convertis (les audios convertis sont des audios créés par la conversion de texte en audio).",
   "applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip": "Appliquer la vitesse de lecture aux audios de la playlist actuelle. Si non défini, l'appliquer uniquement aux audios nouvellement téléchargés, importés ou convertis (les audios convertis sont des audios créés par la conversion de texte en audio).",
   "applyToExistingPlaylist": "Appliquer aux playlists\nexistantes",
   "applyToExistingPlaylistTooltip": "Appliquer la vitesse de lecture à toutes les playlists existantes. Si non défini, l'appliquer uniquement aux nouvelles playlists ajoutées.",
