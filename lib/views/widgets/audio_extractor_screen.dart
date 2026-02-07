@@ -66,6 +66,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     audioExtractorVM.commentVMlistenTrue = widget.commentVMlistenTrue;
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Clear any previous extraction result and errors
+      audioExtractorVM.resetExtractionResult();
+
       // ✅ CRITICAL: Determine mode and clear opposite mode's state
       if (widget.multipleAudiosLst.isNotEmpty) {
         // Multi-audio mode: clear single-audio segments WITHOUT updating comments
