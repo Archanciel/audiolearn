@@ -461,7 +461,7 @@
   "commentText": "Comment",
   "commentDialogTitle": "Comment",
   "update": "Update",
-  "deleteCommentConfirnTitle": "Delete Comment",
+  "deleteCommentConfirmTitle": "Delete Comment",
   "deleteCommentConfirnBody": "Deleting comment \"{title}\".",
   "commentMenu": "Audio Comments ...",
   "tenthOfSecondsCheckboxTooltip": "Enable this checkbox to specify the comment position with precision up to a tenth of second.",
@@ -1165,7 +1165,7 @@
   "audioPositionTooltip": "Define the int position which will be addid to the audio title.",
   "extractCommentsToMp3TextButton": "Extract comments to MP3",
   "extractCommentsToMp3TextButtonTooltip": "Extract audio segments defined by comment timestamps to MP3.",
-  "audioExtractorDialogTitle": "Comments in MP3",
+  "audioExtractorDialogTitle": "Comments to MP3",
   "editCommentDialogTitle": "Edit Comment",
   "addCommentDialogTitle": "Add Comment",
   "deleteCommentDialogTitle": "Remove Comment",
@@ -1223,7 +1223,7 @@
   "extracted": "extracted",
   "extractedAudioNotAddedToPlaylistMessage": "The extracted audio was not added to the \"{targetPlaylist}\" playlist because it already exists in it. To resolve this, please delete the existing extracted audio before running the extraction again.",
   "commentWasDeleted": "Comment not included",
-  "commentWasDeletedTooltip": "This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.",
+  "commentWasDeletedTooltip": "This comment was previously removed from the \"Comments to MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.",
   "deleteInvalidCommentsMessage": "Delete invalid comment(s) with end position greater than audio duration which is {audioDuration}.",
   "fileNotExistError": "File does not exist",
   "errorTitle": "Error",
@@ -1238,5 +1238,17 @@
   "audioFileNotFoundError": "Audio file not found",
   "segmentEndPositionError": "Comment end position ({segmentEndPosition}) exceeds audio duration ({zAudioDuration}) for",
   "audios": "Audios",
-  "audioExtractorMultiAudiosDialogTitle": "Audios in MP3"
+  "audioExtractorMultiAudiosDialogTitle": "Audios to MP3",
+  "invalidReductionPositionError": "{commentTitle}. Invalid reduction position: fade start correspond to {reductionPos} - {startPos} = {fadeStart} which is greater than segment duration {segDuration} = {endPos} - {startPos}. Solution: close the extract dialog. Then, remove all comments of the audio containing \"{commentTitle}\" and reexecute the \"Extract filtered Audios to unique MP3 ...\" menu.",
+  "@invalidReductionPositionError": {
+    "description": "Error message",
+    "placeholders": {
+      "commentTitle": {},
+      "reductionPos": {},
+      "startPos": {},
+      "fadeStart": {},
+      "segDuration": {},
+      "endPos": {}
+    }
+  }
 }

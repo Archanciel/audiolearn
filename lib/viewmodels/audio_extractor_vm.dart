@@ -493,8 +493,7 @@ class AudioExtractorVM extends ChangeNotifier {
 
       final bitrate = inMusicQuality ? '192k' : '64k';
 
-      final Map<String, dynamic> result =
-          await AudioExtractorService.extractFromMultipleInputs(
+      final result = await AudioExtractorService.extractFromMultipleInputs(
         inputs: inputs,
         outputPath: outputPathFileName,
         encoderBitrate: bitrate,
@@ -502,16 +501,39 @@ class AudioExtractorVM extends ChangeNotifier {
 
       if (result['success'] == true) {
         _extractionResult = ExtractionResult.success(
-          result['outputPath']!,
+          '${AppLocalizations.of(context)!.extractedMp3Saved} $outputPathFileName',
         );
       } else {
-        _extractionResult = ExtractionResult.error(result['message']);
+        final message = result['message'] as String;
+
+// ✅ Check if it's a validation error
+        if (message == 'VALIDATION_ERROR' &&
+            result['validationError'] != null) {
+          final error = result['validationError'] as SegmentValidationError;
+
+          // ✅ Format with localization - ALL 6 PARAMETERS
+          final localizedMessage =
+              AppLocalizations.of(context)!.invalidReductionPositionError(
+            error.commentTitle,
+            TimeFormatUtil.formatSeconds(error.soundReductionPosition),
+            TimeFormatUtil.formatSeconds(error.startPosition),
+            TimeFormatUtil.formatSeconds(error.fadeStartRelative),
+            TimeFormatUtil.formatSeconds(error.segmentDuration),
+            TimeFormatUtil.formatSeconds(error.endPosition),
+          );
+
+          _extractionResult = ExtractionResult.error(localizedMessage);
+        } else {
+          _extractionResult = ExtractionResult.error(message);
+        }
       }
+
       notifyListeners();
     } catch (e) {
       _extractionResult = ExtractionResult.error(
         'Error during extraction: $e',
       );
+
       notifyListeners();
     }
   }

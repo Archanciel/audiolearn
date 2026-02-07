@@ -1028,7 +1028,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get update => 'Mettre à jour';
 
   @override
-  String get deleteCommentConfirnTitle => 'Suppression de commentaire';
+  String get deleteCommentConfirmTitle => 'Suppression de commentaire';
 
   @override
   String deleteCommentConfirnBody(Object title) {
@@ -2889,4 +2889,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get audioExtractorMultiAudiosDialogTitle => 'Audios->MP3';
+
+  @override
+  String invalidReductionPositionError(Object commentTitle, Object reductionPos,
+      Object startPos, Object fadeStart, Object segDuration, Object endPos) {
+    return '$commentTitle. Position de réduction invalide: la position de réduction correspond à $reductionPos - $startPos = $fadeStart, valeur supérieure à la durée du commentaire $segDuration = $endPos - $startPos. Solution: fermez le dialogue d\'extraction. Ensuite, supprimez tous les commentaires de l\'audio contenant \"$commentTitle\" et appliquez à nouveau le menu \"Extraire les audios filtrés dans un unique MP3 ...\".';
+  }
 }
