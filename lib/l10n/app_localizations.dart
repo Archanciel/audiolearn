@@ -1801,11 +1801,11 @@ abstract class AppLocalizations {
   /// **'Update'**
   String get update;
 
-  /// No description provided for @deleteCommentConfirnTitle.
+  /// No description provided for @deleteCommentConfirmTitle.
   ///
   /// In en, this message translates to:
   /// **'Delete Comment'**
-  String get deleteCommentConfirnTitle;
+  String get deleteCommentConfirmTitle;
 
   /// No description provided for @deleteCommentConfirnBody.
   ///
@@ -4150,7 +4150,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioExtractorDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Comments in MP3'**
+  /// **'Comments to MP3'**
   String get audioExtractorDialogTitle;
 
   /// No description provided for @editCommentDialogTitle.
@@ -4498,7 +4498,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentWasDeletedTooltip.
   ///
   /// In en, this message translates to:
-  /// **'This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.'**
+  /// **'This comment was previously removed from the \"Comments to MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.'**
   String get commentWasDeletedTooltip;
 
   /// No description provided for @deleteInvalidCommentsMessage.
@@ -4590,8 +4590,15 @@ abstract class AppLocalizations {
   /// No description provided for @audioExtractorMultiAudiosDialogTitle.
   ///
   /// In en, this message translates to:
-  /// **'Audios in MP3'**
+  /// **'Audios to MP3'**
   String get audioExtractorMultiAudiosDialogTitle;
+
+  /// Error message
+  ///
+  /// In en, this message translates to:
+  /// **'{commentTitle}. Invalid reduction position: fade start correspond to {reductionPos} - {startPos} = {fadeStart} which is greater than segment duration {segDuration} = {endPos} - {startPos}. Solution: close the extract dialog. Then, remove all comments of the audio containing \"{commentTitle}\" and reexecute the \"Extract filtered Audios to unique MP3 ...\" menu.'**
+  String invalidReductionPositionError(Object commentTitle, Object reductionPos,
+      Object startPos, Object fadeStart, Object segDuration, Object endPos);
 }
 
 class _AppLocalizationsDelegate

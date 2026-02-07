@@ -555,7 +555,7 @@
   "commentText": "Commentaire",
   "commentDialogTitle": "Commentaire",
   "update": "Mettre à jour",
-  "deleteCommentConfirnTitle": "Suppression de commentaire",
+  "deleteCommentConfirmTitle": "Suppression de commentaire",
   "deleteCommentConfirnBody": "Supprimer le commentaire \"{title}\".",
   "commentMenu": "Commentaires de l'audio ...",
   "tenthOfSecondsCheckboxTooltip": "Activer cette case à cocher pour spécifier la position du commentaire avec une précision au dixième de seconde.",
@@ -1555,7 +1555,7 @@
   "@importingMp4Error": {
     "description": "Message d'erreur affiché lorsqu'une erreur se produit lors de l'importation d'une vidéo mp4",
     "placeholders": {
-      "videoTitle":  {
+      "videoTitle": {
         "type": "Object"
       },
       "exceptionMessage": {
@@ -1645,5 +1645,29 @@
   "audioFileNotFoundError": "Fichier audio non trouvé",
   "segmentEndPositionError": "La position finale du commentaire ({segmentEndPosition}) dépasse la durée de l'audio ({zAudioDuration}) concernant",
   "audios": "Audios",
-  "audioExtractorMultiAudiosDialogTitle": "Audios->MP3"
+  "audioExtractorMultiAudiosDialogTitle": "Audios->MP3",
+  "invalidReductionPositionError": "{commentTitle}. Position de réduction invalide: la position de réduction correspond à {reductionPos} - {startPos} = {fadeStart}, valeur supérieure à la durée du commentaire {segDuration} = {endPos} - {startPos}. Solution: fermez le dialogue d'extraction. Ensuite, supprimez tous les commentaires de l'audio contenant \"{commentTitle}\" et appliquez à nouveau le menu \"Extraire les audios filtrés dans un unique MP3 ...\".",
+  "@invalidReductionPositionError": {
+    "description": "Error message",
+    "placeholders": {
+      "commentTitle": {
+        "type": "Object"
+      },
+      "reductionPos": {
+        "type": "Object"
+      },
+      "startPos": {
+        "type": "Object"
+      },
+      "fadeStart": {
+        "type": "Object"
+      },
+      "segDuration": {
+        "type": "Object"
+      },
+      "endPos": {
+        "type": "Object"
+      }
+    }
+  }
 }

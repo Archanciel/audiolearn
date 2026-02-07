@@ -912,7 +912,7 @@ class MockAppLocalizations extends AppLocalizations {
   String get update => "Update";
 
   @override
-  String get deleteCommentConfirnTitle => "Delete Comment";
+  String get deleteCommentConfirmTitle => "Delete Comment";
 
   @override
   String deleteCommentConfirnBody(
@@ -2966,4 +2966,15 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audioExtractorMultiAudiosDialogTitle => "Audios in MP3";
+
+  @override
+  String invalidReductionPositionError(
+    Object commentTitle,
+    Object reductionPos,
+    Object startPos,
+    Object fadeStart,
+    Object segDuration,
+    Object endPos,
+  ) =>
+      "$commentTitle. Invalid reduction position: fade start = $reductionPos - $startPos = $fadeStart which is greater than segment duration $segDuration = $endPos - $startPos. Solution: edit the comment \"$commentTitle\" to set the reduction position between $startPos and $endPos.";
 }

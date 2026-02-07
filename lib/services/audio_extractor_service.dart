@@ -38,6 +38,26 @@ class InputSegments {
   }
 }
 
+// In audio_extractor_service.dart
+
+class SegmentValidationError {
+  final String commentTitle;
+  final double soundReductionPosition;
+  final double startPosition;
+  final double fadeStartRelative;
+  final double segmentDuration;
+  final double endPosition;
+
+  SegmentValidationError({
+    required this.commentTitle,
+    required this.soundReductionPosition,
+    required this.startPosition,
+    required this.fadeStartRelative,
+    required this.segmentDuration,
+    required this.endPosition,
+  });
+}
+
 class AudioExtractorService {
   static final Logger logger = Logger();
 
@@ -147,9 +167,11 @@ class AudioExtractorService {
     }
   }
 
+// In audio_extractor_service.dart
+
   /// Validates all segments for invalid fade configurations
-  /// Returns error message if validation fails, null if all valid
-  static String? validateSegments(List<AudioSegment> segments) {
+  /// Returns error data if validation fails, null if all valid
+  static SegmentValidationError? validateSegments(List<AudioSegment> segments) {
     for (final segment in segments) {
       const double threshold = 0.05;
 
@@ -160,7 +182,14 @@ class AudioExtractorService {
             segment.soundReductionPosition - segment.startPosition;
 
         if (fadeStartRelative >= segmentDuration - threshold) {
-          return '${segment.commentTitle}. Invalid reduction position: fade start = ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)} = ${TimeFormatUtil.formatSeconds(fadeStartRelative)} which is greater than segment duration ${TimeFormatUtil.formatSeconds(segmentDuration)} = ${TimeFormatUtil.formatSeconds(segment.endPosition)} - ${TimeFormatUtil.formatSeconds(segment.startPosition)}. Solution: remove all comments of the audio containing ${segment.commentTitle} and reexecute the multiple audios extraction.';
+          return SegmentValidationError(
+            commentTitle: segment.commentTitle,
+            soundReductionPosition: segment.soundReductionPosition,
+            startPosition: segment.startPosition,
+            fadeStartRelative: fadeStartRelative,
+            segmentDuration: segmentDuration,
+            endPosition: segment.endPosition,
+          );
         }
       }
     }
@@ -924,18 +953,19 @@ class AudioExtractorService {
       };
     }
 
-    // ✅ ADD: Validate all segments before extraction
+    // Validate all segments before extraction
     for (final input in inputs) {
       final validationError = validateSegments(input.segments);
       if (validationError != null) {
         return {
           'success': false,
-          'message': validationError,
+          'message': 'VALIDATION_ERROR', // ✅ Error code
+          'validationError': validationError, // ✅ Error data
           'outputPath': null,
         };
       }
     }
-    
+
     if (Platform.isAndroid || Platform.isIOS) {
       return _extractMultipleMobile(
         inputs: inputs,

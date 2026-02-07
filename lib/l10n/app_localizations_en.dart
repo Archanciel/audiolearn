@@ -1021,7 +1021,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get update => 'Update';
 
   @override
-  String get deleteCommentConfirnTitle => 'Delete Comment';
+  String get deleteCommentConfirmTitle => 'Delete Comment';
 
   @override
   String deleteCommentConfirnBody(Object title) {
@@ -2590,7 +2590,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Extract audio segments defined by comment timestamps to MP3.';
 
   @override
-  String get audioExtractorDialogTitle => 'Comments in MP3';
+  String get audioExtractorDialogTitle => 'Comments to MP3';
 
   @override
   String get editCommentDialogTitle => 'Edit Comment';
@@ -2799,7 +2799,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentWasDeletedTooltip =>
-      'This comment was previously removed from the \"Comments in MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.';
+      'This comment was previously removed from the \"Comments to MP3\" list so it is not included in the extracted MP3. To include it again, edit the comment and save it.';
 
   @override
   String deleteInvalidCommentsMessage(Object audioDuration) {
@@ -2855,5 +2855,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audios => 'Audios';
 
   @override
-  String get audioExtractorMultiAudiosDialogTitle => 'Audios in MP3';
+  String get audioExtractorMultiAudiosDialogTitle => 'Audios to MP3';
+
+  @override
+  String invalidReductionPositionError(Object commentTitle, Object reductionPos,
+      Object startPos, Object fadeStart, Object segDuration, Object endPos) {
+    return '$commentTitle. Invalid reduction position: fade start correspond to $reductionPos - $startPos = $fadeStart which is greater than segment duration $segDuration = $endPos - $startPos. Solution: close the extract dialog. Then, remove all comments of the audio containing \"$commentTitle\" and reexecute the \"Extract filtered Audios to unique MP3 ...\" menu.';
+  }
 }

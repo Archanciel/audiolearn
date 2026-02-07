@@ -678,7 +678,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
             currentAudio,
           ],
           dialogTitleOne:
-              AppLocalizations.of(context)!.deleteCommentConfirnTitle,
+              AppLocalizations.of(context)!.deleteCommentConfirmTitle,
           dialogContent: AppLocalizations.of(context)!
               .deleteCommentConfirnBody(comment.title),
         );
