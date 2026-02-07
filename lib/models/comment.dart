@@ -8,6 +8,7 @@ class Comment {
   int commentEndPositionInTenthOfSeconds;
   double silenceDuration;
   double playSpeed;
+  bool wasPlaySpeedModifiedByAddSegmentDialog;
   double fadeInDuration;
   double soundReductionPosition;
   double soundReductionDuration;
@@ -22,6 +23,7 @@ class Comment {
     this.commentEndPositionInTenthOfSeconds = 0,
     this.silenceDuration = 0.0,
     this.playSpeed = 1.0,
+    this.wasPlaySpeedModifiedByAddSegmentDialog = false,
     this.fadeInDuration = 0.0,
     this.soundReductionPosition = 0.0,
     this.soundReductionDuration = 0.0,
@@ -42,6 +44,7 @@ class Comment {
     required this.commentEndPositionInTenthOfSeconds,
     required this.silenceDuration,
     required this.playSpeed,
+    required this.wasPlaySpeedModifiedByAddSegmentDialog,
     required this.fadeInDuration,
     required this.soundReductionPosition,
     required this.soundReductionDuration,
@@ -61,6 +64,8 @@ class Comment {
           json['commentEndPositionInTenthOfSeconds'] ?? 0,
       silenceDuration: json['silenceDuration'] ?? 0.0,
       playSpeed: json['playSpeed'] ?? 1.0,
+      wasPlaySpeedModifiedByAddSegmentDialog:
+          json['wasPlaySpeedModifiedByAddSegmentDialog'] ?? false,
       fadeInDuration: json['fadeInDuration'] ?? 0.0,
       soundReductionPosition: json['soundReductionPosition'] ?? 0.0,
       soundReductionDuration: json['soundReductionDuration'] ?? 0.0,
@@ -81,6 +86,8 @@ class Comment {
       'commentEndPositionInTenthOfSeconds': commentEndPositionInTenthOfSeconds,
       'silenceDuration': silenceDuration,
       'playSpeed': playSpeed,
+      'wasPlaySpeedModifiedByAddSegmentDialog':
+          wasPlaySpeedModifiedByAddSegmentDialog,
       'fadeInDuration': fadeInDuration,
       'soundReductionPosition': soundReductionPosition,
       'soundReductionDuration': soundReductionDuration,
