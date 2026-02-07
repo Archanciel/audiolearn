@@ -114,12 +114,12 @@ class CommentDialogManager {
   static bool get hasActiveOverlay => _currentOverlay != null;
 }
 
-class CommentDeleteConfirmActionDialog extends StatelessWidget {
+class CommentDeleteConfirmActionDialog extends StatefulWidget {
   final Function actionFunction;
   final List<dynamic> actionFunctionArgs;
   final String dialogTitle;
   final String dialogContent;
-  final VoidCallback? onCancel; // Nouvelle propriété pour gérer l'annulation
+  final VoidCallback? onCancel;
 
   const CommentDeleteConfirmActionDialog({
     super.key,
@@ -127,72 +127,121 @@ class CommentDeleteConfirmActionDialog extends StatelessWidget {
     required this.actionFunctionArgs,
     required this.dialogTitle,
     required this.dialogContent,
-    this.onCancel, // Paramètre optionnel pour gérer l'annulation
+    this.onCancel,
   });
+
+  @override
+  State<CommentDeleteConfirmActionDialog> createState() =>
+      _CommentDeleteConfirmActionDialogState();
+}
+
+class _CommentDeleteConfirmActionDialogState
+    extends State<CommentDeleteConfirmActionDialog> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // Request focus after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-    return AlertDialog(
-      title: Text(
-        key: const Key('dialogTitle'),
-        dialogTitle,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-      ),
-      content: Text(
-        key: const Key('dialogContent'),
-        dialogContent,
-      ),
-      actions: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              key: const Key('confirmButton'),
-              child: Text(
-                AppLocalizations.of(context)!.confirmButton,
-                style: (isDarkTheme)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode,
-              ),
-              onPressed: () async {
-                // Exécuter la fonction d'action avec les arguments
-                if (actionFunctionArgs.isNotEmpty) {
-                  await Function.apply(actionFunction, actionFunctionArgs);
-                } else {
-                  await actionFunction();
-                }
+    return KeyboardListener(
+      focusNode: _focusNode,
+      onKeyEvent: (event) async {
+        if (event is KeyDownEvent) {
+          if (event.logicalKey == LogicalKeyboardKey.enter ||
+              event.logicalKey == LogicalKeyboardKey.numpadEnter) {
+            // Execute the action function with its arguments
+            await _executeActionFunction();
 
-                // Si nous n'utilisons pas le callback onCancel, fermer avec Navigator
-                if (onCancel == null) {
-                  Navigator.of(context).pop();
-                }
-                // Sinon, l'overlay sera fermé par la fonction actionFunction modifiée
-              },
-            ),
-            TextButton(
-              key: const Key('cancelButtonKey'),
-              child: Text(
-                AppLocalizations.of(context)!.cancelButton,
-                style: (isDarkTheme)
-                    ? kTextButtonStyleDarkMode
-                    : kTextButtonStyleLightMode,
-              ),
-              onPressed: () {
-                // Si onCancel existe, l'appeler, sinon utiliser Navigator.pop
-                if (onCancel != null) {
-                  onCancel!();
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
+            // If we don't use the onCancel callback, close with Navigator
+            if (widget.onCancel == null) {
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
+            }
+          }
+        }
+      },
+      child: AlertDialog(
+        title: Text(
+          key: const Key('dialogTitle'),
+          widget.dialogTitle,
+          textAlign: TextAlign.center,
+          maxLines: 2,
         ),
-      ],
+        content: Text(
+          key: const Key('dialogContent'),
+          widget.dialogContent,
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                key: const Key('confirmButton'),
+                child: Text(
+                  AppLocalizations.of(context)!.confirmButton,
+                  style: (isDarkTheme)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () async {
+                  // Execute the action function with its arguments
+                  await _executeActionFunction();
+
+                  // If we don't use the onCancel callback, close with Navigator
+                  if (widget.onCancel == null) {
+                    Navigator.of(context).pop();
+                  }
+                  // Otherwise, the overlay will be closed by the modified actionFunction
+                },
+              ),
+              TextButton(
+                key: const Key('cancelButtonKey'),
+                child: Text(
+                  AppLocalizations.of(context)!.cancelButton,
+                  style: (isDarkTheme)
+                      ? kTextButtonStyleDarkMode
+                      : kTextButtonStyleLightMode,
+                ),
+                onPressed: () {
+                  // If onCancel exists, call it, otherwise use Navigator.pop
+                  if (widget.onCancel != null) {
+                    widget.onCancel!();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
+  }
+
+  Future<void> _executeActionFunction() async {
+    if (widget.actionFunctionArgs.isNotEmpty) {
+      await Function.apply(widget.actionFunction, widget.actionFunctionArgs);
+    } else {
+      await widget.actionFunction();
+    }
   }
 }
 
@@ -1216,7 +1265,7 @@ class _CommentListAddDialogContentState
               currentAudio,
             ],
             dialogTitle:
-                AppLocalizations.of(context)!.deleteCommentConfirnTitle,
+                AppLocalizations.of(context)!.deleteCommentConfirmTitle,
             dialogContent: AppLocalizations.of(context)!
                 .deleteCommentConfirnBody(comment.title),
             onCancel: () {
