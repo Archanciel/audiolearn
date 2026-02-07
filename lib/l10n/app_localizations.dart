@@ -1654,7 +1654,7 @@ abstract class AppLocalizations {
   /// No description provided for @applyToAlreadyDownloadedAudioTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Apply the playback speed to audios in all existing playlists. If not set, apply it only to newly added playlists.'**
+  /// **'Apply the playback speed to audios in all existing playlists. If not set, apply it only to newly downloaded, imported or converted audios (converted audios are audios created by converting text to audio).'**
   String get applyToAlreadyDownloadedAudioTooltip;
 
   /// No description provided for @applyToAlreadyDownloadedAudioOfCurrentPlaylistTooltip.
