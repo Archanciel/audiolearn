@@ -913,14 +913,49 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               child: IconButton(
                 key: const Key('playPauseButton'),
                 iconSize: 80,
-                onPressed: audioPlayerVM.hasError
-                    ? () => audioPlayerVM.tryRepairPlayer()
-                    : audioPlayerVM.isLoaded
-                        ? () => audioPlayerVM.togglePlay()
-                        : () => _playExtractedFile(
+                onPressed: () async {
+                  if (audioPlayerVM.hasError) {
+                    // Try to repair
+                    await audioPlayerVM.tryRepairPlayer();
+                    // Wait for repair to complete
+                    await Future.delayed(const Duration(milliseconds: 500));
+                  }
+
+                  if (audioPlayerVM.isLoaded && !audioPlayerVM.hasError) {
+                    // Player is ready, just toggle play/pause
+                    await audioPlayerVM.togglePlay();
+                  } else {
+                    // Need to load the file first
+                    final outputPath =
+                        audioExtractorVM.extractionResult.outputPath;
+                    if (outputPath != null) {
+                      // ✅ Give Windows extra time after extraction
+                      if (Platform.isWindows) {
+                        await Future.delayed(
+                            const Duration(milliseconds: 1500));
+                      }
+
+                      try {
+                        await _playExtractedFile(context, outputPath);
+                      } catch (e) {
+                        // If first attempt fails, try repairing and retrying
+                        await audioPlayerVM.tryRepairPlayer();
+                        await Future.delayed(const Duration(milliseconds: 500));
+
+                        try {
+                          await _playExtractedFile(context, outputPath);
+                        } catch (e2) {
+                          if (context.mounted) {
+                            _showErrorSnackBar(
                               context,
-                              audioExtractorVM.extractionResult.outputPath!,
-                            ),
+                              'Failed to play file. Please click Repair button.',
+                            );
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
                 icon: Icon(
                   audioPlayerVM.hasError
                       ? Icons.refresh
@@ -929,12 +964,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           : Icons.play_arrow,
                 ),
                 style: ButtonStyle(
-                  // Highlight button when pressed
                   padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                     const EdgeInsets.symmetric(
                         horizontal: kSmallButtonInsidePadding, vertical: 0),
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
+                  overlayColor: iconButtonTapModification,
                 ),
               ),
             ),
@@ -1271,6 +1305,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
     final ExtractMp3AudioPlayerVM audioPlayerVM =
         context.read<ExtractMp3AudioPlayerVM>();
+
     // Handle multi-audio mode
     if (audioExtractorVM.isMultiAudioMode) {
       if (audioExtractorVM.multiAudios.isEmpty) {
@@ -1278,7 +1313,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         return;
       }
 
-      // Release player if needed
+      // Release player if needed - ONLY if it's currently playing the output file
       if (audioPlayerVM.isLoaded) {
         await audioPlayerVM.releaseCurrentFile();
         if (Platform.isWindows) {
@@ -1305,27 +1340,25 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         extractedMp3FileName: extractedMp3FileName,
       );
 
+      // ✅ DON'T pre-initialize - let the play button handle it
+
       return;
     }
 
     if (audioExtractorVM.multiInputs.isEmpty) {
       if (audioExtractorVM.audioFile.path == null) {
         audioExtractorVM.setError('Please select an MP3 file first');
-
         return;
       }
 
       if (audioExtractorVM.segments.isEmpty) {
-        // Useful if in the audio extractor dialog the red 'Clear all'
-        // button was pressed
         audioExtractorVM.setError(
             AppLocalizations.of(context)!.addAtLeastOneCommentMessage);
-
         return;
       }
     }
 
-    // NEW - Release on ALL platforms
+    // Release player on ALL platforms ONLY if currently loaded
     if (audioPlayerVM.isLoaded) {
       if (Platform.isWindows) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -1368,16 +1401,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       }
 
       if (_extractInMusicQuality) {
-        // AppLocalizations.of(context)!.inMusicQuality is only added
-        // when the extracted music quality MP3 is placed in a directory
-        // and not when it is added to a playlist
         extractedMp3FileName =
             "${AppLocalizations.of(context)!.inMusicQuality}_$extractedMp3FileName";
       }
     } else {
-      // Extracting to playlist. The file name is simpler here without
-      // music quality addition to the file name and without comments
-      // number because the file is stored in the playlist directory.
       extractedMp3FileName = '$base.mp3';
     }
 
@@ -1388,9 +1415,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     Playlist? targetPlaylist;
 
     if (!_extractInDirectory) {
-      // Showing the dialog enabling to select the playlist where to add
-      // the audio containing the extracted MP3 as well as the corresponding
-      // comments
       showDialog<dynamic>(
         context: context,
         builder: (context) => PlaylistOneSelectableDialog(
@@ -1427,17 +1451,15 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           targetPlaylist: targetPlaylist!,
           extractedMp3FileName: extractedMp3FileName,
           inMusicQuality: _extractInMusicQuality,
-          totalDuration: audioExtractorVM
-              .totalDuration, // duration corrected by play speed
+          totalDuration: audioExtractorVM.totalDuration,
         );
 
         if (!wasExtractedAudioAddedToTargetPlaylist) {
-          audioExtractorVM.setError(
-              // This error is cleared when user set 'In playlist' checkbox
-              AppLocalizations.of(context)!
-                  .extractedAudioNotAddedToPlaylistMessage(
-                      targetPlaylist!.title));
+          audioExtractorVM.setError(AppLocalizations.of(context)!
+              .extractedAudioNotAddedToPlaylistMessage(targetPlaylist!.title));
         }
+
+        // ✅ DON'T pre-initialize - let the play button handle it
       });
     }
 
@@ -1447,6 +1469,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         inMusicQuality: _extractInMusicQuality,
         extractedMp3FileName: extractedMp3FileName,
       );
+
+      // ✅ DON'T pre-initialize - let the play button handle it
     }
   }
 
