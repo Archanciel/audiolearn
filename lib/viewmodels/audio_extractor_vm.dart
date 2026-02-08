@@ -386,6 +386,7 @@ class AudioExtractorVM extends ChangeNotifier {
     required int audioIndex,
     required int segmentIndex,
     required AudioSegment segment,
+    required CommentVM commentVMlistenTrue,
   }) {
     if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
       final audioWithSegments = _multiAudios[audioIndex];
@@ -411,6 +412,41 @@ class AudioExtractorVM extends ChangeNotifier {
           commentTitle: segment.commentTitle,
           deleted: segment.deleted,
         );
+
+        if (!segment.commentId.contains('full_audio_')) {
+          // Updating the corresponding comment
+
+          final List<Comment> commentsLst =
+              commentVMlistenTrue.loadAudioComments(
+            audio: audioWithSegments.audio,
+          );
+
+          Comment comment = commentsLst.firstWhere(
+            (c) => c.id == normalized.commentId,
+          );
+          comment.lastUpdateDateTime = DateTime.now();
+          comment.title = normalized.commentTitle;
+          comment.commentStartPositionInTenthOfSeconds =
+              (normalized.startPosition * 10).toInt();
+          comment.commentEndPositionInTenthOfSeconds =
+              (normalized.endPosition * 10).toInt();
+          comment.silenceDuration = normalized.silenceDuration;
+
+          if (comment.playSpeed != normalized.playSpeed) {
+            comment.playSpeed = normalized.playSpeed;
+            comment.wasPlaySpeedModifiedByAddSegmentDialog = true;
+          }
+
+          comment.fadeInDuration = normalized.fadeInDuration;
+          comment.soundReductionPosition = normalized.soundReductionPosition;
+          comment.soundReductionDuration = normalized.soundReductionDuration;
+          comment.deleted = normalized.deleted;
+
+          commentVMlistenTrue.updateAudioCommentsLst(
+            commentedAudio: audioWithSegments.audio,
+            updateCommentsLst: commentsLst,
+          );
+        }
 
         updatedSegments[segmentIndex] = normalized;
         _multiAudios[audioIndex] =
