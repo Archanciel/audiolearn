@@ -389,12 +389,14 @@ class AudioExtractorVM extends ChangeNotifier {
     required CommentVM commentVMlistenTrue,
   }) {
     if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
-      final audioWithSegments = _multiAudios[audioIndex];
+      final AudioWithSegments audioWithSegments = _multiAudios[audioIndex];
+
       if (segmentIndex >= 0 &&
           segmentIndex < audioWithSegments.segments.length) {
         final updatedSegments =
             List<AudioSegment>.from(audioWithSegments.segments);
 
+        final String commentId = segment.commentId;
         final normalized = AudioSegment(
           startPosition:
               TimeFormatUtil.normalizeToTenths(segment.startPosition),
@@ -408,21 +410,22 @@ class AudioExtractorVM extends ChangeNotifier {
               TimeFormatUtil.normalizeToTenths(segment.soundReductionPosition),
           soundReductionDuration:
               TimeFormatUtil.normalizeToTenths(segment.soundReductionDuration),
-          commentId: segment.commentId,
+          commentId: commentId,
           commentTitle: segment.commentTitle,
           deleted: segment.deleted,
         );
 
-        if (!segment.commentId.contains('full_audio_')) {
+        if (!commentId.contains('full_audio_')) {
           // Updating the corresponding comment
 
+          Audio audio = audioWithSegments.audio;
           final List<Comment> commentsLst =
               commentVMlistenTrue.loadAudioComments(
-            audio: audioWithSegments.audio,
+            audio: audio,
           );
 
           Comment comment = commentsLst.firstWhere(
-            (c) => c.id == normalized.commentId,
+            (c) => c.id == commentId,
           );
           comment.lastUpdateDateTime = DateTime.now();
           comment.title = normalized.commentTitle;
@@ -443,7 +446,7 @@ class AudioExtractorVM extends ChangeNotifier {
           comment.deleted = normalized.deleted;
 
           commentVMlistenTrue.updateAudioCommentsLst(
-            commentedAudio: audioWithSegments.audio,
+            commentedAudio: audio,
             updateCommentsLst: commentsLst,
           );
         }
