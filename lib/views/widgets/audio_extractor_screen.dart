@@ -663,6 +663,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                             audioIndex: audioIndex,
                             segmentIndex: segmentIndex,
                             segment: updatedSegment,
+                            commentVMlistenTrue: widget.commentVMlistenTrue,
                           );
                         }
                       },
