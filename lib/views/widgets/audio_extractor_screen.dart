@@ -427,7 +427,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 startPosition: start,
                 endPosition: end,
                 silenceDuration: silence,
-                playSpeed: (comment.wasPlaySpeedModifiedByAddSegmentDialog) ? comment.playSpeed : audio.audioPlaySpeed,
+                playSpeed: (comment.wasPlaySpeedModifiedByAddSegmentDialog)
+                    ? comment.playSpeed
+                    : audio.audioPlaySpeed,
                 fadeInDuration: comment.fadeInDuration,
                 soundReductionPosition: comment.soundReductionPosition,
                 soundReductionDuration: comment.soundReductionDuration,
@@ -1214,7 +1216,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               startPosition: start,
               endPosition: end,
               silenceDuration: silence,
-              playSpeed: currentAudio.audioPlaySpeed,
+              playSpeed: (comment.wasPlaySpeedModifiedByAddSegmentDialog)
+                  ? comment.playSpeed
+                  : currentAudio.audioPlaySpeed,
               fadeInDuration: comment.fadeInDuration,
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,

@@ -41973,7 +41973,8 @@ void main() {
     });
     testWidgets(
         '''Delete and resave the extract comments. Modify their play speed and positions and verify
-           that this is memorized and is correctly stored in the comment json file.''',
+           that this is memorized, is correctly stored in the comment json file and is correctly
+           displayed in the AudioExtractorScreen after closing and reopening it.''',
         (WidgetTester tester) async {
       const String audioTitle =
           "Glorious - Laisse-moi te parler de Jésus #louange";
@@ -42688,7 +42689,7 @@ void main() {
             'commentTitle': "First part",
             'startPosition': '0:10.0',
             'endPosition': '2:20.0',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 0.7',
             'increaseDuration': 'Increase duration: 0:08.0',
             'reductionPosition': 'Reduction position: 2:10.1',
             'reductionDuration': 'Reduction duration: 0:09.9',
@@ -42712,7 +42713,7 @@ void main() {
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 1.25',
             'increaseDuration': 'Increase duration: 0:09.0',
             'reductionPosition': 'Reduction position: 5:11.0',
             'reductionDuration': 'Reduction duration: 0:09.8',
@@ -42726,7 +42727,7 @@ void main() {
           find.byKey(const Key('totalSegmentsDurationTextKey'));
       expect(
         tester.widget<Text>(totalDurationTextFinder).data,
-        'Total duration: 4:34.3',
+        'Total duration: 5:13.1',
       );
 
       // Now, tap on 'Clear all' button to delete all comments at once
@@ -42759,7 +42760,7 @@ void main() {
             'commentTitle': "First part",
             'startPosition': '0:10.0',
             'endPosition': '2:20.0',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 0.7',
             'increaseDuration': 'Increase duration: 0:08.0',
             'reductionPosition': 'Reduction position: 2:10.1',
             'reductionDuration': 'Reduction duration: 0:09.9',
@@ -42783,7 +42784,7 @@ void main() {
                 "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
             'startPosition': '3:56.1',
             'endPosition': '5:20.8',
-            'playSpeed': 'Play speed: 1.0',
+            'playSpeed': 'Play speed: 1.25',
             'increaseDuration': 'Increase duration: 0:09.0',
             'reductionPosition': 'Reduction position: 5:11.0',
             'reductionDuration': 'Reduction duration: 0:09.8',
