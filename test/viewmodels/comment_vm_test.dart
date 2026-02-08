@@ -108,6 +108,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 1810,
           silenceDuration: 1.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 0.0,
           soundReductionPosition: 170.0,
           soundReductionDuration: 11.0,
@@ -124,6 +125,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 2346,
           silenceDuration: 0.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -139,6 +141,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 3208,
           silenceDuration: 0.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 9.0,
           soundReductionPosition: 311.0,
           soundReductionDuration: 9.8,
@@ -193,6 +196,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 1800,
           silenceDuration: 0.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -209,6 +213,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 2800,
           silenceDuration: 0.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -224,6 +229,7 @@ void main() {
           commentEndPositionInTenthOfSeconds: 5000,
           silenceDuration: 0.0,
           playSpeed: 1.0,
+          wasPlaySpeedModifiedByAddSegmentDialog: false,
           fadeInDuration: 0.0,
           soundReductionPosition: 0.0,
           soundReductionDuration: 0.0,
@@ -295,7 +301,7 @@ void main() {
 
       dynamic jsonDecode(
         String source, {
-        Object? reviver(Object? key, Object? value)?,
+        Object? Function(Object? key, Object? value)? reviver,
       }) =>
           json.decode(source, reviver: reviver);
 
@@ -361,6 +367,7 @@ void main() {
         commentEndPositionInTenthOfSeconds: 6553,
         silenceDuration: 0.0,
         playSpeed: 1.0,
+        wasPlaySpeedModifiedByAddSegmentDialog: false,
         fadeInDuration: 0.0,
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
@@ -376,6 +383,7 @@ void main() {
         commentEndPositionInTenthOfSeconds: 46737,
         silenceDuration: 0.0,
         playSpeed: 1.0,
+        wasPlaySpeedModifiedByAddSegmentDialog: false,
         fadeInDuration: 0.0,
         soundReductionPosition: 0.0,
         soundReductionDuration: 0.0,
