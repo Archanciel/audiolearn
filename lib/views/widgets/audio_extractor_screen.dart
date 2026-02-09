@@ -662,21 +662,25 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       final List<Comment> comments = [];
 
       for (final segment in audioWithSegments.segments) {
-        comments.add(Comment(
-          title: segment.commentTitle,
-          content: '', // Empty content for generated comments
-          commentStartPositionInTenthOfSeconds:
-              (segment.startPosition * 10).toInt(),
-          commentEndPositionInTenthOfSeconds:
-              (segment.endPosition * 10).toInt(),
-          silenceDuration: segment.silenceDuration,
-          playSpeed: segment.playSpeed,
-          fadeInDuration: segment.fadeInDuration,
-          soundReductionPosition: segment.soundReductionPosition,
-          soundReductionDuration: segment.soundReductionDuration,
-          deleted: segment.deleted,
-          wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
-        ));
+        Comment comment = Comment(
+            title: segment.commentTitle,
+            content: '', // Empty content for generated comments
+            commentStartPositionInTenthOfSeconds:
+                (segment.startPosition * 10).toInt(),
+            commentEndPositionInTenthOfSeconds:
+                (segment.endPosition * 10).toInt(),
+            silenceDuration: segment.silenceDuration,
+            playSpeed: segment.playSpeed,
+            fadeInDuration: segment.fadeInDuration,
+            soundReductionPosition: segment.soundReductionPosition,
+            soundReductionDuration: segment.soundReductionDuration,
+            deleted: segment.deleted,
+            wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
+          );
+          comment.setId(segment.commentId); // Preserve original comment ID
+        comments.add(
+          comment,
+        );
       }
 
       audioCommentsMap[audioFileName] = comments;
@@ -688,7 +692,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
     // ✅ CHANGED: Use separate directory for multi-audio comments
     final String multiCommentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}kCommentDirName';
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$kCommentDirName';
 
     // Create directory if it doesn't exist
     final Directory multiCommentsDirObj = Directory(multiCommentsDir);
@@ -727,7 +731,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) async {
     // ✅ CHANGED: Look in separate multi_audio_comments directory
     final String multiCommentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}kCommentDirName';
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$kCommentDirName';
 
     final Directory multiCommentsDirObj = Directory(multiCommentsDir);
     if (!multiCommentsDirObj.existsSync()) {
