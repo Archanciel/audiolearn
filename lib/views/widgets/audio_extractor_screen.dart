@@ -688,7 +688,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
     // ✅ CHANGED: Use separate directory for multi-audio comments
     final String multiCommentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}multi_audio_comments';
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}kCommentDirName';
 
     // Create directory if it doesn't exist
     final Directory multiCommentsDirObj = Directory(multiCommentsDir);
@@ -727,7 +727,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) async {
     // ✅ CHANGED: Look in separate multi_audio_comments directory
     final String multiCommentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}multi_audio_comments';
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}kCommentDirName';
 
     final Directory multiCommentsDirObj = Directory(multiCommentsDir);
     if (!multiCommentsDirObj.existsSync()) {
