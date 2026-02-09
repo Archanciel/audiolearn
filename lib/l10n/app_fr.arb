@@ -1669,5 +1669,12 @@
         "type": "Object"
       }
     }
-  }
+  },
+  "saveCommentsDialogTitle": "Enregistrer les commentaires",
+  "loadCommentsDialogTitle": "Charger les commentaires",
+  "fileNameLabel": "Nom du fichier",
+  "loadCommentsButton": "Charger commentaires",
+  "saveCommentsButton": "Sauver commentaires",
+  "commentsSavedMessage": "Commentaires enregistrés dans :",
+  "noSavedCommentsMessage": "Aucun fichier de commentaires trouvé"
 }

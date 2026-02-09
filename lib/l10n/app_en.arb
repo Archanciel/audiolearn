@@ -1250,5 +1250,12 @@
       "segDuration": {},
       "endPos": {}
     }
-  }
+  },
+  "saveCommentsDialogTitle": "Save Comments",
+  "loadCommentsDialogTitle": "Load Comments", 
+  "fileNameLabel": "File name",
+  "loadCommentsButton": "Load Comments",
+  "saveCommentsButton": "Save Comments",
+  "commentsSavedMessage": "Comments saved to:",
+  "noSavedCommentsMessage": "No saved comment files found"
 }

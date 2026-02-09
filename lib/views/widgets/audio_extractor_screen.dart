@@ -16,8 +16,10 @@ import '../../l10n/app_localizations.dart';
 
 import '../../models/audio.dart';
 import '../../models/comment.dart';
+import '../../models/multi_audio_comments.dart';
 import '../../models/playlist.dart';
 import '../../models/audio_with_segments.dart';
+import '../../services/json_data_service.dart';
 import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
@@ -56,6 +58,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   bool _extractInDirectory = true;
   bool _extractInPlaylist = false;
   bool _extractingMultipleAudios = false;
+  String? _loadedCommentsFileName;
 
   @override
   void initState() {
@@ -297,6 +300,40 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                   ),
                                 ],
                               ),
+                              // ✅ ADD: Save/Load buttons for multi-audio mode
+                              if (_extractingMultipleAudios) ...[
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      key: const Key('loadCommentsButton'),
+                                      onPressed: () =>
+                                          _loadMultiAudioCommentsFile(
+                                              context: context),
+                                      icon: const Icon(Icons.folder_open,
+                                          size: 18),
+                                      label: Text(AppLocalizations.of(context)!
+                                          .loadCommentsButton),
+                                    ),
+                                    ElevatedButton.icon(
+                                      key: const Key('saveCommentsButton'),
+                                      onPressed:
+                                          audioExtractorVM.multiAudios.isEmpty
+                                              ? null
+                                              : () => _saveMultiAudioComments(
+                                                    context: context,
+                                                    audioExtractorVM:
+                                                        audioExtractorVM,
+                                                  ),
+                                      icon: const Icon(Icons.save, size: 18),
+                                      label: Text(AppLocalizations.of(context)!
+                                          .saveCommentsButton),
+                                    ),
+                                  ],
+                                ),
+                              ],
                               (_extractingMultipleAudios)
                                   ? const SizedBox
                                       .shrink() // multiple audios are extracted in saved/MP3 dir.
@@ -403,10 +440,40 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     try {
       final List<AudioWithSegments> audiosWithSegments = [];
 
+      // ✅ ADD: Load saved comments if a file was selected
+      Map<String, List<Comment>>? savedCommentsMap;
+      if (_loadedCommentsFileName != null) {
+        try {
+          final multiAudioComments = JsonDataService.loadFromFile(
+            jsonPathFileName: _loadedCommentsFileName!,
+            type: MultiAudioComments,
+          ) as MultiAudioComments?;
+
+          savedCommentsMap = multiAudioComments?.audioCommentsMap;
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error loading comments file: $e'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      }
+
       for (final Audio audio in widget.multipleAudiosLst) {
-        // Load comments for this audio
-        final List<Comment> commentsLst =
-            widget.commentVMlistenTrue.loadAudioComments(audio: audio);
+        List<Comment> commentsLst;
+
+        // ✅ MODIFIED: Check if we have saved comments for this audio
+        if (savedCommentsMap != null &&
+            savedCommentsMap.containsKey(audio.audioFileName)) {
+          commentsLst = savedCommentsMap[audio.audioFileName]!;
+        } else {
+          // Load comments from audio's comment file
+          commentsLst =
+              widget.commentVMlistenTrue.loadAudioComments(audio: audio);
+        }
 
         // Convert comments to segments
         final List<AudioSegment> segments = [];
@@ -441,9 +508,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           }
         }
 
-        // If no segments were created from comments, create a default full-audio segment
+        // If no segments were created, create a default full-audio segment
         if (segments.isEmpty) {
-          // Round to tenth of second to match validation logic
           final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
               toBeRounded: audio.audioDuration.inMilliseconds / 1000.0);
 
@@ -464,7 +530,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           );
         }
 
-        // Always add the audio, whether it has comments or a default segment
         audiosWithSegments.add(
           AudioWithSegments(
             audio: audio,
@@ -509,6 +574,193 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ),
       );
     }
+  }
+
+  // Add these methods in the _AudioExtractorScreenState class:
+
+  Future<void> _saveMultiAudioComments({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+  }) async {
+    // Prompt for filename
+    final TextEditingController fileNameController = TextEditingController(
+      text: 'multi_audio_comments_${DateTime.now().millisecondsSinceEpoch}',
+    );
+
+    final String? fileName = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.saveCommentsDialogTitle),
+        content: TextField(
+          controller: fileNameController,
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.fileNameLabel,
+            hintText: 'multi_audio_comments',
+          ),
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final name = fileNameController.text.trim();
+              if (name.isNotEmpty) {
+                Navigator.of(dialogContext).pop(name);
+              }
+            },
+            child: Text(AppLocalizations.of(context)!.saveButton),
+          ),
+        ],
+      ),
+    );
+
+    if (fileName == null || fileName.isEmpty) return;
+
+    // Convert segments to comments and group by audio
+    final Map<String, List<Comment>> audioCommentsMap = {};
+
+    for (final audioWithSegments in audioExtractorVM.multiAudios) {
+      final String audioFileName = audioWithSegments.audio.audioFileName;
+      final List<Comment> comments = [];
+
+      for (final segment in audioWithSegments.segments) {
+        comments.add(Comment(
+          title: segment.commentTitle,
+          content: '', // Empty content for generated comments
+          commentStartPositionInTenthOfSeconds:
+              (segment.startPosition * 10).toInt(),
+          commentEndPositionInTenthOfSeconds:
+              (segment.endPosition * 10).toInt(),
+          silenceDuration: segment.silenceDuration,
+          playSpeed: segment.playSpeed,
+          fadeInDuration: segment.fadeInDuration,
+          soundReductionPosition: segment.soundReductionPosition,
+          soundReductionDuration: segment.soundReductionDuration,
+          deleted: segment.deleted,
+          wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
+        ));
+      }
+
+      audioCommentsMap[audioFileName] = comments;
+    }
+
+    final multiAudioComments = MultiAudioComments(
+      audioCommentsMap: audioCommentsMap,
+    );
+
+    // Save to file
+    final String commentsDir =
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}comments';
+
+    // Create comments directory if it doesn't exist
+    final Directory commentsDirObj = Directory(commentsDir);
+    if (!commentsDirObj.existsSync()) {
+      commentsDirObj.createSync(recursive: true);
+    }
+
+    final String filePath =
+        '$commentsDir${Platform.pathSeparator}$fileName.json';
+
+    JsonDataService.saveToFile(
+      model: multiAudioComments,
+      path: filePath,
+    );
+
+    if (!context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${AppLocalizations.of(context)!.commentsSavedMessage} $filePath',
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  Future<void> _loadMultiAudioCommentsFile({
+    required BuildContext context,
+  }) async {
+    // Get list of available comment files
+    final String commentsDir =
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}comments';
+
+    final Directory commentsDirObj = Directory(commentsDir);
+    if (!commentsDirObj.existsSync()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.noSavedCommentsMessage),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    final List<FileSystemEntity> files = commentsDirObj
+        .listSync()
+        .where((file) => file.path.endsWith('.json'))
+        .toList();
+
+    if (files.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.noSavedCommentsMessage),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    // Show dialog to select file
+    final String? selectedFile = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.loadCommentsDialogTitle),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: files.length,
+            itemBuilder: (context, index) {
+              final file = files[index];
+              final fileName = PathUtil.fileName(file.path);
+
+              return ListTile(
+                title: Text(fileName),
+                onTap: () => Navigator.of(dialogContext).pop(file.path),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
+          ),
+        ],
+      ),
+    );
+
+    if (selectedFile == null) return;
+
+    setState(() {
+      _loadedCommentsFileName = selectedFile;
+    });
+
+    // Reload the multi-audio data
+    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    await _loadMultipleAudios(
+      context: context,
+      audioExtractorVM: audioExtractorVM,
+    );
   }
 
   Widget _buildSingleAudioList(

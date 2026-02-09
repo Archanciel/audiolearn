@@ -2895,4 +2895,25 @@ class AppLocalizationsFr extends AppLocalizations {
       Object startPos, Object fadeStart, Object segDuration, Object endPos) {
     return '$commentTitle. Position de réduction invalide: la position de réduction correspond à $reductionPos - $startPos = $fadeStart, valeur supérieure à la durée du commentaire $segDuration = $endPos - $startPos. Solution: fermez le dialogue d\'extraction. Ensuite, supprimez tous les commentaires de l\'audio contenant \"$commentTitle\" et appliquez à nouveau le menu \"Extraire les audios filtrés dans un unique MP3 ...\".';
   }
+
+  @override
+  String get saveCommentsDialogTitle => 'Enregistrer les commentaires';
+
+  @override
+  String get loadCommentsDialogTitle => 'Charger les commentaires';
+
+  @override
+  String get fileNameLabel => 'Nom du fichier';
+
+  @override
+  String get loadCommentsButton => 'Charger commentaires';
+
+  @override
+  String get saveCommentsButton => 'Sauver commentaires';
+
+  @override
+  String get commentsSavedMessage => 'Commentaires enregistrés dans :';
+
+  @override
+  String get noSavedCommentsMessage => 'Aucun fichier de commentaires trouvé';
 }

@@ -2977,4 +2977,25 @@ class MockAppLocalizations extends AppLocalizations {
     Object endPos,
   ) =>
       "$commentTitle. Invalid reduction position: fade start = $reductionPos - $startPos = $fadeStart which is greater than segment duration $segDuration = $endPos - $startPos. Solution: edit the comment \"$commentTitle\" to set the reduction position between $startPos and $endPos.";
+
+  @override
+  String get noSavedCommentsMessage => "No saved comments";
+
+  @override
+  String get saveCommentsDialogTitle => "Save Comments";
+
+  @override
+  String get loadCommentsDialogTitle => "Load Comments";
+
+  @override
+  String get fileNameLabel => "File name";
+
+  @override
+  String get loadCommentsButton => "Load Comments";
+
+  @override
+  String get saveCommentsButton => "Save Comments";
+
+  @override
+  String get commentsSavedMessage => "Comments saved to:";
 }
