@@ -2883,4 +2883,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noSavedCommentsMessage => 'No saved comment files found';
+
+  @override
+  String get errorLoadingCommentsFile => 'Error loading comments file';
+
+  @override
+  String get loadedSavedComments => 'Loaded saved comments';
+
+  @override
+  String get audiosMin => 'audios';
+
+  @override
+  String get segments => 'segments';
 }

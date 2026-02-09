@@ -4641,6 +4641,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No saved comment files found'**
   String get noSavedCommentsMessage;
+
+  /// No description provided for @errorLoadingCommentsFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading comments file'**
+  String get errorLoadingCommentsFile;
+
+  /// No description provided for @loadedSavedComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded saved comments'**
+  String get loadedSavedComments;
+
+  /// No description provided for @audiosMin.
+  ///
+  /// In en, this message translates to:
+  /// **'audios'**
+  String get audiosMin;
+
+  /// No description provided for @segments.
+  ///
+  /// In en, this message translates to:
+  /// **'segments'**
+  String get segments;
 }
 
 class _AppLocalizationsDelegate

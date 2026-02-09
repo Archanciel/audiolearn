@@ -64,6 +64,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   void initState() {
     super.initState();
     _segmentsScrollController = ScrollController();
+    _loadedCommentsFileName = null; // ✅ ADD: Always reset on init
+
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
     audioExtractorVM.currentAudio = widget.currentAudio;
     audioExtractorVM.commentVMlistenTrue = widget.commentVMlistenTrue;
@@ -440,37 +442,51 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     try {
       final List<AudioWithSegments> audiosWithSegments = [];
 
-      // ✅ ADD: Load saved comments if a file was selected
+      // ✅ IMPROVED: Better error handling for loading saved comments
       Map<String, List<Comment>>? savedCommentsMap;
       if (_loadedCommentsFileName != null) {
         try {
-          final multiAudioComments = JsonDataService.loadFromFile(
+          final dynamic loaded = JsonDataService.loadFromFile(
             jsonPathFileName: _loadedCommentsFileName!,
             type: MultiAudioComments,
-          ) as MultiAudioComments?;
+          );
 
-          savedCommentsMap = multiAudioComments?.audioCommentsMap;
+          if (loaded is MultiAudioComments) {
+            savedCommentsMap = loaded.audioCommentsMap;
+          } else {
+            throw Exception('Invalid file format');
+          }
         } catch (e) {
+          // ✅ ADD: Clear the problematic filename and show error
+          _loadedCommentsFileName = null;
+
           if (context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Error loading comments file: $e'),
+                content: Text(
+                  '${AppLocalizations.of(context)!.errorLoadingCommentsFile}: $e',
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
                 backgroundColor: Colors.red,
+                duration: const Duration(seconds: 4),
               ),
             );
           }
+
+          // Continue with default behavior (load from individual files)
+          savedCommentsMap = null;
         }
       }
 
       for (final Audio audio in widget.multipleAudiosLst) {
         List<Comment> commentsLst;
 
-        // ✅ MODIFIED: Check if we have saved comments for this audio
+        // Check if we have saved comments for this audio
         if (savedCommentsMap != null &&
             savedCommentsMap.containsKey(audio.audioFileName)) {
           commentsLst = savedCommentsMap[audio.audioFileName]!;
         } else {
-          // Load comments from audio's comment file
+          // Load comments from audio's individual comment file
           commentsLst =
               widget.commentVMlistenTrue.loadAudioComments(audio: audio);
         }
@@ -479,6 +495,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         final List<AudioSegment> segments = [];
 
         for (final Comment comment in commentsLst) {
+          // ✅ ADD: Validate comment data
+          if (comment.commentStartPositionInTenthOfSeconds < 0 ||
+              comment.commentEndPositionInTenthOfSeconds < 0) {
+            continue; // Skip invalid comments
+          }
+
           final double start =
               comment.commentStartPositionInTenthOfSeconds / 10.0;
           final double end = comment.commentEndPositionInTenthOfSeconds / 10.0;
@@ -547,13 +569,18 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         (sum, audioWithSeg) => sum + audioWithSeg.segments.length,
       );
 
+      // ✅ IMPROVED: Different message if loaded from file
+      final String message = savedCommentsMap != null
+          ? '${AppLocalizations.of(context)!.loadedSavedComments} (${widget.multipleAudiosLst.length} ${AppLocalizations.of(context)!.audiosMin}, $totalSegments ${AppLocalizations.of(context)!.segments})'
+          : AppLocalizations.of(context)!.loadedCommentsFromMultipleAudios(
+              widget.multipleAudiosLst.length,
+              totalSegments,
+            );
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            AppLocalizations.of(context)!.loadedCommentsFromMultipleAudios(
-              widget.multipleAudiosLst.length,
-              totalSegments,
-            ),
+            message,
             style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w700,
@@ -563,9 +590,15 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           duration: const Duration(seconds: 3),
         ),
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
+      // ✅ ADD: Comprehensive error logging
+      print('Error in _loadMultipleAudios: $e');
+      print('Stack trace: $stackTrace');
+
       audioExtractorVM.setError('Error loading multiple audios: $e');
+
       if (!context.mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error loading multiple audios: $e'),
@@ -600,10 +633,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           autofocus: true,
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
-          ),
           ElevatedButton(
             onPressed: () {
               final name = fileNameController.text.trim();
@@ -612,6 +641,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               }
             },
             child: Text(AppLocalizations.of(context)!.saveButton),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(AppLocalizations.of(context)!.cancelButton),
           ),
         ],
       ),
@@ -651,18 +684,19 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       audioCommentsMap: audioCommentsMap,
     );
 
-    // Save to file
-    final String commentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}comments';
+    // ✅ CHANGED: Use separate directory for multi-audio comments
+    final String multiCommentsDir =
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}multi_audio_comments';
 
-    // Create comments directory if it doesn't exist
-    final Directory commentsDirObj = Directory(commentsDir);
-    if (!commentsDirObj.existsSync()) {
-      commentsDirObj.createSync(recursive: true);
+    // Create directory if it doesn't exist
+    final Directory multiCommentsDirObj = Directory(multiCommentsDir);
+    if (!multiCommentsDirObj.existsSync()) {
+      multiCommentsDirObj.createSync(recursive: true);
     }
 
+    // ✅ Use regular .json extension now (safe because it's in a separate directory)
     final String filePath =
-        '$commentsDir${Platform.pathSeparator}$fileName.json';
+        '$multiCommentsDir${Platform.pathSeparator}$fileName.json';
 
     JsonDataService.saveToFile(
       model: multiAudioComments,
@@ -689,12 +723,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   Future<void> _loadMultiAudioCommentsFile({
     required BuildContext context,
   }) async {
-    // Get list of available comment files
-    final String commentsDir =
-        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}comments';
+    // ✅ CHANGED: Look in separate multi_audio_comments directory
+    final String multiCommentsDir =
+        '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}multi_audio_comments';
 
-    final Directory commentsDirObj = Directory(commentsDir);
-    if (!commentsDirObj.existsSync()) {
+    final Directory multiCommentsDirObj = Directory(multiCommentsDir);
+    if (!multiCommentsDirObj.existsSync()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppLocalizations.of(context)!.noSavedCommentsMessage),
@@ -704,7 +738,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       return;
     }
 
-    final List<FileSystemEntity> files = commentsDirObj
+    // ✅ Regular .json files in this directory are all multi-audio comment files
+    final List<FileSystemEntity> files = multiCommentsDirObj
         .listSync()
         .where((file) => file.path.endsWith('.json'))
         .toList();

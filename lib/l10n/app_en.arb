@@ -1257,5 +1257,9 @@
   "loadCommentsButton": "Load Comments",
   "saveCommentsButton": "Save Comments",
   "commentsSavedMessage": "Comments saved to:",
-  "noSavedCommentsMessage": "No saved comment files found"
+  "noSavedCommentsMessage": "No saved comment files found",
+  "errorLoadingCommentsFile": "Error loading comments file",
+  "loadedSavedComments": "Loaded saved comments",
+  "audiosMin": "audios",
+  "segments": "segments"
 }
