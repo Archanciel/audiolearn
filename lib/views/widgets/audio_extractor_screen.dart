@@ -11,6 +11,7 @@ import 'package:audiolearn/viewmodels/extract_mp3_audio_player_vm.dart';
 import 'package:audiolearn/views/widgets/add_segment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -59,6 +60,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   bool _extractInPlaylist = false;
   bool _extractingMultipleAudios = false;
   String? _loadedCommentsFileName;
+  final Logger _logger = Logger();
 
   @override
   void initState() {
@@ -592,8 +594,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       );
     } catch (e, stackTrace) {
       // ✅ ADD: Comprehensive error logging
-      print('Error in _loadMultipleAudios: $e');
-      print('Stack trace: $stackTrace');
+      _logger.e('Error in _loadMultipleAudios: $e');
+      _logger.e('Stack trace: $stackTrace');
 
       audioExtractorVM.setError('Error loading multiple audios: $e');
 
