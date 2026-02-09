@@ -499,6 +499,10 @@ class CommentVM extends ChangeNotifier {
     );
 
     for (String commentFileName in commentFileNamesLst) {
+      if (commentFileName.contains('multi_audio_comments')) {
+        continue;
+      }
+      
       List<Comment> audioCommentsLst = JsonDataService.loadListFromFile(
         jsonPathFileName: "$commentPath${path.separator}$commentFileName",
         type: Comment,
