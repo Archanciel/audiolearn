@@ -4599,6 +4599,48 @@ abstract class AppLocalizations {
   /// **'{commentTitle}. Invalid reduction position: fade start correspond to {reductionPos} - {startPos} = {fadeStart} which is greater than segment duration {segDuration} = {endPos} - {startPos}. Solution: close the extract dialog. Then, remove all comments of the audio containing \"{commentTitle}\" and reexecute the \"Extract filtered Audios to unique MP3 ...\" menu.'**
   String invalidReductionPositionError(Object commentTitle, Object reductionPos,
       Object startPos, Object fadeStart, Object segDuration, Object endPos);
+
+  /// No description provided for @saveCommentsDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Comments'**
+  String get saveCommentsDialogTitle;
+
+  /// No description provided for @loadCommentsDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Comments'**
+  String get loadCommentsDialogTitle;
+
+  /// No description provided for @fileNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'File name'**
+  String get fileNameLabel;
+
+  /// No description provided for @loadCommentsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Load Comments'**
+  String get loadCommentsButton;
+
+  /// No description provided for @saveCommentsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Comments'**
+  String get saveCommentsButton;
+
+  /// No description provided for @commentsSavedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments saved to:'**
+  String get commentsSavedMessage;
+
+  /// No description provided for @noSavedCommentsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved comment files found'**
+  String get noSavedCommentsMessage;
 }
 
 class _AppLocalizationsDelegate

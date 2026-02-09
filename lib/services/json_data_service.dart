@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../models/audio.dart';
+import '../models/multi_audio_comments.dart';
 import '../models/playlist.dart';
 import '../models/comment.dart';
 import '../models/picture.dart';
@@ -84,6 +85,8 @@ class JsonDataService {
         AudioSortFilterParameters.fromJson(jsonDataMap),
     Comment: (jsonDataMap) => Comment.fromJson(jsonDataMap),
     Picture: (jsonDataMap) => Picture.fromJson(jsonDataMap),
+    MultiAudioComments: (jsonDataMap) =>
+        MultiAudioComments.fromJson(jsonDataMap),
   };
 
   // typedef ToJsonFunction<T> = Map<String, dynamic> Function(T model);
@@ -95,6 +98,7 @@ class JsonDataService {
         audioSortFilterParameters.toJson(),
     Comment: (model) => model.toJson(),
     Picture: (model) => model.toJson(),
+    MultiAudioComments: (model) => model.toJson(),
   };
 
   static void saveToFile({
@@ -223,7 +227,7 @@ class JsonDataService {
     Type type,
   ) {
     final fromJsonFunction = _fromJsonFunctionsMap[type];
-    
+
     if (fromJsonFunction != null) {
       final jsonData = jsonDecode(jsonString);
       if (jsonData is List) {

@@ -2862,4 +2862,25 @@ class AppLocalizationsEn extends AppLocalizations {
       Object startPos, Object fadeStart, Object segDuration, Object endPos) {
     return '$commentTitle. Invalid reduction position: fade start correspond to $reductionPos - $startPos = $fadeStart which is greater than segment duration $segDuration = $endPos - $startPos. Solution: close the extract dialog. Then, remove all comments of the audio containing \"$commentTitle\" and reexecute the \"Extract filtered Audios to unique MP3 ...\" menu.';
   }
+
+  @override
+  String get saveCommentsDialogTitle => 'Save Comments';
+
+  @override
+  String get loadCommentsDialogTitle => 'Load Comments';
+
+  @override
+  String get fileNameLabel => 'File name';
+
+  @override
+  String get loadCommentsButton => 'Load Comments';
+
+  @override
+  String get saveCommentsButton => 'Save Comments';
+
+  @override
+  String get commentsSavedMessage => 'Comments saved to:';
+
+  @override
+  String get noSavedCommentsMessage => 'No saved comment files found';
 }
