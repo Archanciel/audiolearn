@@ -1676,5 +1676,9 @@
   "loadCommentsButton": "Charger commentaires",
   "saveCommentsButton": "Sauver commentaires",
   "commentsSavedMessage": "Commentaires enregistrés dans :",
-  "noSavedCommentsMessage": "Aucun fichier de commentaires trouvé"
+  "noSavedCommentsMessage": "Aucun fichier de commentaires trouvé",
+  "errorLoadingCommentsFile": "Erreur lors du chargement du fichier de commentaires",
+  "loadedSavedComments": "Commentaires sauvegardés chargés",
+  "audiosMin": "audios",
+  "segments": "segments"
 }

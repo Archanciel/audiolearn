@@ -2998,4 +2998,16 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get commentsSavedMessage => "Comments saved to:";
+
+  @override
+  String get errorLoadingCommentsFile => "Error loading comments file";
+
+  @override
+  String get loadedSavedComments => "Loaded saved comments";
+
+  @override
+  String get segments => "segments";
+
+  @override
+  String get audiosMin => "audios";
 }
