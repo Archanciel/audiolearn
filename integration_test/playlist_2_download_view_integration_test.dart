@@ -43698,7 +43698,198 @@ void main() {
         );
       });
     });
-    group('Extract multiple audio comments', () {});
+    group('Extract multiple audio comments', () {
+      testWidgets(
+          '''Extract to dir in spoken quality with play speed modification multiple audios, one has 1
+           comment. Then save all comments, do new modifications and save again all comments under a
+           new name. Then load the first saved comments. Finally, close the extract comments to MP3
+           dialog and reopen it to verify that the modifications can be reloaded.''',
+          (WidgetTester tester) async {
+        const String playlistTitle = "Les prières de cette playlist";
+        const String playlistSubMenuKeyStr =
+            'popup_menu_extract_filtered_audio';
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Open the move or copy filtered audio dialog by clicking first on
+        // the 'Filtered Audio Actions ...' playlist menu item and then
+        // on the 'Move/Copy Filtered Audio to Playlist ...' sub-menu item
+        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+          tester: tester,
+          playlistTitle: playlistTitle,
+          playlistSubMenuKeyStr: playlistSubMenuKeyStr,
+        );
+
+        // Verify the extract audios to MP3 dialog commentTitle
+        expect(find.text('Audios to MP3'), findsOneWidget);
+
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+        // Verify the Comments number commentTitle
+        expect(find.text('Audios (4)'), findsOneWidget);
+
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -1000), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 4.1,
+              'commentTitle': "Seigneur",
+              'startPosition': '0:00.0',
+              'endPosition': '0:28.6',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 0:00.0',
+              'reductionDuration': 'Reduction duration: 0:00.0',
+              'duration': 'Duration: 0:28.6 + silence 0:01.0',
+            },
+          ],
+        );
+
+        // Now edit the 'Prière à Dieu pour nos difficultés ' comment to modify its
+        // play speed, its increase duration and reduction position and duration
+
+        // This opens the edit comment dialog
+        Finder editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_4.1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Modify the play speed to 0.7
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '0.7',
+        );
+
+        // Modify the fade-in duration to 0:05.0
+        Finder commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction position to 0:20.6
+        Finder commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '0:20.6');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction duration to 0:08.0
+        Finder commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:08.0');
+        await tester.pumpAndSettle();
+
+        // Confirm the comment edition by tapping the save button
+        Finder saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verifying the content of the comments json file
+
+        final String commentsFilePath = path.join(
+          'C:',
+          'development',
+          'flutter',
+          'audiolearn',
+          'test',
+          'data',
+          'audio',
+          'playlists',
+          playlistTitle,
+          'comments',
+          "250904-084829-Seigneur, je T'en prie, mets moi dans le feu de Ton Amour 25-09-03.json",
+        );
+
+        File commentsFile = File(commentsFilePath);
+
+        String jsonContent = commentsFile.readAsStringSync();
+        List<dynamic> commentsLst = jsonDecode(jsonContent) as List<dynamic>;
+
+        Map<String, dynamic> firstComment =
+            commentsLst[0] as Map<String, dynamic>;
+
+        expect(firstComment['id'], '_1770663736263469');
+        expect(firstComment['title'], 'Seigneur');
+        expect(firstComment['content'], '');
+        expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
+        expect(firstComment['commentEndPositionInTenthOfSeconds'], 286);
+        expect(firstComment['silenceDuration'], 1.0);
+        expect(firstComment['playSpeed'], 0.7);
+        expect(firstComment['fadeInDuration'], 5.0);
+        expect(firstComment['soundReductionPosition'], 20.6);
+        expect(firstComment['soundReductionDuration'], 8.0);
+        expect(firstComment['deleted'], false);
+        expect(firstComment['creationDateTime'], '2026-02-09T20:02:16.000');
+        DateTime now = DateTime.now();
+        String yearStr = now.year.toString();
+        String monthStr = now.month.toString();
+        monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
+        String dayStr = now.day.toString();
+        dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
+        String hourStr = now.hour.toString();
+        hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
+        String minuteStr = now.minute.toString();
+        minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
+        expect(firstComment['lastUpdateDateTime'],
+            contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
+            reason:
+                'Last update date time should be today\'s date with current hour and minute');
+
+        String totalDurationStr = '2:35.1';
+
+        // Verify the total duration text
+        Finder totalDurationTextFinder =
+            find.byKey(const Key('totalSegmentsDurationTextKey'));
+        expect(
+          tester.widget<Text>(totalDurationTextFinder).data,
+          'Total duration: $totalDurationStr',
+        );
+
+        // Now, type on the Extract MP3 button
+        final Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
+          extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
+          extractedAudioDuration: totalDurationStr,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
   });
 }
 
