@@ -499,7 +499,7 @@ class CommentVM extends ChangeNotifier {
     );
 
     for (String commentFileName in commentFileNamesLst) {
-      if (commentFileName.contains('multi_audio_comments')) {
+      if (commentFileName.endsWith('.multi.json')) {
         continue;
       }
       
