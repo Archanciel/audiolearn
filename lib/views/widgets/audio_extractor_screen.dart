@@ -690,7 +690,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       audioCommentsMap: audioCommentsMap,
     );
 
-    // ✅ CHANGED: Use separate directory for multi-audio comments
     final String multiCommentsDir =
         '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$kCommentDirName';
 
@@ -700,9 +699,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       multiCommentsDirObj.createSync(recursive: true);
     }
 
-    // ✅ Use regular .json extension now (safe because it's in a separate directory)
+    // Use .multi.json extension to avoid confusion with regular comment files
     final String filePath =
-        '$multiCommentsDir${Platform.pathSeparator}$fileName.json';
+        '$multiCommentsDir${Platform.pathSeparator}$fileName.multi.json';
 
     JsonDataService.saveToFile(
       model: multiAudioComments,
@@ -747,7 +746,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     // ✅ Regular .json files in this directory are all multi-audio comment files
     final List<FileSystemEntity> files = multiCommentsDirObj
         .listSync()
-        .where((file) => file.path.endsWith('.json'))
+        .where((file) => file.path.endsWith('.multi.json'))
         .toList();
 
     if (files.isEmpty) {
