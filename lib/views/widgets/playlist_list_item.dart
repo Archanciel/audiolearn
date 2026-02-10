@@ -851,7 +851,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               'Copy Filtered Audio'),
         ),
         PopupMenuItem<FilteredAudioAction>(
-          key: const Key('popup_menu_copy_filtered_audio'),
+          key: const Key('popup_menu_extract_filtered_audio'),
           value: FilteredAudioAction.extractFilteredAudio,
           child: Text(AppLocalizations.of(context)?.extractFilteredAudio ??
               'Extract Filtered Audio'),
@@ -1035,13 +1035,13 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case FilteredAudioAction.extractFilteredAudio:
-            List<Audio>? sortFilteredAudioLst = playlistListVMlistenFalse
+            List<Audio> sortFilteredAudioLst = playlistListVMlistenFalse
                 .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
               audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
               playlist: playlist,
             );
 
-            if (sortFilteredAudioLst == null || sortFilteredAudioLst.isEmpty) {
+            if (sortFilteredAudioLst.isEmpty) {
               // No audio to extract
               return;
             }
