@@ -664,21 +664,21 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
       for (final segment in audioWithSegments.segments) {
         Comment comment = Comment(
-            title: segment.commentTitle,
-            content: '', // Empty content for generated comments
-            commentStartPositionInTenthOfSeconds:
-                (segment.startPosition * 10).toInt(),
-            commentEndPositionInTenthOfSeconds:
-                (segment.endPosition * 10).toInt(),
-            silenceDuration: segment.silenceDuration,
-            playSpeed: segment.playSpeed,
-            fadeInDuration: segment.fadeInDuration,
-            soundReductionPosition: segment.soundReductionPosition,
-            soundReductionDuration: segment.soundReductionDuration,
-            deleted: segment.deleted,
-            wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
-          );
-          comment.setId(segment.commentId); // Preserve original comment ID
+          title: segment.commentTitle,
+          content: '', // Empty content for generated comments
+          commentStartPositionInTenthOfSeconds:
+              (segment.startPosition * 10).toInt(),
+          commentEndPositionInTenthOfSeconds:
+              (segment.endPosition * 10).toInt(),
+          silenceDuration: segment.silenceDuration,
+          playSpeed: segment.playSpeed,
+          fadeInDuration: segment.fadeInDuration,
+          soundReductionPosition: segment.soundReductionPosition,
+          soundReductionDuration: segment.soundReductionDuration,
+          deleted: segment.deleted,
+          wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
+        );
+        comment.setId(segment.commentId); // Preserve original comment ID
         comments.add(
           comment,
         );
@@ -729,7 +729,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   Future<void> _loadMultiAudioCommentsFile({
     required BuildContext context,
   }) async {
-    // ✅ CHANGED: Look in separate multi_audio_comments directory
     final String multiCommentsDir =
         '${widget.currentAudio.enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$kCommentDirName';
 
@@ -744,7 +743,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       return;
     }
 
-    // ✅ Regular .json files in this directory are all multi-audio comment files
     final List<FileSystemEntity> files = multiCommentsDirObj
         .listSync()
         .where((file) => file.path.endsWith('.multi.json'))
@@ -763,30 +761,135 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     // Show dialog to select file
     final String? selectedFile = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.loadCommentsDialogTitle),
-        content: SizedBox(
-          width: double.maxFinite,
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: files.length,
-            itemBuilder: (context, index) {
-              final file = files[index];
-              final fileName = PathUtil.fileName(file.path);
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setState) {
+          // Get fresh file list (in case files were deleted)
+          final List<FileSystemEntity> currentFiles = multiCommentsDirObj
+              .listSync()
+              .where((file) => file.path.endsWith('.multi.json'))
+              .toList();
 
-              return ListTile(
-                title: Text(fileName),
-                onTap: () => Navigator.of(dialogContext).pop(file.path),
-              );
-            },
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
-          ),
-        ],
+          if (currentFiles.isEmpty) {
+            // Close dialog if no files left
+            Future.microtask(() => Navigator.of(dialogContext).pop());
+          }
+
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.loadCommentsDialogTitle),
+            content: SizedBox(
+              width: double.maxFinite,
+              child: currentFiles.isEmpty
+                  ? Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.noSavedCommentsMessage,
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: currentFiles.length,
+                      itemBuilder: (context, index) {
+                        final file = currentFiles[index];
+                        final fileName = PathUtil.fileName(file.path);
+
+                        return ListTile(
+                          title: Text(fileName),
+                          onTap: () =>
+                              Navigator.of(dialogContext).pop(file.path),
+                          trailing: IconButton(
+                            key: Key('deleteMultiCommentFileButton_$index'),
+                            icon: const Icon(
+                              Icons.delete,
+                              size: 20,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              // Show confirmation dialog
+                              showDialog(
+                                context: dialogContext,
+                                builder: (confirmContext) => AlertDialog(
+                                  title: Text(
+                                    AppLocalizations.of(context)!
+                                        .deleteCommentDialogTitle,
+                                  ),
+                                  content: Text(
+                                    'Delete $fileName?',
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        // Delete the file
+                                        try {
+                                          File(file.path).deleteSync();
+
+                                          // Close confirmation dialog
+                                          Navigator.of(confirmContext).pop();
+
+                                          // Show success message
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Deleted $fileName',
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              backgroundColor: Colors.green,
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                            ),
+                                          );
+
+                                          // Refresh the file list
+                                          setState(() {});
+                                        } catch (e) {
+                                          // Show error message
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Error deleting file: $e',
+                                              ),
+                                              backgroundColor: Colors.red,
+                                              duration:
+                                                  const Duration(seconds: 3),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!.delete,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(confirmContext).pop(),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .cancelButton,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(AppLocalizations.of(context)!.cancelButton),
+              ),
+            ],
+          );
+        },
       ),
     );
 
