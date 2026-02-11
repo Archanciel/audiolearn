@@ -627,6 +627,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       builder: (dialogContext) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.saveCommentsDialogTitle),
         content: TextField(
+          key: const Key('saveCommentsFileNameTextField'),
           controller: fileNameController,
           decoration: InputDecoration(
             labelText: AppLocalizations.of(context)!.fileNameLabel,
