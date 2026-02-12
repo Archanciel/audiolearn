@@ -637,6 +637,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ),
         actions: [
           ElevatedButton(
+            key: const Key('saveCommentsButtonInSaveCommentsDialogKey'),
             onPressed: () {
               final name = fileNameController.text.trim();
               if (name.isNotEmpty) {
