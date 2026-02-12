@@ -43883,8 +43883,6 @@ void main() {
           extractedAudioDuration: totalDurationStr,
         );
 
-
-
         // Necessary to drag up vertically to make visible the edit
         // icon button of the 3rd audio comment
         await tester.drag(
@@ -43894,7 +43892,7 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        // Now edit the 'Père céleste, merci pour cette nouvelle journée que 
+        // Now edit the 'Père céleste, merci pour cette nouvelle journée que
         // Tu me donnes' generated comment to modify its play speed, its increase
         // duration and reduction position and duration
 
@@ -43955,8 +43953,8 @@ void main() {
         await tester.tap(saveCommentButtonFinder);
         await tester.pumpAndSettle();
 
-        // Verify the save comments dialog title   
-        expect(find.text('Save Comments'), findsOneWidget);
+        // Verify the save comments dialog title
+        expect(find.text('Save Comments'), findsNWidgets(2));
 
         // Delete the existing text in the file name text field and enter
         // a new file name
@@ -43965,15 +43963,21 @@ void main() {
             find.byKey(const Key('saveCommentsFileNameTextField'));
         await tester.tap(saveCommentsFileNameTextFieldFinder);
         await tester.enterText(saveCommentsFileNameTextFieldFinder, '');
+        await tester.pumpAndSettle();
         await tester.enterText(
           saveCommentsFileNameTextFieldFinder,
           firstSavedCommentsName,
         );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Type on the Save button
+        Finder saveButtonButtonFinder =
+            find.byKey(const Key('saveCommentsButtonInSaveCommentsDialogKey'));
+        await tester.tap(saveButtonButtonFinder);
         await tester.pumpAndSettle();
 
         // Now, type on the Extract MP3 button
-        extractMp3ButtonFinder =
-            find.byKey(const Key('extractMp3Button'));
+        extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
         await tester.tap(extractMp3ButtonFinder);
         await tester.pumpAndSettle();
 
@@ -43989,12 +43993,6 @@ void main() {
           extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
           extractedAudioDuration: totalDurationStr,
         );
-
-
-
-
-
-
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
