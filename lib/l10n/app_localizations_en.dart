@@ -2895,4 +2895,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get segments => 'segments';
+
+  @override
+  String get segmentDuplicatedMessage => 'Comment duplicated successfully';
+
+  @override
+  String get toExtractCommentTitleAddition => 'To extract';
 }

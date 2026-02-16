@@ -1261,5 +1261,7 @@
   "errorLoadingCommentsFile": "Error loading comments file",
   "loadedSavedComments": "Loaded saved comments",
   "audiosMin": "audios",
-  "segments": "segments"
+  "segments": "segments",
+  "segmentDuplicatedMessage": "Comment duplicated successfully",
+  "toExtractCommentTitleAddition": "To extract"
 }

@@ -3010,4 +3010,10 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get audiosMin => "audios";
+
+  @override
+  String get segmentDuplicatedMessage => "Segment duplicated successfully";
+
+  @override
+  String get toExtractCommentTitleAddition => "To extract";
 }
