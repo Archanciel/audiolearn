@@ -1276,14 +1276,27 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   icon: const Icon(Icons.edit, size: 20),
                   onPressed: onEdit,
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  constraints: const BoxConstraints(
+                    minWidth: 32, // ✅ Explicit width
+                    minHeight: 32, // ✅ Explicit height
+                    maxWidth: 32,
+                    maxHeight: 32,
+                  ),
+                  iconSize: 20,
                 ),
+                const SizedBox(height: 4), // ✅ Add explicit spacing
                 IconButton(
                   key: Key('deleteSegmentButtonKey_$displayedIndex'),
                   icon: const Icon(Icons.delete, size: 20, color: Colors.red),
                   onPressed: onDelete,
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  constraints: const BoxConstraints(
+                    minWidth: 32, // ✅ Explicit width
+                    minHeight: 32, // ✅ Explicit height
+                    maxWidth: 32,
+                    maxHeight: 32,
+                  ),
+                  iconSize: 20,
                 ),
               ],
             ),
