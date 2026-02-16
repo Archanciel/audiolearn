@@ -1107,163 +1107,185 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: ListTile(
-        leading: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0), // ✅ Custom padding
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start, // ✅ Align to top
           children: [
-            CircleAvatar(
-              radius: 13,
-              child: Text(
-                displayedIndex,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ),
-            const SizedBox(height: 2),
-            CircleAvatar(
-              radius: 13,
-              backgroundColor: const Color.fromARGB(255, 27, 131, 31),
-              child: IconButton(
-                key: Key('duplicateSegmentButtonKey_$displayedIndex'),
-                icon: const Icon(
-                  Icons.add,
-                  size: 9,
-                  color: Colors.white,
-                ),
-                onPressed: onDuplicate,
-              ),
-            ),
-          ],
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              segment.commentTitle,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 15,
-              ),
-            ),
-            if (segment.deleted)
-              Tooltip(
-                message: AppLocalizations.of(context)!.commentWasDeletedTooltip,
-                child: Text(
-                  key: Key('commentDeletedTextKey_$displayedIndex'),
-                  AppLocalizations.of(context)!.commentWasDeleted,
-                  maxLines: 2,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-            Row(
+            // Leading icons column (no size constraint!)
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Tooltip(
-                  message:
-                      AppLocalizations.of(context)!.commentStartPositionTooltip,
+                CircleAvatar(
+                  radius: 18, // ✅ Full size!
                   child: Text(
-                    TimeFormatUtil.formatSeconds(segment.startPosition),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Colors.white70,
-                    ),
+                    displayedIndex,
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward,
-                  size: 15,
-                  color: Colors.white70,
+                const SizedBox(height: 18),
+                CircleAvatar(
+                  radius: 18, // ✅ Full size!
+                  backgroundColor: const Color.fromARGB(255, 27, 131, 31),
+                  child: IconButton(
+                    key: Key('duplicateSegmentButtonKey_$displayedIndex'),
+                    icon: const Icon(
+                      Icons.add,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: onDuplicate,
+                  ),
                 ),
               ],
             ),
-            Tooltip(
-              message: AppLocalizations.of(context)!.commentEndPositionTooltip,
-              child: Text(
-                TimeFormatUtil.formatSeconds(segment.endPosition),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
+            const SizedBox(width: 12), // Spacing between leading and content
+
+            // Main content (title, positions, etc.)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    segment.commentTitle,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
+                  ),
+                  if (segment.deleted)
+                    Tooltip(
+                      message: AppLocalizations.of(context)!
+                          .commentWasDeletedTooltip,
+                      child: Text(
+                        key: Key('commentDeletedTextKey_$displayedIndex'),
+                        AppLocalizations.of(context)!.commentWasDeleted,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  Row(
+                    children: [
+                      Tooltip(
+                        message: AppLocalizations.of(context)!
+                            .commentStartPositionTooltip,
+                        child: Text(
+                          TimeFormatUtil.formatSeconds(segment.startPosition),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward,
+                          size: 15, color: Colors.white70),
+                    ],
+                  ),
+                  Tooltip(
+                    message:
+                        AppLocalizations.of(context)!.commentEndPositionTooltip,
+                    child: Text(
+                      TimeFormatUtil.formatSeconds(segment.endPosition),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!
+                        .extractAudioPlaySpeedTooltip,
+                    child: Text(
+                      "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Tooltip(
+                    message:
+                        AppLocalizations.of(context)!.fadeStartPositionTooltip,
+                    child: Text(
+                      "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!
+                        .soundReductionPositionTooltip,
+                    child: Text(
+                      "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Tooltip(
+                    message: AppLocalizations.of(context)!
+                        .soundReductionDurationTooltip,
+                    child: Text(
+                      "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Subtitle (duration)
+                  Text(
+                    "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
+                    "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 2),
-            Tooltip(
-              message:
-                  AppLocalizations.of(context)!.extractAudioPlaySpeedTooltip,
-              child: Text(
-                "${AppLocalizations.of(context)!.extractAudioPlaySpeed}: ${segment.playSpeed}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white70,
+
+            // Trailing action buttons
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  key: Key('editSegmentButtonKey_$displayedIndex'),
+                  icon: const Icon(Icons.edit, size: 20),
+                  onPressed: onEdit,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
                 ),
-              ),
-            ),
-            const SizedBox(height: 2),
-            Tooltip(
-              message: AppLocalizations.of(context)!.fadeStartPositionTooltip,
-              child: Text(
-                "${AppLocalizations.of(context)!.fadeStartPosition}: ${TimeFormatUtil.formatSeconds(segment.fadeInDuration)}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white70,
+                IconButton(
+                  key: Key('deleteSegmentButtonKey_$displayedIndex'),
+                  icon: const Icon(Icons.delete, size: 20, color: Colors.red),
+                  onPressed: onDelete,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
                 ),
-              ),
-            ),
-            const SizedBox(height: 2),
-            Tooltip(
-              message:
-                  AppLocalizations.of(context)!.soundReductionPositionTooltip,
-              child: Text(
-                "${AppLocalizations.of(context)!.soundReductionPosition}: ${TimeFormatUtil.formatSeconds(segment.soundReductionPosition)}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ),
-            const SizedBox(height: 2),
-            Tooltip(
-              message:
-                  AppLocalizations.of(context)!.soundReductionDurationTooltip,
-              child: Text(
-                "${AppLocalizations.of(context)!.soundReductionDuration}: ${TimeFormatUtil.formatSeconds(segment.soundReductionDuration)}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
-              ),
-            ),
-          ],
-        ),
-        subtitle: Text(
-          "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
-          "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
-          style: const TextStyle(fontSize: 12),
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              key: Key('editSegmentButtonKey_$displayedIndex'),
-              icon: const Icon(Icons.edit, size: 20),
-              onPressed: onEdit,
-            ),
-            IconButton(
-              key: Key('deleteSegmentButtonKey_$displayedIndex'),
-              icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-              onPressed: onDelete,
+              ],
             ),
           ],
         ),
@@ -1945,7 +1967,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       soundReductionDuration: segment.soundReductionDuration,
       commentId:
           'duplicated_${segment.commentId}_${DateTime.now().microsecondsSinceEpoch}',
-      commentTitle: '${AppLocalizations.of(context)!.toExtractCommentTitleAddition}-${segment.commentTitle}',
+      commentTitle:
+          '${AppLocalizations.of(context)!.toExtractCommentTitleAddition}-${segment.commentTitle}',
       deleted: false,
     );
 
