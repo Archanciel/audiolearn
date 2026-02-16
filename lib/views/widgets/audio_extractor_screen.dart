@@ -1090,12 +1090,37 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     required String displayedIndex,
     required VoidCallback onEdit,
     required VoidCallback onDelete,
+    required VoidCallback onDuplicate,
   }) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
-        leading: CircleAvatar(
-          child: Text(displayedIndex),
+        leading: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 13,
+              child: Text(
+                displayedIndex,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ),
+            const SizedBox(height: 2),
+            CircleAvatar(
+              radius: 13,
+              backgroundColor: const Color.fromARGB(255, 27, 131, 31),
+              child: IconButton(
+                key: Key('duplicateSegmentButtonKey_$displayedIndex'),
+                icon: const Icon(
+                  Icons.add,
+                  size: 16,
+                  color: Colors.white,
+                ),
+                onPressed: onDuplicate,
+              ),
+            ),
+          ],
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
