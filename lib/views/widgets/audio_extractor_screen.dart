@@ -956,6 +956,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 audioExtractorVM: audioExtractorVM,
                 segmentToDeleteIndex: index,
               ),
+              onDuplicate: () => _duplicateSingleAudioSegment(
+                // ✅ ADD
+                context: context,
+                audioExtractorVM: audioExtractorVM,
+                segment: segment,
+              ),
             );
           },
         ),
@@ -1070,6 +1076,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         audioIndex: audioIndex,
                         segmentIndex: segmentIndex,
                       ),
+                      onDuplicate: () => _duplicateMultiAudioSegment(
+                        // ✅ ADD
+                        context: context,
+                        audioExtractorVM: audioExtractorVM,
+                        audioIndex: audioIndex,
+                        segment: segment,
+                      ),
                     );
                   },
                 ),
@@ -1096,7 +1109,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
@@ -1114,7 +1127,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 key: Key('duplicateSegmentButtonKey_$displayedIndex'),
                 icon: const Icon(
                   Icons.add,
-                  size: 16,
+                  size: 9,
                   color: Colors.white,
                 ),
                 onPressed: onDuplicate,
@@ -1909,6 +1922,149 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             await audioPlayerVM.tryRepairPlayer();
           },
         ),
+      ),
+    );
+  }
+
+// Add these methods before the closing brace of _AudioExtractorScreenState
+
+  /// Duplicates a segment in single-audio mode
+  void _duplicateSingleAudioSegment({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+    required AudioSegment segment,
+  }) {
+    // Create duplicate with modified title and new ID
+    final AudioSegment duplicatedSegment = AudioSegment(
+      startPosition: segment.startPosition,
+      endPosition: segment.endPosition,
+      silenceDuration: segment.silenceDuration,
+      playSpeed: segment.playSpeed,
+      fadeInDuration: segment.fadeInDuration,
+      soundReductionPosition: segment.soundReductionPosition,
+      soundReductionDuration: segment.soundReductionDuration,
+      commentId:
+          'duplicated_${segment.commentId}_${DateTime.now().microsecondsSinceEpoch}',
+      commentTitle: '${AppLocalizations.of(context)!.toExtractCommentTitleAddition}-${segment.commentTitle}',
+      deleted: false,
+    );
+
+    // Add to segments list
+    audioExtractorVM.addSegment(duplicatedSegment);
+
+    // Create corresponding comment and add to comments list
+    final Comment duplicatedComment = Comment(
+      title: duplicatedSegment.commentTitle,
+      content: '',
+      commentStartPositionInTenthOfSeconds:
+          (duplicatedSegment.startPosition * 10).toInt(),
+      commentEndPositionInTenthOfSeconds:
+          (duplicatedSegment.endPosition * 10).toInt(),
+      silenceDuration: duplicatedSegment.silenceDuration,
+      playSpeed: duplicatedSegment.playSpeed,
+      fadeInDuration: duplicatedSegment.fadeInDuration,
+      soundReductionPosition: duplicatedSegment.soundReductionPosition,
+      soundReductionDuration: duplicatedSegment.soundReductionDuration,
+      deleted: false,
+      wasPlaySpeedModifiedByAddSegmentDialog:
+          duplicatedSegment.playSpeed != 1.0,
+    );
+    duplicatedComment.setId(duplicatedSegment.commentId);
+
+    // Add comment to audio
+    widget.commentVMlistenTrue.addComment(
+      addedComment: duplicatedComment,
+      audioToComment: widget.currentAudio,
+    );
+
+    // Show confirmation
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.segmentDuplicatedMessage,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  /// Duplicates a segment in multi-audio mode
+  void _duplicateMultiAudioSegment({
+    required BuildContext context,
+    required AudioExtractorVM audioExtractorVM,
+    required int audioIndex,
+    required AudioSegment segment,
+  }) {
+    // Create duplicate with modified title and new ID
+    final AudioSegment duplicatedSegment = AudioSegment(
+      startPosition: segment.startPosition,
+      endPosition: segment.endPosition,
+      silenceDuration: segment.silenceDuration,
+      playSpeed: segment.playSpeed,
+      fadeInDuration: segment.fadeInDuration,
+      soundReductionPosition: segment.soundReductionPosition,
+      soundReductionDuration: segment.soundReductionDuration,
+      commentId:
+          'duplicated_${segment.commentId}_${DateTime.now().microsecondsSinceEpoch}',
+      commentTitle: 'To extract ${segment.commentTitle}',
+      deleted: false,
+    );
+
+    // Get current audio with segments
+    final AudioWithSegments audioWithSegments =
+        audioExtractorVM.multiAudios[audioIndex];
+
+    // Create new segments list with duplicate added
+    final List<AudioSegment> updatedSegments =
+        List<AudioSegment>.from(audioWithSegments.segments)
+          ..add(duplicatedSegment);
+
+    // Update the multi-audio
+    audioExtractorVM.updateMultiAudioSegments(audioIndex, updatedSegments);
+
+    // Create corresponding comment and add to the audio's comment file
+    final Comment duplicatedComment = Comment(
+      title: duplicatedSegment.commentTitle,
+      content: '',
+      commentStartPositionInTenthOfSeconds:
+          (duplicatedSegment.startPosition * 10).toInt(),
+      commentEndPositionInTenthOfSeconds:
+          (duplicatedSegment.endPosition * 10).toInt(),
+      silenceDuration: duplicatedSegment.silenceDuration,
+      playSpeed: duplicatedSegment.playSpeed,
+      fadeInDuration: duplicatedSegment.fadeInDuration,
+      soundReductionPosition: duplicatedSegment.soundReductionPosition,
+      soundReductionDuration: duplicatedSegment.soundReductionDuration,
+      deleted: false,
+      wasPlaySpeedModifiedByAddSegmentDialog:
+          duplicatedSegment.playSpeed != 1.0,
+    );
+    duplicatedComment.setId(duplicatedSegment.commentId);
+
+    // Add comment to the specific audio
+    widget.commentVMlistenTrue.addComment(
+      addedComment: duplicatedComment,
+      audioToComment: audioWithSegments.audio,
+    );
+
+    // Show confirmation
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context)!.segmentDuplicatedMessage ??
+              'Segment duplicated',
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
       ),
     );
   }

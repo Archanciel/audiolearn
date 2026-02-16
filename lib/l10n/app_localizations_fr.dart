@@ -2929,4 +2929,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get segments => 'segments';
+
+  @override
+  String get segmentDuplicatedMessage => 'Commentaire dupliqué avec succès';
+
+  @override
+  String get toExtractCommentTitleAddition => 'A extraire';
 }

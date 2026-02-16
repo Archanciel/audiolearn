@@ -1680,5 +1680,7 @@
   "errorLoadingCommentsFile": "Erreur lors du chargement du fichier de commentaires",
   "loadedSavedComments": "Commentaires sauvegardés chargés",
   "audiosMin": "audios",
-  "segments": "segments"
+  "segments": "segments",
+  "segmentDuplicatedMessage": "Commentaire dupliqué avec succès",
+  "toExtractCommentTitleAddition": "A extraire"
 }

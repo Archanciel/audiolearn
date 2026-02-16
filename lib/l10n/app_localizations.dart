@@ -4665,6 +4665,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'segments'**
   String get segments;
+
+  /// No description provided for @segmentDuplicatedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment duplicated successfully'**
+  String get segmentDuplicatedMessage;
+
+  /// No description provided for @toExtractCommentTitleAddition.
+  ///
+  /// In en, this message translates to:
+  /// **'To extract'**
+  String get toExtractCommentTitleAddition;
 }
 
 class _AppLocalizationsDelegate
