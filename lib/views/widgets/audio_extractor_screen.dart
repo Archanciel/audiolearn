@@ -1271,32 +1271,32 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(
+                InkWell(
                   key: Key('editSegmentButtonKey_$displayedIndex'),
-                  icon: const Icon(Icons.edit, size: 20),
-                  onPressed: onEdit,
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(
-                    minWidth: 32, // ✅ Explicit width
-                    minHeight: 32, // ✅ Explicit height
-                    maxWidth: 32,
-                    maxHeight: 32,
+                  onTap: onEdit,
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.edit, size: 20),
                   ),
-                  iconSize: 20,
                 ),
-                const SizedBox(height: 4), // ✅ Add explicit spacing
-                IconButton(
+                const SizedBox(height: 4),
+                InkWell(
                   key: Key('deleteSegmentButtonKey_$displayedIndex'),
-                  icon: const Icon(Icons.delete, size: 20, color: Colors.red),
-                  onPressed: onDelete,
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(
-                    minWidth: 32, // ✅ Explicit width
-                    minHeight: 32, // ✅ Explicit height
-                    maxWidth: 32,
-                    maxHeight: 32,
+                  onTap: onDelete,
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.delete,
+                      size: 20,
+                      color: Colors.red,
+                    ),
                   ),
-                  iconSize: 20,
                 ),
               ],
             ),
