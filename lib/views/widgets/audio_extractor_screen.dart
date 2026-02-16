@@ -1271,6 +1271,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const SizedBox(height: 2),
                 InkWell(
                   key: Key('editSegmentButtonKey_$displayedIndex'),
                   onTap: onEdit,
@@ -1282,7 +1283,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     child: const Icon(Icons.edit, size: 20),
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 18),
                 InkWell(
                   key: Key('deleteSegmentButtonKey_$displayedIndex'),
                   onTap: onDelete,
