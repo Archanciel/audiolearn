@@ -813,4 +813,9 @@ class AudioExtractorVM extends ChangeNotifier {
     _segments.clear();
     notifyListeners();
   }
+
+  void setExtractionSuccess(String outputPath) {
+    _extractionResult = ExtractionResult.success(outputPath);
+    notifyListeners();
+  }
 }

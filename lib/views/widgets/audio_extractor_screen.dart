@@ -62,6 +62,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   String? _loadedCommentsFileName;
   final Logger _logger = Logger();
 
+  // track temp preview files for cleanup
+  final List<String> _tempPreviewFiles = [];
+
   @override
   void initState() {
     super.initState();
@@ -127,6 +130,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   @override
   void dispose() {
     _segmentsScrollController.dispose();
+    _cleanupTempPreviewFiles();
 
     super.dispose();
   }
@@ -962,6 +966,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 audioExtractorVM: audioExtractorVM,
                 segment: segment,
               ),
+              onPlay: () => _extractAndPlaySegment(
+                // ✅ ADD
+                context: context,
+                segment: audioExtractorVM.segments[index],
+                audioFilePath: widget.currentAudio.filePathName,
+              ),
             );
           },
         ),
@@ -1083,6 +1093,12 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         audioIndex: audioIndex,
                         segment: segment,
                       ),
+                      onPlay: () => _extractAndPlaySegment(
+                        // ✅ ADD
+                        context: context,
+                        segment: audioExtractorVM.multiAudios[audioIndex].segments[segmentIndex],
+                        audioFilePath: audioWithSegments.audio.filePathName,
+                      ),
                     );
                   },
                 ),
@@ -1104,6 +1120,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     required VoidCallback onEdit,
     required VoidCallback onDelete,
     required VoidCallback onDuplicate,
+    required VoidCallback onPlay,
   }) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -2122,5 +2139,115 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         duration: const Duration(seconds: 2),
       ),
     );
+  }
+
+  /// Extracts a single segment to a temp MP3 file then plays it
+  /// using the existing _buildAudioPlayerControls widget (slider + positions)
+  Future<void> _extractAndPlaySegment({
+    required BuildContext context,
+    required AudioSegment segment,
+    required String audioFilePath,
+  }) async {
+    final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    final ExtractMp3AudioPlayerVM audioPlayerVM =
+        context.read<ExtractMp3AudioPlayerVM>();
+
+    // Release any currently loaded file
+    if (audioPlayerVM.isLoaded) {
+      await audioPlayerVM.releaseCurrentFile();
+      if (Platform.isWindows) {
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+    }
+
+    // ✅ FIX 1: startProcessing() not setProcessing()
+    audioExtractorVM.startProcessing();
+
+    try {
+      final Directory tempDir = Directory(
+        '${Directory.systemTemp.path}${Platform.pathSeparator}audiolearn_preview',
+      );
+      if (!tempDir.existsSync()) {
+        tempDir.createSync(recursive: true);
+      }
+
+      final String safeName = segment.commentTitle
+          .replaceAll(RegExp(r'[^\w\s-]'), '')
+          .replaceAll(' ', '_')
+          .substring(0, segment.commentTitle.length.clamp(0, 30));
+      final String tempFileName =
+          'preview_${safeName}_${DateTime.now().millisecondsSinceEpoch}.mp3';
+      final String tempFilePath =
+          '${tempDir.path}${Platform.pathSeparator}$tempFileName';
+
+      // ✅ FIX 2: extractAudioSegments() not extractSegmentsToSingleFile()
+      final Map<String, dynamic> result =
+          await AudioExtractorService.extractAudioSegments(
+        inputPath: audioFilePath,
+        outputPathFileName: tempFilePath,
+        segments: [segment],
+        inMusicQuality: _extractInMusicQuality,
+      );
+
+      if (result['success'] != true) {
+        audioExtractorVM
+            .setError('Preview extraction failed: ${result['message']}');
+        return;
+      }
+
+      // Track for later cleanup
+      _tempPreviewFiles.add(tempFilePath);
+
+      // ✅ FIX 3: setExtractionSuccess() - method added above in VM
+      audioExtractorVM.setExtractionSuccess(tempFilePath);
+
+      if (!context.mounted) return;
+
+      await _playExtractedFile(context, tempFilePath);
+
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '▶ ${segment.commentTitle}  '
+            '(${TimeFormatUtil.formatSeconds(segment.startPosition)} → '
+            '${TimeFormatUtil.formatSeconds(segment.endPosition)})',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    } catch (e, stack) {
+      _logger.e('_extractAndPlaySegment error: $e\n$stack');
+      audioExtractorVM.setError('Preview extraction failed: $e');
+
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Preview extraction failed: $e'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    }
+  }
+
+  /// Cleans up temp preview files on dispose
+  void _cleanupTempPreviewFiles() {
+    for (final path in _tempPreviewFiles) {
+      try {
+        final file = File(path);
+        if (file.existsSync()) {
+          file.deleteSync();
+        }
+      } catch (_) {}
+    }
+    _tempPreviewFiles.clear();
   }
 }
