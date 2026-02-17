@@ -42,6 +42,7 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   late List<Comment> _commentsLst;
+  List<Comment> get commentsLst => _commentsLst;
   set commentsLst(List<Comment> commentsLst) {
     _commentsLst = commentsLst;
   }
