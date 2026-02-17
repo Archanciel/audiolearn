@@ -62,10 +62,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   String? _loadedCommentsFileName;
   final Logger _logger = Logger();
 
-  // This variable is used to force the Checkbox to be checked or
-  // unchecked when the user clicks on it on a segment index
-  double _extractSegmentCheckboxTrueIndex = 0.0;
-
   @override
   void initState() {
     super.initState();
@@ -1275,31 +1271,23 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // This checkbox enables to select a unique comment to be extracted
-                // on a temporary MP3 to verify that the start and end positions are
-                // correct before applying the extraction for all comments and exporting
-                // the final MP3 with all segments
-                Checkbox(
-                  key: Key('extractSegmentCheckboxKey_$displayedIndex'),
-                  value: (_extractSegmentCheckboxTrueIndex ==
-                          double.parse(displayedIndex)
-                      ? true
-                      : false),
-                  onChanged: (value) {
-                    if (value == null) return;
-
-                    if (value) {
-                      _extractSegmentCheckboxTrueIndex =
-                          double.parse(displayedIndex);
-                    } else {
-                      _extractSegmentCheckboxTrueIndex =
-                          0.0; // Reset when unchecked
-                    }
-
-                    setState(() {});
-                  },
+                const SizedBox(height: 2),
+                InkWell(
+                  key: Key('playSegmentButtonKey_$displayedIndex'),
+                  onTap: onPlay,
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.play_arrow,
+                      size: 28,
+                      color: Colors.green,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 13),
+                const SizedBox(height: 18),
                 InkWell(
                   key: Key('editSegmentButtonKey_$displayedIndex'),
                   onTap: onEdit,
@@ -1308,7 +1296,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     width: 32,
                     height: 32,
                     alignment: Alignment.center,
-                    child: const Icon(Icons.edit, size: 20),
+                    child: const Icon(
+                      Icons.edit,
+                      size: 20,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -2121,8 +2112,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          AppLocalizations.of(context)!.segmentDuplicatedMessage ??
-              'Segment duplicated',
+          AppLocalizations.of(context)!.segmentDuplicatedMessage,
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w700,
