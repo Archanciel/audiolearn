@@ -191,8 +191,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Consumer<ExtractMp3AudioPlayerVM>(
-            builder: (context, audioPlayerVM, _) {
+          child: Consumer2<AudioExtractorVM, ExtractMp3AudioPlayerVM>(
+            builder: (context, audioExtractorVM, audioPlayerVM, _) {
               String extractionResultMessage =
                   audioExtractorVM.extractionResult.message;
               if (extractionResultMessage.contains('Extracted MP3 saved to')) {
@@ -1096,7 +1096,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                       onPlay: () => _extractAndPlaySegment(
                         // ✅ ADD
                         context: context,
-                        segment: audioExtractorVM.multiAudios[audioIndex].segments[segmentIndex],
+                        segment: audioExtractorVM
+                            .multiAudios[audioIndex].segments[segmentIndex],
                         audioFilePath: audioWithSegments.audio.filePathName,
                       ),
                     );
@@ -1998,8 +1999,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     );
   }
 
-// Add these methods before the closing brace of _AudioExtractorScreenState
-
   /// Duplicates a segment in single-audio mode
   void _duplicateSingleAudioSegment({
     required BuildContext context,
@@ -2044,7 +2043,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     );
     duplicatedComment.setId(duplicatedSegment.commentId);
 
-    // Add comment to audio
+    // ✅ ADD: Update the VM's internal comments list FIRST
+    audioExtractorVM.commentsLst = [
+      ...audioExtractorVM.commentsLst,
+      duplicatedComment,
+    ];
+
+    // Add comment to audio file
     widget.commentVMlistenTrue.addComment(
       addedComment: duplicatedComment,
       audioToComment: widget.currentAudio,
