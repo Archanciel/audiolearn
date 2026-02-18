@@ -191,7 +191,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: Consumer2<AudioExtractorVM, ExtractMp3AudioPlayerVM>(
             builder: (context, audioExtractorVM, audioPlayerVM, _) {
               String extractionResultMessage =
@@ -220,7 +220,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
                     (audioExtractorVM.isMultiAudioMode)
                         ? _buildMultiAudioList(context, audioExtractorVM)
                         : (audioExtractorVM.segments.isEmpty)
@@ -401,14 +400,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                         ),
                                       ],
                                     ),
-                              const SizedBox(height: 16),
                             ],
                           ),
                     if (audioExtractorVM.extractionResult.isProcessing)
                       const Center(child: CircularProgressIndicator()),
                     if (audioExtractorVM.extractionResult.hasMessage)
                       Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
+                        padding: const EdgeInsets.only(top: 1.0),
                         child: Text(
                           extractionResultMessage,
                           style: TextStyle(
@@ -425,7 +423,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     if (audioExtractorVM.extractionResult.isSuccess &&
                         audioExtractorVM.extractionResult.outputPath !=
                             null) ...[
-                      const SizedBox(height: 8),
                       _buildAudioPlayerControls(
                         context: context,
                         audioExtractorVM: audioExtractorVM,
@@ -1412,6 +1409,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) {
     return Column(
       children: [
+        // const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -1419,7 +1417,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               padding: const EdgeInsets.all(0.0),
               child: IconButton(
                 key: const Key('playPauseButton'),
-                iconSize: 80,
+                iconSize: 60,
                 onPressed: audioPlayerVM.hasError
                     ? () => audioPlayerVM.tryRepairPlayer()
                     : audioPlayerVM.isLoaded
@@ -1436,19 +1434,18 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           : Icons.play_arrow,
                 ),
                 style: ButtonStyle(
-                  // Highlight button when pressed
                   padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: kSmallButtonInsidePadding, vertical: 0),
+                    EdgeInsets.zero, // Remove button padding
                   ),
-                  overlayColor: iconButtonTapModification, // Tap feedback color
+                  tapTargetSize:
+                      MaterialTapTargetSize.shrinkWrap, // Shrink tap target
+                  overlayColor: iconButtonTapModification,
                 ),
               ),
             ),
           ],
         ),
         if (audioPlayerVM.isLoaded && !audioPlayerVM.hasError) ...[
-          const SizedBox(height: 8),
           SliderTheme(
             data: const SliderThemeData(
               trackHeight: 4,
