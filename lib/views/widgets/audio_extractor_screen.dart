@@ -21,6 +21,7 @@ import '../../models/multi_audio_comments.dart';
 import '../../models/playlist.dart';
 import '../../models/audio_with_segments.dart';
 import '../../services/json_data_service.dart';
+import '../../utils/dir_util.dart';
 import '../../viewmodels/audio_download_vm.dart';
 import '../../viewmodels/warning_message_vm.dart';
 import '../../views/screen_mixin.dart';
@@ -961,13 +962,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 segmentToDeleteIndex: index,
               ),
               onDuplicate: () => _duplicateSingleAudioSegment(
-                // ✅ ADD
                 context: context,
                 audioExtractorVM: audioExtractorVM,
                 segment: segment,
               ),
               onPlay: () => _extractAndPlaySegment(
-                // ✅ ADD
                 context: context,
                 segment: audioExtractorVM.segments[index],
                 audioFilePath: widget.currentAudio.filePathName,
@@ -2165,16 +2164,19 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       }
     }
 
-    // ✅ FIX 1: startProcessing() not setProcessing()
     audioExtractorVM.startProcessing();
 
     try {
       final Directory tempDir = Directory(
         '${Directory.systemTemp.path}${Platform.pathSeparator}audiolearn_preview',
       );
+
       if (!tempDir.existsSync()) {
         tempDir.createSync(recursive: true);
       }
+
+      // Delete old temp files to avoid consuming space
+      DirUtil.deleteFilesAndSubDirsOfDir(rootPath: tempDir.path);
 
       final String safeName = segment.commentTitle
           .replaceAll(RegExp(r'[^\w\s-]'), '')
@@ -2185,7 +2187,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       final String tempFilePath =
           '${tempDir.path}${Platform.pathSeparator}$tempFileName';
 
-      // ✅ FIX 2: extractAudioSegments() not extractSegmentsToSingleFile()
       final Map<String, dynamic> result =
           await AudioExtractorService.extractAudioSegments(
         inputPath: audioFilePath,
