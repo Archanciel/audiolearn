@@ -2178,10 +2178,18 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       // Delete old temp files to avoid consuming space
       DirUtil.deleteFilesAndSubDirsOfDir(rootPath: tempDir.path);
 
-      final String safeName = segment.commentTitle
+      String safeName = segment.commentTitle
           .replaceAll(RegExp(r'[^\w\s-]'), '')
-          .replaceAll(' ', '_')
-          .substring(0, segment.commentTitle.length.clamp(0, 30));
+          .replaceAll(' ', '_');
+
+      if (safeName.length > 30) {
+        safeName = safeName.substring(0, 30);
+      }
+
+      if (safeName.isEmpty) {
+        safeName = 'preview'; // ✅ Fallback for completely invalid titles
+      }
+      
       final String tempFileName =
           'preview_${safeName}_${DateTime.now().millisecondsSinceEpoch}.mp3';
       final String tempFilePath =
