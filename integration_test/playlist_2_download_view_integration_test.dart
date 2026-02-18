@@ -40256,7 +40256,7 @@ void main() {
           await _verifyAndPlayExtractedMp3Method(
             tester: tester,
             extractionSuccessMessage:
-                'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+                'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
             extractionPlayingMessage:
                 'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
             extractedAudioDuration: '0:51.0',
@@ -40551,7 +40551,7 @@ void main() {
           await _verifyAndPlayExtractedMp3Method(
             tester: tester,
             extractionSuccessMessage:
-                'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
+                'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
             extractionPlayingMessage:
                 'Playing: musicQuality_250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27_2_comments.mp3',
             extractedAudioDuration: '0:53.6',
@@ -40859,7 +40859,7 @@ void main() {
           await _verifyAndPlayExtractedMp3Method(
             tester: tester,
             extractionSuccessMessage:
-                'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
+                'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
             extractionPlayingMessage:
                 'Playing: 250830-192540-Glorious - Laisse-moi te parler de Jésus #louange 24-06-27.mp3',
             extractedAudioDuration: '0:51.0',
@@ -41470,7 +41470,7 @@ void main() {
           await _verifyAndPlayExtractedMp3Method(
             tester: tester,
             extractionSuccessMessage:
-                'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
+                'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
             extractionPlayingMessage:
                 'Playing: 260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26 from 23-15.7 to 24-10.0.mp3',
             extractedAudioDuration: '1:17.6',
@@ -41650,7 +41650,7 @@ void main() {
           await _verifyAndPlayExtractedMp3Method(
             tester: tester,
             extractionSuccessMessage:
-                'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
+                'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local with no comment\\260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
             extractionPlayingMessage:
                 'Playing: 260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
             extractedAudioDuration: '0:54.3',
@@ -43878,7 +43878,7 @@ void main() {
         await _verifyAndPlayExtractedMp3Method(
           tester: tester,
           extractionSuccessMessage:
-              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
+              'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
           extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
           extractedAudioDuration: totalDurationStr,
         );
@@ -43888,7 +43888,7 @@ void main() {
         await tester.drag(
           find.byType(AudioExtractorScreen),
           const Offset(
-              0, 600), // Negative value for vertical drag to scroll down
+              0, 400), // Negative value for vertical drag to scroll down
         );
         await tester.pumpAndSettle();
 
@@ -43989,7 +43989,7 @@ void main() {
         await _verifyAndPlayExtractedMp3Method(
           tester: tester,
           extractionSuccessMessage:
-              'Extracted MP3 saved to:\n\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
+              'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
           extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
           extractedAudioDuration: totalDurationStr,
         );
