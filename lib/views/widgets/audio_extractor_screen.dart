@@ -1408,97 +1408,101 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     required ExtractMp3AudioPlayerVM audioPlayerVM,
   }) {
     return Column(
+      mainAxisSize: MainAxisSize.min, // ✅ Shrink column to content
       children: [
-        // const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: IconButton(
-                key: const Key('playPauseButton'),
-                iconSize: 60,
-                onPressed: audioPlayerVM.hasError
-                    ? () => audioPlayerVM.tryRepairPlayer()
-                    : audioPlayerVM.isLoaded
-                        ? () => audioPlayerVM.togglePlay()
-                        : () => _playExtractedFile(
-                              context,
-                              audioExtractorVM.extractionResult.outputPath!,
-                            ),
-                icon: Icon(
-                  audioPlayerVM.hasError
-                      ? Icons.refresh
-                      : audioPlayerVM.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                ),
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.zero, // Remove button padding
-                  ),
-                  tapTargetSize:
-                      MaterialTapTargetSize.shrinkWrap, // Shrink tap target
-                  overlayColor: iconButtonTapModification,
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (audioPlayerVM.isLoaded && !audioPlayerVM.hasError) ...[
-          SliderTheme(
-            data: const SliderThemeData(
-              trackHeight: 4,
-              thumbShape: RoundSliderThumbShape(
-                enabledThumbRadius: 8,
-              ),
-            ),
-            child: Slider(
-              value: audioPlayerVM.progressPercent.clamp(0.0, 1.0),
-              onChanged: (value) => audioPlayerVM.seekByPercentage(
-                percentage: value,
-              ),
-            ),
+        IconButton(
+          key: const Key('playPauseButton'),
+          iconSize: 60,
+          padding: EdgeInsets.zero,
+          constraints: const BoxConstraints(),
+          onPressed: audioPlayerVM.hasError
+              ? () => audioPlayerVM.tryRepairPlayer()
+              : audioPlayerVM.isLoaded
+                  ? () => audioPlayerVM.togglePlay()
+                  : () => _playExtractedFile(
+                        context,
+                        audioExtractorVM.extractionResult.outputPath!,
+                      ),
+          icon: Icon(
+            audioPlayerVM.hasError
+                ? Icons.refresh
+                : audioPlayerVM.isPlaying
+                    ? Icons.pause
+                    : Icons.play_arrow,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          style: ButtonStyle(
+            padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.zero,
+            ),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            overlayColor: iconButtonTapModification,
+          ),
+        ),
+        // ✅ Wrap slider section in Transform to move it UP
+        if (audioPlayerVM.isLoaded && !audioPlayerVM.hasError)
+          Transform.translate(
+            offset: const Offset(
+                0, -2), // ✅ Negative Y = move up (try -8, -12, -16)
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  TimeFormatUtil.formatDuration(
-                    audioPlayerVM.position,
+                SliderTheme(
+                  data: SliderThemeData(
+                    trackHeight: 3,
+                    thumbShape: const RoundSliderThumbShape(
+                      enabledThumbRadius: 7,
+                    ),
+                    overlayShape:
+                        SliderComponentShape.noOverlay, // ✅ Remove overlay
+                  ),
+                  child: Slider(
+                    value: audioPlayerVM.progressPercent.clamp(0.0, 1.0),
+                    onChanged: (value) => audioPlayerVM.seekByPercentage(
+                      percentage: value,
+                    ),
                   ),
                 ),
-                (Platform.isWindows)
-                    ? Text(
-                        key: const Key('extractedAudioDurationTextKey'),
-                        TimeFormatUtil.formatSeconds(
-                          audioExtractorVM.isMultiAudioMode
-                              ? audioExtractorVM.totalDurationMultiAudio
-                              : audioExtractorVM.totalDuration,
-                        ),
-                      )
-                    : Text(
-                        key: const Key('extractedAudioDurationTextKey'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         TimeFormatUtil.formatDuration(
-                          audioPlayerVM.duration,
+                          audioPlayerVM.position,
                         ),
                       ),
+                      (Platform.isWindows)
+                          ? Text(
+                              key: const Key('extractedAudioDurationTextKey'),
+                              TimeFormatUtil.formatSeconds(
+                                audioExtractorVM.isMultiAudioMode
+                                    ? audioExtractorVM.totalDurationMultiAudio
+                                    : audioExtractorVM.totalDuration,
+                              ),
+                            )
+                          : Text(
+                              key: const Key('extractedAudioDurationTextKey'),
+                              TimeFormatUtil.formatDuration(
+                                audioPlayerVM.duration,
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "${AppLocalizations.of(context)!.audioStatePlaying}: ${PathUtil.fileName(audioExtractorVM.extractionResult.outputPath!)}",
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            "${AppLocalizations.of(context)!.audioStatePlaying}: ${PathUtil.fileName(audioExtractorVM.extractionResult.outputPath!)}",
-            style: const TextStyle(
-              fontStyle: FontStyle.italic,
-              fontSize: 12,
-            ),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-          ),
-        ],
         if (audioPlayerVM.hasError)
           Padding(
             padding: const EdgeInsets.all(8.0),
