@@ -251,7 +251,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         ],
                       ),
                     ],
-                    const SizedBox(height: 16),
                     (audioExtractorVM
                             .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
                         ? Text(
