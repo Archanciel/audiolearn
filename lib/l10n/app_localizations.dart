@@ -4621,14 +4621,26 @@ abstract class AppLocalizations {
   /// No description provided for @loadCommentsButton.
   ///
   /// In en, this message translates to:
-  /// **'Load Comments'**
+  /// **'Load'**
   String get loadCommentsButton;
 
   /// No description provided for @saveCommentsButton.
   ///
   /// In en, this message translates to:
-  /// **'Save Comments'**
+  /// **'Save'**
   String get saveCommentsButton;
+
+  /// No description provided for @loadCommentsButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Load a previously saved MP3 extraction configuration'**
+  String get loadCommentsButtonTooltip;
+
+  /// No description provided for @saveCommentsButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the MP3 extraction configuration'**
+  String get saveCommentsButtonTooltip;
 
   /// No description provided for @commentsSavedMessage.
   ///

@@ -3016,4 +3016,12 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get toExtractCommentTitleAddition => "To extract";
+
+  @override
+  String get loadCommentsButtonTooltip =>
+      "Load a previously saved MP3 extraction configuration";
+
+  @override
+  String get saveCommentsButtonTooltip =>
+      "Save the MP3 extraction configuration";
 }
