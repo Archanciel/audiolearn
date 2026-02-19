@@ -251,6 +251,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         ],
                       ),
                     ],
+                    const SizedBox(height: 8),
                     (audioExtractorVM
                             .existNotDeletedSegmentWithEndPositionGreaterThanAudioDuration())
                         ? Text(
@@ -314,29 +315,39 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ElevatedButton.icon(
-                                      key: const Key('loadCommentsButton'),
-                                      onPressed: () =>
-                                          _loadMultiAudioCommentsFile(
-                                              context: context),
-                                      icon: const Icon(Icons.folder_open,
-                                          size: 18),
-                                      label: Text(AppLocalizations.of(context)!
-                                          .loadCommentsButton),
+                                    Tooltip(
+                                      message: AppLocalizations.of(context)!
+                                          .loadCommentsButtonTooltip,
+                                      child: ElevatedButton.icon(
+                                        key: const Key('loadCommentsButtonKey'),
+                                        onPressed: () =>
+                                            _loadMultiAudioCommentsFile(
+                                                context: context),
+                                        icon: const Icon(Icons.folder_open,
+                                            size: 18),
+                                        label: Text(
+                                            AppLocalizations.of(context)!
+                                                .loadCommentsButton),
+                                      ),
                                     ),
-                                    ElevatedButton.icon(
-                                      key: const Key('saveCommentsButton'),
-                                      onPressed:
-                                          audioExtractorVM.multiAudios.isEmpty
-                                              ? null
-                                              : () => _saveMultiAudioComments(
-                                                    context: context,
-                                                    audioExtractorVM:
-                                                        audioExtractorVM,
-                                                  ),
-                                      icon: const Icon(Icons.save, size: 18),
-                                      label: Text(AppLocalizations.of(context)!
-                                          .saveCommentsButton),
+                                    Tooltip(
+                                      message: AppLocalizations.of(context)!
+                                          .saveCommentsButtonTooltip,
+                                      child: ElevatedButton.icon(
+                                        key: const Key('saveCommentsButton'),
+                                        onPressed:
+                                            audioExtractorVM.multiAudios.isEmpty
+                                                ? null
+                                                : () => _saveMultiAudioComments(
+                                                      context: context,
+                                                      audioExtractorVM:
+                                                          audioExtractorVM,
+                                                    ),
+                                        icon: const Icon(Icons.save, size: 18),
+                                        label: Text(
+                                            AppLocalizations.of(context)!
+                                                .saveCommentsButton),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -2189,7 +2200,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       if (safeName.isEmpty) {
         safeName = 'preview'; // ✅ Fallback for completely invalid titles
       }
-      
+
       final String tempFileName =
           'preview_${safeName}_${DateTime.now().millisecondsSinceEpoch}.mp3';
       final String tempFilePath =
