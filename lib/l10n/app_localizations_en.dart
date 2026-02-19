@@ -2873,10 +2873,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fileNameLabel => 'File name';
 
   @override
-  String get loadCommentsButton => 'Load Comments';
+  String get loadCommentsButton => 'Load';
 
   @override
-  String get saveCommentsButton => 'Save Comments';
+  String get saveCommentsButton => 'Save';
+
+  @override
+  String get loadCommentsButtonTooltip =>
+      'Load a previously saved MP3 extraction configuration';
+
+  @override
+  String get saveCommentsButtonTooltip =>
+      'Save the MP3 extraction configuration';
 
   @override
   String get commentsSavedMessage => 'Comments saved to:';
