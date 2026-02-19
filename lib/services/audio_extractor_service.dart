@@ -122,7 +122,7 @@ class AudioExtractorService {
           filters.add('afade=t=out:st=$stStr:d=$dStr');
 
           logger.i(
-            'Fade-out: st=$stStr d=$dStr (segment ${segment.startPosition}-${segment.endPosition})',
+            'Fade-out: st=$stStr d=$dStr (segment ${TimeFormatUtil.formatSeconds(segment.startPosition)}-${TimeFormatUtil.formatSeconds(segment.endPosition)})',
           );
         }
       } else {
@@ -1009,7 +1009,7 @@ class AudioExtractorService {
 
           // ✅ ADD: Log segment being extracted
           logger.i(
-              '  Extracting segment ${j + 1}/${inp.segments.length}: ${s.startPosition}-${s.endPosition}');
+              '  Extracting segment ${j + 1}/${inp.segments.length}: ${TimeFormatUtil.formatSeconds(s.startPosition)}-${TimeFormatUtil.formatSeconds(s.endPosition)}');
 
           final tempCutPath = '${tmp.path}/m_temp_$partIndex.mp3';
           final cutPath = '${tmp.path}/m_cut_${partIndex++}.mp3';
@@ -1234,7 +1234,7 @@ class AudioExtractorService {
 
           // ✅ ADD: Log segment being extracted
           logger.i(
-              '  Extracting segment ${j + 1}/${inp.segments.length}: ${s.startPosition}-${s.endPosition}');
+              '  Extracting segment ${j + 1}/${inp.segments.length}: ${TimeFormatUtil.formatSeconds(s.startPosition)}-${TimeFormatUtil.formatSeconds(s.endPosition)}');
 
           final tempCutPath =
               '${tempDir.path}${Platform.pathSeparator}m_temp_$idx.mp3';
