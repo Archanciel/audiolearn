@@ -1007,6 +1007,14 @@ class AudioExtractorService {
         for (int j = 0; j < inp.segments.length; j++) {
           final s = inp.segments[j];
 
+          // ✅ ADD: Validate segment duration
+          final double segmentDuration = s.endPosition - s.startPosition;
+          if (segmentDuration <= 0) {
+            logger.e(
+                'Invalid segment duration: $segmentDuration for segment $j in audio $i');
+            continue; // Skip invalid segments
+          }
+
           // ✅ ADD: Log segment being extracted
           logger.i(
               '  Extracting segment ${j + 1}/${inp.segments.length}: ${TimeFormatUtil.formatSeconds(s.startPosition)}-${TimeFormatUtil.formatSeconds(s.endPosition)}');
@@ -1014,25 +1022,35 @@ class AudioExtractorService {
           final tempCutPath = '${tmp.path}/m_temp_$partIndex.mp3';
           final cutPath = '${tmp.path}/m_cut_${partIndex++}.mp3';
 
-          // Step 1: Extract segment without filters
+          // Step 1: Extract segment without filters - BUILD COMPLETE COMMAND
           final extractCmd = [
             '-err_detect',
-            'ignore_err', // ← AJOUTER
+            'ignore_err',
             '-ss',
-            // ...
+            s.startPosition.toString(), // ✅ CRITICAL: Add actual start position
+            '-t',
+            segmentDuration.toString(), // ✅ CRITICAL: Add actual duration
+            '-i',
+            _q(inp.inputPath), // ✅ CRITICAL: Add input file
+            '-c:a',
+            'libmp3lame',
+            '-b:a',
+            encoderBitrate,
             '-ar',
-            '44100', // ← AJOUTER
+            '44100',
             '-ac',
-            '2', // ← AJOUTER
-            _q(tempCutPath), // ou _q(tempSegPath)
+            '2',
+            _q(tempCutPath),
             '-y',
           ].join(' ');
+
+          logger.i(
+              'Extracting with command: ffmpeg $extractCmd'); // ✅ ADD: Log command
 
           final extractSess = await FFmpegKit.execute(extractCmd);
           if (!ReturnCode.isSuccess(
             await extractSess.getReturnCode(),
           )) {
-            // ✅ IMPROVED: Better error message with audio info
             final logs = await extractSess.getAllLogsAsString();
             return {
               'success': false,
@@ -1042,7 +1060,7 @@ class AudioExtractorService {
             };
           }
 
-          // ✅ ADD: Validate temporary file was created and is valid
+          // ✅ Validate temporary file was created and is valid
           final tempFile = File(tempCutPath);
           if (!tempFile.existsSync() || tempFile.lengthSync() < 1000) {
             return {
@@ -1053,6 +1071,7 @@ class AudioExtractorService {
             };
           }
 
+          // ... rest of the code continues
           // Step 2: Apply filters (gain + fade)
           final audioFilter = _buildFadeFilterForExtractedSegment(
             segment: s,
@@ -1241,21 +1260,28 @@ class AudioExtractorService {
           final cutPath =
               '${tempDir.path}${Platform.pathSeparator}m_cut_${idx++}.mp3';
 
-          // Step 1: Extract segment without filters
+// Step 1: Extract segment without filters
+          final double segmentDuration = s.endPosition - s.startPosition;
+          if (segmentDuration <= 0) {
+            logger.e(
+                'Invalid segment duration: $segmentDuration for segment $j in audio $i');
+            continue;
+          }
+
           final extractArgs = [
-            '-err_detect', 'ignore_err', // ✅ ADD
+            '-err_detect', 'ignore_err',
             '-ss',
-            s.startPosition.toString(),
+            s.startPosition.toString(), // ✅ CRITICAL: Add actual value
             '-t',
-            (s.endPosition - s.startPosition).toString(),
+            segmentDuration.toString(), // ✅ CRITICAL: Add actual value
             '-i',
-            inp.inputPath,
+            inp.inputPath, // ✅ CRITICAL: Add input file
             '-c:a',
             'libmp3lame',
             '-b:a',
             encoderBitrate,
-            '-ar', '44100', // ✅ ADD
-            '-ac', '2', // ✅ ADD
+            '-ar', '44100',
+            '-ac', '2',
             tempCutPath,
             '-y',
             '-v',
