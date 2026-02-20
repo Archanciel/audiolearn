@@ -43954,7 +43954,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the save comments dialog title
-        expect(find.text('Save Comments'), findsNWidgets(2));
+        expect(find.text('Save Comments'), findsOneWidget);
 
         // Delete the existing text in the file name text field and enter
         // a new file name
