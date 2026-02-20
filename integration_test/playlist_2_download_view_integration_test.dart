@@ -40041,7 +40041,7 @@ void main() {
           expect(find.text('Remove Comment'), findsOneWidget);
 
           // Verify the delete comment confirmation dialog content
-          expect(find.text('Are you sure you want to remove this comment ?'),
+          expect(find.text('Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
               findsOneWidget);
 
           // Confirm the deletion by tapping the delete button
@@ -40359,7 +40359,7 @@ void main() {
           expect(find.text('Remove Comment'), findsOneWidget);
 
           // Verify the delete comment confirmation dialog content
-          expect(find.text('Are you sure you want to remove this comment ?'),
+          expect(find.text('Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
               findsOneWidget);
 
           // Confirm the deletion by tapping the delete button
