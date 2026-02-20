@@ -1487,25 +1487,16 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           audioPlayerVM.position,
                         ),
                       ),
-                      (Platform.isWindows ||
-                              audioExtractorVM.previewSegmentDuration != null)
-                          ? Text(
-                              key: const Key('extractedAudioDurationTextKey'),
-                              TimeFormatUtil.formatSeconds(
-                                audioExtractorVM
-                                        .previewSegmentDuration ?? // ✅ Use preview duration if available
-                                    (audioExtractorVM.isMultiAudioMode
-                                        ? audioExtractorVM
-                                            .totalDurationMultiAudio
-                                        : audioExtractorVM.totalDuration),
-                              ),
-                            )
-                          : Text(
-                              key: const Key('extractedAudioDurationTextKey'),
-                              TimeFormatUtil.formatDuration(
-                                audioPlayerVM.duration,
-                              ),
-                            ),
+                      Text(
+                        key: const Key('extractedAudioDurationTextKey'),
+                        TimeFormatUtil.formatSeconds(
+                          audioExtractorVM
+                                  .previewSegmentDuration ?? // Preview duration if available
+                              (audioExtractorVM.isMultiAudioMode
+                                  ? audioExtractorVM.totalDurationMultiAudio
+                                  : audioExtractorVM.totalDuration),
+                        ),
+                      ),
                     ],
                   ),
                 ),
