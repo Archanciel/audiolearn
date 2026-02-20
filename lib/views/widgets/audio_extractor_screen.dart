@@ -308,7 +308,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                   ),
                                 ],
                               ),
-                              // ✅ ADD: Save/Load buttons for multi-audio mode
+                              // Save/Load buttons for multi-audio mode
                               if (_extractingMultipleAudios) ...[
                                 const SizedBox(height: 8),
                                 Row(
@@ -623,8 +623,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     }
   }
 
-  // Add these methods in the _AudioExtractorScreenState class:
-
+  /// Called when the user clicks the "Save Comments" button in multi-audio mode.
   Future<void> _saveMultiAudioComments({
     required BuildContext context,
     required AudioExtractorVM audioExtractorVM,
