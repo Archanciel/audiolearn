@@ -1487,13 +1487,17 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           audioPlayerVM.position,
                         ),
                       ),
-                      (Platform.isWindows)
+                      (Platform.isWindows ||
+                              audioExtractorVM.previewSegmentDuration != null)
                           ? Text(
                               key: const Key('extractedAudioDurationTextKey'),
                               TimeFormatUtil.formatSeconds(
-                                audioExtractorVM.isMultiAudioMode
-                                    ? audioExtractorVM.totalDurationMultiAudio
-                                    : audioExtractorVM.totalDuration,
+                                audioExtractorVM
+                                        .previewSegmentDuration ?? // ✅ Use preview duration if available
+                                    (audioExtractorVM.isMultiAudioMode
+                                        ? audioExtractorVM
+                                            .totalDurationMultiAudio
+                                        : audioExtractorVM.totalDuration),
                               ),
                             )
                           : Text(
@@ -2229,7 +2233,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       _tempPreviewFiles.add(tempFilePath);
 
       // ✅ FIX 3: setExtractionSuccess() - method added above in VM
-      audioExtractorVM.setExtractionSuccess(tempFilePath);
+      audioExtractorVM.setExtractionSuccess(
+        outputPath: tempFilePath,
+        previewDuration: segment.duration +
+            segment.silenceDuration, // ✅ Total preview duration
+      );
 
       if (!context.mounted) return;
 
