@@ -493,9 +493,10 @@ class AudioExtractorVM extends ChangeNotifier {
   }
 
   int get totalSegmentCountMultiAudio {
-    return _multiAudios.fold(
+    return _multiAudios.fold<int>(
       0,
-      (sum, audioWithSeg) => sum + audioWithSeg.activeSegmentCount,
+      (sum, audioWithSeg) =>
+          sum + audioWithSeg.segments.where((s) => !s.deleted).length,
     );
   }
 
@@ -529,8 +530,10 @@ class AudioExtractorVM extends ChangeNotifier {
       final List<InputSegments> inputs = _multiAudios.map((audioWithSeg) {
         return InputSegments(
           inputPath: audioWithSeg.audio.filePathName,
-          segments: audioWithSeg.segments,
-          gainDb: audioWithSeg.gainDb,
+          segments: audioWithSeg.segments
+              .where((s) => !s.deleted)
+              .toList(), // ✅ Filter deleted
+          gainDb: 0.0,
         );
       }).toList();
 
