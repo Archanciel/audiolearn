@@ -810,6 +810,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           onTap: () =>
                               Navigator.of(dialogContext).pop(file.path),
                           trailing: IconButton(
+                            // Displayed in dialog opened by the "Load" saved
+                            // comments button in multi-audio mode, allowing
+                            // to delete saved multi-audio comments files
                             key: Key('deleteMultiCommentFileButton_$index'),
                             icon: const Icon(
                               Icons.delete,
@@ -2232,7 +2235,10 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
       await _playExtractedFile(context, tempFilePath);
 
-      if (!context.mounted) return;
+      if (!context.mounted) {
+        return;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
