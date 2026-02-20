@@ -739,6 +739,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     );
   }
 
+  /// Called when the user clicks the "Load Comments" button in multi-audio mode.
   Future<void> _loadMultiAudioCommentsFile({
     required BuildContext context,
   }) async {
@@ -833,7 +834,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                         backgroundColor: Colors.red,
                                       ),
                                       onPressed: () {
-                                        // Delete the file
+                                        // Delete the '...'.multi.json file which contains
+                                        // the saved comments for multiple audios
                                         try {
                                           File(file.path).deleteSync();
 
