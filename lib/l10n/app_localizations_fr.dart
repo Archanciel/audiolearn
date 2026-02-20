@@ -2631,7 +2631,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteCommentExplanation =>
-      'Etes-vous sûr que vous voulez enlever ce commentaire ?';
+      'Etes-vous sûr que vous voulez enlever ce commentaire de la fonctionalité d\'extraction en MP3 ?';
 
   @override
   String get clearAllCommentDialogTitle => 'Enlever tous les commentaires';

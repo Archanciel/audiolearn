@@ -1576,7 +1576,7 @@
   "editCommentDialogTitle": "Éditer le commentaire",
   "addCommentDialogTitle": "Ajouter un commentaire",
   "deleteCommentDialogTitle": "Enlever le commentaire",
-  "deleteCommentExplanation": "Etes-vous sûr que vous voulez enlever ce commentaire ?",
+  "deleteCommentExplanation": "Etes-vous sûr que vous voulez enlever ce commentaire de la fonctionalité d'extraction en MP3 ?",
   "clearAllCommentDialogTitle": "Enlever tous les commentaires",
   "clearAllCommentExplanation": "Etes-vous sûr que vous voulez enlever tous les commentaires ?",
   "maxDuration": "Durée audio totale",

@@ -4174,7 +4174,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteCommentExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to remove this comment ?'**
+  /// **'Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'**
   String get deleteCommentExplanation;
 
   /// No description provided for @clearAllCommentDialogTitle.
