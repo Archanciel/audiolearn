@@ -64,6 +64,8 @@ class AudioExtractorVM extends ChangeNotifier {
   final List<AudioWithSegments> _multiAudios = [];
   List<AudioWithSegments> get multiAudios => List.unmodifiable(_multiAudios);
   bool get isMultiAudioMode => _multiAudios.isNotEmpty;
+  double? _previewSegmentDuration;
+  double? get previewSegmentDuration => _previewSegmentDuration;
 
   void setAudioFile({
     required String path,
@@ -242,6 +244,9 @@ class AudioExtractorVM extends ChangeNotifier {
       // in the audio extractor dialog
       startProcessing();
 
+      // Clear preview duration for full extraction
+      _previewSegmentDuration = null;
+
       final String actualTargetDir =
           "${settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
@@ -312,6 +317,9 @@ class AudioExtractorVM extends ChangeNotifier {
       // in the audio extractor dialog
       startProcessing();
 
+      // Clear preview duration for full extraction
+      _previewSegmentDuration = null;
+
       if (File(outputPathFileName).existsSync()) {
         // the case if the audio file to add already exist in the target
         // playlist directory
@@ -355,11 +363,6 @@ class AudioExtractorVM extends ChangeNotifier {
   /// Enables to display the CircularProgressIndicator in the audio extractor dialog.
   void startProcessing() {
     _extractionResult = ExtractionResult.processing();
-    notifyListeners();
-  }
-
-  void resetExtractionResult() {
-    _extractionResult = ExtractionResult.initial();
     notifyListeners();
   }
 
@@ -509,6 +512,9 @@ class AudioExtractorVM extends ChangeNotifier {
   }) async {
     try {
       startProcessing();
+
+      // Clear preview duration for full extraction
+      _previewSegmentDuration = null;
 
       if (!await validateMultiAudioFiles(context: context)) {
         return;
@@ -818,8 +824,18 @@ class AudioExtractorVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setExtractionSuccess(String outputPath) {
+  void setExtractionSuccess({
+    required String outputPath,
+    double? previewDuration,
+  }) {
     _extractionResult = ExtractionResult.success(outputPath);
+    _previewSegmentDuration = previewDuration; // ✅ Store preview duration
+    notifyListeners();
+  }
+
+  void resetExtractionResult() {
+    _extractionResult = ExtractionResult.initial();
+    _previewSegmentDuration = null; // ✅ Clear preview duration
     notifyListeners();
   }
 }
