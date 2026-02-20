@@ -2603,7 +2603,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteCommentExplanation =>
-      'Are you sure you want to remove this comment ?';
+      'Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?';
 
   @override
   String get clearAllCommentDialogTitle => 'Clear all Comments';
