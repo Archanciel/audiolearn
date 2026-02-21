@@ -43754,7 +43754,7 @@ void main() {
               'increaseDuration': 'Increase duration: 0:00.0',
               'reductionPosition': 'Reduction position: 0:00.0',
               'reductionDuration': 'Reduction duration: 0:00.0',
-              'duration': 'Duration: 0:28.6 + silence 0:01.0',
+              'duration': 'Duration: 0:28.6',
             },
           ],
         );
@@ -43832,7 +43832,7 @@ void main() {
         expect(firstComment['content'], '');
         expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
         expect(firstComment['commentEndPositionInTenthOfSeconds'], 286);
-        expect(firstComment['silenceDuration'], 1.0);
+        expect(firstComment['silenceDuration'], 0.0);
         expect(firstComment['playSpeed'], 0.7);
         expect(firstComment['fadeInDuration'], 5.0);
         expect(firstComment['soundReductionPosition'], 20.6);
@@ -43854,7 +43854,7 @@ void main() {
             reason:
                 'Last update date time should be today\'s date with current hour and minute');
 
-        String totalDurationStr = '2:35.1';
+        String totalDurationStr = '2:34.1';
 
         // Verify the total duration text
         Finder totalDurationTextFinder =
@@ -43937,7 +43937,7 @@ void main() {
         await tester.tap(saveEditedCommentButtonFinder);
         await tester.pumpAndSettle();
 
-        totalDurationStr = '2:23.3';
+        totalDurationStr = '2:22.3';
 
         // Verify the total duration text
         totalDurationTextFinder =
