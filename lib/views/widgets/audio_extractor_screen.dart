@@ -819,29 +819,17 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                               // Show confirmation dialog
                               showDialog(
                                 context: dialogContext,
-                                builder: (confirmContext) => AlertDialog(
-                                  title: Text(
-                                    AppLocalizations.of(context)!
-                                        .deleteCommentDialogTitle,
-                                  ),
-                                  content: Text(
-                                    'Delete $fileName?',
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.red,
-                                      ),
-                                      onPressed: () {
-                                        // Delete the '...'.multi.json file which contains
-                                        // the saved comments for multiple audios
+                                builder: (confirmContext) => Actions(
+                                  // ✅ ADD: Enable Enter key to trigger Delete button
+                                  actions: {
+                                    ActivateIntent:
+                                        CallbackAction<ActivateIntent>(
+                                      onInvoke: (_) {
+                                        // Execute the same code as the Delete button
                                         try {
                                           File(file.path).deleteSync();
-
-                                          // Close confirmation dialog
                                           Navigator.of(confirmContext).pop();
 
-                                          // Show success message
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -858,36 +846,110 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                             ),
                                           );
 
-                                          // Refresh the file list
                                           setState(() {});
                                         } catch (e) {
-                                          // Show error message
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Error deleting file: $e',
-                                              ),
+                                                  'Error deleting file: $e'),
                                               backgroundColor: Colors.red,
                                               duration:
                                                   const Duration(seconds: 3),
                                             ),
                                           );
                                         }
+                                        return null;
                                       },
-                                      child: Text(
-                                        AppLocalizations.of(context)!.delete,
+                                    ),
+                                  },
+                                  child: Shortcuts(
+                                    shortcuts: const {
+                                      SingleActivator(LogicalKeyboardKey.enter):
+                                          ActivateIntent(),
+                                      SingleActivator(
+                                              LogicalKeyboardKey.numpadEnter):
+                                          ActivateIntent(),
+                                    },
+                                    child: Focus(
+                                      autofocus:
+                                          true, // ✅ Auto-focus the dialog
+                                      child: AlertDialog(
+                                        title: Text(
+                                          AppLocalizations.of(context)!
+                                              .deleteCommentDialogTitle,
+                                        ),
+                                        content: Text(
+                                          'Delete $fileName?',
+                                        ),
+                                        actions: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red,
+                                            ),
+                                            onPressed: () {
+                                              // Delete the '...'.multi.json file which contains
+                                              // the saved comments for multiple audios
+                                              try {
+                                                File(file.path).deleteSync();
+
+                                                // Close confirmation dialog
+                                                Navigator.of(confirmContext)
+                                                    .pop();
+
+                                                // Show success message
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Deleted $fileName',
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    duration: const Duration(
+                                                        seconds: 2),
+                                                  ),
+                                                );
+
+                                                // Refresh the file list
+                                                setState(() {});
+                                              } catch (e) {
+                                                // Show error message
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                        'Error deleting file: $e'),
+                                                    backgroundColor: Colors.red,
+                                                    duration: const Duration(
+                                                        seconds: 3),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .delete,
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(confirmContext)
+                                                    .pop(),
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .cancelButton,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(confirmContext).pop(),
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                            .cancelButton,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               );
                             },
