@@ -525,9 +525,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
           if (start >= 0 && end > start) {
             double silence = comment.silenceDuration;
-            if (silence == 0.0) {
-              silence = kDefaultSilenceDuration;
-            }
 
             segments.add(
               AudioSegment(
