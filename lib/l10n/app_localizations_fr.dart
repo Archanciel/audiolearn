@@ -2943,4 +2943,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get toExtractCommentTitleAddition => 'A extraire';
+
+  @override
+  String get restoreFullAudioSegmentTooltip =>
+      'Restaurer le segment audio complet';
+
+  @override
+  String get fullAudioSegmentRestoredMessage =>
+      'Segment audio complet restauré';
 }

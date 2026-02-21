@@ -838,4 +838,68 @@ class AudioExtractorVM extends ChangeNotifier {
     _previewSegmentDuration = null; // ✅ Clear preview duration
     notifyListeners();
   }
+
+  /// Adds a default full-audio segment to a specific multi-audio
+  void addDefaultSegmentToMultiAudio({
+    required int audioIndex,
+    required CommentVM commentVMlistenTrue,
+  }) {
+    if (audioIndex < 0 || audioIndex >= _multiAudios.length) return;
+
+    final audioWithSegments = _multiAudios[audioIndex];
+    final audio = audioWithSegments.audio;
+
+    // Create default full-audio segment
+    final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
+      toBeRounded: audio.audioDuration.inMilliseconds / 1000.0,
+    );
+
+    final defaultSegment = AudioSegment(
+      startPosition: 0.0,
+      endPosition: roundedEndPosition,
+      silenceDuration: 1.0,
+      playSpeed: audio.audioPlaySpeed,
+      fadeInDuration: 0.0,
+      soundReductionPosition: 0.0,
+      soundReductionDuration: 0.0,
+      commentId:
+          'full_audio_${audio.audioFileName}_${DateTime.now().microsecondsSinceEpoch}',
+      commentTitle: audio.validVideoTitle,
+      deleted: false,
+    );
+
+    // Add segment to multi-audio
+    final updatedSegments = List<AudioSegment>.from(audioWithSegments.segments)
+      ..add(defaultSegment);
+
+    _multiAudios[audioIndex] = audioWithSegments.copyWith(
+      segments: updatedSegments,
+    );
+
+    // Create corresponding comment
+    final defaultComment = Comment(
+      title: defaultSegment.commentTitle,
+      content: '',
+      commentStartPositionInTenthOfSeconds:
+          (defaultSegment.startPosition * 10).toInt(),
+      commentEndPositionInTenthOfSeconds:
+          (defaultSegment.endPosition * 10).toInt(),
+      silenceDuration: defaultSegment.silenceDuration,
+      playSpeed: defaultSegment.playSpeed,
+      fadeInDuration: defaultSegment.fadeInDuration,
+      soundReductionPosition: defaultSegment.soundReductionPosition,
+      soundReductionDuration: defaultSegment.soundReductionDuration,
+      deleted: false,
+      wasPlaySpeedModifiedByAddSegmentDialog: false,
+    );
+    defaultComment.setId(defaultSegment.commentId);
+
+    // Save comment to audio's comment file
+    commentVMlistenTrue.addComment(
+      addedComment: defaultComment,
+      audioToComment: audio,
+    );
+
+    notifyListeners();
+  }
 }

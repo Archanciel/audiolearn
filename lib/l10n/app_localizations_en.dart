@@ -2909,4 +2909,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toExtractCommentTitleAddition => 'To extract';
+
+  @override
+  String get restoreFullAudioSegmentTooltip => 'Restore full audio segment';
+
+  @override
+  String get fullAudioSegmentRestoredMessage => 'Full audio segment restored';
 }

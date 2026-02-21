@@ -458,8 +458,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
       // IMPROVED: Better error handling for loading saved comments
       Map<String, List<Comment>>? savedCommentsMap;
-      bool isLoadingFromSavedFile =
-          false; // Track if loading from saved file
+      bool isLoadingFromSavedFile = false; // Track if loading from saved file
 
       if (_loadedCommentsFileName != null) {
         try {
@@ -1059,10 +1058,44 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           ],
                         ),
                       ),
+                      // ✅ ADD: Restore button when no segments exist
+                      if (audioWithSegments.segments.isEmpty)
+                        Tooltip(
+                          message: AppLocalizations.of(context)!
+                              .restoreFullAudioSegmentTooltip,
+                          child: IconButton(
+                            key: Key('restoreFullAudioButton_$audioIndex'),
+                            icon: const Icon(
+                              Icons.restore,
+                              color: Colors.green,
+                              size: 28,
+                            ),
+                            onPressed: () {
+                              audioExtractorVM.addDefaultSegmentToMultiAudio(
+                                audioIndex: audioIndex,
+                                commentVMlistenTrue: widget.commentVMlistenTrue,
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(context)!
+                                        .fullAudioSegmentRestoredMessage,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.green,
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                     ],
                   ),
-                ),
-                // Segments for this audio
+                ), // Segments for this audio
                 ...List.generate(
                   audioWithSegments.segments.length,
                   (segmentIndex) {
