@@ -631,7 +631,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) async {
     // Prompt for filename
     final TextEditingController fileNameController = TextEditingController(
-      text: 'multi_audio_comments_${DateTime.now().millisecondsSinceEpoch}',
+      text: '',
     );
 
     final String? fileName = await showDialog<String>(
@@ -641,10 +641,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         content: TextField(
           key: const Key('saveCommentsFileNameTextField'),
           controller: fileNameController,
-          decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)!.fileNameLabel,
-            hintText: 'multi_audio_comments',
-          ),
           autofocus: true,
         ),
         actions: [
