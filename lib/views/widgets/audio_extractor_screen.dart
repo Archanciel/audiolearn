@@ -1045,11 +1045,15 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Text(
-                              '${audioWithSegments.activeSegmentCount} segment(s) - ${TimeFormatUtil.formatSeconds(audioWithSegments.totalDuration)}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade400,
+                            Tooltip(
+                              message: AppLocalizations.of(context)!
+                                  .segmentsCountAndTotalDurationTooltip,
+                              child: Text(
+                                '${audioWithSegments.activeSegmentCount} segment(s) - ${TimeFormatUtil.formatSeconds(audioWithSegments.totalDuration)}',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade400,
+                                ),
                               ),
                             ),
                           ],
