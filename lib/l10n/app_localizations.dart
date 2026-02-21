@@ -4701,6 +4701,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full audio segment restored'**
   String get fullAudioSegmentRestoredMessage;
+
+  /// No description provided for @segmentsCountAndTotalDurationTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'The displayed total duration is impacted by the defined segments play speed.'**
+  String get segmentsCountAndTotalDurationTooltip;
 }
 
 class _AppLocalizationsDelegate

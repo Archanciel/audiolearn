@@ -2951,4 +2951,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fullAudioSegmentRestoredMessage =>
       'Segment audio complet restauré';
+
+  @override
+  String get segmentsCountAndTotalDurationTooltip =>
+      'La durée totale affichée tient compte des vitesses de lecture définies.';
 }

@@ -1686,5 +1686,6 @@
   "segmentDuplicatedMessage": "Commentaire dupliqué avec succès",
   "toExtractCommentTitleAddition": "A extraire",
   "restoreFullAudioSegmentTooltip": "Restaurer le segment audio complet",
-  "fullAudioSegmentRestoredMessage": "Segment audio complet restauré"
+  "fullAudioSegmentRestoredMessage": "Segment audio complet restauré",
+  "segmentsCountAndTotalDurationTooltip":"La durée totale affichée tient compte des vitesses de lecture définies."
 }

@@ -1267,5 +1267,6 @@
   "segmentDuplicatedMessage": "Comment duplicated successfully",
   "toExtractCommentTitleAddition": "To extract",
   "restoreFullAudioSegmentTooltip": "Restore full audio segment",
-  "fullAudioSegmentRestoredMessage": "Full audio segment restored"
+  "fullAudioSegmentRestoredMessage": "Full audio segment restored",
+  "segmentsCountAndTotalDurationTooltip":"The displayed total duration is impacted by the defined segments play speed."
 }
