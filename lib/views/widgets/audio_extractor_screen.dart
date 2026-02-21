@@ -636,29 +636,57 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
     final String? fileName = await showDialog<String>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.saveCommentsDialogTitle),
-        content: TextField(
-          key: const Key('saveCommentsFileNameTextField'),
-          controller: fileNameController,
-          autofocus: true,
-        ),
-        actions: [
-          ElevatedButton(
-            key: const Key('saveCommentsButtonInSaveCommentsDialogKey'),
-            onPressed: () {
+      builder: (dialogContext) => Actions(
+        // ✅ ADD: Enable Enter key to trigger Save button
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) {
+              // Execute the same code as the Save button
               final name = fileNameController.text.trim();
               if (name.isNotEmpty) {
                 Navigator.of(dialogContext).pop(name);
               }
+              return null;
             },
-            child: Text(AppLocalizations.of(context)!.saveButton),
           ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(AppLocalizations.of(context)!.cancelButton),
+        },
+        child: Shortcuts(
+          shortcuts: const {
+            SingleActivator(LogicalKeyboardKey.enter): ActivateIntent(),
+            SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
+          },
+          child: Focus(
+            autofocus: true, // ✅ Auto-focus the dialog
+            child: AlertDialog(
+              title:
+                  Text(AppLocalizations.of(context)!.saveCommentsDialogTitle),
+              content: TextField(
+                key: const Key('saveCommentsFileNameTextField'),
+                controller: fileNameController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.fileNameLabel,
+                ),
+                autofocus: true,
+              ),
+              actions: [
+                ElevatedButton(
+                  key: const Key('saveCommentsButtonInSaveCommentsDialogKey'),
+                  onPressed: () {
+                    final name = fileNameController.text.trim();
+                    if (name.isNotEmpty) {
+                      Navigator.of(dialogContext).pop(name);
+                    }
+                  },
+                  child: Text(AppLocalizations.of(context)!.saveButton),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(AppLocalizations.of(context)!.cancelButton),
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
 
