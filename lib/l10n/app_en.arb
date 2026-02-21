@@ -1265,5 +1265,7 @@
   "audiosMin": "audios",
   "segments": "segments",
   "segmentDuplicatedMessage": "Comment duplicated successfully",
-  "toExtractCommentTitleAddition": "To extract"
+  "toExtractCommentTitleAddition": "To extract",
+  "restoreFullAudioSegmentTooltip": "Restore full audio segment",
+  "fullAudioSegmentRestoredMessage": "Full audio segment restored"
 }

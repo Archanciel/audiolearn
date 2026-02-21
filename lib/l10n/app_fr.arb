@@ -1684,5 +1684,7 @@
   "audiosMin": "audios",
   "segments": "segments",
   "segmentDuplicatedMessage": "Commentaire dupliqué avec succès",
-  "toExtractCommentTitleAddition": "A extraire"
+  "toExtractCommentTitleAddition": "A extraire",
+  "restoreFullAudioSegmentTooltip": "Restaurer le segment audio complet",
+  "fullAudioSegmentRestoredMessage": "Segment audio complet restauré"
 }

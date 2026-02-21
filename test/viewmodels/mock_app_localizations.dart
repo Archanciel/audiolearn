@@ -3024,4 +3024,10 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get saveCommentsButtonTooltip =>
       "Save the MP3 extraction configuration";
+
+  @override
+  String get restoreFullAudioSegmentTooltip => "Restore full audio segment";
+
+  @override
+  String get fullAudioSegmentRestoredMessage => "Full audio segment restored";
 }

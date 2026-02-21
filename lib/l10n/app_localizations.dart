@@ -4689,6 +4689,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'To extract'**
   String get toExtractCommentTitleAddition;
+
+  /// No description provided for @restoreFullAudioSegmentTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore full audio segment'**
+  String get restoreFullAudioSegmentTooltip;
+
+  /// No description provided for @fullAudioSegmentRestoredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Full audio segment restored'**
+  String get fullAudioSegmentRestoredMessage;
 }
 
 class _AppLocalizationsDelegate
