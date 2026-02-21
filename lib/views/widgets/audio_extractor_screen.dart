@@ -456,8 +456,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     try {
       final List<AudioWithSegments> audiosWithSegments = [];
 
-      // ✅ IMPROVED: Better error handling for loading saved comments
+      // IMPROVED: Better error handling for loading saved comments
       Map<String, List<Comment>>? savedCommentsMap;
+      bool isLoadingFromSavedFile =
+          false; // Track if loading from saved file
+
       if (_loadedCommentsFileName != null) {
         try {
           final dynamic loaded = JsonDataService.loadFromFile(
@@ -467,6 +470,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
           if (loaded is MultiAudioComments) {
             savedCommentsMap = loaded.audioCommentsMap;
+            isLoadingFromSavedFile =
+                true; // ✅ ADD: Mark as loading from saved file
           } else {
             throw Exception('Invalid file format');
           }
@@ -544,8 +549,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           }
         }
 
-        // If no segments were created, create a default full-audio segment
-        if (segments.isEmpty) {
+        // FIX: Only create default segment if NOT loading from saved file
+        // When loading from saved file, respect the empty array (all segments deleted)
+        if (segments.isEmpty && !isLoadingFromSavedFile) {
           final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
               toBeRounded: audio.audioDuration.inMilliseconds / 1000.0);
 
@@ -583,7 +589,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         (sum, audioWithSeg) => sum + audioWithSeg.segments.length,
       );
 
-      // ✅ IMPROVED: Different message if loaded from file
+      // IMPROVED: Different message if loaded from file
       final String message = savedCommentsMap != null
           ? '${AppLocalizations.of(context)!.loadedSavedComments} (${widget.multipleAudiosLst.length} ${AppLocalizations.of(context)!.audiosMin}, $totalSegments ${AppLocalizations.of(context)!.segments})'
           : AppLocalizations.of(context)!.loadedCommentsFromMultipleAudios(
@@ -605,7 +611,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
         ),
       );
     } catch (e, stackTrace) {
-      // ✅ ADD: Comprehensive error logging
       _logger.e('Error in _loadMultipleAudios: $e');
       _logger.e('Stack trace: $stackTrace');
 
