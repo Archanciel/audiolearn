@@ -1123,6 +1123,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+                              key: Key('videoTitleKey_$audioIndex'),
                               audioWithSegments.audio.validVideoTitle,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -1135,6 +1136,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                               message: AppLocalizations.of(context)!
                                   .segmentsCountAndTotalDurationTooltip,
                               child: Text(
+                                key: Key('segmentNumberAndDurationKey_$audioIndex'),
                                 '${audioWithSegments.activeSegmentCount} segment(s) - ${TimeFormatUtil.formatSeconds(audioWithSegments.totalDuration)}',
                                 style: TextStyle(
                                   fontSize: 12,
