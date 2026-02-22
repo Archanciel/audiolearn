@@ -43970,7 +43970,7 @@ void main() {
 
         // Now, type on the Save Comments button
         Finder saveCommentButtonFinder =
-            find.byKey(const Key('saveCommentsButton'));
+            find.byKey(const Key('saveCommentsButtonKey'));
         await tester.tap(saveCommentButtonFinder);
         await tester.pumpAndSettle();
 
