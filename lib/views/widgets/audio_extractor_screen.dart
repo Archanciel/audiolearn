@@ -12,6 +12,7 @@ import 'package:audiolearn/views/widgets/add_segment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -334,7 +335,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                                       message: AppLocalizations.of(context)!
                                           .saveCommentsButtonTooltip,
                                       child: ElevatedButton.icon(
-                                        key: const Key('saveCommentsButton'),
+                                        key: const Key('saveCommentsButtonKey'),
                                         onPressed:
                                             audioExtractorVM.multiAudios.isEmpty
                                                 ? null
@@ -631,7 +632,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) async {
     // Prompt for filename
     final TextEditingController fileNameController = TextEditingController(
-      text: '',
+      text: (_loadedCommentsFileName != null) ? path.basenameWithoutExtension(_loadedCommentsFileName!).replaceAll('.multi', '') : '',
     );
 
     final String? fileName = await showDialog<String>(
@@ -1136,7 +1137,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                               message: AppLocalizations.of(context)!
                                   .segmentsCountAndTotalDurationTooltip,
                               child: Text(
-                                key: Key('segmentNumberAndDurationKey_$audioIndex'),
+                                key: Key(
+                                    'segmentNumberAndDurationKey_$audioIndex'),
                                 '${audioWithSegments.activeSegmentCount} segment(s) - ${TimeFormatUtil.formatSeconds(audioWithSegments.totalDuration)}',
                                 style: TextStyle(
                                   fontSize: 12,
