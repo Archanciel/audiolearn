@@ -1096,7 +1096,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               context: context,
               controller: _endAudioDurationController,
               label: AppLocalizations.of(context)!.end,
-              labelSize: 30.0,
+              labelSize: 27.0,
               tooltipMessage: AppLocalizations.of(context)!
                   .endAudioDurationSortFilterTooltip,
             ),
@@ -1135,7 +1135,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               context: context,
               controller: _endFileSizeController,
               label: AppLocalizations.of(context)!.end,
-              labelSize: 30.0,
+              labelSize: 27.0,
               tooltipMessage: AppLocalizations.of(context)!
                   .endAudioFileSizeSortFilterTooltip,
             ),
@@ -1165,7 +1165,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           ),
         ),
         SizedBox(
-          width: 70,
+          width: 76, // 77 not ok
           child: Tooltip(
             message: tooltipMessage,
             child: TextField(
