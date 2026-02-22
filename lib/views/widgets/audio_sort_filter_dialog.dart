@@ -288,13 +288,13 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     int durationStartRangeSec =
         audioSortDefaultFilterParameters.durationStartRangeSec;
     _startAudioDurationController.text = (durationStartRangeSec > 0)
-        ? Duration(seconds: durationStartRangeSec).HHmm()
+        ? Duration(seconds: durationStartRangeSec).HHmmss()
         : '';
 
     int durationEndRangeSec =
         audioSortDefaultFilterParameters.durationEndRangeSec;
     _endAudioDurationController.text = (durationEndRangeSec > 0)
-        ? Duration(seconds: durationEndRangeSec).HHmm()
+        ? Duration(seconds: durationEndRangeSec).HHmmss()
         : '';
   }
 
@@ -2709,10 +2709,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       fileSizeStartRangeMB: double.tryParse(startFileSizeTxt) ?? 0.0,
       fileSizeEndRangeMB: double.tryParse(endFileSizeTxt) ?? 0.0,
       durationStartRangeSec:
-          DateTimeParser.parseHHMMDuration(startAudioDurationTxt)?.inSeconds ??
+          DateTimeParser.parseHHMMSSDuration(startAudioDurationTxt)?.inSeconds ??
               0,
       durationEndRangeSec:
-          DateTimeParser.parseHHMMDuration(endAudioDurationTxt)?.inSeconds ?? 0,
+          DateTimeParser.parseHHMMSSDuration(endAudioDurationTxt)?.inSeconds ?? 0,
     );
   }
 }

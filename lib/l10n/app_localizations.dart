@@ -419,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @audioDurationRange.
   ///
   /// In en, this message translates to:
-  /// **'Audio duration range (hh:mm)'**
+  /// **'Audio duration range (hh:mm:ss)'**
   String get audioDurationRange;
 
   /// No description provided for @openYoutubeVideo.

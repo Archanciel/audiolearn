@@ -175,7 +175,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get end => 'End';
 
   @override
-  String get audioDurationRange => 'Audio duration range (hh:mm)';
+  String get audioDurationRange => 'Audio duration range (hh:mm:ss)';
 
   @override
   String get openYoutubeVideo => 'Open Youtube Video';

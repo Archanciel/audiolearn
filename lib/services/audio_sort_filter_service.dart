@@ -715,10 +715,10 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.durationStartRangeSec) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionDisplayedStr(
-              initialValueStr: DateTimeUtil.formatSecondsToHHMM(
+              initialValueStr: DateTimeUtil.formatSecondsToHHMMSS(
                 seconds: existingAudioSortFilterParms.durationStartRangeSec,
               ),
-              modifiedValueStr: DateTimeUtil.formatSecondsToHHMM(
+              modifiedValueStr: DateTimeUtil.formatSecondsToHHMMSS(
                 seconds:
                     newOrModifiedaudioSortFilterParms.durationStartRangeSec,
               ),
@@ -736,10 +736,10 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.durationEndRangeSec) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionDisplayedStr(
-              initialValueStr: DateTimeUtil.formatSecondsToHHMM(
+              initialValueStr: DateTimeUtil.formatSecondsToHHMMSS(
                 seconds: existingAudioSortFilterParms.durationEndRangeSec,
               ),
-              modifiedValueStr: DateTimeUtil.formatSecondsToHHMM(
+              modifiedValueStr: DateTimeUtil.formatSecondsToHHMMSS(
                 seconds: newOrModifiedaudioSortFilterParms.durationEndRangeSec,
               ),
               sortFilterParmsNameTranslationMap:
