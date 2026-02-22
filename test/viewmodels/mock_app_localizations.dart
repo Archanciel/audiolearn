@@ -3030,4 +3030,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String get fullAudioSegmentRestoredMessage => "Full audio segment restored";
+
+  @override
+  String get segmentsCountAndTotalDurationTooltip =>
+      "The displayed total duration is impacted by the defined segments play speed.";
 }
