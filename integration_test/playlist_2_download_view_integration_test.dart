@@ -40041,7 +40041,9 @@ void main() {
           expect(find.text('Remove Comment'), findsOneWidget);
 
           // Verify the delete comment confirmation dialog content
-          expect(find.text('Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
+          expect(
+              find.text(
+                  'Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
               findsOneWidget);
 
           // Confirm the deletion by tapping the delete button
@@ -40359,7 +40361,9 @@ void main() {
           expect(find.text('Remove Comment'), findsOneWidget);
 
           // Verify the delete comment confirmation dialog content
-          expect(find.text('Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
+          expect(
+              find.text(
+                  'Are you sure you want to remove this comment from the comment extraction to MP3 functionality ?'),
               findsOneWidget);
 
           // Confirm the deletion by tapping the delete button
@@ -43715,9 +43719,10 @@ void main() {
           tapOnPlaylistToggleButton: false,
         );
 
-        // Open the move or copy filtered audio dialog by clicking first on
-        // the 'Filtered Audio Actions ...' playlist menu item and then
-        // on the 'Move/Copy Filtered Audio to Playlist ...' sub-menu item
+        // Open the Extract filtered Audios to unique MP3 dialog by clicking
+        // first on the 'Filtered Audio Actions ...' playlist menu item and
+        // then on the 'Extract filtered Audios to unique MP3 ...' sub-menu
+        // item
         await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
           tester: tester,
           playlistTitle: playlistTitle,
@@ -43741,6 +43746,22 @@ void main() {
               0, -1000), // Negative value for vertical drag to scroll down
         );
         await tester.pumpAndSettle();
+
+        expect(
+            tester
+                .widget<Text>(
+                  find.byKey(const Key('videoTitleKey_3')),
+                )
+                .data,
+            "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour");
+
+        expect(
+            tester
+                .widget<Text>(
+                  find.byKey(const Key('segmentNumberAndDurationKey_3')),
+                )
+                .data,
+            "1 segment(s) - 0:28.6");
 
         await IntegrationTestUtil.checkExtractionCommentDetails(
           tester: tester,
