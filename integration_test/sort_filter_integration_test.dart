@@ -1612,11 +1612,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           await tester.enterText(
-              find.byKey(const Key('startAudioDurationTextField')), '0:06');
+              find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
           await tester.pumpAndSettle(Duration(milliseconds: 200));
 
           await tester.enterText(
-              find.byKey(const Key('endAudioDurationTextField')), '0:08');
+              find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
           await tester.pumpAndSettle(Duration(milliseconds: 200));
 
           // Click on the "Save" button. This closes the sort/filter dialog
@@ -1895,11 +1895,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06');
+                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
-                find.byKey(const Key('endAudioDurationTextField')), '0:08');
+                find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             // Scrolling up the sort filter dialog to access to sort options
@@ -1998,7 +1998,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Spoken q.: checked\n In modified version:\n   Spoken q.: unchecked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Downloaded: checked\n In modified version:\n   Downloaded: unchecked\n In initial version:\n   Import.: checked\n In modified version:\n   Import.: unchecked\n In initial version:\n   Extracted: unchecked\n In modified version:\n   Extracted: checked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08",
+                  "Sort by:\n Present only in initial version:\n   Audio title desc\n Present only in modified version:\n   Audio title asc,\n   Audio chapter asc,\n   Video upload date desc,\n   Audio duration asc,\n   Audio listenable remaining\n   duration asc,\n   Audio downl speed desc,\n   Audio downl duration desc\nFilter words:\n Present only in modified version:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nFilter options:\n In initial version:\n   Ignore case: checked\n In modified version:\n   Ignore case: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Spoken q.: checked\n In modified version:\n   Spoken q.: unchecked\n In initial version:\n   Uncom.: checked\n In modified version:\n   Uncom.: unchecked\n In initial version:\n   Unpictured: checked\n In modified version:\n   Unpictured: unchecked\n In initial version:\n   Not playable: checked\n In modified version:\n   Not playable: unchecked\n In initial version:\n   Downloaded: checked\n In modified version:\n   Downloaded: unchecked\n In initial version:\n   Import.: checked\n In modified version:\n   Import.: unchecked\n In initial version:\n   Extracted: unchecked\n In modified version:\n   Extracted: checked\n In modified version:\n   Start downl date: 26/12/2023\n In modified version:\n   End downl date: 06/01/2024\n In modified version:\n   Start upl date: 12/06/2022\n In modified version:\n   End upl date: 19/09/2023\n In modified version:\n   File size range (MB) Start: 2.37\n In modified version:\n   File size range (MB) End: 2.8\n In modified version:\n   Audio duration range (hh:mm:ss)\n   Start: 00:06:00\n In modified version:\n   Audio duration range (hh:mm:ss)\n   End: 00:08:00",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2719,11 +2719,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06');
+                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
-                find.byKey(const Key('endAudioDurationTextField')), '0:08');
+                find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             // Click on the "Save" button.
@@ -2738,7 +2738,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter options:\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:08',
+                  'Filter options:\n In modified version:\n   Audio duration range (hh:mm:ss)\n   Start: 00:06:00\n In modified version:\n   Audio duration range (hh:mm:ss)\n   End: 00:08:00',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2782,7 +2782,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  'Filter options:\n In initial version:\n   Audio duration range (hh:mm)\n   Start: 00:06\n In modified version:\n   Audio duration range (hh:mm)\n   Start: 00:00\n In initial version:\n   Audio duration range (hh:mm)\n   End: 00:08\n In modified version:\n   Audio duration range (hh:mm)\n   End: 00:00',
+                  'Filter options:\n In initial version:\n   Audio duration range (hh:mm:ss)\n   Start: 00:06:00\n In modified version:\n   Audio duration range (hh:mm:ss)\n   Start: 00:00:00\n In initial version:\n   Audio duration range (hh:mm:ss)\n   End: 00:08:00\n In modified version:\n   Audio duration range (hh:mm:ss)\n   End: 00:00:00',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3488,11 +3488,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06');
+                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
-                find.byKey(const Key('endAudioDurationTextField')), '0:08');
+                find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             // Scrolling up the sort filter dialog to access to sort options
@@ -3582,7 +3582,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Q. orale: coché\n En version modifiée:\n   Q. orale: décoché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version initiale:\n   Importé: coché\n En version modifiée:\n   Importé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08",
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Q. orale: coché\n En version modifiée:\n   Q. orale: décoché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version initiale:\n   Importé: coché\n En version modifiée:\n   Importé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:06:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:08:00",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -4256,11 +4256,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06');
+                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
-                find.byKey(const Key('endAudioDurationTextField')), '0:08');
+                find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             // Click on the "Save" button.
@@ -4275,7 +4275,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Options filtre:\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08',
+                  'Options filtre:\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:06:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:08:00',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
             // Re-edit the 'Title asc' sort/filter parms in order to
@@ -4318,7 +4318,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  'Options filtre:\n En version initiale:\n   Intervalle durée audio (hh:mm)\n   Début: 00:06\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Début: 00:00\n En version initiale:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:08\n En version modifiée:\n   Intervalle durée audio (hh:mm)\n   Fin: 00:00',
+                  'Options filtre:\n En version initiale:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:06:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:00:00\n En version initiale:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:08:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:00:00',
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -11524,8 +11524,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         // And verify the order of the playlist audio subtitles
 
         List<String> audioSubTitlesSortedByTitleAscending = [
-          "0:19:05.0 Remaining 00:00:00 Listened on 16/05/2024 at 17:09",
-          "0:06:29.0 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
+          "0:19:05.0 Remaining 00:00:00:00 Listened on 16/05/2024 at 17:09",
+          "0:06:29.0 Remaining 00:00:00:38 Listened on 16/03/2024 at 17:09",
           "0:06:29.0 Remaining 00:06:29 Not listened",
           "0:07:38.0 Remaining 00:07:38 Not listened",
           "0:20:32.0 Remaining 00:10:32 Listened on 16/06/2024 at 17:09",
