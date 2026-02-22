@@ -123,7 +123,7 @@ class _ConfirmActionDialogState extends State<ConfirmActionDialog>
                             )
                         : Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
-                    maxLines: 10,
+                    maxLines: 11,
                   ),
                 ),
                 if (widget.helpItemsLst.isNotEmpty)
