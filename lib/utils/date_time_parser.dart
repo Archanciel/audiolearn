@@ -26,7 +26,7 @@ class DateTimeParser {
   }
 
   /// Parses the passed dayHourMinuteStr duration formatted as
-  /// 
+  ///
   /// dd:hh:mm or
   /// -dd:hh:mm or
   /// d:hh:mm or
@@ -35,9 +35,9 @@ class DateTimeParser {
   /// -hh:mm or
   /// h:mm or
   /// -h:mm
-  /// 
+  ///
   /// and returns
-  /// 
+  ///
   /// dd:hh:mm or
   /// -dd:hh:mm or
   /// d:hh:mm or
@@ -46,7 +46,7 @@ class DateTimeParser {
   /// -hh:mm or
   /// h:mm or
   /// -h:mm
-  /// 
+  ///
   /// parsed String or null if the passed dayHourMinuteStr does not respect the
   /// format examples listed above, like 03:2 or 3:2 or 03-02 or 03:a2 or -03:2 or
   /// -3:2 or -03-02 or -03:a2 for example.
@@ -110,6 +110,41 @@ class DateTimeParser {
     }
 
     return null;
+  }
+
+  /// Parses the passed HH:MM:SS (12:35:47) hourMinuteSecondStr and returns a Duration
+  /// instantiated with the parsed hour, minute, and second values.
+  static Duration? parseHHMMSSDuration(String hourMinuteSecondStr) {
+    List<String> hourMinuteSecondStrLst = hourMinuteSecondStr.split(':');
+
+    // Validate that we have exactly 3 parts (HH:MM:SS)
+    if (hourMinuteSecondStrLst.length != 3) {
+      return null;
+    }
+
+    try {
+      List<int> hourMinuteSecondIntLst = hourMinuteSecondStrLst
+          .map((element) => int.parse(element))
+          .toList(growable: false);
+
+      final int hourInt = hourMinuteSecondIntLst[0].abs();
+      final int minuteInt = hourMinuteSecondIntLst[1].abs();
+      final int secondInt = hourMinuteSecondIntLst[2].abs();
+
+      Duration duration = Duration(
+        hours: hourInt,
+        minutes: minuteInt,
+        seconds: secondInt,
+      );
+
+      if (hourMinuteSecondStrLst[0].startsWith('-')) {
+        return Duration.zero - duration;
+      } else {
+        return duration;
+      }
+    } catch (e) {
+      return null;
+    }
   }
 
   /// Parses the passed dayHourMinuteStr and returns a Duration
@@ -209,7 +244,7 @@ class DateTimeParser {
 
     try {
       endDateTime = frenchDateTimeFormat.parse(frenchFormatDateTimeStr);
-    // ignore: empty_catches
+      // ignore: empty_catches
     } on FormatException {}
 
     if (endDateTime != null) {
@@ -229,7 +264,7 @@ class DateTimeParser {
 
     try {
       endDateTime = englishDateTimeFormat.parse(englishFormatDateTimeStr);
-    // ignore: empty_catches
+      // ignore: empty_catches
     } on FormatException {}
 
     if (endDateTime != null) {

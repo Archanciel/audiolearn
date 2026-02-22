@@ -64,7 +64,7 @@
   "fileSizeRange": "Intervalle taille fichier (MB)",
   "start": "Début",
   "end": "Fin",
-  "audioDurationRange": "Intervalle durée audio (hh:mm)",
+  "audioDurationRange": "Intervalle durée audio (hh:mm:ss)",
   "openYoutubeVideo": "Ouvrir la vidéo Youtube",
   "openYoutubePlaylist": "Ouvrir la playlist Youtube",
   "apply": "Appl",
