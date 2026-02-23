@@ -880,7 +880,6 @@ class AudioExtractorVM extends ChangeNotifier {
       soundReductionPosition: defaultSegment.soundReductionPosition,
       soundReductionDuration: defaultSegment.soundReductionDuration,
       deleted: false,
-      wasPlaySpeedModifiedByAddSegmentDialog: false,
     );
     defaultComment.setId(defaultSegment.commentId);
 

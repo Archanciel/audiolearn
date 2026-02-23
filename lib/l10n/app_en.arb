@@ -961,7 +961,7 @@
   "playlistInfoAudioPlayer": "Play audio",
   "savePlaylistsAudioMp3FilesToZipMenu": "Save Playlists Audios MP3 to ZIP File(s) ...",
   "savePlaylistsAudioMp3FilesToZipTooltip": "Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.",
-  "setAudioDownloadFromDateTimeTitle": "Set the Download Date",
+  "setAudioDownloadFromDateTimeTitle": "Set the download Date",
   "audioDownloadFromDateTimeAllPlaylistsExplanation": "The default specified download date corresponds to the oldest audio download date from all playlists. Modify this value by specifying the download date from which the audio MP3 files will be included in the ZIP.",
   "audioDownloadFromDateTimeLabel": "Date/time {selectedAppDateFormat} hh:mm",
   "audioDownloadFromDateTimeAllPlaylistsTooltip": "Since the current date/time value corresponds to the application oldest date/time downladed audio value, if the date/time is not modified, all the application audio MP3 files will be included in the ZIP file.",
