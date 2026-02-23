@@ -655,17 +655,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
             SingleActivator(LogicalKeyboardKey.numpadEnter): ActivateIntent(),
           },
           child: Focus(
-            autofocus: true, // ✅ Auto-focus the dialog
             child: AlertDialog(
               title:
                   Text(AppLocalizations.of(context)!.saveCommentsDialogTitle),
               content: TextField(
                 key: const Key('saveCommentsFileNameTextField'),
                 controller: fileNameController,
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.fileNameLabel,
-                ),
-                autofocus: true,
+                autofocus: true, // Auto-focus the text field
               ),
               actions: [
                 ElevatedButton(
