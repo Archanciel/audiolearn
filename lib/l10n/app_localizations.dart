@@ -3272,7 +3272,7 @@ abstract class AppLocalizations {
   /// No description provided for @setAudioDownloadFromDateTimeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Set the Download Date'**
+  /// **'Set the download Date'**
   String get setAudioDownloadFromDateTimeTitle;
 
   /// No description provided for @audioDownloadFromDateTimeAllPlaylistsExplanation.

@@ -2007,7 +2007,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save audio MP3 files from all playlists to ZIP file(s). You can specify a date/time filter to only include audio files downloaded on or after that date.';
 
   @override
-  String get setAudioDownloadFromDateTimeTitle => 'Set the Download Date';
+  String get setAudioDownloadFromDateTimeTitle => 'Set the download Date';
 
   @override
   String get audioDownloadFromDateTimeAllPlaylistsExplanation =>
