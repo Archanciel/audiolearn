@@ -163,12 +163,7 @@ class AudioExtractorVM extends ChangeNotifier {
       comment.commentEndPositionInTenthOfSeconds =
           (normalizedSegment.endPosition * 10).toInt();
       comment.silenceDuration = normalizedSegment.silenceDuration;
-
-      if (comment.playSpeed != normalizedSegment.playSpeed) {
-        comment.playSpeed = normalizedSegment.playSpeed;
-        comment.wasPlaySpeedModifiedByAddSegmentDialog = true;
-      }
-
+      comment.playSpeed = normalizedSegment.playSpeed;
       comment.fadeInDuration = normalizedSegment.fadeInDuration;
       comment.soundReductionPosition = normalizedSegment.soundReductionPosition;
       comment.soundReductionDuration = normalizedSegment.soundReductionDuration;
@@ -438,12 +433,7 @@ class AudioExtractorVM extends ChangeNotifier {
           comment.commentEndPositionInTenthOfSeconds =
               (normalized.endPosition * 10).toInt();
           comment.silenceDuration = normalized.silenceDuration;
-
-          if (comment.playSpeed != normalized.playSpeed) {
-            comment.playSpeed = normalized.playSpeed;
-            comment.wasPlaySpeedModifiedByAddSegmentDialog = true;
-          }
-
+          comment.playSpeed = normalized.playSpeed;
           comment.fadeInDuration = normalized.fadeInDuration;
           comment.soundReductionPosition = normalized.soundReductionPosition;
           comment.soundReductionDuration = normalized.soundReductionDuration;
