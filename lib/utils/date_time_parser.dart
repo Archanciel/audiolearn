@@ -114,6 +114,9 @@ class DateTimeParser {
 
   /// Parses the passed HH:MM:SS (12:35:47) hourMinuteSecondStr and returns a Duration
   /// instantiated with the parsed hour, minute, and second values.
+  /// 
+  /// If the passed string does not match the expected format, or if any of the
+  /// parsed values are not valid integers, the method returns null.
   static Duration? parseHHMMSSDuration(String hourMinuteSecondStr) {
     List<String> hourMinuteSecondStrLst = hourMinuteSecondStr.split(':');
 
