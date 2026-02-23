@@ -6296,7 +6296,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+              "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -6586,7 +6586,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+              "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -6874,7 +6874,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+              "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -7220,7 +7220,7 @@ void main() {
           confirmDialogTitleOne:
               "Delete audios filtered by \"$sortFilterParmName\" parms from playlist \"$youtubePlaylistTitle\"",
           confirmDialogMessage:
-              "Audio's to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.",
+              "Audios to delete number: 2,\nCorresponding total file size: 9.96 MB,\nCorresponding total duration: 00:27:14.",
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
@@ -19752,7 +19752,7 @@ void main() {
             //   confirmDialogTitleOne:
             //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
-            //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+            //       "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
             // );
 
@@ -20213,7 +20213,7 @@ void main() {
             //   confirmDialogTitleOne:
             //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
-            //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+            //       "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
             // );
 
@@ -21057,7 +21057,7 @@ void main() {
             //   confirmDialogTitleOne:
             //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
-            //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+            //       "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
             // );
 
@@ -21567,7 +21567,7 @@ void main() {
             //   confirmDialogTitleOne:
             //       "Delete audios filtered by \"\" parms from playlist \"\"",
             //   confirmDialogMessage:
-            //       "Audio's to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
+            //       "Audios to delete number: 2,\nCorresponding total file size: 7.37 MB,\nCorresponding total duration: 00:20:08.",
             //   confirmOrCancelAction: true, // Confirm button is tapped
             // );
 
