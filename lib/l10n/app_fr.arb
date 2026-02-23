@@ -1687,5 +1687,7 @@
   "toExtractCommentTitleAddition": "A extraire",
   "restoreFullAudioSegmentTooltip": "Restaurer le segment audio complet",
   "fullAudioSegmentRestoredMessage": "Segment audio complet restauré",
-  "segmentsCountAndTotalDurationTooltip":"La durée totale affichée tient compte des vitesses de lecture définies."
+  "segmentsCountAndTotalDurationTooltip":"La durée totale affichée tient compte des vitesses de lecture définies.",
+  "invalidStartAudioDurationMessage": "La durée de début de l’audio ({value}) doit être au format hh:mm:ss.",
+  "invalidEndAudioDurationMessage": "La durée de fin de l’audio ({value}) doit être au format hh:mm:ss."
 }

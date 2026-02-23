@@ -3034,4 +3034,16 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get segmentsCountAndTotalDurationTooltip =>
       "The displayed total duration is impacted by the defined segments play speed.";
+
+  @override
+  String invalidStartAudioDurationMessage(
+    Object value,
+  ) =>
+      "The entered start audio duration value of $value does not respect the required format of hh:mm:ss.";
+
+  @override
+  String invalidEndAudioDurationMessage(
+    Object value,
+  ) =>
+      "The entered end audio duration value of $value does not respect the required format of hh:mm:ss.";
 }

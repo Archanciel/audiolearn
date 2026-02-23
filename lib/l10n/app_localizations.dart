@@ -4707,6 +4707,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The displayed total duration is impacted by the defined segments play speed.'**
   String get segmentsCountAndTotalDurationTooltip;
+
+  /// No description provided for @invalidStartAudioDurationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid start audio duration ({value}). Expected format: hh:mm:ss.'**
+  String invalidStartAudioDurationMessage(Object value);
+
+  /// No description provided for @invalidEndAudioDurationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid end audio duration ({value}). Expected format: hh:mm:ss.'**
+  String invalidEndAudioDurationMessage(Object value);
 }
 
 class _AppLocalizationsDelegate

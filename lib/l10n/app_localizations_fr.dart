@@ -2955,4 +2955,14 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get segmentsCountAndTotalDurationTooltip =>
       'La durée totale affichée tient compte des vitesses de lecture définies.';
+
+  @override
+  String invalidStartAudioDurationMessage(Object value) {
+    return 'La durée de début de l’audio ($value) doit être au format hh:mm:ss.';
+  }
+
+  @override
+  String invalidEndAudioDurationMessage(Object value) {
+    return 'La durée de fin de l’audio ($value) doit être au format hh:mm:ss.';
+  }
 }

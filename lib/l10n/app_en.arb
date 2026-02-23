@@ -1268,5 +1268,7 @@
   "toExtractCommentTitleAddition": "To extract",
   "restoreFullAudioSegmentTooltip": "Restore full audio segment",
   "fullAudioSegmentRestoredMessage": "Full audio segment restored",
-  "segmentsCountAndTotalDurationTooltip":"The displayed total duration is impacted by the defined segments play speed."
+  "segmentsCountAndTotalDurationTooltip":"The displayed total duration is impacted by the defined segments play speed.",
+  "invalidStartAudioDurationMessage": "Invalid start audio duration ({value}). Expected format: hh:mm:ss.",
+  "invalidEndAudioDurationMessage": "Invalid end audio duration ({value}). Expected format: hh:mm:ss."
 }

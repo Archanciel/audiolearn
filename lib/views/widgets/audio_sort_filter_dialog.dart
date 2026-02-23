@@ -2679,6 +2679,37 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     String startAudioDurationTxt = _startAudioDurationController.text;
     String endAudioDurationTxt = _endAudioDurationController.text;
 
+    int startAudioDurationSeconds = 0;
+    int endAudioDurationSeconds = 0;
+
+    if (startAudioDurationTxt.isNotEmpty) {
+      Duration? startAudioDuration =
+          DateTimeParser.parseHHMMSSDuration(startAudioDurationTxt);
+      if (startAudioDuration != null) {
+        startAudioDurationSeconds = startAudioDuration.inSeconds;
+      } else {
+        // Handle the case where the duration string is invalid
+        // You can choose to set it to 0, throw an error, or handle it as needed
+        widget.warningMessageVM.signalInvalidStartAudioDurationFormat(
+          startAudioDurationTxt: startAudioDurationTxt,
+        );
+      }
+    }
+
+    if (endAudioDurationTxt.isNotEmpty) {
+      Duration? endAudioDuration =
+          DateTimeParser.parseHHMMSSDuration(endAudioDurationTxt);
+      if (endAudioDuration != null) {
+        endAudioDurationSeconds = endAudioDuration.inSeconds;
+      } else {
+        // Handle the case where the duration string is invalid
+        // You can choose to set it to 0, throw an error, or handle it as needed
+        widget.warningMessageVM.signalInvalidEndAudioDurationFormat(
+          endAudioDurationTxt: endAudioDurationTxt,
+        );
+      }
+    }
+
     return AudioSortFilterParameters(
       selectedSortItemLst: _selectedSortingItemLst,
       filterSentenceLst: _audioTitleFilterSentencesLst,
@@ -2708,11 +2739,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       uploadDateEndRange: _endUploadDateTime,
       fileSizeStartRangeMB: double.tryParse(startFileSizeTxt) ?? 0.0,
       fileSizeEndRangeMB: double.tryParse(endFileSizeTxt) ?? 0.0,
-      durationStartRangeSec:
-          DateTimeParser.parseHHMMSSDuration(startAudioDurationTxt)?.inSeconds ??
-              0,
-      durationEndRangeSec:
-          DateTimeParser.parseHHMMSSDuration(endAudioDurationTxt)?.inSeconds ?? 0,
+      durationStartRangeSec: startAudioDurationSeconds,
+      durationEndRangeSec: endAudioDurationSeconds,
     );
   }
 }
