@@ -51,6 +51,12 @@ enum WarningMessageType {
   // added a Youtube playlist whose title contains one or several
   // invalid characters, '/' for example.
 
+  invalidStartAudioDurationFormat, // The case if the user
+  // did not respect the hh:mm:ss audio start duration format.
+
+  invalidEndAudioDurationFormat, // The case if the user
+  // did not respect the hh:mm:ss audio start duration format.
+
   renameFileNameAlreadyUsed, // The case if the file name proposed
   // for renaming an audio file is the name of an existing
   // file.
@@ -516,6 +522,32 @@ class WarningMessageVM extends ChangeNotifier {
     _correctedPlaylistTitle = correctedPlaylistTitle;
 
     warningMessageType = WarningMessageType.correctedYoutubePlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _startAudioDurationTxt = '';
+  String get startAudioDurationTxt => _startAudioDurationTxt;
+
+  void signalInvalidStartAudioDurationFormat({
+    required String startAudioDurationTxt,
+  }) {
+    _startAudioDurationTxt = startAudioDurationTxt;
+    warningMessageType = WarningMessageType.invalidStartAudioDurationFormat;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  String _endAudioDurationTxt = '';
+  String get endAudioDurationTxt => _endAudioDurationTxt;
+
+  void signalInvalidEndAudioDurationFormat({
+    required String endAudioDurationTxt,
+  }) {
+    _endAudioDurationTxt = endAudioDurationTxt;
+    warningMessageType = WarningMessageType.invalidEndAudioDurationFormat;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

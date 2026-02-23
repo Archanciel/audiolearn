@@ -2919,4 +2919,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get segmentsCountAndTotalDurationTooltip =>
       'The displayed total duration is impacted by the defined segments play speed.';
+
+  @override
+  String invalidStartAudioDurationMessage(Object value) {
+    return 'Invalid start audio duration ($value). Expected format: hh:mm:ss.';
+  }
+
+  @override
+  String invalidEndAudioDurationMessage(Object value) {
+    return 'Invalid end audio duration ($value). Expected format: hh:mm:ss.';
+  }
 }

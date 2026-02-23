@@ -435,6 +435,42 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         }
 
         return const SizedBox.shrink();
+      case WarningMessageType.invalidStartAudioDurationFormat:
+        String startAudioDurationTxt = _warningMessageVM.startAudioDurationTxt;
+
+        String addedPlaylistMessage;
+
+        // Youtube playlist is added
+        addedPlaylistMessage = AppLocalizations.of(context)!
+            .invalidStartAudioDurationMessage(startAudioDurationTxt);
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+              context: _context,
+              message: addedPlaylistMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM);
+        });
+
+        return const SizedBox.shrink();
+      case WarningMessageType.invalidEndAudioDurationFormat:
+        String endAudioDurationTxt = _warningMessageVM.endAudioDurationTxt;
+
+        String addedPlaylistMessage;
+
+        // Youtube playlist is added
+        addedPlaylistMessage = AppLocalizations.of(context)!
+            .invalidEndAudioDurationMessage(endAudioDurationTxt);
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+              context: _context,
+              message: addedPlaylistMessage,
+              warningMessageVM: _warningMessageVM,
+              themeProviderVM: themeProviderVM);
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.confirmYoutubeChannelModifications:
         int numberOfModifiedDownloadedAudio =
             _warningMessageVM.numberOfModifiedDownloadedAudio;
