@@ -532,9 +532,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 startPosition: start,
                 endPosition: end,
                 silenceDuration: silence,
-                playSpeed: (comment.wasPlaySpeedModifiedByAddSegmentDialog)
-                    ? comment.playSpeed
-                    : audio.audioPlaySpeed,
+                playSpeed: comment.playSpeed,
                 fadeInDuration: comment.fadeInDuration,
                 soundReductionPosition: comment.soundReductionPosition,
                 soundReductionDuration: comment.soundReductionDuration,
@@ -714,7 +712,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           soundReductionPosition: segment.soundReductionPosition,
           soundReductionDuration: segment.soundReductionDuration,
           deleted: segment.deleted,
-          wasPlaySpeedModifiedByAddSegmentDialog: segment.playSpeed != 1.0,
         );
         comment.setId(segment.commentId); // Preserve original comment ID
         comments.add(
@@ -1863,9 +1860,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               startPosition: start,
               endPosition: end,
               silenceDuration: silence,
-              playSpeed: (comment.wasPlaySpeedModifiedByAddSegmentDialog)
-                  ? comment.playSpeed
-                  : currentAudio.audioPlaySpeed,
+              playSpeed: comment.playSpeed,
               fadeInDuration: comment.fadeInDuration,
               soundReductionPosition: comment.soundReductionPosition,
               soundReductionDuration: comment.soundReductionDuration,
@@ -2176,8 +2171,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       soundReductionPosition: duplicatedSegment.soundReductionPosition,
       soundReductionDuration: duplicatedSegment.soundReductionDuration,
       deleted: false,
-      wasPlaySpeedModifiedByAddSegmentDialog:
-          duplicatedSegment.playSpeed != 1.0,
     );
     duplicatedComment.setId(duplicatedSegment.commentId);
 
@@ -2257,8 +2250,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       soundReductionPosition: duplicatedSegment.soundReductionPosition,
       soundReductionDuration: duplicatedSegment.soundReductionDuration,
       deleted: false,
-      wasPlaySpeedModifiedByAddSegmentDialog:
-          duplicatedSegment.playSpeed != 1.0,
     );
     duplicatedComment.setId(duplicatedSegment.commentId);
 
