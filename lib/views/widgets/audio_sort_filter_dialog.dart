@@ -832,12 +832,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           child: TextButton(
             key: const Key('deleteSortFilterTextButton'),
             onPressed: () async {
-              // if (executeAudioSortFilterParmsDeletion(
-              //         playlistListVMlistenFalse) !=
-              //     null) {
-              // } else {
-              _audioSortFilterParameters =
+              AudioSortFilterParameters? audioSortFilterParameters =
                   _generateAudioSortFilterParametersFromDialogFields();
+
+              if (audioSortFilterParameters == null) {
+                // A warning was displayed in _generateAudioSortFilterParametersFromDialogFields.
+                // Does not close the sort and filter dialog
+                return;
+              } else {
+                _audioSortFilterParameters = audioSortFilterParameters;
+              }
 
               if (_audioSortFilterParameters ==
                       AudioSortFilterParameters
@@ -2356,8 +2360,16 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     required DateFormatVM dateFormatVMlistenFalse,
     required String sortFilterParametersSaveAsUniqueName,
   }) async {
-    _audioSortFilterParameters =
+    AudioSortFilterParameters? audioSortFilterParameters =
         _generateAudioSortFilterParametersFromDialogFields();
+
+    if (audioSortFilterParameters == null) {
+      // A warning was displayed in _generateAudioSortFilterParametersFromDialogFields.
+      // Does not close the sort and filter dialog
+      return [];
+    } else {
+      _audioSortFilterParameters = audioSortFilterParameters;
+    }
 
     bool cancelSaveSortFilterParms = false;
 
@@ -2672,7 +2684,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     return buffer.toString();
   }
 
-  AudioSortFilterParameters
+  AudioSortFilterParameters?
       _generateAudioSortFilterParametersFromDialogFields() {
     String startFileSizeTxt = _startFileSizeController.text;
     String endFileSizeTxt = _endFileSizeController.text;
@@ -2693,6 +2705,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         widget.warningMessageVM.signalInvalidStartAudioDurationFormat(
           startAudioDurationTxt: startAudioDurationTxt,
         );
+
+        return null; // Return null to indicate invalid parameters and prevent further processing
       }
     }
 
@@ -2707,6 +2721,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         widget.warningMessageVM.signalInvalidEndAudioDurationFormat(
           endAudioDurationTxt: endAudioDurationTxt,
         );
+
+        return null; // Return null to indicate invalid parameters and prevent further processing
       }
     }
 
