@@ -1600,7 +1600,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               saveAsTitle);
           await tester.pumpAndSettle();
 
-          // Enter the start and end audio duration hh:mm range in the
+          // Enter the start and end audio duration hh:mm:ss range in the
           // corresponding fields, but first scroll down the dialog so
           // that the fields are visible.
 
@@ -1647,6 +1647,121 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
             tester: tester,
             audioOrPlaylistTitlesOrderedLst: audioTitlesSortedByTitleAscending,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets('''Invalid audio duration sort/filter.''',
+            (WidgetTester tester) async {
+          //    Click on 'Sort/filter audio' menu item of Audio popup menu to
+          //    open sort filter audio dialog. Then creating a named audio duration
+          //    sort/filter parms with invalid start or end audio duration and verify
+          //    the displayed warning after trying saving it.
+
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService();
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type "audioFileSize" in the 'Save as' TextField
+
+          String saveAsTitle = 'audioFileSize';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle();
+
+          // Enter the start and end audio duration hh:mm range in the
+          // corresponding fields, but first scroll down the dialog so
+          // that the fields are visible.
+
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -350), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Entering an invalid start audio duration (missing seconds part)
+
+          await tester.enterText(
+              find.byKey(const Key('startAudioDurationTextField')), '0:06');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endAudioDurationTextField')), '0:08:00');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. A warning is displayed and the$
+          // sort/filter dialog is not closed.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verify the displayed warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Invalid start audio duration (0:06). Expected format: hh:mm:ss.",
+          );
+
+          // Entering an invalid end audio duration (missing seconds part)
+          
+          await tester.enterText(
+              find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          await tester.enterText(
+              find.byKey(const Key('endAudioDurationTextField')), '0:08');
+          await tester.pumpAndSettle(Duration(milliseconds: 200));
+
+          // Click on the "Save" button. A warning is displayed and the$
+          // sort/filter dialog is not closed.
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Verify the displayed warning dialog
+          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            tester: tester,
+            warningDialogMessage:
+                "Invalid end audio duration (0:08). Expected format: hh:mm:ss.",
           );
 
           // Purge the test playlist directory so that the created test
@@ -1895,7 +2010,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
+                find.byKey(const Key('startAudioDurationTextField')),
+                '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
@@ -2719,7 +2835,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
+                find.byKey(const Key('startAudioDurationTextField')),
+                '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
@@ -3488,7 +3605,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
+                find.byKey(const Key('startAudioDurationTextField')),
+                '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
@@ -4256,7 +4374,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Set start and end audio duration hh:mm range
 
             await tester.enterText(
-                find.byKey(const Key('startAudioDurationTextField')), '0:06:00');
+                find.byKey(const Key('startAudioDurationTextField')),
+                '0:06:00');
             await tester.pumpAndSettle(Duration(milliseconds: 200));
 
             await tester.enterText(
