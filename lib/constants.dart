@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 const String kApplicationName = "AudioLearn";
-const String kApplicationNameForAboutView = "Audio Learn"; // Enables better readability
+const String kApplicationNameForAboutView =
+    "Audio Learn"; // Enables better readability
 const String kApplicationVersion = "2.8.91";
 
 enum PopupMenuButtonType {
@@ -75,7 +76,7 @@ const String kPictureDirName = 'pictures';
 const String kSavedPlaylistsDirName = 'saved';
 const String kPictureAudioMapFileName = 'pictureAudioMap.json';
 const double kWindowsSystemVolume =
-    0.55; // 0.86, Default system volume for Windows
+    0.65; // 0.86, Default system volume for Windows
 
 const String kOrderedPlaylistTitlesFileName = 'savedOrderedPlaylistTitles.txt';
 
@@ -235,4 +236,3 @@ const int kFullyListenedBufferSeconds = 10;
 // Used by audio extractor functionality
 const double kDefaultSilenceDuration = 1.0; // in seconds
 const double kDefaultSilenceDurationBetweenMp3 = 2.0; // in seconds
-
