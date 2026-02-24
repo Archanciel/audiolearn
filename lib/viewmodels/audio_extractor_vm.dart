@@ -453,21 +453,24 @@ class AudioExtractorVM extends ChangeNotifier {
     }
   }
 
+  /// Called when the user tap on the Delete text button located in the Remove
+  /// Comment dialog of a segment in multi-audio mode.
   void removeMultiAudioSegment({
     required int audioIndex,
     required int segmentIndex,
   }) {
     if (audioIndex >= 0 && audioIndex < _multiAudios.length) {
-      final audioWithSegments = _multiAudios[audioIndex];
+      final AudioWithSegments audioWithSegments = _multiAudios[audioIndex];
+
       if (segmentIndex >= 0 &&
           segmentIndex < audioWithSegments.segments.length) {
-        final updatedSegments =
-            List<AudioSegment>.from(audioWithSegments.segments);
+        final List<AudioSegment> updatedSegments =
+            List<AudioSegment>.from(audioWithSegments.segments); // Create a copy of the segments list
         updatedSegments[segmentIndex] =
             updatedSegments[segmentIndex].copyWith(deleted: true);
-        updatedSegments.removeAt(segmentIndex);
         _multiAudios[audioIndex] =
             audioWithSegments.copyWith(segments: updatedSegments);
+
         notifyListeners();
       }
     }
