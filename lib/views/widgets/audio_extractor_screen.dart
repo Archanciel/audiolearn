@@ -459,7 +459,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
       // IMPROVED: Better error handling for loading saved comments
       Map<String, List<Comment>>? savedCommentsMap;
-      bool isLoadingFromSavedFile = false; // Track if loading from saved file
 
       if (_loadedCommentsFileName != null) {
         try {
@@ -470,8 +469,6 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
           if (loaded is MultiAudioComments) {
             savedCommentsMap = loaded.audioCommentsMap;
-            isLoadingFromSavedFile =
-                true; // ✅ ADD: Mark as loading from saved file
           } else {
             throw Exception('Invalid file format');
           }
@@ -546,7 +543,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
 
         // FIX: Only create default segment if NOT loading from saved file
         // When loading from saved file, respect the empty array (all segments deleted)
-        if (segments.isEmpty && !isLoadingFromSavedFile) {
+        if (segments.isEmpty) {
           final double roundedEndPosition = TimeFormatUtil.roundToTenthOfSecond(
               toBeRounded: audio.audioDuration.inMilliseconds / 1000.0);
 
