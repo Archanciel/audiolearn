@@ -526,7 +526,7 @@ class Playlist {
     Duration totalDuration = Duration.zero;
 
     for (Audio audio in playableAudioLst) {
-      totalDuration += audio.audioDuration;
+      totalDuration += audio.durationImpactedByPlaySpeed();
     }
 
     return totalDuration;

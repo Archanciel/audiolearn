@@ -235,7 +235,7 @@ class AudioSortFilterParameters {
     ),
     SortingOption.audioDuration: SortCriteria<Audio>(
       selectorFunction: (Audio audio) {
-        return audio.audioDuration.inMilliseconds;
+        return audio.durationImpactedByPlaySpeed().inMilliseconds;
       },
       sortOrder: sortAscending,
     ),

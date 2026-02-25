@@ -1651,20 +1651,20 @@ class AudioSortFilterService {
           return [];
         }
         return audioLst.where((audio) {
-          return (audio.audioDuration.inSeconds >= startRangeSeconds) &&
-              (audio.audioDuration.inSeconds <= endRangeSeconds);
+          return (audio.durationImpactedByPlaySpeed().inSeconds >= startRangeSeconds) &&
+              (audio.durationImpactedByPlaySpeed().inSeconds <= endRangeSeconds);
         }).toList();
       } else {
         // endRangeSeconds == 0
         return audioLst.where((audio) {
-          return audio.audioDuration.inSeconds >= startRangeSeconds;
+          return audio.durationImpactedByPlaySpeed().inSeconds >= startRangeSeconds;
         }).toList();
       }
     } else {
       // startRangeSeconds == 0
       if (endRangeSeconds != 0) {
         return audioLst.where((audio) {
-          return audio.audioDuration.inSeconds <= endRangeSeconds;
+          return audio.durationImpactedByPlaySpeed().inSeconds <= endRangeSeconds;
         }).toList();
       } else {
         // startRangeSeconds and endRangeSeconds are 0
