@@ -946,6 +946,170 @@ void main() {
       expect(filteredAudioLst, expectedFilteredAudios);
     });
     test(
+        'filter audio duration range less than 20 sec as well as less than 21 sec',
+        () {
+      final Playlist audioPlaylist = Playlist(
+        id: '2',
+        title: 'Audio Playlist',
+        playlistQuality: PlaylistQuality.voice,
+        playlistType: PlaylistType.youtube,
+      );
+
+      final Audio audio_20001 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
+        originalVideoTitle: 'Zebra ?',
+        compactVideoDescription:
+            'On vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
+        validVideoTitle: 'Sur quelle tendance crypto investir en 2024 ?',
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 22),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(milliseconds: 20001),
+        isAudioMusicQuality: true,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName: 'Test Video Title one.mp3',
+        audioFileSize: 125000000,
+        audioType: AudioType.downloaded,
+      );
+
+      final Audio audio_19999 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
+        originalVideoTitle: 'Zebra ?',
+        compactVideoDescription:
+            'On vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
+        validVideoTitle: 'Sur quelle tendance crypto investir en 2024 ?',
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 22),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(milliseconds: 19999),
+        isAudioMusicQuality: true,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName: 'Test Video Title one.mp3',
+        audioFileSize: 125000000,
+        audioType: AudioType.downloaded,
+      );
+
+      final Audio audio_20999 = Audio.fullConstructor(
+        youtubeVideoChannel: 'one',
+        enclosingPlaylist: audioPlaylist,
+        movedFromPlaylistTitle: null,
+        movedToPlaylistTitle: null,
+        copiedFromPlaylistTitle: null,
+        copiedToPlaylistTitle: null,
+        extractedFromPlaylistTitle: null,
+        originalVideoTitle: 'Zebra ?',
+        compactVideoDescription:
+            'On vous propose de découvrir les tendances crypto en progression en 2024. Découvrez lesquelles sont les plus prometteuses et lesquelles sont à éviter.',
+        validVideoTitle: 'Sur quelle tendance crypto investir en 2024 ?',
+        videoUrl: 'https://www.youtube.com/watch?v=testVideoID',
+        audioDownloadDateTime: DateTime(2023, 3, 24, 20, 5, 22),
+        audioDownloadDuration: const Duration(minutes: 0, seconds: 30),
+        audioDownloadSpeed: 1000000,
+        videoUploadDate: DateTime(2023, 3, 1),
+        audioDuration: const Duration(milliseconds: 20999),
+        isAudioMusicQuality: true,
+        audioPlaySpeed: kAudioDefaultPlaySpeed,
+        audioPlayVolume: kAudioDefaultPlayVolume,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
+        isPaused: true,
+        audioPausedDateTime: null,
+        audioPositionSeconds: 0,
+        audioFileName: 'Test Video Title one.mp3',
+        audioFileSize: 125000000,
+        audioType: AudioType.downloaded,
+      );
+
+      final List<Audio> audioLst = [
+        audio_19999,
+        audio_20001,
+        audio_20999,
+      ];
+
+      List<Audio> filteredAudioLst =
+          audioSortFilterService.filterOnOtherOptions(
+              selectedPlaylist: audioPlaylist,
+              audioLst: audioLst,
+              audioSortFilterParameters: AudioSortFilterParameters(
+                selectedSortItemLst: [],
+                filterSentenceLst: [],
+                sentencesCombination: SentencesCombination.and,
+                ignoreCase: true,
+                searchAsWellInVideoCompactDescription: true,
+                searchAsWellInYoutubeChannelName: false,
+                fileSizeStartRangeMB: 110,
+                fileSizeEndRangeMB: 130,
+                durationStartRangeSec: 0,
+                durationEndRangeSec: 20,
+              ));
+
+      expect(filteredAudioLst, [audio_19999]);
+
+      filteredAudioLst = audioSortFilterService.filterOnOtherOptions(
+          selectedPlaylist: audioPlaylist,
+          audioLst: audioLst,
+          audioSortFilterParameters: AudioSortFilterParameters(
+            selectedSortItemLst: [],
+            filterSentenceLst: [],
+            sentencesCombination: SentencesCombination.and,
+            ignoreCase: true,
+            searchAsWellInVideoCompactDescription: true,
+            searchAsWellInYoutubeChannelName: false,
+            fileSizeStartRangeMB: 110,
+            fileSizeEndRangeMB: 130,
+            durationStartRangeSec: 19,
+            durationEndRangeSec: 20,
+          ));
+
+      expect(filteredAudioLst, [audio_19999]);
+
+      filteredAudioLst = audioSortFilterService.filterOnOtherOptions(
+          selectedPlaylist: audioPlaylist,
+          audioLst: audioLst,
+          audioSortFilterParameters: AudioSortFilterParameters(
+            selectedSortItemLst: [],
+            filterSentenceLst: [],
+            sentencesCombination: SentencesCombination.and,
+            ignoreCase: true,
+            searchAsWellInVideoCompactDescription: true,
+            searchAsWellInYoutubeChannelName: false,
+            fileSizeStartRangeMB: 110,
+            fileSizeEndRangeMB: 130,
+            durationStartRangeSec: 20,
+            durationEndRangeSec: 21,
+          ));
+
+      expect(filteredAudioLst, [
+        audio_20001,
+        audio_20999,
+      ]);
+    });
+    test(
         '''filter by 0 sec to 540 sec audio duration range. This tests a bug fix.''',
         () {
       List<Audio> expectedFilteredAudios = [audioOne, audioFour];
