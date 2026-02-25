@@ -316,7 +316,10 @@ class Audio {
     return (audioDuration == Duration.zero)
         ? false
         : (audioPositionSeconds >=
-            durationImpactedByPlaySpeed().inSeconds - kFullyListenedBufferSeconds);
+            // Makes impossible to click twice on the go to end button in the
+            // audio player screen.
+            // durationImpactedByPlaySpeed().inSeconds - kFullyListenedBufferSeconds);
+            audioDuration.inSeconds - kFullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {
