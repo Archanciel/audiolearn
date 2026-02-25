@@ -658,7 +658,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
     required PlaylistListVM playlistVMlistnedFalse,
     required DateFormatVM dateFormatVMlistenTrue,
   }) {
-    Duration? audioDuration = audio.audioDuration;
+    Duration? audioDuration = audio.durationImpactedByPlaySpeed();
 
     SortingOption appliedSortingOption =
         playlistVMlistnedFalse.getAppliedSortingOption();

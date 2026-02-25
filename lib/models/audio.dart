@@ -305,13 +305,18 @@ class Audio {
     return '${enclosingPlaylist!.downloadPath}${Platform.pathSeparator}$audioFileName';
   }
 
+  Duration durationImpactedByPlaySpeed() {
+    return Duration(
+        microseconds: (audioDuration.inMicroseconds / audioPlaySpeed).round());
+  }
+
   /// Returns true if the audio position is greater or equal to
   /// the audio duration minus 15 seconds.
   bool wasFullyListened() {
     return (audioDuration == Duration.zero)
         ? false
         : (audioPositionSeconds >=
-            audioDuration.inSeconds - kFullyListenedBufferSeconds);
+            durationImpactedByPlaySpeed().inSeconds - kFullyListenedBufferSeconds);
   }
 
   bool isPartiallyListened() {

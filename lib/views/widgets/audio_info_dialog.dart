@@ -219,7 +219,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss(
+          value: audio.durationImpactedByPlaySpeed().HHmmss(
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
@@ -350,7 +350,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss(
+          value: audio.durationImpactedByPlaySpeed().HHmmss(
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
@@ -481,7 +481,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss(
+          value: audio.durationImpactedByPlaySpeed().HHmmss(
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
@@ -619,7 +619,7 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           valueTextWidgetKey: const Key('audioDurationKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
-          value: audio.audioDuration.HHmmss(
+          value: audio.durationImpactedByPlaySpeed().HHmmss(
             addRemainingOneDigitTenthOfSecond: true,
           )),
       createInfoRowFunction(
