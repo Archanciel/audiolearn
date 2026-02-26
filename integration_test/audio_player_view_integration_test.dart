@@ -811,7 +811,8 @@ void main() {
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Now we open the DisplaySelectableAudioListDialog
-      // and select the previous downloaded audio of the playlist
+      // and select the previous downloaded audio of the
+      // playlist ('morning _ cinematic video')
 
       await tester.tap(find.text('$lastDownloadedAudioTitle\n6:28'));
       await tester.pumpAndSettle();
@@ -820,7 +821,7 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Verify that the play button is present (due to the bug, the
-      // pause button is displayed).
+      // pause button was displayed).
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
 
       // Now we go back to the playlist download view in order to select
