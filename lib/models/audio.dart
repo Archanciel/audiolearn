@@ -117,7 +117,7 @@ class Audio {
   // position will be reduced by 30 seconds.
   DateTime? audioPausedDateTime;
 
-  double audioPlaySpeed;
+  double audioPlaySpeed = 1.0;
   double audioPlayVolume = kAudioDefaultPlayVolume;
 
   bool isAudioMusicQuality = false;
@@ -232,7 +232,10 @@ class Audio {
       videoUploadDate: DateTime.parse(json['videoUploadDate']),
       audioDuration: Duration(milliseconds: json['audioDurationMs']),
       isAudioMusicQuality: json['isAudioMusicQuality'] ?? false,
-      audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
+      audioPlaySpeed:
+          (json['audioPlaySpeed'] == null || json['audioPlaySpeed'] == 0.0)
+              ? kAudioDefaultPlaySpeed
+              : json['audioPlaySpeed'],
       audioPlayVolume: json['audioPlayVolume'] ?? kAudioDefaultPlayVolume,
       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd:
           json['isPlayingOrPausedWithPositionBetweenAudioStartAndEnd'] ?? false,

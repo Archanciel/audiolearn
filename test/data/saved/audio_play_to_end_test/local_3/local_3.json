@@ -4,7 +4,7 @@
   "url": "",
   "playlistType": "local",
   "playlistQuality": "voice",
-  "audioPlaySpeed": 0.0,
+  "audioPlaySpeed": 1.0,
   "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\local_3",
   "downloadedAudioLst": [
     {
@@ -153,7 +153,7 @@
       "videoUploadDate": "2023-07-01T18:48:13.000Z",
       "audioDurationMs": 59000,
       "isAudioMusicQuality": false,
-      "audioPlaySpeed": 0.0,
+      "audioPlaySpeed": 1.0,
       "audioPlayVolume": 0.5,
       "isPlayingOrPausedWithPositionBetweenAudioStartAndEnd": true,
       "isPaused": true,
@@ -181,7 +181,7 @@
       "videoUploadDate": "2023-07-01T18:48:13.000Z",
       "audioDurationMs": 59000,
       "isAudioMusicQuality": false,
-      "audioPlaySpeed": 0.0,
+      "audioPlaySpeed": 1.0,
       "audioPlayVolume": 0.5,
       "isPlayingOrPausedWithPositionBetweenAudioStartAndEnd": true,
       "isPaused": true,

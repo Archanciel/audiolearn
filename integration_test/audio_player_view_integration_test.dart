@@ -2334,7 +2334,7 @@ void main() {
       );
 
       // Verify that audio play speed was corrected
-      expect(find.text('1.25x'), findsOneWidget);
+      expect(find.text('1.00x'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
