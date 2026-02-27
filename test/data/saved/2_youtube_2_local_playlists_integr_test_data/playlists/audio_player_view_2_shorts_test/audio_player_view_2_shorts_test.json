@@ -4,7 +4,7 @@
   "url": "https://youtube.com/playlist?list=PLzwWSJNcZTMRrOkIdVTkV58wpWIZQCkgd&si=upNAPefulNZ8kNyF",
   "playlistType": "youtube",
   "playlistQuality": "voice",
-  "audioPlaySpeed": 0.0,
+  "audioPlaySpeed": 1.0,
   "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\audio_player_view_2_shorts_test",
   "downloadedAudioLst": [
     {
