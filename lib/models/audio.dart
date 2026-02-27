@@ -232,10 +232,7 @@ class Audio {
       videoUploadDate: DateTime.parse(json['videoUploadDate']),
       audioDuration: Duration(milliseconds: json['audioDurationMs']),
       isAudioMusicQuality: json['isAudioMusicQuality'] ?? false,
-      audioPlaySpeed:
-          (json['audioPlaySpeed'] == null || json['audioPlaySpeed'] == 0.0)
-              ? kAudioDefaultPlaySpeed
-              : json['audioPlaySpeed'],
+      audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
       audioPlayVolume: json['audioPlayVolume'] ?? kAudioDefaultPlayVolume,
       isPlayingOrPausedWithPositionBetweenAudioStartAndEnd:
           json['isPlayingOrPausedWithPositionBetweenAudioStartAndEnd'] ?? false,
