@@ -4,7 +4,7 @@
   "url": "",
   "playlistType": "local",
   "playlistQuality": "voice",
-  "audioPlaySpeed": 0.0,
+  "audioPlaySpeed": 1.0,
   "downloadPath": "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\playlists\\local_3",
   "downloadedAudioLst": [
     {
