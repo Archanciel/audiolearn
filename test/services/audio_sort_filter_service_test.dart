@@ -14672,7 +14672,7 @@ void main() {
           durationStartRangeSec:
               DateTimeParser.parseHHMMSSDuration('0:05:36')!.inSeconds,
           durationEndRangeSec:
-              DateTimeParser.parseHHMMDuration('0:14')!.inSeconds,
+              DateTimeParser.parseHHMMSSDuration('0:11:12')!.inSeconds,
         );
 
         List<String> expectedAudioFilteredLst = [

@@ -506,8 +506,8 @@ void main() {
         ];
 
         List<String> audioSubTitles = [
-          "0:06:29.0 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
-          "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
+          "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
+          "0:06:06.4 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36",
         ];
 
         _verifyRestoredPlaylistAndAudio(
@@ -1862,7 +1862,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:07.1 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -1877,7 +1877,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:07.1',
+          audioDuration: '0:00:05.6',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
@@ -2055,7 +2055,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.9 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2070,7 +2070,7 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:00.9',
+          audioDuration: '0:00:00.7',
           audioPosition: '0:00:00',
           audioState: 'Not listened',
           lastListenDateTime: '',
