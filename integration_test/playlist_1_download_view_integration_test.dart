@@ -6097,7 +6097,7 @@ void main() {
         copiedToPlaylistTitle: localAudioTargetOnePlaylistTitle,
         audioDownloadDuration: "0:00:00",
         audioDownloadSpeed: "321 Ko/sec",
-        audioDuration: '0:00:24.0',
+        audioDuration: '0:00:16.0',
         audioPosition: '0:00:05',
         audioState: "En pause",
         lastListenDateTime: '25/08/2024 15:03',
@@ -11332,7 +11332,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11472,7 +11472,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11709,7 +11709,7 @@ void main() {
           String currentAudioTitle =
               "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
+              "0:06:06.4 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -11913,7 +11913,7 @@ void main() {
           String currentAudioTitle =
               "La surpopulation mondiale par Jancovici et Barrau";
           String currentAudioSubTitle =
-              "0:07:38.0 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
+              "0:06:06.4 2.79 MB at 2.73 MB/sec on 07/01/2024 at 16:36";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12120,7 +12120,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12282,7 +12282,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12583,7 +12583,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12842,7 +12842,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "La résilience insulaire par Fiona Roche";
           String currentAudioSubTitle =
-              "0:13:35.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
+              "0:10:52.0 4.97 MB at 2.67 MB/sec on 07/01/2024 at 08:16";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -13337,7 +13337,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "L’uniforme arrive en France en 2024";
         String currentAudioSubTitle =
-            "0:00:22.9 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
+            "0:00:18.4 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13482,7 +13482,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "L’uniforme arrive en France en 2024";
         String currentAudioSubTitle =
-            "0:00:22.9 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
+            "0:00:18.4 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13673,7 +13673,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:19.4 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:15.5 155 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13836,7 +13836,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:19.4 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:15.5 155 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color

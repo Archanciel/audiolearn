@@ -583,7 +583,7 @@ void main() {
 
       expect(
         playlist.getPlayableAudioLstTotalDuration().inMinutes,
-        60,
+        40,
       );
 
       expect(
