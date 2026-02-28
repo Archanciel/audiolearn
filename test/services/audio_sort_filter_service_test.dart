@@ -12498,8 +12498,8 @@ void main() {
         searchAsWellInYoutubeChannelName: false,
         fileSizeStartRangeMB: 2.373,
         fileSizeEndRangeMB: 2.8,
-        durationStartRangeSec: 389,
-        durationEndRangeSec: 458,
+        durationStartRangeSec: 311,
+        durationEndRangeSec: 367,
       );
 
       List<Audio> filteredByWordAndSortedByDownloadDateAscAndDurationDesc =
@@ -14670,7 +14670,7 @@ void main() {
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
           durationStartRangeSec:
-              DateTimeParser.parseHHMMDuration('0:07')!.inSeconds,
+              DateTimeParser.parseHHMMSSDuration('0:05:36')!.inSeconds,
           durationEndRangeSec:
               DateTimeParser.parseHHMMDuration('0:14')!.inSeconds,
         );
@@ -14734,7 +14734,7 @@ void main() {
           selectedSortItemLst: selectedSortItemLstDownloadDateDesc,
           sentencesCombination: SentencesCombination.and,
           durationStartRangeSec:
-              DateTimeParser.parseHHMMDuration('0:13')!.inSeconds,
+              DateTimeParser.parseHHMMSSDuration('0:10:24')!.inSeconds,
         );
 
         List<String> expectedAudioFilteredLst = [
