@@ -2888,7 +2888,7 @@ class PlaylistListVM extends ChangeNotifier {
     required bool addPictureJpgFilesToZip,
   }) async {
     String targetDirectoryPath =
-        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName";
+        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
 
     DirUtil.createDirIfNotExistSync(
       pathStr: targetDirectoryPath,
@@ -2938,6 +2938,16 @@ class PlaylistListVM extends ChangeNotifier {
         addPictureJpgFilesToZip: addPictureJpgFilesToZip);
 
     return savedZipFilePathName;
+  }
+
+  /// Returns the path of the directory in which the playlist directories
+  /// are located. This is useful if the user changed the directory in which
+  /// the playlist directories are located using the ApplicationSettingsScreen.
+  /// In this case, the new directory path is returned.
+  String _getPlaylistsRootPath() {
+    return path.dirname(_settingsDataService.get(
+      settingType: SettingType.dataLocation,
+      settingSubType: DataLocation.playlistRootPath));
   }
 
   /// Returns a dynamic list containing the number of picture jpg files added to the zip and
@@ -3191,7 +3201,7 @@ class PlaylistListVM extends ChangeNotifier {
     }
 
     String targetDirectoryPath =
-        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName";
+        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
 
     DirUtil.createDirIfNotExistSync(
       pathStr: targetDirectoryPath,
@@ -3346,7 +3356,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Determine the actual target directory early
     String actualTargetDir =
-        "${_settingsDataService.get(settingType: SettingType.dataLocation, settingSubType: DataLocation.appSettingsPath)}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
     DirUtil.createDirIfNotExistSync(
       pathStr: actualTargetDir,
