@@ -14713,7 +14713,7 @@ void main() {
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_playlists_dir",
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
@@ -14780,14 +14780,14 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
-          "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
-          "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
-          "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
-          "local_3\\local_3.json",
-          "local_audio_playlist_2\\local_audio_playlist_2.json",
-          'pictures\\pictureAudioMap.json',
+          "playlists\\audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+          "playlists\\audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
+          "playlists\\audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
+          "playlists\\audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
+          "playlists\\local_3\\local_3.json",
+          "playlists\\local_audio_playlist_2\\local_audio_playlist_2.json",
           "settings.json",
+          'pictures\\pictureAudioMap.json',
         ];
 
         List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
@@ -15346,7 +15346,7 @@ void main() {
         // Copy the test initial audio data to the app dir
         DirUtil.copyFilesFromDirAndSubDirsToDirectory(
           sourceRootPath:
-              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_integr_test_data",
+              "$kDownloadAppTestSavedDataDir${path.separator}2_youtube_2_local_playlists_delete_playlists_dir",
           destinationRootPath: kApplicationPathWindowsTest,
         );
 
@@ -15423,14 +15423,14 @@ void main() {
         );
 
         List<String> expectedZipContentLst = [
-          "audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
-          "audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
-          "audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
-          "audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
-          "local_3\\local_3.json",
-          "local_audio_playlist_2\\local_audio_playlist_2.json",
-          "pictures\\pictureAudioMap.json",
+          "playlists\\audio_learn_test_download_2_small_videos\\audio_learn_test_download_2_small_videos.json",
+          "playlists\\audio_learn_test_download_2_small_videos\\comments\\230628-033811-audio learn test short video one 23-06-10.json",
+          "playlists\\audio_learn_test_download_2_small_videos\\comments\\230628-033813-audio learn test short video two 23-06-10.json",
+          "playlists\\audio_player_view_2_shorts_test\\audio_player_view_2_shorts_test.json",
+          "playlists\\local_3\\local_3.json",
+          "playlists\\local_audio_playlist_2\\local_audio_playlist_2.json",
           "settings.json",
+          "pictures\\pictureAudioMap.json",
           "pictures\\230628-033811-audio learn test short video one 23-06-10.jpg"
         ];
 
