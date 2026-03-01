@@ -198,7 +198,7 @@ class PictureVM extends ChangeNotifier {
     );
 
     if (pictureLst.isEmpty) {
-      // Create the playlist dir so that the picture json file
+      // Create the playlist picture dir so that the picture json file
       // can be created
       DirUtil.createDirIfNotExistSync(
         pathStr: DirUtil.getPathFromPathFileName(
