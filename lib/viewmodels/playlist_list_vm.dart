@@ -2887,8 +2887,8 @@ class PlaylistListVM extends ChangeNotifier {
   Future<String> savePlaylistsCommentPictureAndSettingsJsonFilesToZip({
     required bool addPictureJpgFilesToZip,
   }) async {
-    String targetDirectoryPath =
-        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
+    final String targetDirectoryPath =
+        "${getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
 
     DirUtil.createDirIfNotExistSync(
       pathStr: targetDirectoryPath,
@@ -2899,7 +2899,7 @@ class PlaylistListVM extends ChangeNotifier {
     notifyListeners();
 
     List<dynamic> returnedResults = await _saveAllJsonFilesToZip(
-      targetDir: targetDirectoryPath,
+      zipTargetDir: targetDirectoryPath,
       addPictureJpgFilesToZip: addPictureJpgFilesToZip,
     );
 
@@ -2944,7 +2944,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// are located. This is useful if the user changed the directory in which
   /// the playlist directories are located using the ApplicationSettingsScreen.
   /// In this case, the new directory path is returned.
-  String _getPlaylistsRootPath() {
+  String getPlaylistsRootPath() {
     return path.dirname(_settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.playlistRootPath));
@@ -2954,19 +2954,25 @@ class PlaylistListVM extends ChangeNotifier {
   /// the saved zip file path name. An empty list is returned if the playlists source dir or the
   /// target dir in which to save the zip does not exist.
   Future<List<dynamic>> _saveAllJsonFilesToZip({
-    required String targetDir,
+    required String zipTargetDir,
     required bool addPictureJpgFilesToZip,
   }) async {
+    // Example of using playlistsRootDir to preserve the relative path of the playlist json files
+    // in the zip file:
+    //
+    // zipTargetDir: "C:\development\flutter\audiolearn\test\data\audio\parent_1\parent_1_1\saved"
+    // playlistsRootDir: "C:\development\flutter\audiolearn\test\data\audio\parent_1\parent_1_1"
+    // relativePath: "playlists\Dieu je T'adore\Dieu je T'adore.json"
+    final String playlistsRootDir = path.dirname(zipTargetDir);
     List<dynamic> returnedResults = [];
-    String playlistsRootPath = _settingsDataService.get(
+    final String playlistsRootPath = _settingsDataService.get(
         settingType: SettingType.dataLocation,
         settingSubType: DataLocation.playlistRootPath);
-    String applicationPath = _settingsDataService.get(
+    final String applicationPath = _settingsDataService.get(
       settingType: SettingType.dataLocation,
       settingSubType: DataLocation.appSettingsPath,
     );
-
-    Directory sourceDir = Directory(playlistsRootPath);
+    final Directory sourceDir = Directory(playlistsRootPath);
 
     if (!sourceDir.existsSync()) {
       return returnedResults; // returning an empty list
@@ -2979,7 +2985,7 @@ class PlaylistListVM extends ChangeNotifier {
     await for (FileSystemEntity entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
-        String relativePath = path.relative(entity.path, from: applicationPath);
+        String relativePath = path.relative(entity.path, from: playlistsRootDir);
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
@@ -3079,7 +3085,7 @@ class PlaylistListVM extends ChangeNotifier {
     // Save the archive to a zip file in the target directory
     String zipFileName =
         "audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now())}.zip";
-    String zipFilePathName = path.join(targetDir, zipFileName);
+    String zipFilePathName = path.join(zipTargetDir, zipFileName);
     File zipFile = File(zipFilePathName);
 
     try {
@@ -3102,14 +3108,17 @@ class PlaylistListVM extends ChangeNotifier {
   /// Returns the saved zip file path name, '' if the  target dir in which to save
   /// the zip does not exist.
   Future<String> saveUniquePlaylistCommentAndPictureJsonFilesToZip({
+    required String zipTargetDir,
     required Playlist playlist,
   }) async {
-    String applicationPath = _settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.appSettingsPath,
-    );
-
-    Directory sourceDir = Directory(playlist.downloadPath);
+    // Example of using playlistsRootDir to preserve the relative path of the playlist json files
+    // in the zip file:
+    //
+    // zipTargetDir: "C:\development\flutter\audiolearn\test\data\audio\parent_1\parent_1_1\saved"
+    // playlistsRootDir: "C:\development\flutter\audiolearn\test\data\audio\parent_1\parent_1_1"
+    // relativePath: "playlists\Dieu je T'adore\Dieu je T'adore.json"
+    final String playlistsRootDir = path.dirname(zipTargetDir);
+    final Directory sourceDir = Directory(playlist.downloadPath);
 
     // Create a zip encoder
     final archive = Archive();
@@ -3118,7 +3127,7 @@ class PlaylistListVM extends ChangeNotifier {
     await for (FileSystemEntity entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
-        String relativePath = path.relative(entity.path, from: applicationPath);
+        String relativePath = path.relative(entity.path, from: playlistsRootDir);
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
         archive.addFile(ArchiveFile(
@@ -3200,16 +3209,9 @@ class PlaylistListVM extends ChangeNotifier {
       }
     }
 
-    String targetDirectoryPath =
-        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
-
-    DirUtil.createDirIfNotExistSync(
-      pathStr: targetDirectoryPath,
-    );
-
     // Save the archive to a zip file in the target directory
     String zipFileName = "$playlistTitle.zip";
-    String savedZipFilePathName = path.join(targetDirectoryPath, zipFileName);
+    String savedZipFilePathName = path.join(zipTargetDir, zipFileName);
     File zipFile = File(savedZipFilePathName);
 
     try {
@@ -3356,7 +3358,7 @@ class PlaylistListVM extends ChangeNotifier {
 
     // Determine the actual target directory early
     String actualTargetDir =
-        "${_getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+        "${getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
 
     DirUtil.createDirIfNotExistSync(
       pathStr: actualTargetDir,

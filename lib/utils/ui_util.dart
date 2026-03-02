@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:path/path.dart' as path;
 import '../../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
@@ -113,10 +114,19 @@ class UiUtil {
     required BuildContext context,
     required Playlist playlist,
   }) async {
-    await Provider.of<PlaylistListVM>(
+    PlaylistListVM playlistListVMlistenFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
-    ).saveUniquePlaylistCommentAndPictureJsonFilesToZip(
+    );
+    final String targetDirectoryPath =
+        "${playlistListVMlistenFalse.getPlaylistsRootPath()}${path.separator}$kSavedPlaylistsDirName";
+
+    DirUtil.createDirIfNotExistSync(
+      pathStr: targetDirectoryPath,
+    );
+
+    await playlistListVMlistenFalse.saveUniquePlaylistCommentAndPictureJsonFilesToZip(
+      zipTargetDir: targetDirectoryPath,
       playlist: playlist,
     );
   }
