@@ -34490,8 +34490,9 @@ void main() {
       'Save and restore playlist and mp3 to and from different playlists root path',
       () {
     testWidgets(
-        '''From audio\\playlists, multiple and unique playlist and mp3 saving and restoring the
-           saved zip's to audio\\parent_1\\parent_1_1\\playlists.Then, in audio\\parent_1\\
+        '''From audio\\playlists, saving multiple playlists and their mp3 as well as saving
+           a unique playlist and its mp3. Then, restoring the previously saved zip's to
+           audio\\parent_1\\parent_1_1\\playlists. Then, in audio\\parent_1\\
            parent_1_1\\playlists, add a picture to one audio and verify where the jpg file was
            stored. Then, do multiple and unique playlist and mp3 saving and restore the
            saved zip's to audio\\playlists. This will verify that the playlist and mp3 saving and
@@ -34639,6 +34640,63 @@ void main() {
         zipFilePathName:
             "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
       );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
+      // Tap on the Ok button to close the warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      String playlistToSaveTitle = 'Local';
+
+      // Save the playlist and its comments to a zip file
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToSaveTitle,
+        playlistMenuKeyStr: 'popup_menu_save_playlist_comments_pictures_to_zip',
+      );
+
+      // Verify the displayed warning dialog
+      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        tester: tester,
+        warningDialogMessage:
+            "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistToSaveTitle.zip\".",
+        isWarningConfirming: true,
+      );
+
+      // Verify that the zip file has been created
+
+      zipLst = DirUtil.listFileNamesInDir(
+        directoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+        fileExtension: 'zip',
+      );
+
+      expect(
+        zipLst.contains('$playlistToSaveTitle.zip'),
+        true,
+      );
+
+      // Verify the content of the created ZIP file
+
+      String zipFilePathName = path.join(
+          "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
+          '$playlistToSaveTitle.zip');
+
+      zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName: zipFilePathName,
+      );
+
+      // Verify ZIP content
+      expectedZipContentLst = [
+        "playlists\\Local\\comments\\Jésus je T'aime énormément.json",
+        "playlists\\Local\\Local.json",
+        "pictures\\pictureAudioMap.json",
+      ];
 
       expect(
         zipContentLst,
