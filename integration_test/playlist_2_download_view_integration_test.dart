@@ -34486,6 +34486,114 @@ void main() {
     });
   });
 
+  group(
+      'Save and restore playlist and mp3 to and from different playlists root path',
+      () {
+    testWidgets(
+        '''From audio\\playlists, multiple and unique playlist and mp3 saving and restoring the
+           saved zip's to audio\\parent_1\\parent_1_1\\playlists.Then, in audio\\parent_1\\
+           parent_1_1\\playlists, add a picture to one audio and verify where the jpg file was
+           stored. Then, do multiple and unique playlist and mp3 saving and restore the
+           saved zip's to audio\\playlists. This will verify that the playlist and mp3 saving and
+           restoring works correctly when the playlists root path is changed.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}multi_playlist_root_dirs",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      String saveZipFilePath =
+          '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
+
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists and Comments to zip File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAndCommentsToZip',
+      );
+
+      // Check the "Add all JPG pictures to ZIP" checkbox
+      await tester.tap(find.byKey(const Key('checkbox_0_key')));
+      await tester.pumpAndSettle();
+
+      // Close the dialog with the OK button
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      String actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+
+      expect(
+        actualMessage,
+        contains(
+          "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_",
+        ),
+      );
+
+      expect(
+        actualMessage,
+        contains(
+          "\n\nSaved also 4 picture JPG file(s) in the ZIP file.",
+        ),
+      );
+
+      List<String> zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: saveZipFilePath,
+        fileExtension: 'zip',
+      );
+
+      List<String> expectedZipContentLst = [
+        "playlists\\EMI\\EMI.json",
+        "playlists\\Local\\comments\\Jésus je T'aime énormément.json",
+        "playlists\\Local\\Local.json",
+        "settings.json",
+        "pictures\\pictureAudioMap.json",
+        "pictures\\Dieu je T'adore.jpg",
+        "pictures\\Jésus je T'adore.jpg",
+        "pictures\\Jésus je T'aime.jpg",
+        "pictures\\SkyCross.jpg",
+      ];
+
+      List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
+      );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
   group('Manage picture for audio', () {
     group('From audio list item in playlist download view', () {
       testWidgets(
