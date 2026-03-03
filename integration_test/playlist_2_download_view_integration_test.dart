@@ -34703,6 +34703,19 @@ void main() {
         expectedZipContentLst,
       );
 
+      // Replace the platform instance with your mock
+      MockFilePicker mockFilePicker = MockFilePicker();
+      FilePicker.platform = mockFilePicker;
+
+      String modifiedPlaylistRootPath =
+          '$kApplicationPathWindowsTest${path.separator}parent_1${path.separator}parent_1_1${path.separator}playlists';
+
+      await _changeAndSavePlaylistRootPath(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pathToSelectStr: modifiedPlaylistRootPath,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -45332,6 +45345,53 @@ Future<void> _changePlaylistRootPathAndSaveAppSettings({
   bool confirmOrCancelAction = true, // true: confirm, false: cancel
 }) async {
   // Tap the appbar leading popup menu button Then, the
+  // app settings dialog is opened ...
+  await _changeAndSavePlaylistRootPath(
+    tester: tester,
+    mockFilePicker: mockFilePicker,
+    pathToSelectStr: pathToSelectStr,
+  );
+
+  if (confirmDialogTitleOne.isNotEmpty) {
+    // Verify the ConfirmActionDialog which asks to the user if he wants
+    // to restore the saved playlist titles order or keep the current
+    // order
+    await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
+      tester: tester,
+      confirmDialogTitleOne: confirmDialogTitleOne,
+      confirmDialogMessage: confirmDialogMessage,
+      confirmOrCancelAction: confirmOrCancelAction, // Confirm button is tapped
+    );
+  }
+
+  // Verify the modified directory playlist titles
+
+  IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    tester: tester,
+    audioOrPlaylistTitlesOrderedLst: playlistTitlesOrderInModifiedDir,
+  );
+
+  // Verify the selected playlist
+  IntegrationTestUtil.verifyPlaylistSelection(
+    tester: tester,
+    playlistTitle: selectedPlaylistTitle,
+    modifiedPlaylistRootPath: pathToSelectStr,
+  );
+
+  // Ensure settings json file has been modified
+  expect(
+    File("$kApplicationPathWindowsTest${path.separator}$kSettingsFileName")
+        .readAsStringSync(),
+    expectedSettingsContent,
+  );
+}
+
+Future<void> _changeAndSavePlaylistRootPath({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String pathToSelectStr,
+}) async {
+  // Tap the appbar leading popup menu button Then, the
   // app settings dialog is opened.
   await IntegrationTestUtil.typeOnAppbarMenuItem(
     tester: tester,
@@ -45366,39 +45426,6 @@ Future<void> _changePlaylistRootPathAndSaveAppSettings({
   // And tap on save button
   await tester.tap(find.byKey(const Key('saveButton')));
   await tester.pumpAndSettle(const Duration(milliseconds: 2000));
-
-  if (confirmDialogTitleOne.isNotEmpty) {
-    // Verify the ConfirmActionDialog which asks to the user if he wants
-    // to restore the saved playlist titles order or keep the current
-    // order
-    await IntegrationTestUtil.verifyAndCloseConfirmActionDialog(
-      tester: tester,
-      confirmDialogTitleOne: confirmDialogTitleOne,
-      confirmDialogMessage: confirmDialogMessage,
-      confirmOrCancelAction: confirmOrCancelAction, // Confirm button is tapped
-    );
-  }
-
-  // Verify the modified directory playlist titles
-
-  IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-    tester: tester,
-    audioOrPlaylistTitlesOrderedLst: playlistTitlesOrderInModifiedDir,
-  );
-
-  // Verify the selected playlist
-  IntegrationTestUtil.verifyPlaylistSelection(
-    tester: tester,
-    playlistTitle: selectedPlaylistTitle,
-    modifiedPlaylistRootPath: pathToSelectStr,
-  );
-
-  // Ensure settings json file has been modified
-  expect(
-    File("$kApplicationPathWindowsTest${path.separator}$kSettingsFileName")
-        .readAsStringSync(),
-    expectedSettingsContent,
-  );
 }
 
 Future<void> _verifyDatePickerTitleTranslation({
