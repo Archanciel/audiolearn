@@ -34587,6 +34587,64 @@ void main() {
         expectedZipContentLst,
       );
 
+      // Tap on the Ok button to close the warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap the appbar leading popup menu button Then, the 'Save
+      // Playlists Audio's MP3 to ZIP File' menu is selected.
+      await IntegrationTestUtil.typeOnAppbarMenuItem(
+        tester: tester,
+        appbarMenuKeyStr: 'appBarMenuSavePlaylistsAudioMp3FilesToZip',
+      );
+
+      // Tap on the Ok button to accept the download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap on the confirm button of the confirm action dialog
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      String oldestAudioDownloadDateTime = "02/03/2026 20:20";
+
+      actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+
+      expect(
+          actualMessage,
+          contains(
+              "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 2, total size: 861 KB and total duration: 0:01:47.6."));
+
+      String savedMp3DirectoryPath =
+          "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3";
+
+      expect(
+          actualMessage,
+          contains(
+              "ZIP file path name: \"$savedMp3DirectoryPath${path.separator}audioLearn_mp3_from_2026-03-02_20_20_15_on_"));
+
+      zipLst = DirUtil.listFileNamesInDir(
+        directoryPath: savedMp3DirectoryPath,
+        fileExtension: 'zip',
+      );
+
+      expectedZipContentLst = [
+        "playlists\\EMI\\260302-202015-Aram Khachaturian - Andantino (live) 17-02-02.mp3",
+        "playlists\\Local\\Jésus je T'aime énormément.mp3",
+      ];
+
+      zipContentLst = await DirUtil.listPathFileNamesInZip(
+        zipFilePathName:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
+      );
+
+      expect(
+        zipContentLst,
+        expectedZipContentLst,
+      );
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
