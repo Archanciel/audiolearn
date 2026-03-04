@@ -34526,6 +34526,9 @@ void main() {
       await app.main();
       await tester.pumpAndSettle();
 
+      // Save the playlists contained in the app test dir with their comments and
+      // pictures to a zip file
+
       String saveZipFilePath =
           '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
@@ -34592,6 +34595,8 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
+      // Save the mp3 of the playlists contained in the app test dir
+
       // Tap the appbar leading popup menu button Then, the 'Save
       // Playlists Audio's MP3 to ZIP File' menu is selected.
       await IntegrationTestUtil.typeOnAppbarMenuItem(
@@ -34650,9 +34655,10 @@ void main() {
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
       await tester.pumpAndSettle();
 
-      String playlistToSaveTitle = 'Local';
+      // Save a unique playlist contained in the app test dir with its comments and
+      // pictures to a zip file
 
-      // Save the playlist and its comments to a zip file
+      String playlistToSaveTitle = 'Local';
 
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -34703,12 +34709,48 @@ void main() {
         expectedZipContentLst,
       );
 
+      // Save the mp3 of the unique playlist contained in the app test dir
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToSaveTitle,
+        playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+      );
+
+      // Tap on the Ok button to accept the download date time.
+      await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+      await tester.pumpAndSettle();
+
+      // Tap on the confirm button of the confirm action dialog
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      actualMessage = tester
+          .widget<Text>(find.byKey(const Key('warningDialogMessage')).last)
+          .data!;
+
+      oldestAudioDownloadDateTime = "02/03/2026 20:29";
+
+      expect(
+          actualMessage,
+          contains(
+              "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $oldestAudioDownloadDateTime.\n\nTotal saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3."));
+      expect(actualMessage, contains("number of created ZIP file(s): 1."));
+      expect(
+          actualMessage,
+          contains(
+              "ZIP file path name: \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}Local_mp3_from_2026-03-02_20_29_26_on_"));
+
       // Replace the platform instance with your mock
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
       String modifiedPlaylistRootPath =
           '$kApplicationPathWindowsTest${path.separator}parent_1${path.separator}parent_1_1${path.separator}playlists';
+
+      // Tap on the Ok button to close the warning confirmation dialog
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')));
+      await tester.pumpAndSettle();
 
       await _changeAndSavePlaylistRootPath(
         tester: tester,
