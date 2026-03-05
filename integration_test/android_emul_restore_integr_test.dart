@@ -904,7 +904,7 @@ void main() {
           closeDialog: true,
         );
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -1108,7 +1108,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -1266,7 +1266,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -1428,7 +1428,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
