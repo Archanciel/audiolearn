@@ -30830,7 +30830,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -30972,7 +30972,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -31098,7 +31098,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -31247,7 +31247,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -31468,7 +31468,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -31655,7 +31655,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -31938,7 +31938,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -32127,7 +32127,7 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -33252,7 +33252,7 @@ void main() {
 
       expect(dialogContent.data, 'What would you like to select ?');
 
-      // Now tap on the 'A Single ZIP File' button
+      // Now tap on the 'A single ZIP File' button
       await tester.tap(find.byKey(const Key('selectFileButton')));
       await tester.pumpAndSettle();
 
@@ -33399,7 +33399,7 @@ void main() {
         closeDialog: true,
       );
 
-      // Now tap on the 'A Single ZIP File' button
+      // Now tap on the 'A single ZIP File' button
       await tester.tap(find.byKey(const Key('selectFileButton')));
       await tester.pumpAndSettle();
 
@@ -34226,7 +34226,7 @@ void main() {
           closeDialog: true,
         );
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -34306,7 +34306,7 @@ void main() {
           closeDialog: true,
         );
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -34383,7 +34383,7 @@ void main() {
           closeDialog: true,
         );
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -34465,7 +34465,7 @@ void main() {
           closeDialog: true,
         );
 
-        // Now tap on the 'A Single ZIP File' button
+        // Now tap on the 'A single ZIP File' button
         await tester.tap(find.byKey(const Key('selectFileButton')));
         await tester.pumpAndSettle();
 
@@ -34532,7 +34532,7 @@ void main() {
       String saveZipFilePath =
           '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
 
-      await _saveAllPlaylistsAndTheirMp3(
+      List<String> savedZipNameLst = await _saveAllPlaylistsAndTheirMp3(
         tester: tester,
         saveZipFilePath: saveZipFilePath,
         savedPicturesMessage:
@@ -34551,6 +34551,7 @@ void main() {
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:20",
         savedMp3DirectoryPath:
             "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
+        mp3ZipNameFirstPart: 'audioLearn_mp3_from_2026-03-02_20_20_15_on_',
         expectedMp3ZipContentLst: [
           "playlists\\EMI\\260302-202015-Aram Khachaturian - Andantino (live) 17-02-02.mp3",
           "playlists\\Local\\Jésus je T'aime énormément.mp3",
@@ -34580,6 +34581,10 @@ void main() {
       MockFilePicker mockFilePicker = MockFilePicker();
       FilePicker.platform = mockFilePicker;
 
+      // Change the playlist root path to the 'parent_1\\parent_1_1\\playlists'
+      // directory in order to restore the previously saved zip file there.
+      // This will verify that the playlist and mp3 restoration works correctly
+      // when the playlist root path is changed
       String modifiedPlaylistRootPath =
           '$kApplicationPathWindowsTest${path.separator}parent_1${path.separator}parent_1_1${path.separator}playlists';
 
@@ -34588,6 +34593,81 @@ void main() {
         mockFilePicker: mockFilePicker,
         pathToSelectStr: modifiedPlaylistRootPath,
       );
+
+      // Now restore in 'parent_1\\parent_1_1\\playlists' the multiple playlists
+      // previously saved in 'audio\\saved' dir.
+
+      List<String> playlistTitles = [
+        "Dieu je T'adore",
+        "local 3",
+        "EMI",
+        "Local",
+      ];
+
+      String savedZipFilePath =
+          '$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName';
+
+      await _restoreMultipleOrIndividualPlaylist(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        savedMultipleOrUniquePlaylistZipName: savedZipNameLst[0],
+        savedZipFilePath: savedZipFilePath,
+        savedZipSize: 1232878,
+        saveFromPartMessage:
+            'Restored 2 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from',
+        saveSincePartMessage:
+            '\n\nSince the playlists\n  "EMI",\n  "Local"\nwere created, they are positioned at the end of the playlist list.',
+        playlistTitlesOrderedLst: playlistTitles,
+        audioTitlesOrderedLst: ['Seigneur'],
+      );
+
+      // Now restore in 'parent_1\\parent_1_1\\playlists' the mp3 of multiple
+      // playlists previously saved in 'audio\\saved\\MP3' dir.
+
+      String mp3RestorableZipDirectory =
+          '$savedZipFilePath${path.separator}MP3';
+      String savedMp3ZipName = savedZipNameLst[1];
+
+      await _restoreMultiplePlaylistsMp3(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        restorableMp3ZipName: savedMp3ZipName,
+        restorableMp3ZipDirectory: mp3RestorableZipDirectory,
+        restorableMp3ZipSize: 826744,
+        restoredFromPartMessage:
+            'Restored 2 audio(s) MP3 in 2 playlist(s) from',
+      );
+
+      // Now delete the 'Local' playlist (its mp3 files
+      // are also deleted)
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: 'Local',
+          playlistMenuKeyStr: 'popup_menu_delete_playlist',
+          dragToBottom: true);
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      // Now restore the previously deleted 'Local' playlist.
+      await _restoreMultipleOrIndividualPlaylist(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        savedMultipleOrUniquePlaylistZipName: 'Local.zip',
+        savedZipFilePath: savedZipFilePath,
+        savedZipSize: 1375,
+        saveFromPartMessage:
+            'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from',
+        saveSincePartMessage:
+            '\n\nSince the playlist\n  "Local"\nwas created, it is positioned at the end of the playlist list.',
+        playlistTitlesOrderedLst: playlistTitles,
+        audioTitlesOrderedLst: ['Seigneur'],
+      );
+
+      // AAnd restore mp3 of the previously deleted 'Local' playlist.
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -44135,13 +44215,120 @@ void main() {
   });
 }
 
-Future<void> _saveAllPlaylistsAndTheirMp3({
+Future<void> _restoreMultiplePlaylistsMp3({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String restorableMp3ZipName,
+  required String restorableMp3ZipDirectory,
+  required int restorableMp3ZipSize,
+  required String restoredFromPartMessage,
+  String restoreUniquePlaylistName = '',
+}) async {
+  String restorableMp3ZipFilePathName =
+      '$restorableMp3ZipDirectory${path.separator}$restorableMp3ZipName';
+
+  // Setting the mp3 zip file to select in the mock file
+  // picker. This zip contains multiple playlists MP3 files
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: restorableMp3ZipName,
+        path: restorableMp3ZipFilePathName,
+        size: restorableMp3ZipSize),
+  ]);
+
+  if (restoreUniquePlaylistName.isEmpty) {
+    await IntegrationTestUtil.typeOnAppbarMenuItem(
+      tester: tester,
+      appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
+    );
+  } else {
+    
+  }
+
+  // Tap on the Ok button to close the MP3 Restoration dialog
+  await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+  await tester.pumpAndSettle();
+
+  // Now tap on the 'A single ZIP File' button
+  await tester.tap(find.byKey(const Key('selectFileButton')));
+  await tester.pumpAndSettle();
+
+  // Verify the displayed warning confirmation dialog
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        '$restoredFromPartMessage the MP3 zip file "$restorableMp3ZipFilePathName".',
+    isWarningConfirming: true,
+  );
+}
+
+Future<void> _restoreMultipleOrIndividualPlaylist({
+  required WidgetTester tester,
+  required MockFilePicker mockFilePicker,
+  required String savedMultipleOrUniquePlaylistZipName,
+  required String savedZipFilePath,
+  required String saveFromPartMessage,
+  required String saveSincePartMessage,
+  required int savedZipSize,
+  required List<String> playlistTitlesOrderedLst,
+  required List<String> audioTitlesOrderedLst,
+}) async {
+  mockFilePicker.setSelectedFiles([
+    PlatformFile(
+        name: savedMultipleOrUniquePlaylistZipName,
+        path:
+            '$savedZipFilePath${path.separator}$savedMultipleOrUniquePlaylistZipName',
+        size: savedZipSize),
+  ]);
+
+  // Execute the 'Restore Playlists, Comments and Settings from Zip
+  // File ...' menu without replacing the existing playlists and
+  // without deleting playlist not contained in zip.
+  await IntegrationTestUtil.executeRestorePlaylists(
+    tester: tester,
+    doReplaceExistingPlaylists: false,
+    doDeleteExistingPlaylistsNotContainedInZip: false,
+  );
+
+  await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+  // Verify the displayed warning confirmation dialog
+  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    tester: tester,
+    warningDialogMessage:
+        '$saveFromPartMessage "$savedZipFilePath\\$savedMultipleOrUniquePlaylistZipName".$saveSincePartMessage',
+    isWarningConfirming: true,
+    warningTitle: 'CONFIRMATION',
+  );
+
+  // Verifying the existing and the restored playlists
+  // list as well as the selected playlist displayed
+  // audio titles.
+  IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
+    tester: tester,
+    playlistTitlesOrderedLst: playlistTitlesOrderedLst,
+    audioTitlesOrderedLst: audioTitlesOrderedLst,
+  );
+}
+
+/// This method tests the saving of playlists and their mp3 files in zip files and
+/// the verification of the zip file content.
+///
+/// [
+///   savedMultiplePlaylistsZipName, is the name of the zip file which contains the
+///                                  saved playlists and their comments and pictures
+///                                  json files
+///   savedMp3ZipName,               is the name of the zip file which contains the
+///                                  saved mp3 files of the saved playlists
+/// ] is returned by this method.
+Future<List<String>> _saveAllPlaylistsAndTheirMp3({
   required WidgetTester tester,
   required String saveZipFilePath,
   required String savedPicturesMessage,
   required List<String> expectedPlaylistsZipContentLst,
   required String oldestAudioDownloadDateTimeStr,
   required String savedMp3DirectoryPath,
+  required String mp3ZipNameFirstPart,
   required List<String> expectedMp3ZipContentLst,
 }) async {
   // Tap the appbar leading popup menu button Then, the 'Save
@@ -44182,8 +44369,10 @@ Future<void> _saveAllPlaylistsAndTheirMp3({
     fileExtension: 'zip',
   );
 
+  final String savedMultiplePlaylistsZipName = zipLst[0];
   List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
-    zipFilePathName: "$saveZipFilePath${path.separator}${zipLst[0]}",
+    zipFilePathName:
+        "$saveZipFilePath${path.separator}$savedMultiplePlaylistsZipName",
   );
 
   expect(
@@ -44224,11 +44413,17 @@ Future<void> _saveAllPlaylistsAndTheirMp3({
   expect(
       actualMessage,
       contains(
-          "ZIP file path name: \"$savedMp3DirectoryPath${path.separator}audioLearn_mp3_from_2026-03-02_20_20_15_on_"));
+          "ZIP file path name: \"$savedMp3DirectoryPath${path.separator}$mp3ZipNameFirstPart"));
 
   zipLst = DirUtil.listFileNamesInDir(
     directoryPath: savedMp3DirectoryPath,
     fileExtension: 'zip',
+  );
+
+  final String savedMp3ZipName = zipLst.firstWhere(
+    (zipName) {
+      return zipName.contains(mp3ZipNameFirstPart);
+    },
   );
 
   zipContentLst = await DirUtil.listPathFileNamesInZip(
@@ -44244,6 +44439,11 @@ Future<void> _saveAllPlaylistsAndTheirMp3({
   // Tap on the Ok button to close the warning confirmation dialog
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();
+
+  return [
+    savedMultiplePlaylistsZipName,
+    savedMp3ZipName,
+  ];
 }
 
 Future<void> _saveUniquePlaylistAndItsMp3({
@@ -44934,7 +45134,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   await tester.tap(setValueToTargetOkButton);
   await tester.pumpAndSettle();
 
-  // Now tap on the 'A Single ZIP File' button
+  // Now tap on the 'A single ZIP File' button
   await tester.tap(find.byKey(const Key('selectFileButton')));
   await tester.pumpAndSettle();
 
