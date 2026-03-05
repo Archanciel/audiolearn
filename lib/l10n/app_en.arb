@@ -1126,7 +1126,7 @@
   "deletedExistingPlaylistsMessage": "\n\nDeleted {deletedExistingPlaylistNumber} playlist(s)\n  \"{deletedExistingPlaylistTitles}\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
   "selectFileOrDirTitle": "Restore MP3 Files",
   "selectQuestion": "What would you like to select ?",
-  "selectZipFile": "A Single ZIP File",
+  "selectZipFile": "A single ZIP File",
   "selectDirectory": "A Directory with ZIP's",
   "dateFormatddMMyyyy": "dd/MM/yyyy",
   "dateFormatMMddyyyy": "MM/dd/yyyy",

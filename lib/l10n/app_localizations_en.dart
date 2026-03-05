@@ -2480,7 +2480,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectQuestion => 'What would you like to select ?';
 
   @override
-  String get selectZipFile => 'A Single ZIP File';
+  String get selectZipFile => 'A single ZIP File';
 
   @override
   String get selectDirectory => 'A Directory with ZIP\'s';
