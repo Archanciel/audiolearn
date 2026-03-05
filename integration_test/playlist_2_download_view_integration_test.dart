@@ -34563,7 +34563,7 @@ void main() {
 
       String playlistToSaveTitle = 'Local';
 
-      await _saveUniquePlaylistAndItsMp3(
+      String singlePlaylistSavedMp3ZipName = await _saveUniquePlaylistAndItsMp3(
         tester: tester,
         playlistToSaveTitle: playlistToSaveTitle,
         saveZipFilePath: saveZipFilePath,
@@ -34575,6 +34575,9 @@ void main() {
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:29",
         savedAudioMessage:
             "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
+        savedMp3DirectoryPath:
+            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
+        mp3ZipNameFirstPart: 'Local_mp3_from_2026-03-02_20_29_26_on_',
       );
 
       // Replace the platform instance with your mock
@@ -34626,12 +34629,12 @@ void main() {
 
       String mp3RestorableZipDirectory =
           '$savedZipFilePath${path.separator}MP3';
-      String savedMp3ZipName = savedZipNameLst[1];
+      String multiplePlaylistsSavedMp3ZipName = savedZipNameLst[1];
 
-      await _restoreMultiplePlaylistsMp3(
+      await _restoreMultipleOrSinglePlaylistMp3(
         tester: tester,
         mockFilePicker: mockFilePicker,
-        restorableMp3ZipName: savedMp3ZipName,
+        restorableMp3ZipName: multiplePlaylistsSavedMp3ZipName,
         restorableMp3ZipDirectory: mp3RestorableZipDirectory,
         restorableMp3ZipSize: 826744,
         restoredFromPartMessage:
@@ -34667,7 +34670,18 @@ void main() {
         audioTitlesOrderedLst: ['Seigneur'],
       );
 
-      // AAnd restore mp3 of the previously deleted 'Local' playlist.
+      // And restore mp3 of the previously deleted 'Local' playlist.
+
+      await _restoreMultipleOrSinglePlaylistMp3(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        restorableMp3ZipName: singlePlaylistSavedMp3ZipName,
+        restorableMp3ZipDirectory: mp3RestorableZipDirectory,
+        restorableMp3ZipSize: 826744,
+        restoredFromPartMessage:
+            'Restored 1 audio(s) MP3 in 1 playlist(s) from',
+        restoreUniquePlaylistTitle: 'Local',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -44215,14 +44229,14 @@ void main() {
   });
 }
 
-Future<void> _restoreMultiplePlaylistsMp3({
+Future<void> _restoreMultipleOrSinglePlaylistMp3({
   required WidgetTester tester,
   required MockFilePicker mockFilePicker,
   required String restorableMp3ZipName,
   required String restorableMp3ZipDirectory,
   required int restorableMp3ZipSize,
   required String restoredFromPartMessage,
-  String restoreUniquePlaylistName = '',
+  String restoreUniquePlaylistTitle = '',
 }) async {
   String restorableMp3ZipFilePathName =
       '$restorableMp3ZipDirectory${path.separator}$restorableMp3ZipName';
@@ -44236,13 +44250,19 @@ Future<void> _restoreMultiplePlaylistsMp3({
         size: restorableMp3ZipSize),
   ]);
 
-  if (restoreUniquePlaylistName.isEmpty) {
+  if (restoreUniquePlaylistTitle.isEmpty) {
     await IntegrationTestUtil.typeOnAppbarMenuItem(
       tester: tester,
       appbarMenuKeyStr: 'appBarMenuRestorePlaylistsAudioMp3FilesFromZip',
     );
   } else {
-    
+    await IntegrationTestUtil.typeOnPlaylistMenuItem(
+      tester: tester,
+      playlistTitle: restoreUniquePlaylistTitle,
+      playlistMenuKeyStr:
+          'popup_menu_restore_playlist_audio_mp3_files_from_zip',
+      dragToBottom: true,
+    );
   }
 
   // Tap on the Ok button to close the MP3 Restoration dialog
@@ -44446,13 +44466,15 @@ Future<List<String>> _saveAllPlaylistsAndTheirMp3({
   ];
 }
 
-Future<void> _saveUniquePlaylistAndItsMp3({
+Future<String> _saveUniquePlaylistAndItsMp3({
   required WidgetTester tester,
   required String playlistToSaveTitle,
   required String saveZipFilePath,
   required List<String> expectedPlaylistZipContentLst,
   required String oldestAudioDownloadDateTimeStr,
   required String savedAudioMessage,
+  required String savedMp3DirectoryPath,
+  required String mp3ZipNameFirstPart,
 }) async {
   await IntegrationTestUtil.typeOnPlaylistMenuItem(
     tester: tester,
@@ -44524,11 +44546,22 @@ Future<void> _saveUniquePlaylistAndItsMp3({
   expect(
       actualMessage,
       contains(
-          "ZIP file path name: \"$saveZipFilePath${path.separator}MP3${path.separator}Local_mp3_from_2026-03-02_20_29_26_on_"));
+          "ZIP file path name: \"$savedMp3DirectoryPath${path.separator}$mp3ZipNameFirstPart"));
 
   // Tap on the Ok button to close the warning confirmation dialog
   await tester.tap(find.byKey(const Key('warningDialogOkButton')));
   await tester.pumpAndSettle();
+
+  zipLst = DirUtil.listFileNamesInDir(
+    directoryPath: savedMp3DirectoryPath,
+    fileExtension: 'zip',
+  );
+
+  return zipLst.firstWhere(
+    (zipName) {
+      return zipName.contains(mp3ZipNameFirstPart);
+    },
+  );
 }
 
 Future<void> _correctPlaySpeedEnterCode({
