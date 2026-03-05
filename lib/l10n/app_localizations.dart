@@ -3956,7 +3956,7 @@ abstract class AppLocalizations {
   /// No description provided for @selectZipFile.
   ///
   /// In en, this message translates to:
-  /// **'A Single ZIP File'**
+  /// **'A single ZIP File'**
   String get selectZipFile;
 
   /// No description provided for @selectDirectory.
