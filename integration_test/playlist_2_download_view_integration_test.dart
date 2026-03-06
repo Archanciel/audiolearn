@@ -34549,8 +34549,9 @@ void main() {
           "pictures\\SkyCross.jpg",
         ],
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:20",
-        savedMp3DirectoryPath:
-            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
+        totalSavedMessage:
+            "Total saved audio number: 2, total size: 861 KB and total duration: 0:01:47.6.",
+        savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'audioLearn_mp3_from_2026-03-02_20_20_15_on_',
         expectedMp3ZipContentLst: [
           "playlists\\EMI\\260302-202015-Aram Khachaturian - Andantino (live) 17-02-02.mp3",
@@ -34681,6 +34682,47 @@ void main() {
         restoredFromPartMessage:
             'Restored 1 audio(s) MP3 in 1 playlist(s) from',
         restoreUniquePlaylistTitle: 'Local',
+      );
+
+      // Save the playlists contained in 'parent_1\\parent_1_1\\playlists'
+      // with their comments and pictures to a zip file
+
+      saveZipFilePath =
+          '$kApplicationPathWindowsTest${path.separator}parent_1${path.separator}parent_1_1${path.separator}$kSavedPlaylistsDirName';
+
+      savedZipNameLst = await _saveAllPlaylistsAndTheirMp3(
+        tester: tester,
+        saveZipFilePath: saveZipFilePath,
+        savedPicturesMessage:
+            "\n\nSaved also 4 picture JPG file(s) in the ZIP file.",
+        expectedPlaylistsZipContentLst: [
+          "playlists\\Dieu je T'adore\\comments\\Jésus je T'aime.json",
+          "playlists\\Dieu je T'adore\\Dieu je T'adore.json",
+          "playlists\\Dieu je T'adore\\pictures\\Jésus je T'aime.json",
+          "playlists\\EMI\\EMI.json",
+          "playlists\\Local\\comments\\Jésus je T'aime énormément.json",
+          "playlists\\Local\\Local.json",
+          "playlists\\local 3\\comments\\Seigneur.json",
+          "playlists\\local 3\\local 3.json",
+          "playlists\\local 3\\pictures\\Seigneur.json",
+          "settings.json",
+          "pictures\\pictureAudioMap.json",
+          "pictures\\Dieu je T'adore.jpg",
+          "pictures\\Jésus je T'adore.jpg",
+          "pictures\\Jésus je T'aime.jpg",
+          "pictures\\SkyCross.jpg",
+        ],
+        oldestAudioDownloadDateTimeStr: "02/03/2026 20:20",
+        totalSavedMessage:
+            "Total saved audio number: 4, total size: 899 KB and total duration: 0:01:52.5.",
+        savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
+        mp3ZipNameFirstPart: 'audioLearn_mp3_from_2026-03-02_20_20_15_on_',
+        expectedMp3ZipContentLst: [
+          "playlists\\Dieu je T'adore\\Jésus je T'aime.mp3",
+          "playlists\\local 3\\Seigneur.mp3",
+          "playlists\\EMI\\260302-202015-Aram Khachaturian - Andantino (live) 17-02-02.mp3",
+          "playlists\\Local\\Jésus je T'aime énormément.mp3",
+        ],
       );
 
       // Purge the test playlist directory so that the created test
@@ -44347,6 +44389,7 @@ Future<List<String>> _saveAllPlaylistsAndTheirMp3({
   required String savedPicturesMessage,
   required List<String> expectedPlaylistsZipContentLst,
   required String oldestAudioDownloadDateTimeStr,
+  required String totalSavedMessage,
   required String savedMp3DirectoryPath,
   required String mp3ZipNameFirstPart,
   required List<String> expectedMp3ZipContentLst,
@@ -44428,7 +44471,7 @@ Future<List<String>> _saveAllPlaylistsAndTheirMp3({
   expect(
       actualMessage,
       contains(
-          "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTimeStr.\n\nTotal saved audio number: 2, total size: 861 KB and total duration: 0:01:47.6."));
+          "Saved to ZIP all playlists audio MP3 files downloaded from $oldestAudioDownloadDateTimeStr.\n\n$totalSavedMessage"));
 
   expect(
       actualMessage,
@@ -44448,7 +44491,7 @@ Future<List<String>> _saveAllPlaylistsAndTheirMp3({
 
   zipContentLst = await DirUtil.listPathFileNamesInZip(
     zipFilePathName:
-        "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3${path.separator}${zipLst[0]}",
+        "$saveZipFilePath${path.separator}MP3${path.separator}${zipLst[0]}",
   );
 
   expect(
