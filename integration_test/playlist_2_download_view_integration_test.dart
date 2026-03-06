@@ -34577,8 +34577,7 @@ void main() {
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:29",
         savedAudioMessage:
             "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
-        savedMp3DirectoryPath:
-            "$saveZipFilePath${path.separator}MP3",
+        savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'Local_mp3_from_2026-03-02_20_29_26_on_',
       );
 
@@ -34747,9 +34746,116 @@ void main() {
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:49",
         savedAudioMessage:
             "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
-        savedMp3DirectoryPath:
-            "$saveZipFilePath${path.separator}MP3",
+        savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: "Dieu je T'adore_mp3_from_2026-03-02_20_49_53_on_",
+      );
+
+      // Change the playlist root path to the 'newDir\\playlists' directory in order
+      // to restore the zip files previously saved in 'parent_1\\parent_1_1\\saved'.
+      // This will verify that the playlist and mp3 restoration works correctly when
+      // the playlist root path was changed
+      modifiedPlaylistRootPath =
+          '$kApplicationPathWindowsTest${path.separator}newDir${path.separator}playlists';
+
+      await _changeAndSavePlaylistRootPath(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        pathToSelectStr: modifiedPlaylistRootPath,
+      );
+
+      // Now restore in 'parent_1\\parent_1_1\\playlists' the multiple playlists
+      // previously saved in 'audio\\saved' dir.
+
+      playlistTitles = [
+        "Local 2",
+        "Dieu je T'adore",
+        "local 3",
+        "EMI",
+        "Local",
+      ];
+
+      savedZipFilePath =
+          '$kApplicationPathWindowsTest${path.separator}parent_1${path.separator}parent_1_1${path.separator}$kSavedPlaylistsDirName';
+
+      await _restoreMultipleOrIndividualPlaylist(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        savedMultipleOrUniquePlaylistZipName: savedZipNameLst[0],
+        savedZipFilePath: savedZipFilePath,
+        savedZipSize: 1236315,
+        saveFromPartMessage:
+            'Restored 4 playlist, 3 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from',
+        saveSincePartMessage:
+            "\n\nSince the playlists\n  \"Dieu je T'adore\",\n  \"EMI\",\n  \"Local\",\n  \"local 3\"\nwere created, they are positioned at the end of the playlist list.",
+        playlistTitlesOrderedLst: playlistTitles,
+        audioTitlesOrderedLst: ["Dieu, je T'adore"],
+      );
+
+      // Now restore in 'parent_1\\parent_1_1\\playlists' the mp3 of multiple
+      // playlists previously saved in 'audio\\saved\\MP3' dir.
+
+      mp3RestorableZipDirectory = '$savedZipFilePath${path.separator}MP3';
+      multiplePlaylistsSavedMp3ZipName = savedZipNameLst[1];
+
+      await _restoreMultipleOrSinglePlaylistMp3(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        restorableMp3ZipName: multiplePlaylistsSavedMp3ZipName,
+        restorableMp3ZipDirectory: mp3RestorableZipDirectory,
+        restorableMp3ZipSize: 826744,
+        restoredFromPartMessage:
+            'Restored 4 audio(s) MP3 in 4 playlist(s) from',
+      );
+
+      // Now delete the 'Dieu je T'adore' playlist (its mp3 files
+      // are also deleted)
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: "Dieu je T'adore",
+        playlistMenuKeyStr: 'popup_menu_delete_playlist',
+        dragToBottom: true,
+      );
+
+      // Now find the confirm button of the delete playlist confirm
+      // dialog and tap on it
+      await tester.tap(find.byKey(const Key('confirmButton')));
+      await tester.pumpAndSettle();
+
+      playlistTitles = [
+        "Local 2",
+        "local 3",
+        "EMI",
+        "Local",
+        "Dieu je T'adore",
+      ];
+
+      // Now restore the previously deleted 'Dieu je T'adore' playlist.
+      await _restoreMultipleOrIndividualPlaylist(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        savedMultipleOrUniquePlaylistZipName: "Dieu je T'adore.zip",
+        savedZipFilePath: savedZipFilePath,
+        savedZipSize: 127512,
+        saveFromPartMessage:
+            'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from',
+        saveSincePartMessage:
+            "\n\nSince the playlist\n  \"Dieu je T'adore\"\nwas created, it is positioned at the end of the playlist list.",
+        playlistTitlesOrderedLst: playlistTitles,
+        audioTitlesOrderedLst: ["Dieu, je T'adore"],
+      );
+
+      // And restore mp3 of the previously deleted 'Dieu je T'adore' playlist.
+
+      await _restoreMultipleOrSinglePlaylistMp3(
+        tester: tester,
+        mockFilePicker: mockFilePicker,
+        restorableMp3ZipName: singlePlaylistSavedMp3ZipName,
+        restorableMp3ZipDirectory: mp3RestorableZipDirectory,
+        restorableMp3ZipSize: 10254,
+        restoredFromPartMessage:
+            'Restored 1 audio(s) MP3 in 1 playlist(s) from',
+        restoreUniquePlaylistTitle: "Dieu je T'adore",
       );
 
       // Purge the test playlist directory so that the created test
