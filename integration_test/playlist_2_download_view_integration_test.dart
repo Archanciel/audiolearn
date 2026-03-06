@@ -34568,6 +34568,7 @@ void main() {
         tester: tester,
         playlistToSaveTitle: playlistToSaveTitle,
         saveZipFilePath: saveZipFilePath,
+        savedPicturesMessage: '',
         expectedPlaylistZipContentLst: [
           "playlists\\Local\\comments\\Jésus je T'aime énormément.json",
           "playlists\\Local\\Local.json",
@@ -34577,7 +34578,7 @@ void main() {
         savedAudioMessage:
             "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
         savedMp3DirectoryPath:
-            "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}MP3",
+            "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'Local_mp3_from_2026-03-02_20_29_26_on_',
       );
 
@@ -34723,6 +34724,32 @@ void main() {
           "playlists\\EMI\\260302-202015-Aram Khachaturian - Andantino (live) 17-02-02.mp3",
           "playlists\\Local\\Jésus je T'aime énormément.mp3",
         ],
+      );
+
+      // Save a unique playlist contained in 'parent_1\\parent_1_1\\playlists'
+      // with its comments and pictures to a zip file
+
+      playlistToSaveTitle = "Dieu je T'adore";
+
+      singlePlaylistSavedMp3ZipName = await _saveUniquePlaylistAndItsMp3(
+        tester: tester,
+        playlistToSaveTitle: playlistToSaveTitle,
+        saveZipFilePath: saveZipFilePath,
+        savedPicturesMessage:
+            "Saved also 1 picture JPG file(s) in the ZIP file.",
+        expectedPlaylistZipContentLst: [
+          "playlists\\Dieu je T'adore\\comments\\Jésus je T'aime.json",
+          "playlists\\Dieu je T'adore\\Dieu je T'adore.json",
+          "playlists\\Dieu je T'adore\\pictures\\Jésus je T'aime.json",
+          "pictures\\pictureAudioMap.json",
+          "pictures\\Jésus je T'aime.jpg",
+        ],
+        oldestAudioDownloadDateTimeStr: "02/03/2026 20:49",
+        savedAudioMessage:
+            "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
+        savedMp3DirectoryPath:
+            "$saveZipFilePath${path.separator}MP3",
+        mp3ZipNameFirstPart: "Dieu je T'adore_mp3_from_2026-03-02_20_49_53_on_",
       );
 
       // Purge the test playlist directory so that the created test
@@ -44513,6 +44540,7 @@ Future<String> _saveUniquePlaylistAndItsMp3({
   required WidgetTester tester,
   required String playlistToSaveTitle,
   required String saveZipFilePath,
+  required String savedPicturesMessage,
   required List<String> expectedPlaylistZipContentLst,
   required String oldestAudioDownloadDateTimeStr,
   required String savedAudioMessage,
@@ -44528,8 +44556,9 @@ Future<String> _saveUniquePlaylistAndItsMp3({
   // Verify the displayed warning dialog
   await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
     tester: tester,
-    warningDialogMessage:
-        "Saved playlist, comment and picture JSON files to \"$saveZipFilePath${path.separator}$playlistToSaveTitle.zip\".",
+    warningDialogMessage: (savedPicturesMessage.isEmpty)
+        ? "Saved playlist, comment and picture JSON files to \"$saveZipFilePath${path.separator}$playlistToSaveTitle.zip\"."
+        : "Saved playlist, comment and picture JSON files to \"$saveZipFilePath${path.separator}$playlistToSaveTitle.zip\".\n\n$savedPicturesMessage",
     isWarningConfirming: true,
   );
 
@@ -44547,9 +44576,8 @@ Future<String> _saveUniquePlaylistAndItsMp3({
 
   // Verify the content of the created ZIP file
 
-  String zipFilePathName = path.join(
-      "$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName",
-      '$playlistToSaveTitle.zip');
+  String zipFilePathName =
+      path.join(saveZipFilePath, '$playlistToSaveTitle.zip');
 
   List<String> zipContentLst = await DirUtil.listPathFileNamesInZip(
     zipFilePathName: zipFilePathName,
