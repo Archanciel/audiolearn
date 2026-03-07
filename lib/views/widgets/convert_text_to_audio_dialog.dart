@@ -134,60 +134,67 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
           ),
           centerTitle: true,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextToConvertFieldAndDeleteButton(
-                context: context,
-                textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-              ),
-              const SizedBox(
-                height: kDialogTextFieldVerticalSeparation,
-              ),
-              textToSpeechVMlistenTrue.isConverting
-                  ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        AppLocalizations.of(context)!.creatingMp3,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: kDialogTitlesStyle,
-                        key: const Key('conversionTextKey'),
-                      ),
-                      SizedBox(width: 20.0),
-                      SizedBox(
-                        width: 24, // taille souhaitée
-                        height: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 3,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTextToConvertFieldAndDeleteButton(
+                    context: context,
+                    textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+                  ),
+                  const SizedBox(
+                    height: kDialogTextFieldVerticalSeparation,
+                  ),
+                  textToSpeechVMlistenTrue.isConverting
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                              Text(
+                                AppLocalizations.of(context)!.creatingMp3,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                style: kDialogTitlesStyle,
+                                key: const Key('conversionTextKey'),
+                              ),
+                              SizedBox(width: 20.0),
+                              SizedBox(
+                                width: 24, // taille souhaitée
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                ),
+                              ),
+                            ])
+                      : Text(
+                          AppLocalizations.of(context)!
+                              .conversionVoiceSelection,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: kDialogTitlesStyle,
+                          key: const Key('voiceSelectionTitleKey'),
                         ),
-                      ),
-                    ])
-                  : Text(
-                      AppLocalizations.of(context)!.conversionVoiceSelection,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      style: kDialogTitlesStyle,
-                      key: const Key('voiceSelectionTitleKey'),
-                    ),
-              _buildVoiceSelectionCheckboxes(
-                context: context,
+                ],
               ),
-              const SizedBox(
-                height: kDialogTextFieldVerticalSeparation,
-              ),
-              _buildClearEndLineCharsCheckbox(
-                context: context,
-              ),
-              _buildActionButtonsLine(
-                context: context,
-                themeProviderVM: themeProviderVMlistenFalse,
-                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-                textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-              ),
-            ],
-          ),
+            ),
+            _buildVoiceSelectionCheckboxes(
+              context: context,
+            ),
+            const SizedBox(
+              height: kDialogTextFieldVerticalSeparation,
+            ),
+            _buildClearEndLineCharsCheckbox(
+              context: context,
+            ),
+            _buildActionButtonsLine(
+              context: context,
+              themeProviderVM: themeProviderVMlistenFalse,
+              dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+              textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+            ),
+          ],
         ),
       ),
     );
