@@ -71,6 +71,12 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
           return Scaffold(
             backgroundColor: Colors.black,
             appBar: AppBar(
+              leading: IconButton(
+                key: const Key('audioExtractorBackButton'),
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+                tooltip: 'Back',
+              ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -114,7 +120,7 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
                     onPageChanged: (index) {
                       // ✅ Mettre à jour _lastKnownPage
                       _updateLastKnownPage(index);
-                      
+
                       // Sauvegarder automatiquement quand on change de page
                       _helpDataService.saveLastHelpPosition(
                         categoryId: widget.categoryId,
@@ -193,7 +199,7 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
                 viewModel.jumpToPage(index);
                 // ✅ Mettre à jour _lastKnownPage
                 _updateLastKnownPage(index);
-                
+
                 // Sauvegarder la nouvelle position
                 _helpDataService.saveLastHelpPosition(
                   categoryId: widget.categoryId,

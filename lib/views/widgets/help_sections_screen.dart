@@ -23,6 +23,12 @@ class HelpSectionsScreen extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
           title: Text(
             category.title,
             textAlign: TextAlign.center,

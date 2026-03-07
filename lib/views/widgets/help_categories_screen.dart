@@ -19,6 +19,12 @@ class HelpCategoriesScreen extends StatelessWidget {
       create: (_) => HelpCategoriesViewModel(),
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
           title: const Text(
             'Aide AudioLearn',
             textAlign: TextAlign.center,
