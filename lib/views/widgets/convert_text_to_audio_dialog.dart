@@ -90,7 +90,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Widget build(
     BuildContext context,
   ) {
-    final ThemeProviderVM themeProviderVM = Provider.of<ThemeProviderVM>(
+    final ThemeProviderVM themeProviderVMlistenFalse = Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     );
@@ -128,7 +128,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             ),
             IconButton(
               icon: IconTheme(
-                data: (themeProviderVM.currentTheme == AppTheme.dark
+                data: (themeProviderVMlistenFalse.currentTheme == AppTheme.dark
                         ? ScreenMixin.themeDataDark
                         : ScreenMixin.themeDataLight)
                     .iconTheme,
@@ -221,7 +221,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         actions: [
           _buildActionButtonsLine(
             context: context,
-            themeProviderVM: themeProviderVM,
+            themeProviderVM: themeProviderVMlistenFalse,
             dateFormatVMlistenFalse: dateFormatVMlistenFalse,
             textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
           ),
