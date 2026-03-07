@@ -90,7 +90,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Widget build(
     BuildContext context,
   ) {
-    final ThemeProviderVM themeProviderVMlistenFalse = Provider.of<ThemeProviderVM>(
+    final ThemeProviderVM themeProviderVMlistenFalse =
+        Provider.of<ThemeProviderVM>(
       context,
       listen: false,
     );
@@ -112,120 +113,82 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       notify: false,
     );
 
-    return Center(
-      child: AlertDialog(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              child: Text(
-                key: const Key('convertTextToAudioDialogTitleKey'),
-                AppLocalizations.of(context)!.convertTextToAudioDialogTitle,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center, // Centered multi lines text
-                maxLines: 2,
-              ),
-            ),
-            IconButton(
-              icon: IconTheme(
-                data: (themeProviderVMlistenFalse.currentTheme == AppTheme.dark
-                        ? ScreenMixin.themeDataDark
-                        : ScreenMixin.themeDataLight)
-                    .iconTheme,
-                child: const Icon(
-                  Icons.help_outline,
-                  size: 40.0,
-                ),
-              ),
-              onPressed: () {
-                UiUtil.displayHelp(
-                    context: context,
-                    categoryId: "text_to_speech_conversion",
-                    categoryIdTitle: "Conversion de texte en audio",
-                    categoryIdDescription:
-                        "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.");
-              },
-            ),
-          ],
+    return Theme(
+      data: themeProviderVMlistenFalse.currentTheme == AppTheme.dark
+          ? ScreenMixin.themeDataDark
+          : ScreenMixin.themeDataLight,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
+          title: Text(
+            key: const Key('convertTextToAudioDialogTitleKey'),
+            AppLocalizations.of(context)!.convertTextToAudioDialogTitle,
+            style: Theme.of(context).textTheme.headlineSmall,
+            textAlign: TextAlign.center, // Centered multi lines text
+            maxLines: 2,
+          ),
+          centerTitle: true,
         ),
-        actionsPadding:
-            // reduces the top vertical space between the buttons
-            // and the content
-            kDialogActionsPadding,
-        content: SizedBox(
-          width: double.maxFinite,
-          height: 800,
-          child: DraggableScrollableSheet(
-            initialChildSize: 1,
-            minChildSize: 1,
-            maxChildSize: 1,
-            builder: (
-              BuildContext context,
-              ScrollController scrollController,
-            ) {
-              return SingleChildScrollView(
-                child: ListBody(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildTextToConvertFieldAndDeleteButton(
-                      context: context,
-                      textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextToConvertFieldAndDeleteButton(
+                context: context,
+                textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+              ),
+              const SizedBox(
+                height: kDialogTextFieldVerticalSeparation,
+              ),
+              textToSpeechVMlistenTrue.isConverting
+                  ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Text(
+                        AppLocalizations.of(context)!.creatingMp3,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        style: kDialogTitlesStyle,
+                        key: const Key('conversionTextKey'),
+                      ),
+                      SizedBox(width: 20.0),
+                      SizedBox(
+                        width: 24, // taille souhaitée
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    ])
+                  : Text(
+                      AppLocalizations.of(context)!.conversionVoiceSelection,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: kDialogTitlesStyle,
+                      key: const Key('voiceSelectionTitleKey'),
                     ),
-                    const SizedBox(
-                      height: kDialogTextFieldVerticalSeparation,
-                    ),
-                    textToSpeechVMlistenTrue.isConverting
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                Text(
-                                  AppLocalizations.of(context)!.creatingMp3,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  style: kDialogTitlesStyle,
-                                  key: const Key('conversionTextKey'),
-                                ),
-                                SizedBox(width: 20.0),
-                                SizedBox(
-                                  width: 24, // taille souhaitée
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                  ),
-                                ),
-                              ])
-                        : Text(
-                            AppLocalizations.of(context)!
-                                .conversionVoiceSelection,
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            style: kDialogTitlesStyle,
-                            key: const Key('voiceSelectionTitleKey'),
-                          ),
-                    _buildVoiceSelectionCheckboxes(
-                      context: context,
-                    ),
-                    const SizedBox(
-                      height: kDialogTextFieldVerticalSeparation,
-                    ),
-                    _buildClearEndLineCharsCheckbox(
-                      context: context,
-                    ),
-                  ],
-                ),
-              );
-            },
+              _buildVoiceSelectionCheckboxes(
+                context: context,
+              ),
+              const SizedBox(
+                height: kDialogTextFieldVerticalSeparation,
+              ),
+              _buildClearEndLineCharsCheckbox(
+                context: context,
+              ),
+              _buildActionButtonsLine(
+                context: context,
+                themeProviderVM: themeProviderVMlistenFalse,
+                dateFormatVMlistenFalse: dateFormatVMlistenFalse,
+                textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+              ),
+            ],
           ),
         ),
-        actions: [
-          _buildActionButtonsLine(
-            context: context,
-            themeProviderVM: themeProviderVMlistenFalse,
-            dateFormatVMlistenFalse: dateFormatVMlistenFalse,
-            textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
-          ),
-        ],
       ),
     );
   }
