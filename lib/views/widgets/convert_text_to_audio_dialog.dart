@@ -137,7 +137,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -148,34 +148,39 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                   const SizedBox(
                     height: kDialogTextFieldVerticalSeparation,
                   ),
-                  textToSpeechVMlistenTrue.isConverting
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                              Text(
-                                AppLocalizations.of(context)!.creatingMp3,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                style: kDialogTitlesStyle,
-                                key: const Key('conversionTextKey'),
-                              ),
-                              SizedBox(width: 20.0),
-                              SizedBox(
-                                width: 24, // taille souhaitée
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 3,
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: textToSpeechVMlistenTrue.isConverting
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                Text(
+                                  AppLocalizations.of(context)!.creatingMp3,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  style: kDialogTitlesStyle,
+                                  key: const Key('conversionTextKey'),
                                 ),
-                              ),
-                            ])
-                      : Text(
-                          AppLocalizations.of(context)!
-                              .conversionVoiceSelection,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          style: kDialogTitlesStyle,
-                          key: const Key('voiceSelectionTitleKey'),
+                                SizedBox(width: 20.0),
+                                SizedBox(
+                                  width: 24, // taille souhaitée
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                  ),
+                                ),
+                              ])
+                        : Center(
+                          child: Text(
+                              AppLocalizations.of(context)!
+                                  .conversionVoiceSelection,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              style: kDialogTitlesStyle,
+                              key: const Key('voiceSelectionTitleKey'),
+                            ),
                         ),
+                  ),
                 ],
               ),
             ),
