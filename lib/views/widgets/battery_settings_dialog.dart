@@ -38,6 +38,12 @@ class BatterySettingsDialog extends StatelessWidget with ScreenMixin {
           : ScreenMixin.themeDataLight,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
           title: Text(
             AppLocalizations.of(context)!.batteryParameters,
             textAlign: TextAlign.center,

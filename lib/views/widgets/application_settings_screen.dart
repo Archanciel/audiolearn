@@ -112,6 +112,12 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
           : ScreenMixin.themeDataLight,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            key: const Key('audioExtractorBackButton'),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'Back',
+          ),
           title: Text(
             AppLocalizations.of(context)!.appSettingsDialogTitle,
             textAlign: TextAlign.center,
