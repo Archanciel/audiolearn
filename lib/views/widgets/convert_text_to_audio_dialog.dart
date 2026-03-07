@@ -133,6 +133,28 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
             maxLines: 2,
           ),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: IconTheme(
+                data: (themeProviderVMlistenFalse.currentTheme == AppTheme.dark
+                        ? ScreenMixin.themeDataDark
+                        : ScreenMixin.themeDataLight)
+                    .iconTheme,
+                child: const Icon(
+                  Icons.help_outline,
+                  size: 39.0, // 40 is too big for french version
+                ),
+              ),
+              onPressed: () {
+                UiUtil.displayHelp(
+                    context: context,
+                    categoryId: "text_to_speech_conversion",
+                    categoryIdTitle: "Conversion de texte en audio",
+                    categoryIdDescription:
+                        "Convertir un texte en audio. Par exemple, transformer une prière écrite en prière écoutable.");
+              },
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -171,7 +193,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                 ),
                               ])
                         : Center(
-                          child: Text(
+                            child: Text(
                               AppLocalizations.of(context)!
                                   .conversionVoiceSelection,
                               textAlign: TextAlign.center,
@@ -179,16 +201,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                               style: kDialogTitlesStyle,
                               key: const Key('voiceSelectionTitleKey'),
                             ),
-                        ),
+                          ),
                   ),
                 ],
               ),
             ),
             _buildVoiceSelectionCheckboxes(
               context: context,
-            ),
-            const SizedBox(
-              height: kDialogTextFieldVerticalSeparation,
             ),
             _buildClearEndLineCharsCheckbox(
               context: context,
@@ -240,7 +259,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 key: const Key('textToConvertTextField'),
                 focusNode: _textToConvertFocusNode,
                 style: kDialogTextFieldStyle,
-                maxLines: 18,
+                maxLines: 19,
                 decoration: getDialogTextFieldInputDecoration(
                   hintText:
                       AppLocalizations.of(context)!.textToConvertTextFieldHint,
