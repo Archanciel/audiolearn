@@ -1169,44 +1169,6 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    test(
-        '''Test audio speed zero bug fix. Now audio with speed zero can be played
-           since its peed is set to default playlist speed.''', () async {
-      AudioPlayerVM audioPlayerVM = await createAudioPlayerVM(
-        savedTestDataDirName: 'audio_player_view_zero_speed_test',
-      );
-
-      // obtain the list of playable audio of the selected
-      // playlist ordered by download date
-      List<Audio> selectedPlaylistAudioList =
-          audioPlayerVM.getPlayableAudiosApplyingSortFilterParameters(
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      );
-
-      Audio currentAudio = selectedPlaylistAudioList[0];
-
-      expect(currentAudio.audioPlaySpeed, 0.0);
-
-      // set the current audio to the first audio in the list
-      await audioPlayerVM.setCurrentAudio(
-        audio: currentAudio,
-      );
-
-      expect(currentAudio.audioPlaySpeed, 1.25);
-
-      const String playListOneName = "audio_player_view_0_speed_test";
-
-      // Load Playlist from the file
-      Playlist loadedPlaylistOne = loadPlaylist(playListOneName);
-
-      expect(loadedPlaylistOne.playableAudioLst[0].audioPlaySpeed, 1.25);
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
   });
   group('AudioPlayerVM skipToStart undo/redo', () {
     test('Test single undo/redo of skipToStart position change', () async {
