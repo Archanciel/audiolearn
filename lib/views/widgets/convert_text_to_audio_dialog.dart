@@ -104,6 +104,13 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
       listen: true,
     );
 
+    // Check if the keyboard is visible by checking if the bottom
+    // view inset is greater than zero. This will determine the
+    // maxLines of the TextField to avoid it being too small when
+    // the keyboard is not visible and too big when the keyboard is
+    // visible.
+    final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     // This avoids that after reopening the text to audio dialog,
     // the previous text is still listenable. It is very important
     // that notify is false, otherwise an exception happens and
@@ -168,6 +175,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                     _buildTextToConvertFieldAndDeleteButton(
                       context: context,
                       textToSpeechVMlistenTrue: textToSpeechVMlistenTrue,
+                      isKeyboardVisible: isKeyboardVisible,
                     ),
                     const SizedBox(
                       height: kDialogTextFieldVerticalSeparation,
@@ -230,6 +238,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
   Widget _buildTextToConvertFieldAndDeleteButton({
     required BuildContext context,
     required TextToSpeechVM textToSpeechVMlistenTrue,
+    required bool isKeyboardVisible,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,7 +271,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                 key: const Key('textToConvertTextField'),
                 focusNode: _textToConvertFocusNode,
                 style: kDialogTextFieldStyle,
-                maxLines: 19,
+                maxLines: isKeyboardVisible ? 10 : 19,
                 decoration: getDialogTextFieldInputDecoration(
                   hintText:
                       AppLocalizations.of(context)!.textToConvertTextFieldHint,
