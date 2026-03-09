@@ -1270,5 +1270,6 @@
   "fullAudioSegmentRestoredMessage": "Full audio segment restored",
   "segmentsCountAndTotalDurationTooltip":"The displayed total duration is impacted by the defined segments play speed.",
   "invalidStartAudioDurationMessage": "Invalid start audio duration ({value}). Expected format: hh:mm:ss.",
-  "invalidEndAudioDurationMessage": "Invalid end audio duration ({value}). Expected format: hh:mm:ss."
+  "invalidEndAudioDurationMessage": "Invalid end audio duration ({value}). Expected format: hh:mm:ss.",
+  "playlistUnsavedRootPathWarning": "Since the playlist root path was changed to \"{playlistRootPath}\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog."
 }

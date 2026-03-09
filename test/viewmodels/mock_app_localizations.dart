@@ -3046,4 +3046,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object value,
   ) =>
       "The entered end audio duration value of $value does not respect the required format of hh:mm:ss.";
+
+  @override
+  String playlistUnsavedRootPathWarning(
+    Object playlistRootPath,
+  ) =>
+      "Since the playlist root path was changed to \"$playlistRootPath\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.";
 }
