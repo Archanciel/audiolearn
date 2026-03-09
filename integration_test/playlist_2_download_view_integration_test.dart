@@ -13057,6 +13057,79 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''Change playlist root path and click on dialog back button. Verify the displayed warning.''',
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+
+        // Copy the test initial audio data to the app dir
+        DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+          sourceRootPath:
+              "$kDownloadAppTestSavedDataDir${path.separator}modify_playlist_root_path",
+          destinationRootPath: kApplicationPathWindowsTest,
+        );
+
+        final SettingsDataService settingsDataService = SettingsDataService(
+          isTest: true,
+        );
+
+        // Load the settings from the json file. This is necessary
+        // otherwise the ordered playlist titles will remain empty
+        // and the playlist list will not be filled with the
+        // playlists available in the app test dir
+        await settingsDataService.loadSettingsFromFile(
+            settingsJsonPathFileName:
+                "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+        // Replace the platform instance with your mock
+        MockFilePicker mockFilePicker = MockFilePicker();
+        FilePicker.platform = mockFilePicker;
+
+        await app.main();
+        await tester.pumpAndSettle();
+
+        // Now, set the playlist root path to the a new value.
+
+        final String modifiedPlaylistRootPath =
+            '$kApplicationPathWindowsTest${path.separator}newDirectory${path.separator}playlists';
+
+        // Tap the appbar leading popup menu button Then, the
+        // app settings dialog is opened.
+        await IntegrationTestUtil.typeOnAppbarMenuItem(
+          tester: tester,
+          appbarMenuKeyStr: 'appBarMenuOpenSettingsDialog',
+        );
+
+        // Setting the path value.
+        mockFilePicker.setPathToSelect(
+          pathToSelectStr: modifiedPlaylistRootPath,
+        );
+
+        await tester.tap(find.byKey(const Key('openDirectoryIconButton')));
+        await tester.pumpAndSettle();
+
+        // After having modified the playlist root path, tap on the dialog back button
+        // without saving the changes. This should will open a warning dialog since the
+        // changes are not saved.
+        await tester.tap(find.byKey(const Key('appSettingsBackButton')));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          tester: tester,
+          warningDialogMessage:
+              "Since the playlist root path was changed to \"$modifiedPlaylistRootPath\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.",
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
 
     group('App settings set speed test', () {
