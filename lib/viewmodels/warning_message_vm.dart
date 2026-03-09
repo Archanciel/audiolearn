@@ -162,6 +162,10 @@ enum WarningMessageType {
   playlistInvalidRootPath, // The case if the user enters a playlist
   // root path which does not exist in the application settings dialog
 
+  playlistUnsavedRootPath, // The case if the user enters a playlist
+  // root path in the application settings dialog and close it without
+  // saving or cancelling the settings.
+
   noPlaylistSelectedForSingleVideoDownload, // The case if the user
   // clicks on the single video download button but no playlist
   // to which the downloaded audio will be added is selected.
@@ -1435,4 +1439,17 @@ class WarningMessageVM extends ChangeNotifier {
     // Causes the display warning message widget to be displayed.
     notifyListeners();
   }
+
+  String _playlistRootPath = '';
+  String get playlistRootPath => _playlistRootPath;
+
+  void signalUnsavedModifiedPlaylistRootPath({
+    required String playlistRootPath,}) {
+    _playlistRootPath = playlistRootPath;
+
+    warningMessageType = WarningMessageType.playlistUnsavedRootPath;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+    }
 }

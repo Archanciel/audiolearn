@@ -1689,5 +1689,6 @@
   "fullAudioSegmentRestoredMessage": "Segment audio complet restauré",
   "segmentsCountAndTotalDurationTooltip":"La durée totale affichée tient compte des vitesses de lecture définies.",
   "invalidStartAudioDurationMessage": "La durée de début de l’audio ({value}) doit être au format hh:mm:ss.",
-  "invalidEndAudioDurationMessage": "La durée de fin de l’audio ({value}) doit être au format hh:mm:ss."
+  "invalidEndAudioDurationMessage": "La durée de fin de l’audio ({value}) doit être au format hh:mm:ss.",
+  "playlistUnsavedRootPathWarning": "Étant donné que le chemin racine des playlists a été modifié en \"{playlistRootPath}\", vous devez cliquer sur le bouton \"Enregistrer\" ou sur \"Annuler\" pour fermer le dialogue \"Paramètres de l’application\"."
 }

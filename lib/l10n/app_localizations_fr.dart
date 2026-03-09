@@ -2965,4 +2965,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String invalidEndAudioDurationMessage(Object value) {
     return 'La durée de fin de l’audio ($value) doit être au format hh:mm:ss.';
   }
+
+  @override
+  String playlistUnsavedRootPathWarning(Object playlistRootPath) {
+    return 'Étant donné que le chemin racine des playlists a été modifié en \"$playlistRootPath\", vous devez cliquer sur le bouton \"Enregistrer\" ou sur \"Annuler\" pour fermer le dialogue \"Paramètres de l’application\".';
+  }
 }

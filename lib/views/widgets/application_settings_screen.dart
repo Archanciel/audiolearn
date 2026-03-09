@@ -115,7 +115,24 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
           leading: IconButton(
             key: const Key('appSettingsBackButton'),
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              if (_applicationDialogPlaylistRootPath.isNotEmpty && _applicationDialogPlaylistRootPath != widget.settingsDataService.get(
+                      settingType: SettingType.dataLocation,
+                      settingSubType: DataLocation.playlistRootPath)) {
+                // If the playlist root path was modified but the user
+                // clicks on the back button instead of the save button,
+                // a warning is displayed to prevent losing the modified
+                // playlist root path.
+                Provider.of<WarningMessageVM>(
+                  context,
+                  listen: false,
+                ).signalUnsavedModifiedPlaylistRootPath(
+                  playlistRootPath: _applicationDialogPlaylistRootPath,
+                );
+              } else {
+                Navigator.of(context).pop();
+              }
+            },
             tooltip: 'Back',
           ),
           title: Text(

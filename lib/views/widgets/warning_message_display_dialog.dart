@@ -1126,6 +1126,19 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.playlistUnsavedRootPath:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: AppLocalizations.of(context)!.playlistUnsavedRootPathWarning(
+              _warningMessageVM.playlistRootPath,
+            ),
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.noSortFilterParameterWasModified:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(

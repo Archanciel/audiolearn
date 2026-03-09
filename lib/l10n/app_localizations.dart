@@ -4719,6 +4719,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid end audio duration ({value}). Expected format: hh:mm:ss.'**
   String invalidEndAudioDurationMessage(Object value);
+
+  /// No description provided for @playlistUnsavedRootPathWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Since the playlist root path was changed to \"{playlistRootPath}\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.'**
+  String playlistUnsavedRootPathWarning(Object playlistRootPath);
 }
 
 class _AppLocalizationsDelegate
