@@ -113,7 +113,7 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('audioExtractorBackButton'),
+            key: const Key('appSettingsBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
             tooltip: 'Back',

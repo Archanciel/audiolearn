@@ -24,7 +24,7 @@ class HelpSectionsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('audioExtractorBackButton'),
+            key: const Key('helpSectionssBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
             tooltip: 'Back',
