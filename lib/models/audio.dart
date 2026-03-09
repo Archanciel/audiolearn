@@ -117,7 +117,7 @@ class Audio {
   // position will be reduced by 30 seconds.
   DateTime? audioPausedDateTime;
 
-  double audioPlaySpeed = 1.0;
+  double audioPlaySpeed = kAudioDefaultPlaySpeed;
   double audioPlayVolume = kAudioDefaultPlayVolume;
 
   bool isAudioMusicQuality = false;
