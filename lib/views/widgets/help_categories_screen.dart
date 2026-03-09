@@ -20,7 +20,7 @@ class HelpCategoriesScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('audioExtractorBackButton'),
+            key: const Key('helpCategoriesBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
             tooltip: 'Back',

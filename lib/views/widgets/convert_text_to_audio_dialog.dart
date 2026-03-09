@@ -128,7 +128,7 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-            key: const Key('audioExtractorBackButton'),
+            key: const Key('convertTextToAudioBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
             tooltip: 'Back',

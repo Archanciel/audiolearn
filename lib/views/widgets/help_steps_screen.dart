@@ -72,7 +72,7 @@ class _HelpStepsScreenState extends State<HelpStepsScreen> {
             backgroundColor: Colors.black,
             appBar: AppBar(
               leading: IconButton(
-                key: const Key('audioExtractorBackButton'),
+                key: const Key('helpStepsBackButton'),
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
                 tooltip: 'Back',
