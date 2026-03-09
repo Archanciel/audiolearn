@@ -89,8 +89,15 @@ class AudioPlayerVM extends ChangeNotifier {
 
   Duration get currentAudioPosition => _currentAudioPosition;
   Duration get currentAudioTotalDuration => _currentAudioTotalDuration;
-  Duration get currentAudioRemainingDuration =>
-      _currentAudioTotalDuration - _currentAudioPosition;
+  Duration get currentAudioRemainingDuration {
+    if (_currentAudio == null) return Duration.zero;
+    final rawRemaining = _currentAudioTotalDuration - _currentAudioPosition;
+    if (rawRemaining <= Duration.zero) return Duration.zero;
+    return Duration(
+      microseconds:
+          (rawRemaining.inMicroseconds / _currentAudio!.audioPlaySpeed).round(),
+    );
+  }
 
   bool get isPlaying => _audioPlayer.state == PlayerState.playing;
 
@@ -1425,16 +1432,16 @@ class AudioPlayerVM extends ChangeNotifier {
       return null;
     }
 
-    return '${_currentAudio!.validVideoTitle}\n${_currentAudio!.audioDuration.HHmmssZeroHH()}';
+    return '${_currentAudio!.validVideoTitle}\n${_currentAudio!.durationImpactedByPlaySpeed().HHmmssZeroHH()}';
   }
 
   Future<void> changeAudioPlaySpeed(double speed) async {
-    if (_currentAudio == null) {
-      return;
-    }
-
+    if (_currentAudio == null) return;
     _currentAudio!.audioPlaySpeed = speed;
     await _audioPlayer.setPlaybackRate(speed);
+    // _currentAudioTotalDuration is raw audioDuration — unchanged by speed
+    currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioPositionNotifier.value = _currentAudioPosition;
     updateAndSaveCurrentAudio();
   }
 
