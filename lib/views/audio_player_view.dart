@@ -1154,73 +1154,90 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
       // not used.
       valueListenable: audioPlayerVMlistenFalse.currentAudioTitleNotifier,
       builder: (context, currentAudioTitle, child) {
-        return ValueListenableBuilder<Duration>(
+        return ValueListenableBuilder<double>(
           valueListenable:
-              audioPlayerVMlistenFalse.currentAudioPositionNotifier,
-          builder: (context, currentPosition, child) {
-            double sliderValue;
-            double maxDuration;
-            String currentAudioPositionStr;
-            String remainingAudioDurationStr;
+              audioPlayerVMlistenFalse.currentAudioPlaySpeedNotifier,
+          builder: (context, currentAudioPlaySpeed, child) {
+            return ValueListenableBuilder<Duration>(
+              valueListenable:
+                  audioPlayerVMlistenFalse.currentAudioPositionNotifier,
+              builder: (context, currentPosition, child) {
+                double sliderValue;
+                double maxDuration;
+                String currentAudioPositionStr;
+                String remainingAudioDurationStr;
+                Audio? currentAudio = audioPlayerVMlistenFalse.currentAudio;
 
-            if (audioPlayerVMlistenFalse.currentAudio != null) {
-              sliderValue = currentPosition.inSeconds.toDouble();
-              maxDuration = audioPlayerVMlistenFalse
-                  .currentAudioTotalDuration.inSeconds
-                  .toDouble();
-              currentAudioPositionStr = currentPosition.HHmmssZeroHH();
-              remainingAudioDurationStr = audioPlayerVMlistenFalse
-                  .currentAudioRemainingDuration
-                  .HHmmssZeroHH();
-            } else {
-              sliderValue = 0.0;
-              maxDuration = 0.0;
-              currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
-              remainingAudioDurationStr = currentAudioPositionStr; // 0.0
-            }
+                if (currentAudio != null) {
+                  final double audioPlaySpeed = currentAudio.audioPlaySpeed;
 
-            // Ensure the slider value is within the range
-            sliderValue = sliderValue.clamp(0.0, maxDuration);
+                  // Slider uses raw file-position seconds — matches what audioplayers reports
+                  sliderValue = currentPosition.inSeconds.toDouble();
+                  maxDuration =
+                      currentAudio.audioDuration.inMilliseconds / 1000.0;
+                      
+                  // Display times converted to apparent (speed-adjusted) seconds
+                  currentAudioPositionStr = Duration(
+                    microseconds:
+                        (currentPosition.inMicroseconds / audioPlaySpeed)
+                            .round(),
+                  ).HHmmssZeroHH();
+                  remainingAudioDurationStr = audioPlayerVMlistenFalse
+                      .currentAudioRemainingDuration // now returns apparent remaining
+                      .HHmmssZeroHH();
+                } else {
+                  sliderValue = 0.0;
+                  maxDuration = 0.0;
+                  currentAudioPositionStr = Duration.zero.HHmmssZeroHH();
+                  remainingAudioDurationStr = currentAudioPositionStr; // 0.0
+                }
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultMargin),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    key: const Key('audioPlayerViewAudioPosition'),
-                    currentAudioPositionStr,
-                    style: kSliderValueTextStyle,
-                  ),
-                  Expanded(
-                    child: SliderTheme(
-                      data: const SliderThemeData(
-                        trackHeight: kSliderThickness,
-                        thumbShape: RoundSliderThumbShape(
-                            enabledThumbRadius:
-                                6.0), // Adjust the radius as you need
+                // Ensure the slider value is within the range
+                sliderValue = sliderValue.clamp(0.0, maxDuration);
+
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultMargin),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        key: const Key('audioPlayerViewAudioPosition'),
+                        currentAudioPositionStr,
+                        style: kSliderValueTextStyle,
                       ),
-                      child: Slider(
-                        key: const Key('audioPlayerViewAudioSlider'),
-                        min: 0.0,
-                        max: maxDuration,
-                        value: sliderValue,
-                        onChanged: (double value) async {
-                          await audioPlayerVMlistenFalse
-                              .slideToAudioPlayPosition(
-                            durationPosition: Duration(seconds: value.toInt()),
-                          );
-                        },
+                      Expanded(
+                        child: SliderTheme(
+                          data: const SliderThemeData(
+                            trackHeight: kSliderThickness,
+                            thumbShape: RoundSliderThumbShape(
+                                enabledThumbRadius:
+                                    6.0), // Adjust the radius as you need
+                          ),
+                          child: Slider(
+                            key: const Key('audioPlayerViewAudioSlider'),
+                            min: 0.0,
+                            max: maxDuration,
+                            value: sliderValue,
+                            onChanged: (double value) async {
+                              await audioPlayerVMlistenFalse
+                                  .slideToAudioPlayPosition(
+                                durationPosition:
+                                    Duration(seconds: value.toInt()),
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                      Text(
+                        key: const Key('audioPlayerViewAudioRemainingDuration'),
+                        remainingAudioDurationStr,
+                        style: kSliderValueTextStyle,
+                      ),
+                    ],
                   ),
-                  Text(
-                    key: const Key('audioPlayerViewAudioRemainingDuration'),
-                    remainingAudioDurationStr,
-                    style: kSliderValueTextStyle,
-                  ),
-                ],
-              ),
+                );
+              },
             );
           },
         );
