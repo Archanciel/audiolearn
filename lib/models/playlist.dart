@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audiolearn/constants.dart';
 import 'audio.dart';
 
 enum PlaylistType {
@@ -25,9 +26,7 @@ class Playlist {
   PlaylistType playlistType;
   PlaylistQuality playlistQuality;
 
-  // If the audioPlaySpeed is 0, then the audio is played at the
-  // application settings play speed.
-  double audioPlaySpeed = 0;
+  double audioPlaySpeed = kAudioDefaultPlaySpeed;
 
   String downloadPath = '';
   bool isSelected;
@@ -110,7 +109,7 @@ class Playlist {
         (e) => e.toString().split('.').last == json['playlistQuality'],
         orElse: () => PlaylistQuality.voice,
       ),
-      audioPlaySpeed: json['audioPlaySpeed'] ?? 0,
+      audioPlaySpeed: json['audioPlaySpeed'] ?? kAudioDefaultPlaySpeed,
       downloadPath: json['downloadPath'],
       isSelected: json['isSelected'],
       currentOrPastPlayableAudioIndex:
@@ -272,6 +271,14 @@ class Playlist {
 
     copiedAudioCopy.enclosingPlaylist = this;
     copiedAudioCopy.copiedFromPlaylistTitle = copiedFromPlaylistTitle;
+
+    // The audio play speed of the copied audio is set to the audio
+    // play speed of the playlist since the audio play speed of the
+    // copied audio is not necessarily the same as the audio play
+    // speed of the playlist and since the audio play speed of the
+    // copied audio must be the same as the audio play speed of the
+    // playlist when the copied audio is added to the playable audio
+    // list of the playlist.
     copiedAudioCopy.audioPlaySpeed = audioPlaySpeed;
 
     downloadedAudioLst.add(copiedAudioCopy);
@@ -330,6 +337,14 @@ class Playlist {
 
     movedAudioCopy.enclosingPlaylist = this;
     movedAudioCopy.movedFromPlaylistTitle = movedFromPlaylistTitle;
+
+    // The audio play speed of the moved audio is set to the audio
+    // play speed of the playlist since the audio play speed of the
+    // moved audio is not necessarily the same as the audio play
+    // speed of the playlist and since the audio play speed of the
+    // moved audio must be the same as the audio play speed of the
+    // playlist when the moved audio is added to the playable audio
+    // list of the playlist.
     movedAudioCopy.audioPlaySpeed = audioPlaySpeed;
 
     if (existingDownloadedAudio != null) {
@@ -344,6 +359,13 @@ class Playlist {
           movedFromPlaylistTitle;
       existingDownloadedAudioCopy.movedToPlaylistTitle = title; // this.title
       existingDownloadedAudioCopy.enclosingPlaylist = this;
+
+      // The audio play speed of the existing downloaded audio copy is set to the audio
+      // play speed of the playlist. This is necessary in case the audio play speed of
+      // the existing downloaded audio copy is not the same as the audio play speed of
+      // the playlist and since the audio play speed of the existing downloaded audio
+      // copy must be the same as the audio play speed of the playlist when the existing
+      // downloaded audio copy is added to the downloaded audio list of the playlist.
       existingDownloadedAudioCopy.audioPlaySpeed =
           audioPlaySpeed; // this.audioPlaySpeed
 
@@ -522,6 +544,8 @@ class Playlist {
         : null;
   }
 
+  /// Returns the total duration of the audio contained in the playableAudioLst
+  /// taking into account the audio play speed of each audio.
   Duration getPlayableAudioLstTotalDuration() {
     Duration totalDuration = Duration.zero;
 
