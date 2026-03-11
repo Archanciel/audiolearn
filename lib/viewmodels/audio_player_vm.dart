@@ -954,7 +954,7 @@ class AudioPlayerVM extends ChangeNotifier {
   /// undo or redo methods. In this case, the method does not add a
   /// command to the undo list.
   Future<void> changeAudioPlayPosition({
-    required Duration posOrNegPositionDurationChange,
+    required int posOrNegPositionModificationInSeconds,
     bool isUndoRedo = false,
   }) async {
     if (_wasAudioPlayersStopped) {
@@ -969,8 +969,10 @@ class AudioPlayerVM extends ChangeNotifier {
       _wasAudioPlayersStopped = false;
     }
 
+    int correctedPosOrNegPositionModificationInMicroseconds =
+        (posOrNegPositionModificationInSeconds * 1000000 * _currentAudio!.audioPlaySpeed).round();
     Duration newAudioPosition =
-        _currentAudioPosition + posOrNegPositionDurationChange;
+        _currentAudioPosition + Duration(microseconds: correctedPosOrNegPositionModificationInMicroseconds);
 
     // Check if the new audio position is within the audio duration.
     // If not, set the audio position to the beginning or the end
