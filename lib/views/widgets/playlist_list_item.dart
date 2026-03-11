@@ -4,7 +4,6 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/audio_download_vm.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
-import 'package:audiolearn/views/widgets/comment_list_add_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,6 +56,7 @@ enum PlaylistPopupMenuAction {
 enum FilteredAudioAction {
   moveFilteredAudio,
   copyFilteredAudio,
+  rewindFilteredAudioToStart,
   extractFilteredAudio,
   deleteFilteredAudio,
   deleteFilteredAudioFromPlaylistAsWell,
@@ -587,6 +587,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             _showFilteredAudioActionsMenu(
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
               warningMessageVMlistenFalse: warningMessageVMlistenFalse,
             );
             break;
@@ -821,6 +822,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   void _showFilteredAudioActionsMenu({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required WarningMessageVM warningMessageVMlistenFalse,
   }) {
     final RenderBox box = context.findRenderObject() as RenderBox;
@@ -841,20 +843,22 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_move_filtered_audio'),
           value: FilteredAudioAction.moveFilteredAudio,
-          child: Text(AppLocalizations.of(context)?.moveFilteredAudio ??
-              'Move Filtered Audio'),
+          child: Text(AppLocalizations.of(context)!.moveFilteredAudio),
         ),
         PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_copy_filtered_audio'),
           value: FilteredAudioAction.copyFilteredAudio,
-          child: Text(AppLocalizations.of(context)?.copyFilteredAudio ??
-              'Copy Filtered Audio'),
+          child: Text(AppLocalizations.of(context)!.copyFilteredAudio),
+        ),
+        PopupMenuItem<FilteredAudioAction>(
+          key: const Key('popup_menu_rewind_filtered_audio_to_start'),
+          value: FilteredAudioAction.rewindFilteredAudioToStart,
+          child: Text(AppLocalizations.of(context)!.rewindFilteredAudioToStart),
         ),
         PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_extract_filtered_audio'),
           value: FilteredAudioAction.extractFilteredAudio,
-          child: Text(AppLocalizations.of(context)?.extractFilteredAudio ??
-              'Extract Filtered Audio'),
+          child: Text(AppLocalizations.of(context)!.extractFilteredAudio),
         ),
         PopupMenuItem<FilteredAudioAction>(
           key: const Key('popup_menu_delete_filtered_audio'),
@@ -1033,6 +1037,16 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 notCopiedAudioNumber: copiedNotCopiedAudioNumberLst[2],
               );
             });
+            break;
+          case FilteredAudioAction.rewindFilteredAudioToStart:
+            int rewindedPlayableAudioNumber =
+                playlistListVMlistenFalse.rewindPlayableFilteredAudioToStart(
+              audioPlayerVMlistenFalse: audioPlayerVMlistenFalse,
+              playlist: playlist,
+            );
+
+            warningMessageVMlistenFalse.rewindedFilteredPlayableAudioToStart(
+                rewindedPlayableAudioNumber: rewindedPlayableAudioNumber);
             break;
           case FilteredAudioAction.extractFilteredAudio:
             List<Audio> sortFilteredAudioLst = playlistListVMlistenFalse

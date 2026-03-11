@@ -5972,6 +5972,79 @@ class PlaylistListVM extends ChangeNotifier {
     return rewindedAudioNumber;
   }
 
+  /// Method called when the user clicks on the 'Rewind filtered audio to start'
+  /// sub menu item of the playlist 'Filtered Audios Actions' menu . The method
+  /// rewinds the filtered audios to start and saves the playlist to its json file.
+  ///
+  /// Passing the {audioPlayerVM} is necessary in order to rewind the current
+  /// audio to start position. Otherwise, after clicking on the play audio view
+  /// button, the current audio will be positioned to the last played position
+  /// instead of the start position.
+  int rewindPlayableFilteredAudioToStart({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Playlist playlist,
+  }) {
+    List<Audio> filteredAudioToRewindToStart =
+        _sortedFilteredSelectedPlaylistPlayableAudioLst!;
+
+    int rewindedAudioNumber = 0;
+
+    if (filteredAudioToRewindToStart.isNotEmpty) {
+      rewindedAudioNumber = playlist.rewindPlayableAudioToStart(
+          audioToRewindLst: filteredAudioToRewindToStart);
+
+      // Obtaining the playable audio list ordered according to the
+      // sort/filter parameters applied to the playlist download view.
+      List<Audio> playlistDownloadViewAudioLst = filteredAudioToRewindToStart;
+      //     getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      //   audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      // );
+
+      Audio currentAudioInAudioPlayableListDialog;
+
+      if (playlist.audioPlayingOrder == AudioPlayingOrder.descending) {
+        // If the audio playing order is descending, we need to
+        // set the current audio to the first playable audio.
+        currentAudioInAudioPlayableListDialog = filteredAudioToRewindToStart.first;
+      } else {
+        // If the audio playing order is ascending, we need to
+        // set the current audio to the last playable audio.
+        currentAudioInAudioPlayableListDialog = filteredAudioToRewindToStart.last;
+      }
+
+      audioPlayerVMlistenFalse.setCurrentAudio(
+          audio: currentAudioInAudioPlayableListDialog);
+
+      // Setting the current audio index in the download playlist
+      // view audio list
+      playlist.currentOrPastPlayableAudioIndex =
+          playlist.playableAudioLst.indexOf(
+        currentAudioInAudioPlayableListDialog,
+      );
+    }
+
+    if (playlist.currentOrPastPlayableAudioIndex != -1 &&
+        audioPlayerVMlistenFalse.currentAudio != null) {
+      audioPlayerVMlistenFalse.skipToStart(
+        // This parameter value avoids that the current audio is
+        // set the previous audio position after rewinding the
+        // current audio to start position.
+        isAfterRewindingAudioPosition: true,
+      );
+    }
+
+    if (rewindedAudioNumber > 0) {
+      JsonDataService.saveToFile(
+        model: playlist,
+        path: playlist.getPlaylistDownloadFilePathName(),
+      );
+    }
+
+    notifyListeners();
+
+    return rewindedAudioNumber;
+  }
+
   /// Method called when the user clicks on the Save button in the application
   /// settings dialog.
   void updatePlaylistRootPathAndSavePlaylistTitleOrder({
