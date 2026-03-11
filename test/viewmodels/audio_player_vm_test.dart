@@ -95,8 +95,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
+      Audio selectedPlaylistAudioOne = selectedPlaylistAudioList[0];
       await audioPlayerVM.setCurrentAudio(
-        audio: selectedPlaylistAudioList[0],
+        audio: selectedPlaylistAudioOne,
       );
 
       // obtain the current audios initial position
@@ -115,7 +116,7 @@ void main() {
       expect(
           currentAudioChangedPosition.inSeconds -
               currentAudioInitialPosition.inSeconds,
-          backwardChangePosition);
+          (backwardChangePosition * selectedPlaylistAudioOne.audioPlaySpeed).round());
 
       // undo the change
       audioPlayerVM.undo();
@@ -137,7 +138,7 @@ void main() {
       expect(
           currentAudioPositionAfterRedo.inSeconds -
               currentAudioInitialPosition.inSeconds,
-          backwardChangePosition);
+          (backwardChangePosition * selectedPlaylistAudioOne.audioPlaySpeed).round());
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -158,8 +159,9 @@ void main() {
       );
 
       // set the current audio to the first audio in the list
+      Audio selectedPlaylistAudioOne = selectedPlaylistAudioList[0];
       await audioPlayerVM.setCurrentAudio(
-        audio: selectedPlaylistAudioList[0],
+        audio: selectedPlaylistAudioOne,
       );
 
       // obtain the current audios initial position
