@@ -5945,7 +5945,7 @@ class PlaylistListVM extends ChangeNotifier {
       // Setting the current audio index in the download playlist
       // view audio list
       playlist.currentOrPastPlayableAudioIndex =
-          playlistDownloadViewAudioLst.indexOf(
+          playlist.playableAudioLst.indexOf(
         currentAudioInAudioPlayableListDialog,
       );
     }
