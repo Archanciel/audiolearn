@@ -4725,6 +4725,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Since the playlist root path was changed to \"{playlistRootPath}\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.'**
   String playlistUnsavedRootPathWarning(Object playlistRootPath);
+
+  /// No description provided for @rewindFilteredAudioToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewind filtered Audios to Start'**
+  String get rewindFilteredAudioToStart;
+
+  /// No description provided for @rewindedFilteredPlayableAudioNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'{number} filtered playlist audios were repositioned to start and the first listenable audio was selected.'**
+  String rewindedFilteredPlayableAudioNumber(Object number);
 }
 
 class _AppLocalizationsDelegate

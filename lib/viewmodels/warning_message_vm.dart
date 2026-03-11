@@ -121,6 +121,10 @@ enum WarningMessageType {
   // were rewinded to start position. This happens when the user clicks
   // on the Rewind Audio to Start playlist menu item.
 
+  rewindedFilteredPlayableAudioToStart, // The case if the filtered playable
+  // audios were rewinded to start position. This happens when the user clicks
+  // on the Rewind Audio to Start playlist menu item.
+
   redownloadedAudioNumbersConfirmation, // The case if the sort
   // filtered deleted audios were redownloaded. This happens when
   // the user clicks on the playlist submenu 'Redownload filtered
@@ -1345,6 +1349,17 @@ class WarningMessageVM extends ChangeNotifier {
     _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
 
     warningMessageType = WarningMessageType.rewindedPlayableAudioToStart;
+
+    // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  void rewindedFilteredPlayableAudioToStart({
+    required int rewindedPlayableAudioNumber,
+  }) {
+    _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
+
+    warningMessageType = WarningMessageType.rewindedFilteredPlayableAudioToStart;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();

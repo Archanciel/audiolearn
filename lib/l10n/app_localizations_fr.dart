@@ -2970,4 +2970,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String playlistUnsavedRootPathWarning(Object playlistRootPath) {
     return 'Étant donné que le chemin racine des playlists a été modifié en \"$playlistRootPath\", vous devez cliquer sur le bouton \"Enregistrer\" ou sur \"Annuler\" pour fermer le dialogue \"Paramètres de l’application\".';
   }
+
+  @override
+  String get rewindFilteredAudioToStart =>
+      'Repositionner les audios filrés au début';
+
+  @override
+  String rewindedFilteredPlayableAudioNumber(Object number) {
+    return '$number audios filtrés de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.';
+  }
 }
