@@ -4613,9 +4613,8 @@ void main() {
       );
 
       // Verify the play/pause icon button format and color of
-      // all audios of the selected playlist after rewinding to
-      // start the audios selected by applying the 'Dur < 0:00:29'
-      // Sort/Filter parms.
+      // the selected playlist filtered audios after rewinding
+      // them to start.
       for (String audioTitle in audioTitlesToRewindToStartLst) {
         IntegrationTestUtil.validateInkWellButton(
           tester: tester,
