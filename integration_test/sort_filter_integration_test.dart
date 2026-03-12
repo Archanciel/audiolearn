@@ -226,7 +226,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // and verify the the displayed audio titles
 
       await tester.tap(find
-          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39"));
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n10:55"));
       await tester.pumpAndSettle();
 
       List<String>
@@ -328,7 +328,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // and verify the the displayed audio titles
 
       await tester.tap(find
-          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39"));
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n10:55"));
       await tester.pumpAndSettle();
 
       IntegrationTestUtil.checkAudioTitlesOrderInListBody(
@@ -359,7 +359,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify the next audio title
       Finder nextAudioTextFinder =
-          find.text("Les besoins artificiels par R.Keucheyan\n19:05");
+          find.text("Les besoins artificiels par R.Keucheyan\n15:16");
 
       expect(
         nextAudioTextFinder,
@@ -414,7 +414,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // selects the next playable audio which is before the now fully played
       // 'Les besoins artificiels par R.Keucheyan'
       nextAudioTextFinder =
-          find.text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
+          find.text("La surpopulation mondiale par Jancovici et Barrau\n6:06");
 
       expect(
         nextAudioTextFinder,
@@ -532,7 +532,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
 
       // Verify the next audio title
       Finder nextAudioTextFinder =
-          find.text("La surpopulation mondiale par Jancovici et Barrau\n7:38");
+          find.text("La surpopulation mondiale par Jancovici et Barrau\n6:06");
 
       expect(
         nextAudioTextFinder,
@@ -576,7 +576,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       // selects the previous playable audio which is before the current
       // audio 'La surpopulation mondiale par Jancovici et Barrau'
       nextAudioTextFinder = find
-          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n13:39");
+          .text("Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik\n10:55");
 
       expect(
         nextAudioTextFinder,
