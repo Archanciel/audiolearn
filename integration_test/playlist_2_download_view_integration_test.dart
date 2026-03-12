@@ -4496,7 +4496,7 @@ void main() {
       // all audios of the selected playlist
 
       List<String> audioTitles = [
-        "Gloire au Père, au Fils,et au Saint Espri",
+        "Gloire au Père, au Fils,et au Saint Esprit",
         "Prière pour Dieu",
         "Père céleste, merci pour cette nouvelle journée que Tu me donnes",
         "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour",
@@ -4507,138 +4507,124 @@ void main() {
           tester: tester,
           audioTitle: audioTitle,
           expectedIcon: Icons.play_arrow,
-          expectedIconColor:
-              kScreenButtonColor, // not played icon color
+          expectedIconColor: kScreenButtonColor, // not played icon color
           expectedIconBackgroundColor: Colors.black,
         );
       }
 
+      String sortFilterParmName = 'Dur < 0:00:29';
 
+      // Now tap on the current dropdown button item to open the dropdown
+      // button items list
 
+      Finder dropDownButtonFinder =
+          find.byKey(const Key('sort_filter_parms_dropdown_button'));
 
+      Finder dropDownButtonTextFinder = find.descendant(
+        of: dropDownButtonFinder,
+        matching: find.byType(Text),
+      );
 
-
-
-
-
-      // Go to audio player view to verify the playlist current
-      // audio position (La résilience insulaire par Fiona Roche)
-      Finder appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
+      await tester.tap(dropDownButtonTextFinder);
       await tester.pumpAndSettle();
 
-      // Verify the current audio position
-      Text audioPositionText = tester
-          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-      expect(audioPositionText.data, '2:34');
-
-      Finder audioTitlePositionTextFinder =
-          find.text("La résilience insulaire par Fiona Roche\n13:35");
-      expect(audioTitlePositionTextFinder, findsOneWidget);
-
-      // Return to playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
+      // Find and tap on the 'Dur < 0:00:29' sort/filter item
+      Finder sortFilterParmNameDropDownTextFinder =
+          find.text(sortFilterParmName).last;
+      await tester.tap(sortFilterParmNameDropDownTextFinder);
       await tester.pumpAndSettle();
 
-      // Tap the 'Toggle List' button to show the list of playlist's.
+      // Verify the audioTitles selected by applying the 'Dur < 0:00:29'
+      // sort/filter parms
+      List<String> audioTitlesToRewindToStartLst = [
+        "Père céleste, merci pour cette nouvelle journée que Tu me donnes",
+        "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour",
+      ];
+
+      // Verify the displayed audio list after selecting the 'Dur < 0:00:29'
+      // Sort/Filter parms.
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioTitlesToRewindToStartLst,
+      );
+
+      // Tap the 'Toggle List' button to display the list of playlist's.
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
-      // Rewind all 'S8 audio" playlist audios to start position
-      await _tapOnRewindPlaylistAudioToStartPositionMenu(
-        tester: tester,
-        playlistToRewindTitle: playlistToRewindTitle,
-        numberOfRewindedAudio: 4,
+      // Verify that the applyed Sort/Filter parms name is displayed
+      // after the selected playlist title
+
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        sortFilterParmName,
       );
 
-      // Return to audio player view to verify the playlist current
-      // audio position set to start (La résilience insulaire par Fiona Roche)
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('audioPlayerViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
+      // Verify the play/pause icon button format and color of
+      // all audios of the selected playlist after applying the
+      // 'Dur < 0:00:29' Sort/Filter parms.
+      for (String audioTitle in audioTitlesToRewindToStartLst) {
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: audioTitle,
+          expectedIcon: Icons.play_arrow,
+          expectedIconColor: kScreenButtonColor, // not played icon color
+          expectedIconBackgroundColor: Colors.black,
+        );
+      }
 
-      // Verify the current audio position
-      audioPositionText = tester
-          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-      expect(audioPositionText.data, '0:00');
+      // Now test rewinding to start the filtered audio
 
-      // Go back to playlist download view
-      appScreenNavigationButton =
-          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
-      await tester.tap(appScreenNavigationButton);
-      await tester.pumpAndSettle();
-
-      // Tap the 'Toggle List' button to reduce the list of playlist's.
-      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-      await tester.pumpAndSettle();
-
-      _verifyAllNowUnplayedAudioPlayPauseIconColor(
+      // Clicking first on the 'Filtered Audio Actions ...' playlist
+      // menu item and then on the 'Rewind filtered Audios to Start'
+      // sub-menu item
+      await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
         tester: tester,
-        audioTitles: audioTitles,
+        playlistTitle: playlistToRewindTitle,
+        playlistSubMenuKeyStr: 'popup_menu_rewind_filtered_audio_to_start',
       );
 
-      // Now play then pause "Les besoins artificiels par R.Keucheyan"
-      // before rewinding the playlist audio to start position
-      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+      // Verifying and closing the confirm dialog
+
+      // Now verifying the confirming warning dialog
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
-        appScreenNavigationButton: appScreenNavigationButton,
-        doExpandPlaylistList: true,
-        playlistToRewindTitle: playlistToRewindTitle,
-        audioToPlayTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        warningDialogMessage:
+            "2 filtered playlist audios were repositioned to start and the first listenable audio was selected.",
+        isWarningConfirming: true,
       );
 
-      // Now play then pause "Ce qui va vraiment sauver notre espèce
-      // par Jancovici et Barrau" before rewinding the playlist audio
-      // to start position after having clicked on another audio item.
-      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+      // Setting to this variables the currently selected audio title/subTitle
+      // of the 'Les prières de cette playlist' playlist
+      String currentAudioTitle =
+          "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour";
+      String currentAudioSubTitle =
+          "0:00:28.6 463 KB at 193 KB/sec on 04/09/2025 at 08:48";
+
+      // Verify that the current audio is displayed with the correct
+      // title and subtitle color
+      await IntegrationTestUtil.verifyCurrentAudioTitleAndSubTitleColor(
         tester: tester,
-        appScreenNavigationButton: appScreenNavigationButton,
-        doExpandPlaylistList: false,
-        playlistToRewindTitle: playlistToRewindTitle,
-        audioToPlayTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
-        otherAudioTitleToTapOnBeforeRewinding:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-        otherAudioTitleToTapOnBeforeRewindingDuration:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
+        currentAudioTitle: currentAudioTitle,
+        currentAudioSubTitle: currentAudioSubTitle,
       );
 
-      // Now play then pause "Ce qui va vraiment sauver notre espèce
-      // par Jancovici et Barrau" before rewinding the playlist audio
-      // to start position after having clicked on the same audio item,
-      // which sets its position to 0 and so causes the rewind number
-      // to be 0.
-      await _rewindPlaylistAfterPlayThenPauseAnAudio(
-        tester: tester,
-        appScreenNavigationButton: appScreenNavigationButton,
-        doExpandPlaylistList: false,
-        playlistToRewindTitle: playlistToRewindTitle,
-        audioToPlayTitle:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
-        otherAudioTitleToTapOnBeforeRewinding:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
-        otherAudioTitleToTapOnBeforeRewindingDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
-      );
-
-      // Rewind again all playlist audio to start position. Since
-      // the playlist was already rewinded, 0 audio will be rewinded !
-      await _tapOnRewindPlaylistAudioToStartPositionMenu(
-        tester: tester,
-        playlistToRewindTitle: playlistToRewindTitle,
-        numberOfRewindedAudio: 0,
-      );
+      // Verify the play/pause icon button format and color of
+      // all audios of the selected playlist after rewinding to
+      // start the audios selected by applying the 'Dur < 0:00:29'
+      // Sort/Filter parms.
+      for (String audioTitle in audioTitlesToRewindToStartLst) {
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: audioTitle,
+          expectedIcon: Icons.play_arrow,
+          expectedIconColor: kDarkAndLightEnabledIconColor, // not played icon color
+          expectedIconBackgroundColor: Colors.black,
+        );
+      }
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -9880,7 +9866,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -9995,7 +9981,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be moved from Youtube playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -10109,7 +10095,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be moved from local playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -10216,7 +10202,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be moved from local playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -10712,7 +10698,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now verifying the confirm dialog message
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Audio "$currentAudioTitle" copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$lastPlaylistTitle".',
@@ -12011,7 +11997,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -12122,7 +12108,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be copied from Youtube playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -12236,7 +12222,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be copied from local playlist "$sourcePlaylistTitle" to Youtube playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -12346,7 +12332,7 @@ void main() {
           await tester.pumpAndSettle();
 
           // Now verifying the warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Since "default" Sort/Filter parms is selected, no audio can be copied from local playlist "$sourcePlaylistTitle" to local playlist "$targetPlaylistTitle". SOLUTION: define a Sort/Filter parms and apply it before executing this operation ...',
@@ -13142,7 +13128,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Now verifying the warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'The defined path "$modifiedInvalidPlaylistRootPath" is invalid since the playlists final dir name \'newDirectory\' is not equal to \'playlists\'. Please define a valid playlist directory and retry changing the playlists root path.',
@@ -13297,7 +13283,7 @@ void main() {
         await tester.tap(find.byKey(const Key('appSettingsBackButton')));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Since the playlist root path was changed to \"$modifiedPlaylistRootPath\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.",
@@ -15607,7 +15593,7 @@ void main() {
         );
 
         // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in same directory / pictures.",
@@ -16244,7 +16230,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Saved playlist, comment and picture JSON files as well as application settings to \"$saveZipFilePath${path.separator}audioLearn_${yearMonthDayDateTimeFormatForFileName.format(DateTime.now().subtract(Duration(seconds: 1)))}.zip\".\n\nSaved also 4 picture JPG file(s) in the ZIP file.",
@@ -16353,7 +16339,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
@@ -16478,7 +16464,7 @@ void main() {
       );
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Saved playlist, comment and picture JSON files to \"$kApplicationPathWindowsTest${path.separator}$kSavedPlaylistsDirName${path.separator}$playlistToSaveTitle.zip\".\n\nSaved also 3 picture JPG file(s) in the ZIP file.",
@@ -17009,7 +16995,7 @@ void main() {
         );
 
         // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
@@ -17106,7 +17092,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Defining an empty date or date/time download date is not possible.",
@@ -17204,7 +17190,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "$invalidDateFormat does not respect the date or date/time format.",
@@ -17302,7 +17288,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "$invalidDateTimeFormat does not respect the date or date/time format.",
@@ -17720,7 +17706,7 @@ void main() {
         );
 
         // Verify the displayed warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "No audio MP3 file was saved to ZIP since no audio was downloaded on or after $tooRecentAudioDownloadDateTime.",
@@ -17819,7 +17805,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Defining an empty date or date/time download date is not possible.",
@@ -17920,7 +17906,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "$invalidDateFormat does not respect the date or date/time format.",
@@ -18021,7 +18007,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed error warning dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "$invalidDateTimeFormat does not respect the date or date/time format.",
@@ -18165,7 +18151,7 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
@@ -18579,7 +18565,7 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$unselectedYoutubePlaylistTitle\".",
@@ -18994,7 +18980,7 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
@@ -19388,7 +19374,7 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
 
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$youtubePlaylistTitle\".",
@@ -19869,7 +19855,7 @@ void main() {
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -20124,7 +20110,7 @@ void main() {
             await tester.tap(popupDisplayAudioInfoMenuItemFinder);
             await tester.pumpAndSettle();
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
@@ -20346,7 +20332,7 @@ void main() {
             await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -20585,7 +20571,7 @@ void main() {
             await tester.tap(popupDisplayAudioInfoMenuItemFinder);
             await tester.pumpAndSettle();
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
@@ -20753,7 +20739,7 @@ void main() {
             await tester.pumpAndSettle(const Duration(seconds: 1));
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -20942,7 +20928,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -21168,7 +21154,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -21429,7 +21415,7 @@ void main() {
             await tester.tap(popupDisplayAudioInfoMenuItemFinder);
             await tester.pumpAndSettle();
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
@@ -21674,7 +21660,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -21939,7 +21925,7 @@ void main() {
             await tester.tap(popupDisplayAudioInfoMenuItemFinder);
             await tester.pumpAndSettle();
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$youtubePlaylistTitle\".",
@@ -22118,7 +22104,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -22315,7 +22301,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
@@ -22405,7 +22391,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows S8 audio.zip".',
@@ -22535,7 +22521,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows 2 existing playlists with new audios.zip".',
@@ -22729,7 +22715,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Prières du Maître.zip".',
@@ -22905,7 +22891,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Prières du Maître.zip".',
@@ -23080,7 +23066,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows sort_and_filter_audio_dialog_widget_test_playlists.zip".',
@@ -23267,7 +23253,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows sort_and_filter_audio_dialog_widget_test_playlists.zip".',
@@ -23450,7 +23436,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\\\Windows Prières du Maître.zip".',
@@ -23487,7 +23473,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
@@ -23703,7 +23689,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\\\Windows Prières du Maître.zip".',
@@ -23740,7 +23726,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 5 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows audioLearn_2025-05-11_13_16.zip".\n\nSince the playlists\n  "A restaurer",\n  "local"\nwere created, they are positioned at the end of the playlist list.',
@@ -23961,7 +23947,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows restore_multiple_playlists_and_pictures.zip".',
@@ -24081,7 +24067,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows restore_multiple_playlists_and_pictures.zip".',
@@ -24103,7 +24089,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows restore_multiple_playlists_and_pictures.zip".',
@@ -24195,7 +24181,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Restore- short - test - playlist.zip".',
@@ -24433,7 +24419,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -24545,7 +24531,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Restore- short - test - playlist.zip".',
@@ -24783,7 +24769,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -24896,7 +24882,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".',
@@ -25134,7 +25120,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -25245,7 +25231,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".',
@@ -25483,7 +25469,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -25563,7 +25549,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Restore- short - test - playlist.zip".',
@@ -25615,7 +25601,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -25710,7 +25696,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Restore- short - test - playlist.zip".',
@@ -25758,7 +25744,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -25882,7 +25868,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   // If executed on main
@@ -25962,7 +25948,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   // If executed on main
@@ -26084,7 +26070,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 8 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local initialization.zip".',
@@ -26195,7 +26181,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows Prières and local comment restoration.zip".',
@@ -26369,7 +26355,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -26496,7 +26482,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 1 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -26643,7 +26629,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -26864,7 +26850,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 2 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -27100,7 +27086,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -27231,7 +27217,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 1 added plus 1 deleted plus 1 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -27388,7 +27374,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -27617,7 +27603,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 2 playlist, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 2 added plus 2 deleted plus 2 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -27871,7 +27857,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -27915,7 +27901,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -28022,7 +28008,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -28066,7 +28052,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -28198,7 +28184,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -28436,7 +28422,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -28548,7 +28534,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -28786,7 +28772,7 @@ void main() {
               await tester.pumpAndSettle();
             }
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "The audio \"$audioTitle\" was redownloaded in the playlist \"$uniquePlaylistTitle\".",
@@ -28868,7 +28854,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -28911,7 +28897,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -28957,7 +28943,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
@@ -29065,7 +29051,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Restore- short - test - playlist.zip".',
@@ -29112,7 +29098,7 @@ void main() {
             // existing picture JPG files were replaced by the restored
             // picture JPG files.
 
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list.',
@@ -29158,7 +29144,7 @@ void main() {
             await tester.pumpAndSettle(); // must be used !
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 1 playlist, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android Prières du Maître.zip".\n\nSince the playlist\n  "Prières du Maître"\nwas created, it is positioned at the end of the playlist list.',
@@ -29327,7 +29313,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 8 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android audioLearn_multiple_playlists.zip".',
@@ -29522,7 +29508,7 @@ void main() {
             );
 
             // Verify the displayed warning confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   'Restored 3 playlist, 7 comment and 7 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 8 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android audioLearn_multiple_playlists.zip".',
@@ -29680,7 +29666,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android S8 audio.zip".',
@@ -29761,7 +29747,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android S8 audio.zip".',
@@ -29832,7 +29818,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android 2 existing playlists with new audios.zip".',
@@ -29974,7 +29960,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist saved individually, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières initialization.zip".',
@@ -30047,7 +30033,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières comment restoration.zip".',
@@ -30165,7 +30151,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 5 comment and 4 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 8 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières and local initialization.zip".',
@@ -30274,7 +30260,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 1 added plus 0 deleted plus 4 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Android Prières and local comment restoration.zip".',
@@ -30492,7 +30478,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android restore_multiple_playlists_and_pictures.zip".',
@@ -30612,7 +30598,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 2 playlist, 1 comment and 4 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 12 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android restore_multiple_playlists_and_pictures.zip".',
@@ -30634,7 +30620,7 @@ void main() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Android restore_multiple_playlists_and_pictures.zip".',
@@ -30711,7 +30697,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist, 46 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
@@ -30783,7 +30769,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist, 46 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
@@ -30855,7 +30841,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 playlist(s)\n  \"new_updated_copy\",\n  \"textToSpeech\"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.",
@@ -30927,7 +30913,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 1 playlist, 48 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
@@ -30979,7 +30965,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist saved individually, 46 comment and 0 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
@@ -31031,7 +31017,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 1 playlist saved individually, 48 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 163 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
@@ -31111,7 +31097,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 4 playlist, 6 comment and 6 picture JSON files as well as 3 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -31143,7 +31129,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -31204,7 +31190,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
@@ -31285,7 +31271,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 audio(s) MP3 in 0 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -31411,7 +31397,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -31472,7 +31458,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
@@ -31528,7 +31514,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 4 playlist, 6 comment and 6 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 11 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".",
@@ -31560,7 +31546,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -31656,7 +31642,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".",
@@ -31781,7 +31767,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -31843,7 +31829,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
@@ -31968,7 +31954,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -32028,7 +32014,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nDeleted 1 audio(s)\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
@@ -32251,7 +32237,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 11 audio(s) MP3 in 4 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -32307,7 +32293,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 0 playlist, 2 comment and 1 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 1 added plus 0 deleted plus 1 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.",
@@ -32440,7 +32426,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 2 audio(s) MP3 in 2 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -32663,7 +32649,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nSince the playlist\n  \"Bible Bénie\"\nwas created, it is positioned at the end of the playlist list.",
@@ -32842,7 +32828,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 2 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -32948,7 +32934,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "$restorableZipFilePathName".',
@@ -33267,7 +33253,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 3 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -33417,7 +33403,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist, 0 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 0 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "$restorableZipFilePathName".',
@@ -33482,7 +33468,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
@@ -33565,7 +33551,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Restored 3 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -33641,7 +33627,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
@@ -33712,7 +33698,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Restored 4 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -33788,7 +33774,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
@@ -33855,7 +33841,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -33931,7 +33917,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             'Restored 1 playlist saved individually, 4 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\urgent_actus_17-12-2023.zip".',
@@ -33998,7 +33984,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Restored 4 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34072,7 +34058,7 @@ void main() {
       );
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             'Restored 2 playlist, 4 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 10 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-09-07_07_45_02.zip".',
@@ -34139,7 +34125,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Restored 6 audio(s) MP3 in 2 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34232,7 +34218,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34306,7 +34292,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34383,7 +34369,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 24 audio(s) MP3 in 2 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34462,7 +34448,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the multiple MP3 zip files contained in dir \"$mp3RestorableZipDirectory\".",
@@ -34539,7 +34525,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -34619,7 +34605,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -34696,7 +34682,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -34778,7 +34764,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Restored 22 audio(s) MP3 in 1 playlist(s) from the MP3 zip file \"$mp3RestorableZipFilePathName\".",
@@ -36736,7 +36722,7 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
@@ -36750,7 +36736,7 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -36869,14 +36855,14 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_3\",\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -36918,7 +36904,7 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -36997,7 +36983,7 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
@@ -37043,14 +37029,14 @@ void main() {
         playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -37420,7 +37406,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -37615,7 +37601,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -37831,7 +37817,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$localEmptyPlaylistTitle\".",
@@ -37898,7 +37884,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
@@ -37968,7 +37954,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
@@ -38102,7 +38088,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
@@ -38298,7 +38284,7 @@ void main() {
       await Future.delayed(const Duration(seconds: 2));
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$unselectedLocalPlaylistTitle\".",
@@ -38741,7 +38727,7 @@ void main() {
       expect(find.text(conversionTextValue), findsOneWidget);
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -38828,7 +38814,7 @@ void main() {
       expect(find.text(conversionTextValue), findsOneWidget);
       await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -39037,7 +39023,7 @@ void main() {
       // Since no checkbox was checked, a warning is displayed ...
 
       // Verify the displayed warning dialog and close it
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "No checkbox selected. Please select one checkbox before clicking 'Ok', or click 'Cancel' to exit.",
@@ -39216,7 +39202,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Ensure the warning dialog is displayed
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "A playlist with the title \"$modifiedPlaylistTitle\" already exists in the playlists list and so the playlist can't be renamed to this title.",
@@ -39306,7 +39292,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Ensure the warning dialog is displayed
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The modified playlist title \"$modifiedPlaylistTitle\" can not contain any comma. Please correct the title and retry ...",
@@ -39707,7 +39693,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Ensure the warning dialog is displayed
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "A playlist with the title \"$modifiedPlaylistTitle\" already exists in the playlists list and so the playlist can't be renamed to this title.",
@@ -39797,7 +39783,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Ensure the warning dialog is displayed
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The modified playlist title \"$modifiedPlaylistTitle\" can not contain any comma. Please correct the title and retry ...",
@@ -44757,7 +44743,7 @@ Future<void> _restoreMultipleOrSinglePlaylistMp3({
   await tester.pumpAndSettle();
 
   // Verify the displayed warning confirmation dialog
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
         '$restoredFromPartMessage the MP3 zip file "$restorableMp3ZipFilePathName".',
@@ -44796,7 +44782,7 @@ Future<void> _restoreMultipleOrIndividualPlaylist({
   await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
   // Verify the displayed warning confirmation dialog
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
         '$saveFromPartMessage "$savedZipFilePath\\$savedMultipleOrUniquePlaylistZipName".$saveSincePartMessage',
@@ -44968,7 +44954,7 @@ Future<String> _saveUniquePlaylistAndItsMp3({
   );
 
   // Verify the displayed warning dialog
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage: (savedPicturesMessage.isEmpty)
         ? "Saved playlist, comment and picture JSON files to \"$saveZipFilePath${path.separator}$playlistToSaveTitle.zip\"."
@@ -45460,14 +45446,14 @@ Future<void> _thirdReImport({
     playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
   );
 
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
         "Audio(s)\n\n\"$filename2Mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
     isWarningConfirming: true,
   );
 
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
         "Audio(s)\n\n\"$fileName_1\",\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -45599,7 +45585,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   if (restorePlaylistsConfirmationMessage.isNotEmpty) {
     // Verify the displayed confirmation dialog and confirm the
     // restoration
-    await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    await IntegrationTestUtil.verifyAndCloseWarningDialog(
       tester: tester,
       warningDialogMessage: restorePlaylistsConfirmationMessage,
       isWarningConfirming: true,
@@ -45659,7 +45645,7 @@ Future<void> _restorePaylistsAndTheirMp3({
   if (restoreMp3ConfirmationMessage.isNotEmpty) {
     // Verify the displayed confirmation dialog and confirm the
     // restoration
-    await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+    await IntegrationTestUtil.verifyAndCloseWarningDialog(
       tester: tester,
       warningDialogMessage: restoreMp3ConfirmationMessage,
       isWarningConfirming: true,
@@ -47042,7 +47028,7 @@ Future<void> _tapOnRewindPlaylistAudioToStartPositionMenu({
   await tester.tap(popupDeletePlaylistMenuItem);
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-  await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+  await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
         "$numberOfRewindedAudio playlist audios were repositioned to start and the first listenable audio was selected.",
