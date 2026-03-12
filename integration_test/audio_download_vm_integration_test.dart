@@ -137,7 +137,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added at the end of the playlist list.",
@@ -304,7 +304,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added at the end of the playlist list.",
@@ -1037,7 +1037,7 @@ Future<void> main() async {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"${playlistBeforeRecreatedCopy.title}\" URL was updated. The playlist can be downloaded with its new URL.",
@@ -1165,7 +1165,7 @@ Future<void> main() async {
           .tap(find.byKey(const Key('addPlaylistConfirmDialogAddButton')));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"${playlistBeforeRecreatedCopy.title}\" URL was updated. The playlist can be downloaded with its new URL.",
@@ -1300,7 +1300,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"le meilleur chant de canari/chant canari male\" of spoken quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list.",
@@ -1378,7 +1378,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"le meilleur chant de canari/chant canari male\" of musical quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list.",
@@ -1451,7 +1451,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"testing : invalid playlist title with double point\" of spoken quality added with corrected title \"testing - invalid playlist title with double point\" at the end of the playlist list.",
@@ -1525,7 +1525,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"testing invalid \\ playlist title with backward invalid character\" of spoken quality added with corrected title \"testing invalid - playlist title with backward invalid character\" at the end of the playlist list.",
@@ -1599,7 +1599,7 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Verify the displayed warning dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Youtube playlist \"Restore: short / test \\ playlist\" of spoken quality added with corrected title \"Restore- short - test - playlist\" at the end of the playlist list.",

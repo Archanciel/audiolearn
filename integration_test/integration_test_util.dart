@@ -1177,7 +1177,7 @@ class IntegrationTestUtil {
     }
   }
 
-  static Future<void> verifyWarningDisplayAndCloseIt({
+  static Future<void> verifyAndCloseWarningDialog({
     required WidgetTester tester,
     required String warningDialogMessage,
     String warningDialogMessageAlternative = '',
