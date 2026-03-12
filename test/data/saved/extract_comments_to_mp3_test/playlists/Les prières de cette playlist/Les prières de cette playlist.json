@@ -254,7 +254,7 @@
         }
     ],
     "isSelected": false,
-    "currentOrPastPlayableAudioIndex": 3,
+    "currentOrPastPlayableAudioIndex": 0,
     "audioSortFilterParmsNamePlaylistDownloadView": "",
     "audioSortFilterParmsNameAudioPlayerView": "",
     "audioPlayingOrder": "ascending"
