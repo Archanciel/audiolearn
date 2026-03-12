@@ -4468,6 +4468,185 @@ void main() {
       );
     });
   });
+  group('Rewind playlist sort/filtered audio to start position test', () {
+    testWidgets(
+        '''Set to the selected playlist a sort/filter parameter. Then type on the
+        'Filtered Audios Actions ...' playlist menu and then on the 'Rewind filtered Audios to Start'
+        sub-menu. Then check the confirm warning as well as the filtered audios titles.''',
+        (WidgetTester tester) async {
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+        tapOnPlaylistToggleButton: false,
+      );
+
+      const String playlistToRewindTitle = 'Les prières de cette playlist';
+
+      // Now select the 'Les prières de cette playlist' playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToRewindTitle,
+      );
+
+      // Tap the 'Toggle List' button to close the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Verify the play/pause icon button format and color of
+      // all audios of the selected playlist
+
+      List<String> audioTitles = [
+        "Gloire au Père, au Fils,et au Saint Espri",
+        "Prière pour Dieu",
+        "Père céleste, merci pour cette nouvelle journée que Tu me donnes",
+        "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour",
+      ];
+
+      for (String audioTitle in audioTitles) {
+        IntegrationTestUtil.validateInkWellButton(
+          tester: tester,
+          audioTitle: audioTitle,
+          expectedIcon: Icons.play_arrow,
+          expectedIconColor:
+              kScreenButtonColor, // not played icon color
+          expectedIconBackgroundColor: Colors.black,
+        );
+      }
+
+
+
+
+
+
+
+
+
+      // Go to audio player view to verify the playlist current
+      // audio position (La résilience insulaire par Fiona Roche)
+      Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the current audio position
+      Text audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '2:34');
+
+      Finder audioTitlePositionTextFinder =
+          find.text("La résilience insulaire par Fiona Roche\n13:35");
+      expect(audioTitlePositionTextFinder, findsOneWidget);
+
+      // Return to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to show the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      // Rewind all 'S8 audio" playlist audios to start position
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: playlistToRewindTitle,
+        numberOfRewindedAudio: 4,
+      );
+
+      // Return to audio player view to verify the playlist current
+      // audio position set to start (La résilience insulaire par Fiona Roche)
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('audioPlayerViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Verify the current audio position
+      audioPositionText = tester
+          .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
+      expect(audioPositionText.data, '0:00');
+
+      // Go back to playlist download view
+      appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Tap the 'Toggle List' button to reduce the list of playlist's.
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      _verifyAllNowUnplayedAudioPlayPauseIconColor(
+        tester: tester,
+        audioTitles: audioTitles,
+      );
+
+      // Now play then pause "Les besoins artificiels par R.Keucheyan"
+      // before rewinding the playlist audio to start position
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: true,
+        playlistToRewindTitle: playlistToRewindTitle,
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+      );
+
+      // Now play then pause "Ce qui va vraiment sauver notre espèce
+      // par Jancovici et Barrau" before rewinding the playlist audio
+      // to start position after having clicked on another audio item.
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: false,
+        playlistToRewindTitle: playlistToRewindTitle,
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
+      );
+
+      // Now play then pause "Ce qui va vraiment sauver notre espèce
+      // par Jancovici et Barrau" before rewinding the playlist audio
+      // to start position after having clicked on the same audio item,
+      // which sets its position to 0 and so causes the rewind number
+      // to be 0.
+      await _rewindPlaylistAfterPlayThenPauseAnAudio(
+        tester: tester,
+        appScreenNavigationButton: appScreenNavigationButton,
+        doExpandPlaylistList: false,
+        playlistToRewindTitle: playlistToRewindTitle,
+        audioToPlayTitle:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        audioToPlayTitleAndDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+        otherAudioTitleToTapOnBeforeRewinding:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+        otherAudioTitleToTapOnBeforeRewindingDuration:
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+      );
+
+      // Rewind again all playlist audio to start position. Since
+      // the playlist was already rewinded, 0 audio will be rewinded !
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: playlistToRewindTitle,
+        numberOfRewindedAudio: 0,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+  });
   group('Change application date format using the date format selection dialog',
       () {
     testWidgets(
@@ -13179,7 +13358,7 @@ void main() {
         // Tap on the dialog back button without having modified anything
         await tester.tap(find.byKey(const Key('appSettingsBackButton')));
         await tester.pumpAndSettle();
-        
+
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
         DirUtil.deleteFilesInDirAndSubDirs(
