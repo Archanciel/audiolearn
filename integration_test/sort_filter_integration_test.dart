@@ -301,7 +301,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verify confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
@@ -504,7 +504,7 @@ void audioPlayerViewSortFilterIntegrationTest() {
       await tester.pumpAndSettle();
 
       // Verify confirmation dialog
-      await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
             "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
@@ -1733,7 +1733,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify the displayed warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Invalid start audio duration (0:06). Expected format: hh:mm:ss.",
@@ -1756,7 +1756,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify the displayed warning dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Invalid end audio duration (0:08). Expected format: hh:mm:ss.",
@@ -9015,7 +9015,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"desc listened\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\".",
@@ -9074,7 +9074,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Play Audio\".",
@@ -9160,7 +9160,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"desc listened\" were removed from playlist \"S8 audio\" on screen(s) \"Download Audio\".",
@@ -9302,7 +9302,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"Play Audio\".",
@@ -9397,7 +9397,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"$sortFilterParmsName\" were saved to playlist \"$playlistTitle\" for screen(s) \"Download Audio\".",
@@ -9482,7 +9482,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nSince the playlist\n  "MaValTest"\nwas created, it is positioned at the end of the playlist list.',
@@ -9595,7 +9595,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
 
             // Verify confirmation dialog
-            await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+            await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
                   "Sort/filter parameters \"$notPlayableSortFilterParmsName\" were saved to playlist \"$playlistToRedownloadTitle\" for screen(s) \"Download Audio\".",
@@ -9671,7 +9671,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 'Restored 1 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\audioLearn_2025-03-24_11_30.zip".\n\nSince the playlist\n  "MaValTest"\nwas created, it is positioned at the end of the playlist list.',
@@ -9738,7 +9738,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify the displayed warning confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "The audio \"$audioToRedownloadTitle\" was redownloaded in the playlist \"$playlistToRedownloadTitle\".",
@@ -9758,7 +9758,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"$notPlayableSortFilterParmsName\" were saved to playlist \"$playlistToRedownloadTitle\" for screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -9865,7 +9865,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\".",
@@ -10018,7 +10018,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -10040,7 +10040,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"local\" for screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -10377,7 +10377,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -10396,7 +10396,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were removed from playlist \"S8 audio\" on screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -10549,7 +10549,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\".",
@@ -10568,7 +10568,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were removed from playlist \"S8 audio\" on screen(s) \"Download Audio\".",
@@ -10698,7 +10698,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"S8 audio\" for screen(s) \"Download Audio\".",
@@ -10717,7 +10717,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were removed from playlist \"S8 audio\" on screen(s) \"Download Audio\".",
@@ -10878,7 +10878,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"Conversation avec Dieu\" for screen(s) \"Download Audio\" and \"Play Audio\".",
@@ -11016,7 +11016,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"Conversation avec Dieu\" for screen(s) \"Play Audio\".",
@@ -11157,7 +11157,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
 
           // Verify confirmation dialog
-          await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+          await IntegrationTestUtil.verifyAndCloseWarningDialog(
             tester: tester,
             warningDialogMessage:
                 "Sort/filter parameters \"Title asc\" were saved to playlist \"Conversation avec Dieu\" for screen(s) \"Download Audio\".",

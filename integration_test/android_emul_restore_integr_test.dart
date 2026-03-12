@@ -113,7 +113,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows S8 audio.zip".',
@@ -186,7 +186,7 @@ void main() {
         );
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Saved playlist, comment and picture JSON files to \"$kApplicationPathAndroidTest${path.separator}$kSavedPlaylistsDirName${path.separator}S8 audio.zip\".\n\nSaved also 2 picture JPG file(s) in the ZIP file.",
@@ -308,7 +308,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "/storage/emulated/0/Documents/test/audiolearn/Windows 2 existing playlists with new audios.zip".',
@@ -482,7 +482,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist\n  "Les plus belles chansons chrétiennes"\nwas created, it is positioned at the end of the playlist list.',
@@ -612,7 +612,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist saved individually, 2 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Android S8 audio.zip".',
@@ -755,7 +755,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify the displayed warning confirmation dialog
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               'Restored 0 playlist, 3 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "/storage/emulated/0/Documents/test/audiolearn/Android 2 existing playlists with new audios.zip".',
@@ -1297,7 +1297,7 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
         );
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Audio(s)\n\n\"$fileNameExt\"\n\nimported to local playlist \"$localPlaylistTitle\".",
@@ -1311,7 +1311,7 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
         );
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Audio(s)\n\n\"$fileNameExt\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -1482,14 +1482,14 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
         );
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_3\",\n\"$fileName_5\"\n\nimported to local playlist \"$localPlaylistTitle\".",
           isWarningConfirming: true,
         );
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Audio(s)\n\n\"$fileName_4\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -1531,7 +1531,7 @@ void main() {
           playlistMenuKeyStr: 'popup_menu_import_audio_in_playlist',
         );
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "Audio(s)\n\n\"$fileName_1\",\n\"$fileName_2\",\n\"$fileName_3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to local playlist \"$localPlaylistTitle\" since the playlist directory already contains the audio(s).",
@@ -1837,7 +1837,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -2032,7 +2032,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
@@ -2335,7 +2335,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
@@ -2569,7 +2569,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
 
-        await IntegrationTestUtil.verifyWarningDisplayAndCloseIt(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
               "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$unselectedLocalPlaylistTitle\".",
