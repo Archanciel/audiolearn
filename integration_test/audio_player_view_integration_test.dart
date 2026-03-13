@@ -131,7 +131,7 @@ void main() {
 
       Text audioRemainingDurationText = tester.widget<Text>(
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
-      expect(audioRemainingDurationText.data, '0:59');
+      expect(audioRemainingDurationText.data, '0:47');
 
       // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
@@ -211,12 +211,12 @@ void main() {
           audioRemainingDurationAfterPauseActual;
 
       // Check if the sum of the actual audio position duration
-      // and the actual audio remaining duration is equal to 58 or
-      // 59 seconds which is the total duration of the listened
+      // and the actual audio remaining duration is equal to 46 or
+      // 47 seconds which is the total duration of the listened
       // audio minus 1 second. Checking the value of the audio
       // position and remaining duration is not safe.
-      expect(sumDurations >= const Duration(seconds: 58), isTrue);
-      expect(sumDurations <= const Duration(seconds: 59), isTrue);
+      expect(sumDurations >= const Duration(seconds: 46), isTrue);
+      expect(sumDurations <= const Duration(seconds: 47), isTrue);
 
       // Verify if the pause button changed back to play button
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
@@ -266,7 +266,7 @@ void main() {
       const String previousEndDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
       const String previousEndDownloadedAudioTitleWithDuration =
-          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n8:50';
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches\n5:53';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -354,7 +354,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
       const String lastDownloadedAudioTitleWithDuration =
-          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32";
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -437,8 +437,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '20:10',
-        maxPositionTimeStr: '20:15',
+        minPositionTimeStr: '16:07',
+        maxPositionTimeStr: '16:12',
       );
 
       // Purge the test playlist directory so that the created test
@@ -500,7 +500,7 @@ void main() {
       // Verify the last downloaded played audio title
       expect(
           find.text(
-              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
+              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n7:53"),
           findsOneWidget);
 
       // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
@@ -512,8 +512,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '9:21',
-        maxPositionTimeStr: '9:26',
+        minPositionTimeStr: '7:29',
+        maxPositionTimeStr: '7:34',
       );
 
       // Purge the test playlist directory so that the created test
@@ -627,7 +627,7 @@ void main() {
       // Verify the last downloaded played audio title
       expect(
           find.text(
-              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n9:51"),
+              "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet\n7:53"),
           findsOneWidget);
 
       // Verify that the selected playlist title is displayed
@@ -644,8 +644,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '8:52',
-        maxPositionTimeStr: '8:57',
+        minPositionTimeStr: '7:06',
+        maxPositionTimeStr: '7:11',
       );
 
       // Purge the test playlist directory so that the created test
@@ -814,7 +814,7 @@ void main() {
       // and select the previous downloaded audio of the
       // playlist ('morning _ cinematic video')
 
-      await tester.tap(find.text('$lastDownloadedAudioTitle\n6:28'));
+      await tester.tap(find.text('$lastDownloadedAudioTitle\n5:11'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(previousDownloadedAudioTitle));
@@ -1062,10 +1062,10 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:11',
-        expectedMaxPositionTimeStr: '1:12',
+        audioDurationStr: '5:53',
+        audioPositionBeforePlayingStr: '1:07',
+        expectedMinPositionTimeStr: '0:47',
+        expectedMaxPositionTimeStr: '0:48',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1095,11 +1095,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.backward10sec,
-        audioPositionBeforePlayingStr: '1:31',
-        expectedMinPositionTimeStr: '1:31',
-        expectedMaxPositionTimeStr: '1:32',
+        audioPositionBeforePlayingStr: '1:01',
+        expectedMinPositionTimeStr: '1:01',
+        expectedMaxPositionTimeStr: '1:02',
       );
 
       // Purge the test playlist directory so that the created test
@@ -2278,7 +2278,7 @@ void main() {
       // and select the last downloaded audio of the playlist
 
       await tester.tap(find.text(
-          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29'));
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n9:16'));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(nextUnreadAndLastDownloadedAudioTitle));
