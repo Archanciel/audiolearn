@@ -361,7 +361,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
-            _selectPlaylistAndDisplaySnackbar(
+            _selectPlaylistAndDisplayMessageOnSnackbar(
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
             );
@@ -796,7 +796,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     });
   }
 
-  void _selectPlaylistAndDisplaySnackbar({
+  void _selectPlaylistAndDisplayMessageOnSnackbar({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenFalse,
   }) {
@@ -1080,7 +1080,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             );
             break;
           case FilteredAudioAction.deleteFilteredAudio:
-            _selectPlaylistAndDisplaySnackbar(
+            _selectPlaylistAndDisplayMessageOnSnackbar(
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
             );
@@ -1226,7 +1226,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             }
             break;
           case FilteredAudioAction.deleteFilteredAudioFromPlaylistAsWell:
-            _selectPlaylistAndDisplaySnackbar(
+            _selectPlaylistAndDisplayMessageOnSnackbar(
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
             );
@@ -1308,7 +1308,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             });
             break;
           case FilteredAudioAction.redownloadFilteredAudio:
-            _selectPlaylistAndDisplaySnackbar(
+            _selectPlaylistAndDisplayMessageOnSnackbar(
               context: context,
               playlistListVMlistenFalse: playlistListVMlistenFalse,
             );
