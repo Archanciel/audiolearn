@@ -1274,8 +1274,8 @@ class AudioPlayerVM extends ChangeNotifier {
     );
   }
 
-  /// Method called when the user clicks on the >| icon,
-  /// either the first time or the second time.
+  /// Method called when the user clicks on the >| icon button located
+  /// on the audio player view, either the first time or the second time.
   ///
   /// {isUndoRedo} is true when the method is called by the AudioPlayerVM
   /// undo or redo methods. In this case, the method does not add a
