@@ -1304,7 +1304,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String playlistSortFilterLabel(Object screenName) {
-    return '$screenName sort/filter';
+    return 'Sort/filter $screenName';
   }
 
   @override

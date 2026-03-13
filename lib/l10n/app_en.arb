@@ -554,7 +554,7 @@
       "forViewMessage": {}
     }
   },
-  "playlistSortFilterLabel": "{screenName} sort/filter",
+  "playlistSortFilterLabel": "Sort/filter {screenName}",
   "playlistAudioCommentsLabel": "Audio comments",
   "playlistAudioPicturesLabel": "Audio pictures",
   "listenedOn": "Listened on",
