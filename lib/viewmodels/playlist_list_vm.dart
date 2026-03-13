@@ -2576,7 +2576,7 @@ class PlaylistListVM extends ChangeNotifier {
     // In order to obtain the current audio index before the audio
     // was fully listened, we decrement the audio position by 10
     // seconds and we then search again the sorted and filtered audio.
-    currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds - 10;
+    currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds - 20;
     List<Audio> sortedAndFilteredPlayableAudioLstWithCurrentAudio =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: AudioLearnAppViewType.audioPlayerView,
@@ -2589,7 +2589,7 @@ class PlaylistListVM extends ChangeNotifier {
             (audio) => audio == currentAudio); // using Audio == operator
 
     // restoring the current audio position to fully listened
-    currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds + 10;
+    currentAudio.audioPositionSeconds = currentAudio.audioPositionSeconds + 20;
 
     return currentAudioIndex;
   }
