@@ -1313,7 +1313,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String playlistSortFilterLabel(Object screenName) {
-    return '$screenName tri/filtre';
+    return 'Tri/filtre $screenName';
   }
 
   @override

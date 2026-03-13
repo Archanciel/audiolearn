@@ -664,7 +664,7 @@
       }
     }
   },
-  "playlistSortFilterLabel": "{screenName} tri/filtre",
+  "playlistSortFilterLabel": "Tri/filtre {screenName}",
   "playlistAudioCommentsLabel": "Commentaires des audios",
   "playlistAudioPicturesLabel": "Photos des audios",
   "listenedOn": "Écouté le",

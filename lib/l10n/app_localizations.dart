@@ -2217,7 +2217,7 @@ abstract class AppLocalizations {
   /// No description provided for @playlistSortFilterLabel.
   ///
   /// In en, this message translates to:
-  /// **'{screenName} sort/filter'**
+  /// **'Sort/filter {screenName}'**
   String playlistSortFilterLabel(Object screenName);
 
   /// No description provided for @playlistAudioCommentsLabel.
