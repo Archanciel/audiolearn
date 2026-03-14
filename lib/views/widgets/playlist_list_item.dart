@@ -36,6 +36,7 @@ enum PlaylistPopupMenuAction {
   copyYoutubePlaylistUrl,
   displayPlaylistInfo,
   renamePlaylist,
+  movePlaylist,
   addPositionToAudioTitle,
   displayPlaylistAudioComments,
   importAudioFilesInPlaylist,
@@ -189,6 +190,11 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
           key: const Key('popup_menu_rename_playlist'),
           value: PlaylistPopupMenuAction.renamePlaylist,
           child: Text(AppLocalizations.of(context)!.renamePlaylistMenu),
+        ),
+        PopupMenuItem<PlaylistPopupMenuAction>(
+          key: const Key('popup_menu_move_playlist'),
+          value: PlaylistPopupMenuAction.movePlaylist,
+          child: Text(AppLocalizations.of(context)!.movePlaylistMenu),
         ),
         PopupMenuItem<PlaylistPopupMenuAction>(
           key: const Key('popup_menu_add_audio_position_to_its_title'),
@@ -350,6 +356,62 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                 );
               },
             );
+            break;
+          case PlaylistPopupMenuAction.movePlaylist:
+            final PlaylistListVM playlistListVMlistenFalse =
+                Provider.of<PlaylistListVM>(
+              context,
+              listen: false,
+            );
+
+            _selectPlaylistAndDisplayMessageOnSnackbar(
+              context: context,
+              playlistListVMlistenFalse: playlistListVMlistenFalse,
+            );
+
+            showDialog<List<String>>(
+              barrierDismissible:
+                  false, // Prevents the dialog from closing when tapping outside.
+              context: context,
+              builder: (BuildContext context) {
+                return SetValueToTargetDialog(
+                  dialogTitle: "Playlist move Position Definition",
+                  // AppLocalizations.of(context)!
+                  //     .setAudioDownloadFromDateTimeTitle,
+                  dialogCommentStr:
+                      "Set number of positions to move the playlist up (negative) or down (positive)",
+                  // AppLocalizations.of(context)!
+                  //     .audioDownloadFromDateTimeUniquePlaylistExplanation,
+                  passedValueFieldLabel: "Position number",
+                  passedValueFieldTooltip:
+                      "Position number to move the playlist up (negative) or down (positive)",
+                  // AppLocalizations.of(context)!
+                  //     .audioDownloadFromDateTimeUniquePlaylistTooltip,
+                  checkboxLabelLst: [],
+                  validationFunction: validatePlaylistPositionFormat,
+                  validationFunctionArgs: [playlistListVMlistenFalse],
+                  isCursorAtStart: true,
+                );
+              },
+            ).then((resultStringLst) async {
+              if (resultStringLst == null) {
+                // The case if the Cancel button was pressed.
+                return;
+              }
+
+              final String playlistNewPosition = resultStringLst[0];
+              final int parsedPlaylistNewPosition = int.parse(playlistNewPosition);
+
+              if (parsedPlaylistNewPosition > 0) {
+                playlistListVMlistenFalse.moveSelectedPlaylistDown(
+                  positionNumberToMove: parsedPlaylistNewPosition,
+                );
+              } else if (parsedPlaylistNewPosition < 0) {
+                playlistListVMlistenFalse.moveSelectedPlaylistUp(
+                  positionNumberToMove: parsedPlaylistNewPosition.abs(),
+                );
+              }
+            });
             break;
           case PlaylistPopupMenuAction.addPositionToAudioTitle:
             playlistListVMlistenFalse.addNumericPrefixesToPlaylistAudioTitles(
@@ -1504,6 +1566,27 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     if (parsedDateTime == null) {
       return InvalidValueState
           .dateFormatInvalid; // This will prevent the dialog from closing
+    }
+
+    return InvalidValueState.none;
+  }
+
+  InvalidValueState validatePlaylistPositionFormat(
+    PlaylistListVM playlistListVMlistenFalse,
+    String enteredPositionStr,
+  ) {
+    if (enteredPositionStr.isEmpty) {
+      return InvalidValueState.playlistPositionFormatInvalid;
+    }
+
+    int? parsedPosition = int.tryParse(enteredPositionStr);
+
+    if (parsedPosition == null) {
+      return InvalidValueState
+          .playlistPositionFormatInvalid; // This will prevent the dialog from closing
+    } else if (parsedPosition.abs() >
+        playlistListVMlistenFalse.listOfSelectablePlaylists.length) {
+      return InvalidValueState.playlistPositionTooBig;
     }
 
     return InvalidValueState.none;

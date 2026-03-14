@@ -1273,5 +1273,8 @@
   "invalidEndAudioDurationMessage": "Invalid end audio duration ({value}). Expected format: hh:mm:ss.",
   "playlistUnsavedRootPathWarning": "Since the playlist root path was changed to \"{playlistRootPath}\" you must click on the \"Save\" or the \"Cancel\" button to close the \"Application Settings\" dialog.",
   "rewindFilteredAudioToStart": "Rewind filtered Audios to Start",
-  "rewindedFilteredPlayableAudioNumber": "{number} filtered playlist audios were repositioned to start and the first listenable audio was selected."
+  "rewindedFilteredPlayableAudioNumber": "{number} filtered playlist audios were repositioned to start and the first listenable audio was selected.",
+  "movePlaylistMenu": "Move Playlist ...",
+  "playlistPositionFormatErrorMessage": "{valueStr} does not respect the positive or negative integer playlist position format.",
+  "playlistPositionTooBigErrorMessage": "{valueStr} exceeds the playlists number and so is invalid for repositioning the playlist."
 }

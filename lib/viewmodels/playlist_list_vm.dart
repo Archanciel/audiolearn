@@ -930,12 +930,15 @@ class PlaylistListVM extends ChangeNotifier {
     _uniqueSelectedPlaylist = null;
   }
 
-  void moveSelectedPlaylistUp() {
+  void moveSelectedPlaylistUp({
+    int positionNumberToMove = 1,
+  }) {
     int selectedPlaylistIndex = _getSelectedPlaylistIndex();
 
     if (selectedPlaylistIndex != -1) {
       _movePlaylistUp(
         selectedPlaylistIndex: selectedPlaylistIndex,
+        positionNumberToMove: positionNumberToMove,
       );
       _updateAndSavePlaylistOrder();
       notifyListeners();
@@ -1103,12 +1106,15 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  void moveSelectedPlaylistDown() {
+  void moveSelectedPlaylistDown({
+    int positionNumberToMove = 1,
+  }) {
     int selectedPlaylistIndex = _getSelectedPlaylistIndex();
 
     if (selectedPlaylistIndex != -1) {
       _movePlaylistDown(
         selectedPlaylistIndex: selectedPlaylistIndex,
+        positionNumberToMove: positionNumberToMove,
       );
       _updateAndSavePlaylistOrder();
       notifyListeners();
@@ -2456,10 +2462,12 @@ class PlaylistListVM extends ChangeNotifier {
 
   void _movePlaylistUp({
     required int selectedPlaylistIndex,
+    required int positionNumberToMove,
   }) {
-    int newPlaylistIndex =
-        (selectedPlaylistIndex - 1 + _listOfSelectablePlaylists.length) %
-            _listOfSelectablePlaylists.length;
+    int newPlaylistIndex = (selectedPlaylistIndex -
+            positionNumberToMove +
+            _listOfSelectablePlaylists.length) %
+        _listOfSelectablePlaylists.length;
     Playlist movedPlaylist =
         _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
     _listOfSelectablePlaylists.insert(newPlaylistIndex, movedPlaylist);
@@ -2469,9 +2477,10 @@ class PlaylistListVM extends ChangeNotifier {
 
   void _movePlaylistDown({
     required int selectedPlaylistIndex,
+    required int positionNumberToMove,
   }) {
-    int newIndex =
-        (selectedPlaylistIndex + 1) % _listOfSelectablePlaylists.length;
+    int newIndex = (selectedPlaylistIndex + positionNumberToMove) %
+        _listOfSelectablePlaylists.length;
     Playlist movedPlaylist =
         _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
     _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);

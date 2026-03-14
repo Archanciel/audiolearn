@@ -3061,4 +3061,19 @@ class MockAppLocalizations extends AppLocalizations {
     Object number,
   ) =>
       "$number filtered playlist audios were repositioned to start and the first listenable audio was selected.";
+
+  @override
+  String get movePlaylistMenu => "Move Playlist ...";
+
+  @override
+  String playlistPositionFormatErrorMessage(
+    Object valueStr,
+  ) =>
+      "$valueStr does not respect the positive or negative integer playlist position format.";
+
+  @override
+  String playlistPositionTooBigErrorMessage(
+    Object valueStr,
+  ) =>
+      "$valueStr exceeds the playlists number and so is invalid for repositioning the playlist.";
 }
