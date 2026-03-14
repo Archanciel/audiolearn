@@ -1550,7 +1550,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             key: const Key('move_down_playlist_button'),
             onPressed: playlistListVMlistenFalse.isButtonMovePlaylistEnabled
                 ? () {
-                    playlistListVMlistenFalse.moveSelectedItemDown();
+                    playlistListVMlistenFalse.moveSelectedPlaylistDown();
                   }
                 : null,
             style: ButtonStyle(
@@ -1573,7 +1573,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             key: const Key('move_up_playlist_button'),
             onPressed: playlistListVMlistenFalse.isButtonMovePlaylistEnabled
                 ? () {
-                    playlistListVMlistenFalse.moveSelectedItemUp();
+                    playlistListVMlistenFalse.moveSelectedPlaylistUp();
                   }
                 : null,
             style: ButtonStyle(

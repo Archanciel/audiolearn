@@ -930,11 +930,11 @@ class PlaylistListVM extends ChangeNotifier {
     _uniqueSelectedPlaylist = null;
   }
 
-  void moveSelectedItemUp() {
+  void moveSelectedPlaylistUp() {
     int selectedIndex = _getSelectedPlaylistIndex();
 
     if (selectedIndex != -1) {
-      moveItemUp(selectedIndex);
+      _movePlaylistUp(selectedIndex);
       _updateAndSavePlaylistOrder();
       notifyListeners();
     }
@@ -1101,11 +1101,11 @@ class PlaylistListVM extends ChangeNotifier {
     }
   }
 
-  void moveSelectedItemDown() {
+  void moveSelectedPlaylistDown() {
     int selectedIndex = _getSelectedPlaylistIndex();
 
     if (selectedIndex != -1) {
-      moveItemDown(selectedIndex);
+      _movePlaylistDown(selectedIndex);
       _updateAndSavePlaylistOrder();
       notifyListeners();
     }
@@ -2450,19 +2450,19 @@ class PlaylistListVM extends ChangeNotifier {
     _isButtonMovePlaylistEnabled = false;
   }
 
-  void moveItemUp(int index) {
+  void _movePlaylistUp(int index) {
     int newIndex = (index - 1 + _listOfSelectablePlaylists.length) %
         _listOfSelectablePlaylists.length;
-    Playlist item = _listOfSelectablePlaylists.removeAt(index);
-    _listOfSelectablePlaylists.insert(newIndex, item);
+    Playlist movedPlaylist = _listOfSelectablePlaylists.removeAt(index);
+    _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);
 
     notifyListeners();
   }
 
-  void moveItemDown(int index) {
+  void _movePlaylistDown(int index) {
     int newIndex = (index + 1) % _listOfSelectablePlaylists.length;
-    Playlist item = _listOfSelectablePlaylists.removeAt(index);
-    _listOfSelectablePlaylists.insert(newIndex, item);
+    Playlist movedPlaylist = _listOfSelectablePlaylists.removeAt(index);
+    _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);
 
     notifyListeners();
   }
