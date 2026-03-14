@@ -79,7 +79,7 @@ class _PlaylistAddRemoveSortFilterOptionsDialogState
                   .removeSortFilterOptionsFromPlaylistDialogTitle(
                       widget.sortFilterParmsName),
           textAlign: TextAlign.center,
-          maxLines: 3,
+          maxLines: 4,
         ),
         actionsPadding: kDialogActionsPadding,
         content: SingleChildScrollView(
