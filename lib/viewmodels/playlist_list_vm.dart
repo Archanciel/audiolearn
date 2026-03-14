@@ -931,10 +931,12 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void moveSelectedPlaylistUp() {
-    int selectedIndex = _getSelectedPlaylistIndex();
+    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
 
-    if (selectedIndex != -1) {
-      _movePlaylistUp(selectedIndex);
+    if (selectedPlaylistIndex != -1) {
+      _movePlaylistUp(
+        selectedPlaylistIndex: selectedPlaylistIndex,
+      );
       _updateAndSavePlaylistOrder();
       notifyListeners();
     }
@@ -1102,10 +1104,12 @@ class PlaylistListVM extends ChangeNotifier {
   }
 
   void moveSelectedPlaylistDown() {
-    int selectedIndex = _getSelectedPlaylistIndex();
+    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
 
-    if (selectedIndex != -1) {
-      _movePlaylistDown(selectedIndex);
+    if (selectedPlaylistIndex != -1) {
+      _movePlaylistDown(
+        selectedPlaylistIndex: selectedPlaylistIndex,
+      );
       _updateAndSavePlaylistOrder();
       notifyListeners();
     }
@@ -2450,18 +2454,26 @@ class PlaylistListVM extends ChangeNotifier {
     _isButtonMovePlaylistEnabled = false;
   }
 
-  void _movePlaylistUp(int index) {
-    int newIndex = (index - 1 + _listOfSelectablePlaylists.length) %
-        _listOfSelectablePlaylists.length;
-    Playlist movedPlaylist = _listOfSelectablePlaylists.removeAt(index);
-    _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);
+  void _movePlaylistUp({
+    required int selectedPlaylistIndex,
+  }) {
+    int newPlaylistIndex =
+        (selectedPlaylistIndex - 1 + _listOfSelectablePlaylists.length) %
+            _listOfSelectablePlaylists.length;
+    Playlist movedPlaylist =
+        _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
+    _listOfSelectablePlaylists.insert(newPlaylistIndex, movedPlaylist);
 
     notifyListeners();
   }
 
-  void _movePlaylistDown(int index) {
-    int newIndex = (index + 1) % _listOfSelectablePlaylists.length;
-    Playlist movedPlaylist = _listOfSelectablePlaylists.removeAt(index);
+  void _movePlaylistDown({
+    required int selectedPlaylistIndex,
+  }) {
+    int newIndex =
+        (selectedPlaylistIndex + 1) % _listOfSelectablePlaylists.length;
+    Playlist movedPlaylist =
+        _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
     _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);
 
     notifyListeners();
@@ -2946,8 +2958,8 @@ class PlaylistListVM extends ChangeNotifier {
   /// In this case, the new directory path is returned.
   String getPlaylistsRootPath() {
     return path.dirname(_settingsDataService.get(
-      settingType: SettingType.dataLocation,
-      settingSubType: DataLocation.playlistRootPath));
+        settingType: SettingType.dataLocation,
+        settingSubType: DataLocation.playlistRootPath));
   }
 
   /// Returns a dynamic list containing the number of picture jpg files added to the zip and
@@ -2985,7 +2997,8 @@ class PlaylistListVM extends ChangeNotifier {
     await for (FileSystemEntity entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
-        String relativePath = path.relative(entity.path, from: playlistsRootDir);
+        String relativePath =
+            path.relative(entity.path, from: playlistsRootDir);
 
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
@@ -3127,7 +3140,8 @@ class PlaylistListVM extends ChangeNotifier {
     await for (FileSystemEntity entity
         in sourceDir.list(recursive: true, followLinks: false)) {
       if (entity is File && path.extension(entity.path) == '.json') {
-        String relativePath = path.relative(entity.path, from: playlistsRootDir);
+        String relativePath =
+            path.relative(entity.path, from: playlistsRootDir);
         // Add the file to the archive, preserving the relative path
         List<int> fileBytes = await entity.readAsBytes();
         archive.addFile(ArchiveFile(
@@ -6005,11 +6019,13 @@ class PlaylistListVM extends ChangeNotifier {
       if (playlist.audioPlayingOrder == AudioPlayingOrder.descending) {
         // If the audio playing order is descending, we need to
         // set the current audio to the first playable audio.
-        currentAudioInAudioPlayableListDialog = filteredAudioToRewindToStart.first;
+        currentAudioInAudioPlayableListDialog =
+            filteredAudioToRewindToStart.first;
       } else {
         // If the audio playing order is ascending, we need to
         // set the current audio to the last playable audio.
-        currentAudioInAudioPlayableListDialog = filteredAudioToRewindToStart.last;
+        currentAudioInAudioPlayableListDialog =
+            filteredAudioToRewindToStart.last;
       }
 
       audioPlayerVMlistenFalse.setCurrentAudio(
