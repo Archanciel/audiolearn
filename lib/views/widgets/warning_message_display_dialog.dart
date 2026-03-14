@@ -243,6 +243,32 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             });
 
             return const SizedBox.shrink();
+          case ErrorType.playlistPositionFormatInvalid:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .playlistPositionFormatErrorMessage(
+                        _warningMessageVM.errorArgOne),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
+          case ErrorType.playlistPositionTooBig:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!
+                    .playlistPositionTooBigErrorMessage(
+                        _warningMessageVM.errorArgOne),
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           default:
             return const SizedBox.shrink();
         }

@@ -4737,6 +4737,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{number} filtered playlist audios were repositioned to start and the first listenable audio was selected.'**
   String rewindedFilteredPlayableAudioNumber(Object number);
+
+  /// No description provided for @movePlaylistMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Move Playlist ...'**
+  String get movePlaylistMenu;
+
+  /// No description provided for @playlistPositionFormatErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{valueStr} does not respect the positive or negative integer playlist position format.'**
+  String playlistPositionFormatErrorMessage(Object valueStr);
+
+  /// No description provided for @playlistPositionTooBigErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{valueStr} exceeds the playlists number and so is invalid for repositioning the playlist.'**
+  String playlistPositionTooBigErrorMessage(Object valueStr);
 }
 
 class _AppLocalizationsDelegate

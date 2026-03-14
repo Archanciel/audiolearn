@@ -17,6 +17,8 @@ enum InvalidValueState {
   positionTooSmall,
   dateFormatInvalid,
   enteredDateEmpty,
+  playlistPositionFormatInvalid,
+  playlistPositionTooBig,
 }
 
 /// A dialog that allows the user to enter a value and select one or more
@@ -81,7 +83,7 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.helpItemsLst = const [],
     this.areCheckboxesOnRow = true, // if false, checkboxes are on column
   }) : isValueStringUsed =
-            passedValueFieldLabel.isNotEmpty && passedValueStr.isNotEmpty;
+            passedValueFieldLabel.isNotEmpty;
 
   @override
   State<SetValueToTargetDialog> createState() => _SetValueToTargetDialogState();
@@ -112,8 +114,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       _passedValueTextEditingController.text = widget.passedValueStr;
 
       // Ensure focus after dialog is fully built
-      if (widget.passedValueFieldLabel.isNotEmpty &&
-          widget.passedValueStr.isNotEmpty) {
+      if (widget.passedValueFieldLabel.isNotEmpty) {
         _focusNodePassedValueTextField.requestFocus();
       }
     });
@@ -201,8 +202,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
                 context: context,
                 commentStr: widget.dialogCommentStr,
               ),
-              (widget.passedValueFieldLabel.isNotEmpty &&
-                      widget.passedValueStr.isNotEmpty)
+              (widget.passedValueFieldLabel.isNotEmpty)
                   ? (widget.isPassedValueEditable)
                       ? createEditableRowFunction(
                           context: context,
@@ -420,6 +420,24 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
         case InvalidValueState.enteredDateEmpty:
           warningMessageVM.setError(
             errorType: ErrorType.enteredDateEmpty,
+            errorArgOne: enteredStr,
+          );
+
+          _passedValueTextEditingController.text = enteredStr;
+
+          return [""];
+        case InvalidValueState.playlistPositionFormatInvalid:
+          warningMessageVM.setError(
+            errorType: ErrorType.playlistPositionFormatInvalid,
+            errorArgOne: enteredStr,
+          );
+
+          _passedValueTextEditingController.text = enteredStr;
+
+          return [""];
+        case InvalidValueState.playlistPositionTooBig:
+          warningMessageVM.setError(
+            errorType: ErrorType.playlistPositionTooBig,
             errorArgOne: enteredStr,
           );
 

@@ -2979,4 +2979,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String rewindedFilteredPlayableAudioNumber(Object number) {
     return '$number audios filtrés de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.';
   }
+
+  @override
+  String get movePlaylistMenu => 'Déplacer la playlist ...';
+
+  @override
+  String playlistPositionFormatErrorMessage(Object valueStr) {
+    return '$valueStr ne respecte pas le format d’une position de playlist qui doit être un entier positif ou négatif.';
+  }
+
+  @override
+  String playlistPositionTooBigErrorMessage(Object valueStr) {
+    return '$valueStr dépasse le nombre de playlists et n’est donc pas valide pour repositionner la playlist.';
+  }
 }

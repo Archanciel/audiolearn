@@ -281,6 +281,12 @@ enum ErrorType {
 
   androidZipFileCreationError, // Error in creating the ZIP file since it
   // is too large.
+
+  playlistPositionFormatInvalid, // The case if the entered playlist position
+  // is not an integer.
+
+  playlistPositionTooBig, // The case if the entered playlist position is
+  // bigger than the number of playlists in the playlist list.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.
