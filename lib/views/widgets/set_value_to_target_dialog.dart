@@ -439,6 +439,8 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
           warningMessageVM.setError(
             errorType: ErrorType.playlistPositionTooBig,
             errorArgOne: enteredStr,
+            errorArgTwo: widget.validationFunctionArgs[0]
+                .toString(), // the number of selectable playlists
           );
 
           _passedValueTextEditingController.text = enteredStr;

@@ -1365,7 +1365,8 @@ class WarningMessageVM extends ChangeNotifier {
   }) {
     _rewindedPlayableAudioNumber = rewindedPlayableAudioNumber;
 
-    warningMessageType = WarningMessageType.rewindedFilteredPlayableAudioToStart;
+    warningMessageType =
+        WarningMessageType.rewindedFilteredPlayableAudioToStart;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
@@ -1465,12 +1466,13 @@ class WarningMessageVM extends ChangeNotifier {
   String get playlistRootPath => _playlistRootPath;
 
   void signalUnsavedModifiedPlaylistRootPath({
-    required String playlistRootPath,}) {
+    required String playlistRootPath,
+  }) {
     _playlistRootPath = playlistRootPath;
 
     warningMessageType = WarningMessageType.playlistUnsavedRootPath;
 
     // Causes the display warning message widget to be displayed.
     notifyListeners();
-    }
+  }
 }

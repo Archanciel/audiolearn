@@ -4753,8 +4753,9 @@ abstract class AppLocalizations {
   /// No description provided for @playlistPositionTooBigErrorMessage.
   ///
   /// In en, this message translates to:
-  /// **'{valueStr} exceeds the playlists number and so is invalid for repositioning the playlist.'**
-  String playlistPositionTooBigErrorMessage(Object valueStr);
+  /// **'{enteredPosition} exceeds the playlists number ({playlistsNumber}) and so is invalid for repositioning the playlist.'**
+  String playlistPositionTooBigErrorMessage(
+      Object enteredPosition, Object playlistsNumber);
 }
 
 class _AppLocalizationsDelegate

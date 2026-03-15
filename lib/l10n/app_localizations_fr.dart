@@ -2989,7 +2989,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String playlistPositionTooBigErrorMessage(Object valueStr) {
-    return '$valueStr dépasse le nombre de playlists et n’est donc pas valide pour repositionner la playlist.';
+  String playlistPositionTooBigErrorMessage(
+      Object enteredPosition, Object playlistsNumber) {
+    return '$enteredPosition dépasse le nombre de playlists ($playlistsNumber) et n’est donc pas valide pour repositionner la playlist.';
   }
 }

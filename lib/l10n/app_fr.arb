@@ -1695,5 +1695,5 @@
   "rewindedFilteredPlayableAudioNumber": "{number} audios filtrés de la playlist ont été repositionnés au début et le premier audio écoutable a été selectionné.",
   "movePlaylistMenu": "Déplacer la playlist ...",
   "playlistPositionFormatErrorMessage": "{valueStr} ne respecte pas le format d’une position de playlist qui doit être un entier positif ou négatif.",
-  "playlistPositionTooBigErrorMessage": "{valueStr} dépasse le nombre de playlists et n’est donc pas valide pour repositionner la playlist."
+  "playlistPositionTooBigErrorMessage": "{enteredPosition} dépasse le nombre de playlists ({playlistsNumber}) et n’est donc pas valide pour repositionner la playlist."
 }

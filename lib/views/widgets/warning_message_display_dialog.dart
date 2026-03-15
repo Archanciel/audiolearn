@@ -262,7 +262,9 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                 context: _context,
                 message: AppLocalizations.of(context)!
                     .playlistPositionTooBigErrorMessage(
-                        _warningMessageVM.errorArgOne),
+                  _warningMessageVM.errorArgOne,
+                  _warningMessageVM.errorArgTwo,
+                ),
                 warningMessageVM: _warningMessageVM,
                 themeProviderVM: themeProviderVM,
               );
@@ -1037,7 +1039,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!.rewindedFilteredPlayableAudioNumber(
+            message: AppLocalizations.of(context)!
+                .rewindedFilteredPlayableAudioNumber(
               _warningMessageVM.rewindedPlayableAudioNumber,
             ),
             warningMessageVM: _warningMessageVM,
@@ -1170,7 +1173,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _displayWarningDialog(
             context: _context,
-            message: AppLocalizations.of(context)!.playlistUnsavedRootPathWarning(
+            message:
+                AppLocalizations.of(context)!.playlistUnsavedRootPathWarning(
               _warningMessageVM.playlistRootPath,
             ),
             warningMessageVM: _warningMessageVM,

@@ -389,7 +389,9 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   //     .audioDownloadFromDateTimeUniquePlaylistTooltip,
                   checkboxLabelLst: [],
                   validationFunction: validatePlaylistPositionFormat,
-                  validationFunctionArgs: [playlistListVMlistenFalse],
+                  validationFunctionArgs: [
+                    playlistListVMlistenFalse.listOfSelectablePlaylists.length,
+                  ],
                   isCursorAtStart: true,
                 );
               },
@@ -400,7 +402,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               }
 
               final String playlistNewPosition = resultStringLst[0];
-              final int parsedPlaylistNewPosition = int.parse(playlistNewPosition);
+              final int parsedPlaylistNewPosition =
+                  int.parse(playlistNewPosition);
 
               if (parsedPlaylistNewPosition > 0) {
                 playlistListVMlistenFalse.moveSelectedPlaylistDown(
@@ -1572,7 +1575,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   }
 
   InvalidValueState validatePlaylistPositionFormat(
-    PlaylistListVM playlistListVMlistenFalse,
+    int selectablePlaylistsNumber,
     String enteredPositionStr,
   ) {
     if (enteredPositionStr.isEmpty) {
@@ -1585,7 +1588,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       return InvalidValueState
           .playlistPositionFormatInvalid; // This will prevent the dialog from closing
     } else if (parsedPosition.abs() >
-        playlistListVMlistenFalse.listOfSelectablePlaylists.length) {
+        selectablePlaylistsNumber) {
       return InvalidValueState.playlistPositionTooBig;
     }
 

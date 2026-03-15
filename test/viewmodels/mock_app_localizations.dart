@@ -3073,7 +3073,8 @@ class MockAppLocalizations extends AppLocalizations {
 
   @override
   String playlistPositionTooBigErrorMessage(
-    Object valueStr,
+    Object enteredPosition,
+    Object playlistsNumber,
   ) =>
-      "$valueStr exceeds the playlists number and so is invalid for repositioning the playlist.";
+      "$enteredPosition exceeds the playlists number ($playlistsNumber) and so is invalid for repositioning the playlist.";
 }
