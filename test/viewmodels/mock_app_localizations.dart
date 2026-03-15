@@ -3077,4 +3077,10 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistsNumber,
   ) =>
       "$enteredPosition exceeds the playlists number ($playlistsNumber) and so is invalid for repositioning the playlist.";
+
+  @override
+  String playlistPositionTooltip(
+    Object playlistPosition,
+  ) =>
+      "Playlist position: $playlistPosition";
 }

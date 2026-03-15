@@ -1276,5 +1276,6 @@
   "rewindedFilteredPlayableAudioNumber": "{number} filtered playlist audios were repositioned to start and the first listenable audio was selected.",
   "movePlaylistMenu": "Move Playlist ...",
   "playlistPositionFormatErrorMessage": "{valueStr} does not respect the positive or negative integer playlist position format.",
-  "playlistPositionTooBigErrorMessage": "{enteredPosition} exceeds the playlists number ({playlistsNumber}) and so is invalid for repositioning the playlist."
+  "playlistPositionTooBigErrorMessage": "{enteredPosition} exceeds the playlists number ({playlistsNumber}) and so is invalid for repositioning the playlist.",
+  "playlistPositionTooltip": "Playlist position: {playlistPosition}"
 }

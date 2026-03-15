@@ -2993,4 +2993,9 @@ class AppLocalizationsFr extends AppLocalizations {
       Object enteredPosition, Object playlistsNumber) {
     return '$enteredPosition dépasse le nombre de playlists ($playlistsNumber) et n’est donc pas valide pour repositionner la playlist.';
   }
+
+  @override
+  String playlistPositionTooltip(Object playlistPosition) {
+    return 'Position de la playlist: $playlistPosition';
+  }
 }
