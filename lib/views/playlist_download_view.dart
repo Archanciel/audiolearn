@@ -381,7 +381,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       }
     } else if (audioToScrollPosition > 200) {
       scrollPositionNumber *= 1.21;
-    } else if (audioToScrollPosition > 120) {
+    } else {
       scrollPositionNumber *= 1.125;
     }
 
@@ -401,8 +401,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             )
             .length ==
         scrollPositionNumber.toInt() + 1) {
-          // The case if playlist menu 'Rewind all Audios to Start'
-          // was applied
+      // The case if playlist menu 'Rewind all Audios to Start'
+      // was applied
       offset *= 1.3;
     }
 
@@ -440,9 +440,15 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             Playlist playlist = upToDateSelectablePlaylists[index];
             return Builder(
               builder: (listTileContext) {
-                return PlaylistListItem(
-                  settingsDataService: widget.settingsDataService,
-                  playlist: playlist,
+                return Tooltip(
+                  message:
+                      AppLocalizations.of(context)!.playlistPositionTooltip(
+                    index + 1,
+                  ),
+                  child: PlaylistListItem(
+                    settingsDataService: widget.settingsDataService,
+                    playlist: playlist,
+                  ),
                 );
               },
             );
