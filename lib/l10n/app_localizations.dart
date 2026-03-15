@@ -4756,6 +4756,12 @@ abstract class AppLocalizations {
   /// **'{enteredPosition} exceeds the playlists number ({playlistsNumber}) and so is invalid for repositioning the playlist.'**
   String playlistPositionTooBigErrorMessage(
       Object enteredPosition, Object playlistsNumber);
+
+  /// No description provided for @playlistPositionTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist position: {playlistPosition}'**
+  String playlistPositionTooltip(Object playlistPosition);
 }
 
 class _AppLocalizationsDelegate

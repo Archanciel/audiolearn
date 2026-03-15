@@ -475,14 +475,14 @@ class PlaylistListVM extends ChangeNotifier {
         selectedPlaylisPlayableAudios[currentOrPastPlayableAudioIndex];
 
     // Getting the currently displayed audio list of the selected playlist
-    List<Audio> selectedPlaylistSortFiltertPlayableAudios =
+    List<Audio> selectedPlaylistSortFilterdPlayableAudios =
         getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
     );
 
     // getting the index of the current or past audio in the displayed
     // audio list of the selected playlist
-    int audioToScrollPosition = selectedPlaylistSortFiltertPlayableAudios
+    int audioToScrollPosition = selectedPlaylistSortFilterdPlayableAudios
         .indexWhere((Audio audio) => audio == currentOrPastPlayableAudio);
 
     return audioToScrollPosition;
