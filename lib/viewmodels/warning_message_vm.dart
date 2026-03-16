@@ -423,14 +423,19 @@ class WarningMessageVM extends ChangeNotifier {
   late PlaylistType _addedPlaylistType;
   PlaylistType get addedPlaylistType => _addedPlaylistType;
 
+  late int _addedPlaylistPosition;
+  int get addedPlaylistPosition => _addedPlaylistPosition;
+
   void annoncePlaylistAddition({
     required String playlistTitle,
     required PlaylistQuality playlistQuality,
     required PlaylistType playlistType,
+    required int playlistPosition,
   }) {
     _addedPlaylistTitle = playlistTitle;
     _addedPlaylistQuality = playlistQuality;
     _addedPlaylistType = playlistType;
+    _addedPlaylistPosition = playlistPosition;
 
     if (playlistTitle.isNotEmpty) {
       warningMessageType = WarningMessageType.addPlaylistTitle;
@@ -525,15 +530,20 @@ class WarningMessageVM extends ChangeNotifier {
   String get originalPlaylistTitle => _originalPlaylistTitle;
   String _correctedPlaylistTitle = '';
   String get correctedPlaylistTitle => _correctedPlaylistTitle;
+  int _correctedPlaylistPosition = 0;
+  int get correctedPlaylistPosition => _correctedPlaylistPosition;
 
   void signalCorrectedYoutubePlaylistTitle({
     required String originalPlaylistTitle,
     required PlaylistQuality playlistQuality,
     required String correctedPlaylistTitle,
+    required int playlistPosition,
   }) {
     _originalPlaylistTitle = originalPlaylistTitle;
     _addedPlaylistQuality = playlistQuality;
     _correctedPlaylistTitle = correctedPlaylistTitle;
+    _correctedPlaylistPosition = playlistPosition;
+
 
     warningMessageType = WarningMessageType.correctedYoutubePlaylistTitle;
 

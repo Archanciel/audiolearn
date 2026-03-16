@@ -1483,20 +1483,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Applying Sort/Filter parms \"$sortedFilterParmsName\", from local playlist \"$sourcePlaylistTitle\" to local playlist \"$targetPlaylistTitle\", $copiedAudioNumber audio(s) were copied from which $copiedCommentedAudioNumber were commented, and $notCopiedAudioNumber audio(s) were not copied.";
 
   @override
-  String addYoutubePlaylistTitle(
-    Object title,
-    Object quality,
-  ) =>
-      "Youtube playlist \"$title\" of $quality quality added to the end of list of playlists.";
-
-  @override
-  String addLocalPlaylistTitle(
-    Object title,
-    Object quality,
-  ) =>
-      "Local playlist \"$title\" of $quality quality added to the end of list of playlists.";
-
-  @override
   String defaultSFPNotApplyedToCopyAudioFromLocalToLocalPlaylistWarning(
     Object sortedFilterParmsName,
     Object sourcePlaylistTitle,
@@ -1810,14 +1796,6 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get clearPlaylistUrlOrSearchButtonTooltip =>
       "Clear Youtube link or sentence field.";
-
-  @override
-  String addCorrectedYoutubePlaylistTitle(
-    Object originalTitle,
-    Object quality,
-    Object correctedTitle,
-  ) =>
-      "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" to the end of the playlist list.";
 
   @override
   String get setPlaylistAudioQuality => "Set Audio Quality ...";
@@ -3083,4 +3061,29 @@ class MockAppLocalizations extends AppLocalizations {
     Object playlistPosition,
   ) =>
       "Playlist position: $playlistPosition";
+
+  @override
+  String addYoutubePlaylistTitle(
+    Object title,
+    Object quality,
+    Object position,
+  ) =>
+      "Youtube playlist \"$title\" of $quality quality added at the end of the playlist list at position $position.";
+
+  @override
+  String addLocalPlaylistTitle(
+    Object title,
+    Object quality,
+    Object position,
+  ) =>
+      "Local playlist \"$title\" of $quality quality added at the end of the playlist list at position $position.";
+
+  @override
+  String addCorrectedYoutubePlaylistTitle(
+    Object originalTitle,
+    Object quality,
+    Object correctedTitle,
+    Object position,
+  ) =>
+      "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list at position $position.";
 }

@@ -294,6 +294,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         PlaylistQuality playlistQuality =
             _warningMessageVM.addedPlaylistQuality;
         String playlistQualityStr;
+        String playlistPositionStr =
+            _warningMessageVM.addedPlaylistPosition.toString();
 
         if (addedPlayListTitle.isNotEmpty) {
           if (playlistQuality == PlaylistQuality.voice) {
@@ -307,13 +309,20 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           String addedPlaylistMessage;
 
           if (_warningMessageVM.addedPlaylistType == PlaylistType.local) {
-            addedPlaylistMessage = AppLocalizations.of(context)!
-                .addLocalPlaylistTitle(addedPlayListTitle, playlistQualityStr);
+            addedPlaylistMessage =
+                AppLocalizations.of(context)!.addLocalPlaylistTitle(
+              addedPlayListTitle,
+              playlistQualityStr,
+              playlistPositionStr,
+            );
           } else {
             // Youtube playlist is added
-            addedPlaylistMessage = AppLocalizations.of(context)!
-                .addYoutubePlaylistTitle(
-                    addedPlayListTitle, playlistQualityStr);
+            addedPlaylistMessage =
+                AppLocalizations.of(context)!.addYoutubePlaylistTitle(
+              addedPlayListTitle,
+              playlistQualityStr,
+              playlistPositionStr,
+            );
           }
 
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -436,6 +445,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         PlaylistQuality playlistQuality =
             _warningMessageVM.addedPlaylistQuality;
         String playlistQualityStr;
+        String playlistPositionStr =
+            _warningMessageVM.correctedPlaylistPosition.toString();
 
         if (originalPlaylistTitle.isNotEmpty) {
           if (playlistQuality == PlaylistQuality.voice) {
@@ -449,10 +460,13 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
           String addedPlaylistMessage;
 
           // Youtube playlist is added
-          addedPlaylistMessage = AppLocalizations.of(context)!
-              .addCorrectedYoutubePlaylistTitle(originalPlaylistTitle,
-                  playlistQualityStr, correctedPlaylistTitle);
-
+          addedPlaylistMessage =
+              AppLocalizations.of(context)!.addCorrectedYoutubePlaylistTitle(
+            originalPlaylistTitle,
+            playlistQualityStr,
+            correctedPlaylistTitle,
+            playlistPositionStr,
+          );
           WidgetsBinding.instance.addPostFrameCallback((_) {
             _displayWarningDialog(
                 context: _context,

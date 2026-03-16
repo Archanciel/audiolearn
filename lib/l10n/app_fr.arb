@@ -83,7 +83,7 @@
       }
     }
   },
-  "addYoutubePlaylistTitle": "Nouvelle playlist Youtube \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
+  "addYoutubePlaylistTitle": "Nouvelle playlist Youtube \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists à la position {position}.",
   "@addYoutubePlaylistTitle": {
     "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
     "placeholders": {
@@ -92,10 +92,13 @@
       },
       "quality": {
         "type": "Object"
+      },
+      "position": {
+        "type": "Object"
       }
     }
   },
-  "addCorrectedYoutubePlaylistTitle": "Nouvelle playlist Youtube \"{originalTitle}\" de qualité {quality} ajoutée avec le titre corrigé \"{correctedTitle}\" à la fin de la liste des playlists.",
+  "addCorrectedYoutubePlaylistTitle": "Playlist Youtube \"{originalTitle}\" de qualité {quality} ajoutée avec le titre corrigé \"{correctedTitle}\" à la fin de la liste des playlists à la position {position}.",
   "@addCorrectedYoutubePlaylistTitle": {
     "description": "Warning announcing that the playlist was added with a corrected title to the end of the playlist list",
     "placeholders": {
@@ -107,10 +110,13 @@
       },
       "correctedTitle": {
         "type": "Object"
+      },
+      "position": {
+        "type": "Object"
       }
     }
   },
-  "addLocalPlaylistTitle": "Nouvelle playlist locale \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists.",
+  "addLocalPlaylistTitle": "Nouvelle playlist locale \"{title}\" de qualité {quality} ajoutée à la fin de la liste des playlists à la position {position}.",
   "@addLocalPlaylistTitle": {
     "description": "Message informant qu'une nouvelle playlist a été ajoutée à la liste des playlists.",
     "placeholders": {
@@ -118,6 +124,9 @@
         "type": "Object"
       },
       "quality": {
+        "type": "Object"
+      },
+      "position": {
         "type": "Object"
       }
     }

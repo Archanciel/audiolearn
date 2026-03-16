@@ -216,19 +216,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String addYoutubePlaylistTitle(Object title, Object quality) {
-    return 'Youtube playlist \"$title\" of $quality quality added at the end of the playlist list.';
+  String addYoutubePlaylistTitle(
+      Object title, Object quality, Object position) {
+    return 'Youtube playlist \"$title\" of $quality quality added at the end of the playlist list at position $position.';
   }
 
   @override
-  String addCorrectedYoutubePlaylistTitle(
-      Object originalTitle, Object quality, Object correctedTitle) {
-    return 'Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list.';
+  String addCorrectedYoutubePlaylistTitle(Object originalTitle, Object quality,
+      Object correctedTitle, Object position) {
+    return 'Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list at position $position.';
   }
 
   @override
-  String addLocalPlaylistTitle(Object title, Object quality) {
-    return 'Local playlist \"$title\" of $quality quality added at the end of the playlist list.';
+  String addLocalPlaylistTitle(Object title, Object quality, Object position) {
+    return 'Local playlist \"$title\" of $quality quality added at the end of the playlist list at position $position.';
   }
 
   @override

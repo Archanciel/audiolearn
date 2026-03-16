@@ -486,21 +486,21 @@ abstract class AppLocalizations {
   /// Warning announcing that the playlist was added at the end of the playlist list
   ///
   /// In en, this message translates to:
-  /// **'Youtube playlist \"{title}\" of {quality} quality added at the end of the playlist list.'**
-  String addYoutubePlaylistTitle(Object title, Object quality);
+  /// **'Youtube playlist \"{title}\" of {quality} quality added at the end of the playlist list at position {position}.'**
+  String addYoutubePlaylistTitle(Object title, Object quality, Object position);
 
   /// Warning announcing that the playlist was added with a corrected title at the end of the playlist list
   ///
   /// In en, this message translates to:
-  /// **'Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list.'**
-  String addCorrectedYoutubePlaylistTitle(
-      Object originalTitle, Object quality, Object correctedTitle);
+  /// **'Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list at position {position}.'**
+  String addCorrectedYoutubePlaylistTitle(Object originalTitle, Object quality,
+      Object correctedTitle, Object position);
 
   /// Warning announcing that the playlist was added at the end of the playlist list.
   ///
   /// In en, this message translates to:
-  /// **'Local playlist \"{title}\" of {quality} quality added at the end of the playlist list.'**
-  String addLocalPlaylistTitle(Object title, Object quality);
+  /// **'Local playlist \"{title}\" of {quality} quality added at the end of the playlist list at position {position}.'**
+  String addLocalPlaylistTitle(Object title, Object quality, Object position);
 
   /// Warning announcing that the playlist with invalid URL was not added.
   ///

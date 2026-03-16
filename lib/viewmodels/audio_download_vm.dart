@@ -598,6 +598,7 @@ class AudioDownloadVM extends ChangeNotifier {
         playlistTitle: localPlaylistTitle,
         playlistQuality: playlistQuality,
         playlistType: PlaylistType.local,
+        playlistPosition: _listOfPlaylist.length,
       );
 
       return addedPlaylist;
@@ -719,12 +720,14 @@ class AudioDownloadVM extends ChangeNotifier {
         playlistTitle: addedPlaylist.title,
         playlistQuality: playlistQuality,
         playlistType: PlaylistType.youtube,
+        playlistPosition: _listOfPlaylist.length,
       );
     } else {
       warningMessageVM.signalCorrectedYoutubePlaylistTitle(
         originalPlaylistTitle: youtubePlaylistTitleToCorrect,
         playlistQuality: playlistQuality,
         correctedPlaylistTitle: addedPlaylist.title,
+        playlistPosition: _listOfPlaylist.length, 
       );
     }
 
@@ -2523,7 +2526,8 @@ class AudioDownloadVM extends ChangeNotifier {
     // physical extracted audio file name.
     extractedAudio.audioFileName = extractedFileName;
     extractedAudio.audioType = AudioType.extracted;
-    extractedAudio.extractedFromPlaylistTitle = currentAudio.enclosingPlaylist!.title;
+    extractedAudio.extractedFromPlaylistTitle =
+        currentAudio.enclosingPlaylist!.title;
 
     return extractedAudio;
   }
