@@ -396,14 +396,12 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     double offset = scrollPositionNumber * widget.audioItemHeight;
 
     if (playlistListVMlistenTrue
-            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-              audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-            )
-            .length ==
-        scrollPositionNumber.toInt() + 1) {
-      // The case if playlist menu 'Rewind all Audios to Start'
-      // was applied
-      offset *= 1.3;
+        .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+          audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+        )
+        .isNotEmpty) {
+      offset *= 20.0; // The case if playlist menu 'Rewind all Audios to Start'
+      //               was applied
     }
 
     if (_audioScrollController.hasClients) {
