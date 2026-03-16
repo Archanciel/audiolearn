@@ -81,29 +81,32 @@
       "title": {}
     }
   },
-  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" of {quality} quality added at the end of the playlist list.",
+  "addYoutubePlaylistTitle": "Youtube playlist \"{title}\" of {quality} quality added at the end of the playlist list at position {position}.",
   "@addYoutubePlaylistTitle": {
     "description": "Warning announcing that the playlist was added at the end of the playlist list",
     "placeholders": {
       "title": {},
-      "quality": {}
+      "quality": {},
+      "position": {}
     }
   },
-  "addCorrectedYoutubePlaylistTitle": "Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list.",
+  "addCorrectedYoutubePlaylistTitle": "Youtube playlist \"{originalTitle}\" of {quality} quality added with corrected title \"{correctedTitle}\" at the end of the playlist list at position {position}.",
   "@addCorrectedYoutubePlaylistTitle": {
     "description": "Warning announcing that the playlist was added with a corrected title at the end of the playlist list",
     "placeholders": {
       "originalTitle": {},
       "quality": {},
-      "correctedTitle": {}
+      "correctedTitle": {},
+      "position": {}
     }
   },
-  "addLocalPlaylistTitle": "Local playlist \"{title}\" of {quality} quality added at the end of the playlist list.",
+  "addLocalPlaylistTitle": "Local playlist \"{title}\" of {quality} quality added at the end of the playlist list at position {position}.",
   "@addLocalPlaylistTitle": {
     "description": "Warning announcing that the playlist was added at the end of the playlist list.",
     "placeholders": {
       "title": {},
-      "quality": {}
+      "quality": {},
+      "position": {}
     }
   },
   "invalidPlaylistUrl": "Playlist with invalid URL \"{url}\" neither added nor modified.",

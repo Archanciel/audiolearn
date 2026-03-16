@@ -216,19 +216,20 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String addYoutubePlaylistTitle(Object title, Object quality) {
-    return 'Nouvelle playlist Youtube \"$title\" de qualité $quality ajoutée à la fin de la liste des playlists.';
+  String addYoutubePlaylistTitle(
+      Object title, Object quality, Object position) {
+    return 'Nouvelle playlist Youtube \"$title\" de qualité $quality ajoutée à la fin de la liste des playlists à la position $position.';
   }
 
   @override
-  String addCorrectedYoutubePlaylistTitle(
-      Object originalTitle, Object quality, Object correctedTitle) {
-    return 'Nouvelle playlist Youtube \"$originalTitle\" de qualité $quality ajoutée avec le titre corrigé \"$correctedTitle\" à la fin de la liste des playlists.';
+  String addCorrectedYoutubePlaylistTitle(Object originalTitle, Object quality,
+      Object correctedTitle, Object position) {
+    return 'Playlist Youtube \"$originalTitle\" de qualité $quality ajoutée avec le titre corrigé \"$correctedTitle\" à la fin de la liste des playlists à la position $position.';
   }
 
   @override
-  String addLocalPlaylistTitle(Object title, Object quality) {
-    return 'Nouvelle playlist locale \"$title\" de qualité $quality ajoutée à la fin de la liste des playlists.';
+  String addLocalPlaylistTitle(Object title, Object quality, Object position) {
+    return 'Nouvelle playlist locale \"$title\" de qualité $quality ajoutée à la fin de la liste des playlists à la position $position.';
   }
 
   @override
