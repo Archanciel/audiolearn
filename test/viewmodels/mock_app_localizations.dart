@@ -2455,18 +2455,6 @@ class MockAppLocalizations extends AppLocalizations {
       "Deleted $deletedExistingPlaylistNumber playlist(s)\n{deletedExistingPlaylistTitles}no longer present in the restore ZIP file and not created or modified after the ZIP creation.";
 
   @override
-  String uniquePlaylistAddedAtEndOfPlaylistLst(
-    Object addedPlaylistTitles,
-  ) =>
-      "Since the playlist  \"$addedPlaylistTitles\"was created, it is positioned at the end of the playlist list.";
-
-  @override
-  String multiplePlaylistsAddedAtEndOfPlaylistLst(
-    Object addedPlaylistTitles,
-  ) =>
-      "Since the playlists  \"$addedPlaylistTitles\"were created, they are positioned at the end of the playlist list.";
-
-  @override
   String fromMultipleMp3ZipFileUsedToRestoreMultiplePlaylists(
     Object zipFilePathNName,
   ) =>
@@ -3086,4 +3074,12 @@ class MockAppLocalizations extends AppLocalizations {
     Object position,
   ) =>
       "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list at position $position.";
+
+  @override
+  String uniquePlaylistAddedAtEndOfPlaylistLst(Object addedPlaylistTitles, Object position,) =>
+      "Since the playlist \"$addedPlaylistTitles\" was created, it is positioned at the end of the playlist list at position $position.";
+
+  @override
+  String multiplePlaylistsAddedAtEndOfPlaylistLst(Object addedPlaylistTitles, Object position,) =>
+      "Since the playlists \"$addedPlaylistTitles\" were created, they are positioned at the end of the playlist list starting at position $position.";
 }

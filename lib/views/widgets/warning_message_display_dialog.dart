@@ -1593,6 +1593,7 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.playlistTitlesLst;
           final int playlistsNumber = playlistTitlesLst.length;
           String newPlaylistsAddedAtEndOfPlaylistLstMessage = '';
+          String playlistsStartPositionStr = _warningMessageVM.playlistsStartPosition.toString();
 
           if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
             String newPlaylistsTitlesStr = playlistTitlesLst.join('",\n  "');
@@ -1602,12 +1603,14 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!
                       .multiplePlaylistsAddedAtEndOfPlaylistLst(
                 newPlaylistsTitlesStr,
+                playlistsStartPositionStr,
               );
             } else {
               newPlaylistsAddedAtEndOfPlaylistLstMessage =
                   AppLocalizations.of(context)!
                       .uniquePlaylistAddedAtEndOfPlaylistLst(
                 newPlaylistsTitlesStr,
+                playlistsStartPositionStr,
               );
             }
           }
