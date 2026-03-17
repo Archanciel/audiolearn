@@ -229,7 +229,7 @@ void main() {
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
-        audioPositionSeconds: 47,
+        audioPositionSeconds: 59,
         isPaused: true,
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
         audioPausedDateTime: pausedAudioAtDateTime,
@@ -1097,9 +1097,9 @@ void main() {
         audioToListenIndex: 1,
         audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.backward10sec,
-        audioPositionBeforePlayingStr: '1:01',
-        expectedMinPositionTimeStr: '1:01',
-        expectedMaxPositionTimeStr: '1:02',
+        audioPositionBeforePlayingStr: '0:57',
+        expectedMinPositionTimeStr: '0:57',
+        expectedMaxPositionTimeStr: '0:58',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1129,11 +1129,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.backward1min,
-        audioPositionBeforePlayingStr: '0:41',
-        expectedMinPositionTimeStr: '0:41',
-        expectedMaxPositionTimeStr: '0:42',
+        audioPositionBeforePlayingStr: '0:07',
+        expectedMinPositionTimeStr: '0:07',
+        expectedMaxPositionTimeStr: '0:08',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1163,11 +1163,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.forward10sec,
-        audioPositionBeforePlayingStr: '1:51',
-        expectedMinPositionTimeStr: '1:51',
-        expectedMaxPositionTimeStr: '1:53',
+        audioPositionBeforePlayingStr: '1:17',
+        expectedMinPositionTimeStr: '1:17',
+        expectedMaxPositionTimeStr: '1:18',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1197,11 +1197,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.forward1min,
-        audioPositionBeforePlayingStr: '2:41',
-        expectedMinPositionTimeStr: '2:41',
-        expectedMaxPositionTimeStr: '2:42',
+        audioPositionBeforePlayingStr: '2:07',
+        expectedMinPositionTimeStr: '2:07',
+        expectedMaxPositionTimeStr: '2:08',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1230,11 +1230,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPausedDateTimeSecBeforeNowModification: 1800,
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:21',
-        expectedMaxPositionTimeStr: '1:22',
+        audioPositionBeforePlayingStr: '1:07',
+        expectedMinPositionTimeStr: '0:54',
+        expectedMaxPositionTimeStr: '0:55',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1262,11 +1262,11 @@ void main() {
         audioPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         audioToListenTitle: previouslyPartiallyListenedAudioTitle,
         audioToListenIndex: 1,
-        audioDurationStr: '8:50',
+        audioDurationStr: '5:53',
         audioPausedDateTimeSecBeforeNowModification: 1,
-        audioPositionBeforePlayingStr: '1:41',
-        expectedMinPositionTimeStr: '1:39',
-        expectedMaxPositionTimeStr: '1:40',
+        audioPositionBeforePlayingStr: '1:07',
+        expectedMinPositionTimeStr: '1:06',
+        expectedMaxPositionTimeStr: '1:07',
       );
 
       // Purge the test playlist directory so that the created test
@@ -1683,7 +1683,7 @@ void main() {
 
       audioRemainingDurationText = tester.widget<Text>(
           find.byKey(const Key('audioPlayerViewAudioRemainingDuration')));
-      expect(audioRemainingDurationText.data, '0:10');
+      expect(audioRemainingDurationText.data, '0:08');
 
       await IntegrationTestUtil.verifyTopButtonsState(
         tester: tester,
@@ -2582,7 +2582,7 @@ void main() {
       const String secondDownloadedAudioTitle =
           "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
-          "La résilience insulaire par Fiona Roche\n13:35";
+          "La résilience insulaire par Fiona Roche\n10:52";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
         tester: tester,
@@ -2683,7 +2683,7 @@ void main() {
       const String firstDownloadedAudioTitle =
           "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet";
       const String lastDownloadedAudioTitleOnAudioPlayerView =
-          "La résilience insulaire par Fiona Roche\n13:35";
+          "La résilience insulaire par Fiona Roche\n10:52";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -2736,8 +2736,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '3:03',
-        maxPositionTimeStr: '3:06',
+        minPositionTimeStr: '2:27',
+        maxPositionTimeStr: '2:30',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -2761,7 +2761,7 @@ void main() {
       const String nextDownloadedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
       const String nextDownloadedAudioTitleOnAudioPlayerView =
-          "$nextDownloadedAudioTitle\n19:05";
+          "$nextDownloadedAudioTitle\n15:16";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -2793,7 +2793,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('19:05'), findsOneWidget);
+      expect(find.text('15:16'), findsOneWidget);
 
       // change the current audios play position
 
@@ -2802,7 +2802,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('18:05'), findsOneWidget);
+      expect(find.text('14:16'), findsOneWidget);
 
       // Now, go back to the playlist download view
       final Finder appScreenNavigationButton =
@@ -2843,8 +2843,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '18:06',
-        maxPositionTimeStr: '18:11',
+        minPositionTimeStr: '14:15',
+        maxPositionTimeStr: '14:20',
       );
 
       // Verify if the last downloaded audio title is displayed
@@ -2867,7 +2867,7 @@ void main() {
       const String thirdDownloadedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
       const String thirdDownloadedAudioTitleOnAudioPlayerView =
-          "$thirdDownloadedAudioTitle\n19:05";
+          "$thirdDownloadedAudioTitle\n15:16";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -3010,7 +3010,7 @@ void main() {
       const String thirdDownloadedAudioTitle =
           "Les besoins artificiels par R.Keucheyan";
       const String thirdDownloadedAudioTitleOnAudioPlayerView =
-          "$thirdDownloadedAudioTitle\n19:05";
+          "$thirdDownloadedAudioTitle\n15:16";
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
@@ -3334,7 +3334,7 @@ void main() {
 
       // Now we open the AudioPlayableListDialog by tapping on the
       // audio title
-      await tester.tap(find.text("$thirdDownloadedNotPlayedAudioTitle\n19:05"));
+      await tester.tap(find.text("$thirdDownloadedNotPlayedAudioTitle\n15:16"));
       await tester.pumpAndSettle();
 
       // The list has been moved down so that the current audio is
