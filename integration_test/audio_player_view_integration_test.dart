@@ -229,7 +229,7 @@ void main() {
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
         audioTitle: lastDownloadedAudioTitle,
-        audioPositionSeconds: 59,
+        audioPositionSeconds: 47,
         isPaused: true,
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
         audioPausedDateTime: pausedAudioAtDateTime,
