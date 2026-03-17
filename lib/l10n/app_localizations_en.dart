@@ -2432,13 +2432,15 @@ class AppLocalizationsEn extends AppLocalizations {
       '\n\nThe created playlists are positioned at the end of the playlist list.';
 
   @override
-  String uniquePlaylistAddedAtEndOfPlaylistLst(Object addedPlaylistTitles) {
-    return '\n\nSince the playlist\n  \"$addedPlaylistTitles\"\nwas created, it is positioned at the end of the playlist list.';
+  String uniquePlaylistAddedAtEndOfPlaylistLst(
+      Object addedPlaylistTitles, Object position) {
+    return '\n\nSince the playlist\n  \"$addedPlaylistTitles\"\nwas created, it is positioned at the end of the playlist list at position $position.';
   }
 
   @override
-  String multiplePlaylistsAddedAtEndOfPlaylistLst(Object addedPlaylistTitles) {
-    return '\n\nSince the playlists\n  \"$addedPlaylistTitles\"\nwere created, they are positioned at the end of the playlist list.';
+  String multiplePlaylistsAddedAtEndOfPlaylistLst(
+      Object addedPlaylistTitles, Object position) {
+    return '\n\nSince the playlists\n  \"$addedPlaylistTitles\"\nwere created, they are positioned at the end of the playlist list starting at position $position.';
   }
 
   @override

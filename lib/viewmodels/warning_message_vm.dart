@@ -544,7 +544,6 @@ class WarningMessageVM extends ChangeNotifier {
     _correctedPlaylistTitle = correctedPlaylistTitle;
     _correctedPlaylistPosition = playlistPosition;
 
-
     warningMessageType = WarningMessageType.correctedYoutubePlaylistTitle;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
@@ -1085,20 +1084,24 @@ class WarningMessageVM extends ChangeNotifier {
       _deletedExistingPlaylistTitlesLst;
   int _deletedCommentNumber = 0;
   int get deletedCommentNumber => _deletedCommentNumber;
-  void confirmRestorationFromZip(
-      {required String zipFilePathName,
-      required List<String> playlistTitlesLst,
-      required int audioReferencesNumber,
-      required int commentJsonFilesNumber,
-      required int updatedCommentNumber,
-      required int addedCommentNumber,
-      required int pictureJsonFilesNumber,
-      required int pictureJpgFilesNumber,
-      required List<String> deletedAudioTitlesLst,
-      required bool wasIndividualPlaylistRestored,
-      required bool newPlaylistsAddedAtEndOfPlaylistLst,
-      required List<String> deletedExistingPlaylistTitlesLst,
-      required int deletedCommentNumber}) {
+  int _playlistsStartPosition = 0;
+  int get playlistsStartPosition => _playlistsStartPosition;
+  void confirmRestorationFromZip({
+    required String zipFilePathName,
+    required List<String> playlistTitlesLst,
+    required int audioReferencesNumber,
+    required int commentJsonFilesNumber,
+    required int updatedCommentNumber,
+    required int addedCommentNumber,
+    required int pictureJsonFilesNumber,
+    required int pictureJpgFilesNumber,
+    required List<String> deletedAudioTitlesLst,
+    required bool wasIndividualPlaylistRestored,
+    required bool newPlaylistsAddedAtEndOfPlaylistLst,
+    required List<String> deletedExistingPlaylistTitlesLst,
+    required int deletedCommentNumber,
+    required int playlistsStartPosition,
+  }) {
     _zipFilePathName = zipFilePathName;
     _playlistTitlesLst = playlistTitlesLst;
     _audioReferencesNumber = audioReferencesNumber;
@@ -1112,6 +1115,7 @@ class WarningMessageVM extends ChangeNotifier {
     _newPlaylistsAddedAtEndOfPlaylistLst = newPlaylistsAddedAtEndOfPlaylistLst;
     _deletedExistingPlaylistTitlesLst = deletedExistingPlaylistTitlesLst;
     _deletedCommentNumber = deletedCommentNumber;
+    _playlistsStartPosition = playlistsStartPosition;
 
     warningMessageType = WarningMessageType.restoreAppDataFromZip;
 

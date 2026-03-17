@@ -3983,6 +3983,14 @@ class PlaylistListVM extends ChangeNotifier {
     // appbar 'Save Playlist, Comments, Pictures and Settings to Zip
     // File' menu item.
     bool wasIndividualPlaylistRestored = restoredInfoLst[4];
+    int playlistRestoreStartPosition = 0;
+
+    if (wasIndividualPlaylistRestored) {
+      playlistRestoreStartPosition = _listOfSelectablePlaylists.length;
+    } else {
+      playlistRestoreStartPosition =
+          (_listOfSelectablePlaylists.length - restoredInfoLst[0].length).toInt() + 1;
+    }
 
     // Display a confirmation message to the user.
     _warningMessageVM.confirmRestorationFromZip(
@@ -3999,6 +4007,7 @@ class PlaylistListVM extends ChangeNotifier {
       newPlaylistsAddedAtEndOfPlaylistLst: restoredInfoLst[9],
       deletedExistingPlaylistTitlesLst: restoredInfoLst[10],
       deletedCommentNumber: restoredInfoLst[11],
+      playlistsStartPosition: playlistRestoreStartPosition,
     );
 
     if (doReplaceExistingPlaylists &&
