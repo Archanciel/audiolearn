@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:audiolearn/views/playlist_download_view.dart';
+import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -3149,7 +3151,7 @@ void main() {
       // and verify the color of the displayed audio titles
 
       await tester
-          .tap(find.text('$fifthDownloadedPartiallyPlayedAudioTitle\n6:29'));
+          .tap(find.text('$fifthDownloadedPartiallyPlayedAudioTitle\n5:11'));
       await tester.pumpAndSettle();
 
       await IntegrationTestUtil.checkAudioTextColor(
@@ -3417,6 +3419,13 @@ void main() {
       await tester.tap(find.byKey(const Key('playlist_toggle_button')));
       await tester.pumpAndSettle();
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll up action
+      await tester.drag(listFinder, const Offset(0, 200));
+      await tester.pumpAndSettle();
+
       // Type on the audio to play title in order to open the
       // AudioPlayerView displaying the audio
       await tester.tap(find.text(audioToPlayTitle));
@@ -3449,7 +3458,7 @@ void main() {
       // Now we are back on the AudioPlayerView displaying the selected
       // audio to play. We reopen the AudioPlayableListDialog
       // by tapping on the audio title.
-      await tester.tap(find.text("$audioToSelectInAudioListTitle\n6:29"));
+      await tester.tap(find.text("$audioToSelectInAudioListTitle\n5:11"));
       await tester.pumpAndSettle();
 
       // Then select the previously playing audio in order to open it in
@@ -3546,6 +3555,13 @@ void main() {
         sortFilterParmsName: 'default',
       );
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll up action
+      await tester.drag(listFinder, const Offset(0, 200));
+      await tester.pumpAndSettle();
+
       // Type on the audio to play title in order to open the
       // AudioPlayerView displaying the audio
       await tester.tap(find.text(audioToPlayTitle));
@@ -3608,7 +3624,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -3616,7 +3632,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('9:00'), findsOneWidget);
 
       // undo the change
 
@@ -3624,7 +3640,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3632,7 +3648,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('9:00'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3672,7 +3688,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -3681,7 +3697,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('10:10'), findsOneWidget);
+      expect(find.text('8:10'), findsOneWidget);
 
       // undo the change
 
@@ -3689,7 +3705,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3697,7 +3713,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('10:10'), findsOneWidget);
+      expect(find.text('8:10'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3737,7 +3753,7 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -3745,7 +3761,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:00'), findsOneWidget);
+      expect(find.text('7:00'), findsOneWidget);
 
       // undo the change
 
@@ -3753,7 +3769,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3761,7 +3777,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:00'), findsOneWidget);
+      expect(find.text('7:00'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3803,7 +3819,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -3811,7 +3827,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:50'), findsOneWidget);
+      expect(find.text('7:50'), findsOneWidget);
 
       // undo the change
 
@@ -3819,7 +3835,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3827,7 +3843,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:50'), findsOneWidget);
+      expect(find.text('7:50'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -3868,7 +3884,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position to audio start
 
@@ -3885,7 +3901,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3934,7 +3950,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position to audio end
 
@@ -3942,7 +3958,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // undo the change
 
@@ -3950,7 +3966,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -3958,7 +3974,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4000,7 +4016,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -4041,8 +4057,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:23',
-        maxPositionTimeStr: '1:25',
+        minPositionTimeStr: '1:06',
+        maxPositionTimeStr: '1:08',
       );
 
       // undo the change
@@ -4051,7 +4067,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // redo the change
 
@@ -4059,7 +4075,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('1:23'), findsOneWidget);
+      expect(find.text('1:06'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4103,7 +4119,7 @@ void main() {
       );
 
       // check the current audios play position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -4111,7 +4127,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('9:00'), findsOneWidget);
 
       // undo the change
 
@@ -4119,7 +4135,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: change the current audios play position to audio start
 
@@ -4135,7 +4151,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('9:00'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4175,7 +4191,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios initial position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -4184,7 +4200,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('10:10'), findsOneWidget);
+      expect(find.text('8:10'), findsOneWidget);
 
       // undo the change
 
@@ -4192,7 +4208,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: change the current audios play position to audio start
 
@@ -4208,7 +4224,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios redoned change position
-      expect(find.text('10:10'), findsOneWidget);
+      expect(find.text('8:10'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4250,7 +4266,7 @@ void main() {
       );
 
       // check the current audios play position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -4258,7 +4274,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:00'), findsOneWidget);
+      expect(find.text('7:00'), findsOneWidget);
 
       // undo the change
 
@@ -4266,14 +4282,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: change the current audios play position to audio end
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
       await tester.pumpAndSettle();
 
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // redo the change
 
@@ -4281,7 +4297,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:00'), findsOneWidget);
+      expect(find.text('7:00'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4321,7 +4337,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios play position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position
 
@@ -4329,7 +4345,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:50'), findsOneWidget);
+      expect(find.text('7:50'), findsOneWidget);
 
       // undo the change
 
@@ -4337,14 +4353,14 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: change the current audios play position to audio end
 
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
       await tester.pumpAndSettle();
 
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // redo the change
 
@@ -4352,7 +4368,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:50'), findsOneWidget);
+      expect(find.text('7:50'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4391,7 +4407,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position to audio start
 
@@ -4408,7 +4424,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: go forward 1 minute
 
@@ -4416,7 +4432,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('11:00'), findsOneWidget);
+      expect(find.text('9:00'), findsOneWidget);
 
       // redo the change
 
@@ -4465,7 +4481,7 @@ void main() {
       );
 
       // check the current audios changed position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // change the current audios play position to audio end
 
@@ -4473,7 +4489,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // undo the change
 
@@ -4481,7 +4497,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: go back 1 minute
 
@@ -4489,7 +4505,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('9:00'), findsOneWidget);
+      expect(find.text('7:00'), findsOneWidget);
 
       // redo the change
 
@@ -4497,7 +4513,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('20:32'), findsOneWidget);
+      expect(find.text('16:26'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -4539,7 +4555,7 @@ void main() {
       );
 
       // check the current audios position
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // Tap on the comment icon button to open the comment add list
       // dialog
@@ -4568,7 +4584,7 @@ void main() {
       await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
         tester: tester,
       );
-      
+
       // check the current audios changed position
       final Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
@@ -4580,8 +4596,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '1:24',
-        maxPositionTimeStr: '1:26',
+        minPositionTimeStr: '1:06',
+        maxPositionTimeStr: '1:08',
       );
 
       // undo the change
@@ -4590,7 +4606,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position after the undo
-      expect(find.text('10:00'), findsOneWidget);
+      expect(find.text('8:00'), findsOneWidget);
 
       // new command: change the current audios play position to audio start
 
@@ -4606,7 +4622,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // check the current audios changed position
-      expect(find.text('1:23'), findsOneWidget);
+      expect(find.text('1:06'), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -8578,7 +8594,6 @@ void main() {
         '1:17:53.7',
       );
 
-      
       // Tap on the add/edit comment button to save the comment
       await tester.tap(find.byKey(const Key('addOrUpdateCommentTextButton')));
       await tester.pumpAndSettle();
@@ -10072,7 +10087,7 @@ void main() {
 
       // Now, open the AudioPlayableListDialog by tapping on the
       // audio title
-      await tester.tap(find.text("$secondModifiedAudioTitle\n6:29"));
+      await tester.tap(find.text("$secondModifiedAudioTitle\n5:11"));
       await tester.pumpAndSettle();
 
       // Select the first Audio in the AudioPlayableListDialog
