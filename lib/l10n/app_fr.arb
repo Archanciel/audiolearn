@@ -1705,5 +1705,6 @@
   "movePlaylistMenu": "Déplacer la playlist ...",
   "playlistPositionFormatErrorMessage": "{valueStr} ne respecte pas le format d’une position de playlist qui doit être un entier positif ou négatif.",
   "playlistPositionTooBigErrorMessage": "{enteredPosition} dépasse le nombre de playlists ({playlistsNumber}) et n’est donc pas valide pour repositionner la playlist.",
-  "playlistPositionTooltip": "Position de la playlist: {playlistPosition}"
+  "playlistPositionTooltip": "Position de la playlist: {playlistPosition}",
+  "movedPlaylistMessage": "La playlist {playlist} a été déplacée de la position {positionFrom} à la position {positionTo}."
 }

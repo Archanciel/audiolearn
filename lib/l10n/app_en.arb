@@ -1280,5 +1280,6 @@
   "movePlaylistMenu": "Move Playlist ...",
   "playlistPositionFormatErrorMessage": "{valueStr} does not respect the positive or negative integer playlist position format.",
   "playlistPositionTooBigErrorMessage": "{enteredPosition} exceeds the playlists number ({playlistsNumber}) and so is invalid for repositioning the playlist.",
-  "playlistPositionTooltip": "Playlist position: {playlistPosition}"
+  "playlistPositionTooltip": "Playlist position: {playlistPosition}",
+  "movedPlaylistMessage": "The playlist {playlist} was moved from position {positionFrom} to position {positionTo}."
 }

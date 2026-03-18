@@ -3001,4 +3001,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String playlistPositionTooltip(Object playlistPosition) {
     return 'Position de la playlist: $playlistPosition';
   }
+
+  @override
+  String movedPlaylistMessage(
+      Object playlist, Object positionFrom, Object positionTo) {
+    return 'La playlist $playlist a été déplacée de la position $positionFrom à la position $positionTo.';
+  }
 }

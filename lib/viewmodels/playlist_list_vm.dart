@@ -933,14 +933,24 @@ class PlaylistListVM extends ChangeNotifier {
   void moveSelectedPlaylistUp({
     int positionNumberToMove = 1,
   }) {
-    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
+    int selectedPlaylistIndexBeforeMoving = _getSelectedPlaylistIndex();
 
-    if (selectedPlaylistIndex != -1) {
+    if (selectedPlaylistIndexBeforeMoving != -1) {
       _movePlaylistUp(
-        selectedPlaylistIndex: selectedPlaylistIndex,
+        selectedPlaylistIndex: selectedPlaylistIndexBeforeMoving,
         positionNumberToMove: positionNumberToMove,
       );
       _updateAndSavePlaylistOrder();
+
+      if ((selectedPlaylistIndexBeforeMoving - _getSelectedPlaylistIndex()).abs() >
+          1) {
+        _warningMessageVM.signalPlaylistMovePosition(
+          playlistTitle: _uniqueSelectedPlaylist!.title,
+          playlistPositionFrom: selectedPlaylistIndexBeforeMoving + 1,
+          playlistPositionTo: _getSelectedPlaylistIndex() + 1,
+        );
+      }
+
       notifyListeners();
     }
   }
@@ -1109,14 +1119,24 @@ class PlaylistListVM extends ChangeNotifier {
   void moveSelectedPlaylistDown({
     int positionNumberToMove = 1,
   }) {
-    int selectedPlaylistIndex = _getSelectedPlaylistIndex();
+    int selectedPlaylistIndexBeforeMoving = _getSelectedPlaylistIndex();
 
-    if (selectedPlaylistIndex != -1) {
+    if (selectedPlaylistIndexBeforeMoving != -1) {
       _movePlaylistDown(
-        selectedPlaylistIndex: selectedPlaylistIndex,
+        selectedPlaylistIndex: selectedPlaylistIndexBeforeMoving,
         positionNumberToMove: positionNumberToMove,
       );
       _updateAndSavePlaylistOrder();
+
+      if ((_getSelectedPlaylistIndex() - selectedPlaylistIndexBeforeMoving).abs() >
+          1) {
+        _warningMessageVM.signalPlaylistMovePosition(
+          playlistTitle: _uniqueSelectedPlaylist!.title,
+          playlistPositionFrom: selectedPlaylistIndexBeforeMoving + 1,
+          playlistPositionTo: _getSelectedPlaylistIndex() + 1,
+        );
+      }
+
       notifyListeners();
     }
   }
@@ -2471,8 +2491,6 @@ class PlaylistListVM extends ChangeNotifier {
     Playlist movedPlaylist =
         _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
     _listOfSelectablePlaylists.insert(newPlaylistIndex, movedPlaylist);
-
-    notifyListeners();
   }
 
   void _movePlaylistDown({
@@ -2484,8 +2502,6 @@ class PlaylistListVM extends ChangeNotifier {
     Playlist movedPlaylist =
         _listOfSelectablePlaylists.removeAt(selectedPlaylistIndex);
     _listOfSelectablePlaylists.insert(newIndex, movedPlaylist);
-
-    notifyListeners();
   }
 
   /// If no sort/filter parameter is applyed to the playlist containing
@@ -3989,7 +4005,9 @@ class PlaylistListVM extends ChangeNotifier {
       playlistRestoreStartPosition = _listOfSelectablePlaylists.length;
     } else {
       playlistRestoreStartPosition =
-          (_listOfSelectablePlaylists.length - restoredInfoLst[0].length).toInt() + 1;
+          (_listOfSelectablePlaylists.length - restoredInfoLst[0].length)
+                  .toInt() +
+              1;
     }
 
     // Display a confirmation message to the user.

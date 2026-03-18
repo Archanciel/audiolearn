@@ -51,6 +51,9 @@ enum WarningMessageType {
   // added a Youtube playlist whose title contains one or several
   // invalid characters, '/' for example.
 
+  movedPlaylistPosition, // The case if the user clicked on
+  // the playlist move position menu item.
+
   invalidStartAudioDurationFormat, // The case if the user
   // did not respect the hh:mm:ss audio start duration format.
 
@@ -545,6 +548,26 @@ class WarningMessageVM extends ChangeNotifier {
     _correctedPlaylistPosition = playlistPosition;
 
     warningMessageType = WarningMessageType.correctedYoutubePlaylistTitle;
+
+    // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
+    notifyListeners();
+  }
+
+  int _playlistPositionFrom = 0;
+  int get playlistPositionFrom => _playlistPositionFrom;
+  int _playlistPositionTo = 0;
+  int get playlistPositionTo => _playlistPositionTo;
+
+  void signalPlaylistMovePosition({
+    required String playlistTitle,
+    required int playlistPositionFrom,
+    required int playlistPositionTo,
+  }) {
+    _playlistTitle = playlistTitle;
+    _playlistPositionFrom = playlistPositionFrom;
+    _playlistPositionTo = playlistPositionTo;
+
+    warningMessageType = WarningMessageType.movedPlaylistPosition;
 
     // Causes the display warning message widget to be displayed.      // Causes the display warning message widget to be displayed.
     notifyListeners();

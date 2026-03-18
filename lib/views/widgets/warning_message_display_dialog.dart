@@ -495,6 +495,34 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
         });
 
         return const SizedBox.shrink();
+      case WarningMessageType.movedPlaylistPosition:
+        String playlistTitle = _warningMessageVM.playlistTitle;
+        String playlistPositionFrom =
+            _warningMessageVM.playlistPositionFrom.toString();
+        String playlistPositionTo =
+            _warningMessageVM.playlistPositionTo.toString();
+
+        String movedPlaylistMessage;
+
+        // Youtube playlist is added
+        movedPlaylistMessage =
+            AppLocalizations.of(context)!.movedPlaylistMessage(
+          playlistTitle,
+          playlistPositionFrom,
+          playlistPositionTo,
+        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _displayWarningDialog(
+            context: _context,
+            message: movedPlaylistMessage,
+            warningMessageVM: _warningMessageVM,
+            themeProviderVM: themeProviderVM,
+            warningMode: WarningMode.confirm,
+          );
+        });
+
+        return const SizedBox.shrink();
       case WarningMessageType.invalidEndAudioDurationFormat:
         String endAudioDurationTxt = _warningMessageVM.endAudioDurationTxt;
 
@@ -1593,7 +1621,8 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
               _warningMessageVM.playlistTitlesLst;
           final int playlistsNumber = playlistTitlesLst.length;
           String newPlaylistsAddedAtEndOfPlaylistLstMessage = '';
-          String playlistsStartPositionStr = _warningMessageVM.playlistsStartPosition.toString();
+          String playlistsStartPositionStr =
+              _warningMessageVM.playlistsStartPosition.toString();
 
           if (_warningMessageVM.newPlaylistsAddedAtEndOfPlaylistLst) {
             String newPlaylistsTitlesStr = playlistTitlesLst.join('",\n  "');
