@@ -3076,10 +3076,24 @@ class MockAppLocalizations extends AppLocalizations {
       "Youtube playlist \"$originalTitle\" of $quality quality added with corrected title \"$correctedTitle\" at the end of the playlist list at position $position.";
 
   @override
-  String uniquePlaylistAddedAtEndOfPlaylistLst(Object addedPlaylistTitles, Object position,) =>
+  String uniquePlaylistAddedAtEndOfPlaylistLst(
+    Object addedPlaylistTitles,
+    Object position,
+  ) =>
       "Since the playlist \"$addedPlaylistTitles\" was created, it is positioned at the end of the playlist list at position $position.";
 
   @override
-  String multiplePlaylistsAddedAtEndOfPlaylistLst(Object addedPlaylistTitles, Object position,) =>
+  String multiplePlaylistsAddedAtEndOfPlaylistLst(
+    Object addedPlaylistTitles,
+    Object position,
+  ) =>
       "Since the playlists \"$addedPlaylistTitles\" were created, they are positioned at the end of the playlist list starting at position $position.";
+
+  @override
+  String movedPlaylistMessage(
+    Object playlist,
+    Object positionFrom,
+    Object positionTo,
+  ) =>
+      "The playlist $playlist was moved from position $positionFrom to position $positionTo.";
 }

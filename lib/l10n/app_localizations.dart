@@ -4764,6 +4764,13 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Playlist position: {playlistPosition}'**
   String playlistPositionTooltip(Object playlistPosition);
+
+  /// No description provided for @movedPlaylistMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The playlist {playlist} was moved from position {positionFrom} to position {positionTo}.'**
+  String movedPlaylistMessage(
+      Object playlist, Object positionFrom, Object positionTo);
 }
 
 class _AppLocalizationsDelegate
