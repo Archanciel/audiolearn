@@ -83,10 +83,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         commentVM.currentCommentEndPosition = commentEndPosition;
       } else {
         // here, we are creating a comment
+        final Duration durationDividedByAAudioPPlaySpeed = Duration(
+            microseconds: (audioPlayerVM.currentAudioPosition.inMicroseconds /
+                    widget.commentableAudio.audioPlaySpeed)
+                .round());
+
         commentVM.currentCommentStartPosition =
-            audioPlayerVM.currentAudioPosition;
-        commentVM.currentCommentEndPosition =
-            audioPlayerVM.currentAudioPosition;
+            durationDividedByAAudioPPlaySpeed;
+        commentVM.currentCommentEndPosition = durationDividedByAAudioPPlaySpeed;
       }
     });
   }
@@ -605,8 +609,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             }
 
             // Format the current audio position using your custom extension function.
-            String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
-                addRemainingOneDigitTenthOfSecond: true);
+            String currentAudioPositionStr = Duration(
+                    microseconds: (currentAudioPosition.inMicroseconds /
+                            widget.commentableAudio.audioPlaySpeed)
+                        .round())
+                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
