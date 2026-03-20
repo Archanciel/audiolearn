@@ -6564,8 +6564,8 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      const String commentStartPositionStr = '0:46';
-      const String commentEndPositionStr = '0:48';
+      const String commentStartPositionStr = '0:37';
+      const String commentEndPositionStr = '0:34';
 
       // Obtain the current audio position in the audio player view
       audioPlayerViewAudioPositionFinder =
@@ -6575,12 +6575,17 @@ void main() {
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartPositionStr, // 0:46
+        commentStartPositionStr, // 0:37
+      );
+
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentEndPositionStr, // 0:34
       );
 
       expect(
         audioPlayerViewCurrentAudioPositionStr,
-        commentStartPositionStr, // 0:46
+        '0:30',
       );
 
       // Verify that the comment end position displayed in the comment
@@ -6590,7 +6595,7 @@ void main() {
       // audio position in the audio player view.
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 0:34
       );
 
       // Tap five times on the forward comment end icon button, then
@@ -6632,7 +6637,7 @@ void main() {
 
       expect(
         actualCommentEndPositionStr,
-        commentEndPositionStr, // 0:48
+        '0:39',
       );
 
       // Now, modifying the comment start position in tenth of
@@ -6647,11 +6652,11 @@ void main() {
 
       // Verify that the comment start position is now displayed
       // with added tenth of seconds value
-      String commentStartPositionWithTensOfSecond = '0:46.0';
+      String commentStartPositionWithTensOfSecond = '0:37.4';
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartPositionWithTensOfSecond, // 0:46.0
+        commentStartPositionWithTensOfSecond, // 0:37.4
       );
 
       // Tap three times on the forward comment start icon button, then
@@ -6677,14 +6682,14 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      String expectedCommentStartPositionWithTensOfSecond = '0:46.1';
+      String expectedCommentStartPositionWithTensOfSecond = '0:37.5';
       String actualCommentStartPositionWithTensOfSecondStr = tester
           .widget<Text>(find.byKey(const Key('commentStartPositionText')))
           .data!;
 
       expect(
         actualCommentStartPositionWithTensOfSecondStr,
-        expectedCommentStartPositionWithTensOfSecond, // 0:46.1
+        expectedCommentStartPositionWithTensOfSecond, // 0:37.5
         reason:
             'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
       );
@@ -6700,8 +6705,8 @@ void main() {
       await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
-      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.0';
-      String expectedCommentEndPositionWithTensOfSecondMax = '0:48.6';
+      String expectedCommentEndPositionWithTensOfSecondMin = '0:39.3';
+      String expectedCommentEndPositionWithTensOfSecondMax = '0:39.8';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -6749,13 +6754,13 @@ void main() {
       // dialog
 
       String expectedCommentEndPositionSeconds =
-          '0:51'; // 0:48 + 3 - 1 + 1 seconds
+          '0:42'; // 0:38.4 + 3 - 1 + 1 seconds
       String actualCommentEndPositionSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
       expect(
         actualCommentEndPositionSecondsStr,
-        expectedCommentEndPositionSeconds, // 0:51
+        expectedCommentEndPositionSeconds, // 0:41
         reason:
             'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
       );
@@ -6763,8 +6768,8 @@ void main() {
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
-      String expectedAudioPlayerAudioPositionMin = '0:47';
-      String expectedAudioPlayerAudioPositionMax = '0:49';
+      String expectedAudioPlayerAudioPositionMin = '0:30';
+      String expectedAudioPlayerAudioPositionMax = '0:32';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -6785,8 +6790,8 @@ void main() {
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
 
-      String expectedCommentEndPositionMin = '0:51.0';
-      String expectedCommentEndPositionMax = '0:51.0';
+      String expectedCommentEndPositionMin = '0:42.4';
+      String expectedCommentEndPositionMax = '0:42.4';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -6819,8 +6824,8 @@ void main() {
       // Verify the comment end position displayed in the comment
       // dialog
 
-      expectedCommentEndPositionMin = '0:51.3';
-      expectedCommentEndPositionMax = '0:51.3';
+      expectedCommentEndPositionMin = '0:42.7';
+      expectedCommentEndPositionMax = '0:42.7';
 
       String actualCommentEndPositionWithTenthOfSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
@@ -6840,8 +6845,8 @@ void main() {
       // The audio position correspond to the comment start position
       // in seconds.
 
-      expectedAudioPlayerAudioPositionMin = '0:47';
-      expectedAudioPlayerAudioPositionMax = '0:49';
+      expectedAudioPlayerAudioPositionMin = '0:30';
+      expectedAudioPlayerAudioPositionMax = '0:32';
 
       // If this test fails, try to rexecute it several times. If
       // the test continue to fail, restart your computer and
@@ -6896,16 +6901,19 @@ void main() {
               of: commentListDialogFinder, matching: find.text(commentText)),
           findsOneWidget);
 
+      const String displayedCommentStartPosition = '0:38';
+      const String displayedCommentEndPosition = '0:43';
+
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentStartPositionStr), // 0:46
+            matching: find.text(displayedCommentStartPosition),
           ),
           findsOneWidget);
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(expectedCommentEndPositionSeconds), // 0:51
+            matching: find.text(displayedCommentEndPosition),
           ),
           findsOneWidget);
       expect(
@@ -6930,11 +6938,11 @@ void main() {
       await tester.pumpAndSettle();
 
       final Finder updatableCommentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 0:51.3
+          find.byKey(const Key('commentEndPositionText')); // 0:42.7
 
       String updatableActualCommentEndPositionWithTenthOfSecondsStr = tester
           .widget<Text>(updatableCommentEndTextWidgetFinder)
-          .data!; // 0:51.3
+          .data!; // 0:42.7
 
       expect(
         updatableActualCommentEndPositionWithTenthOfSecondsStr, // actual value on comment editing dialog
@@ -6987,7 +6995,7 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentStartPositionStr),
+            matching: find.text(displayedCommentStartPosition),
           ),
           findsOneWidget);
       expect(
@@ -7023,10 +7031,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      // expectedAudioPlayerAudioPositionMin = '5:00';
-      // expectedAudioPlayerAudioPositionMax = '5:01';
-      expectedAudioPlayerAudioPositionMin = '5:00'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '5:49';
+      expectedAudioPlayerAudioPositionMin = '5:00';
+      expectedAudioPlayerAudioPositionMax = '5:35';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -7059,7 +7065,7 @@ void main() {
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
         DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
             timeWithTenthOfSecondsStr:
-                actualCommentEndPositionWithTenthOfSecondsStr), // 0:51
+                actualCommentEndPositionWithTenthOfSecondsStr), // 0:42.7
       );
 
       // Verify that the audio player view audio position displayed
