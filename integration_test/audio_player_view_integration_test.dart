@@ -6367,7 +6367,8 @@ void main() {
     testWidgets(
         '''Play speed 1.25. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''', (WidgetTester tester) async {
+           comment position and finally delete it.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
@@ -6455,7 +6456,7 @@ void main() {
 
       // Verify the current audio position in the audio player view.
 
-      String expectedAudioPlayerViewCurrentAudioPosition = '0:34';
+      String expectedAudioPlayerViewCurrentAudioPosition = '0:34'; // 0:43 / 1.25
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       String actualAudioPlayerViewCurrentAudioPosition =
@@ -6519,12 +6520,12 @@ void main() {
       // This position was the audio player view position when
       // the comment dialog was opened.
       String commentStartAndEndInitialPosition =
-          expectedAudioPlayerViewCurrentAudioPosition;
+          expectedAudioPlayerViewCurrentAudioPosition; // 0:34
 
       final Finder commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 0:43
+          find.byKey(const Key('commentStartPositionText')); // 0:34
       final Finder commentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 0:43
+          find.byKey(const Key('commentEndPositionText')); // 0:34
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
@@ -7236,10 +7237,11 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-  testWidgets(
+    testWidgets(
         '''Play speed 1.0. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''', (WidgetTester tester) async {
+           comment position and finally delete it.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
@@ -7449,7 +7451,6 @@ void main() {
       // Verify the comment start position displayed in the comment
       // dialog
       const String commentStartPositionStr = '0:46';
-      const String commentEndPositionStr = '0:48';
 
       // Obtain the current audio position in the audio player view
       audioPlayerViewAudioPositionFinder =
@@ -7511,6 +7512,8 @@ void main() {
       // Verify that the comment end position displayed in the comment
       // dialog is now the expected commentEndPosition and is the same
       // as the current audio position in the audio player view.
+
+      const String commentEndPositionStr = '0:48';
       String actualCommentEndPositionStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
@@ -8114,10 +8117,11 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-  testWidgets(
+    testWidgets(
         '''Play speed 0.7. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''', (WidgetTester tester) async {
+           comment position and finally delete it.''',
+        (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
       const String uncommentedAudioTitle =
@@ -8190,8 +8194,8 @@ void main() {
       await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
       await tester.pumpAndSettle();
 
-      // Now select the 1.0x play speed
-      await tester.tap(find.text('1.0x'));
+      // Now select the 0.7x play speed
+      await tester.tap(find.text('0.7x'));
       await tester.pumpAndSettle();
 
       // And click on the Ok button
@@ -8217,7 +8221,7 @@ void main() {
 
       // Verify the current audio position in the audio player view.
 
-      String expectedAudioPlayerViewCurrentAudioPosition = '0:43';
+      String expectedAudioPlayerViewCurrentAudioPosition = '1:01';
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       String actualAudioPlayerViewCurrentAudioPosition =
@@ -8284,17 +8288,17 @@ void main() {
           expectedAudioPlayerViewCurrentAudioPosition;
 
       final Finder commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 0:43
+          find.byKey(const Key('commentStartPositionText')); // 1:01
       final Finder commentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 0:43
+          find.byKey(const Key('commentEndPositionText')); // 1:01
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 1:01
       );
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 1:01
       );
 
       // Setting the comment start position in seconds ...
@@ -8326,8 +8330,8 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      const String commentStartPositionStr = '0:46';
-      const String commentEndPositionStr = '0:48';
+      const String commentStartPositionStr = '1:04'; // 1:01 + 3 - 1 + 1 seconds
+      const String commentEndPositionStr = '1:01'; // 1:01
 
       // Obtain the current audio position in the audio player view
       audioPlayerViewAudioPositionFinder =
@@ -8337,12 +8341,17 @@ void main() {
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartPositionStr, // 0:46
+        commentStartPositionStr, // 1:04
+      );
+
+      expect(
+        tester.widget<Text>(commentEndTextWidgetFinder).data!,
+        commentEndPositionStr, // 1:01
       );
 
       expect(
         audioPlayerViewCurrentAudioPositionStr,
-        commentStartPositionStr, // 0:46
+        '1:32', // 1:04 / 0.7
       );
 
       // Verify that the comment end position displayed in the comment
@@ -8394,7 +8403,7 @@ void main() {
 
       expect(
         actualCommentEndPositionStr,
-        commentEndPositionStr, // 0:48
+        '1:06', // 1:01 + 5 - 1 + 1 seconds
       );
 
       // Now, modifying the comment start position in tenth of
@@ -8409,11 +8418,11 @@ void main() {
 
       // Verify that the comment start position is now displayed
       // with added tenth of seconds value
-      String commentStartPositionWithTensOfSecond = '0:46.0';
+      String commentStartPositionWithTensOfSecond = '1:04.4';
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartPositionWithTensOfSecond, // 0:46.0
+        commentStartPositionWithTensOfSecond, // 1:04.4
       );
 
       // Tap three times on the forward comment start icon button, then
@@ -8439,14 +8448,15 @@ void main() {
 
       // Verify the comment start position displayed in the comment
       // dialog
-      String expectedCommentStartPositionWithTensOfSecond = '0:46.1';
+      String expectedCommentStartPositionWithTensOfSecond =
+          '1:04.5'; // 1:04.4 + 3*0.1 - 2*0.1 seconds
       String actualCommentStartPositionWithTensOfSecondStr = tester
           .widget<Text>(find.byKey(const Key('commentStartPositionText')))
           .data!;
 
       expect(
         actualCommentStartPositionWithTensOfSecondStr,
-        expectedCommentStartPositionWithTensOfSecond, // 0:46.1
+        expectedCommentStartPositionWithTensOfSecond, // 1:04.5
         reason:
             'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
       );
@@ -8462,8 +8472,8 @@ void main() {
       await tester.tap(commentEndTenthOfSecondsCheckboxFinder);
       await tester.pumpAndSettle();
 
-      String expectedCommentEndPositionWithTensOfSecondMin = '0:48.0';
-      String expectedCommentEndPositionWithTensOfSecondMax = '0:48.6';
+      String expectedCommentEndPositionWithTensOfSecondMin = '1:06.4';
+      String expectedCommentEndPositionWithTensOfSecondMax = '1:06.5';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -8511,7 +8521,7 @@ void main() {
       // dialog
 
       String expectedCommentEndPositionSeconds =
-          '0:51'; // 0:48 + 3 - 1 + 1 seconds
+          '1:09'; // 1:06 + 3 - 1 + 1 seconds
       String actualCommentEndPositionSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
 
