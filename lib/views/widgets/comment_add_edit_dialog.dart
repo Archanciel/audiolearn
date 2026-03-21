@@ -308,6 +308,22 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 commentVMlistenFalse.currentCommentStartPosition;
             Duration currentCommentEndPosition =
                 commentVMlistenFalse.currentCommentEndPosition;
+            double commentableAudioPlaySpeed =
+                widget.commentableAudio.audioPlaySpeed;
+
+            int commentStartPositionInTenthOfSeconds =
+                ((currentCommentStartPosition.inMicroseconds /
+                                commentableAudioPlaySpeed)
+                            .round() /
+                        100000)
+                    .round();
+            int commentEndPositionInTenthOfSeconds =
+                ((currentCommentEndPosition.inMicroseconds /
+                                commentableAudioPlaySpeed)
+                            .round() /
+                        100000)
+                    .round();
+
             if (widget.isAddMode) {
               commentVMlistenFalse.addComment(
                 addedComment: Comment(
@@ -327,13 +343,9 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.commentStartPositionInTenthOfSeconds =
-                  (currentCommentStartPosition.inMilliseconds /
-                          100)
-                      .round();
+                  (currentCommentStartPosition.inMilliseconds / 100).round();
               commentToModify.commentEndPositionInTenthOfSeconds =
-                  (currentCommentEndPosition.inMilliseconds /
-                          100)
-                      .round();
+                  (currentCommentEndPosition.inMilliseconds / 100).round();
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
