@@ -28,14 +28,18 @@ class CommentPlayCommand {
 /// This class manages the audio player obtained from the
 class CommentVM extends ChangeNotifier {
   Duration _currentCommentStartPosition = Duration.zero;
-  Duration get currentCommentStartPosition => _currentCommentStartPosition;
+  Duration get currentCommentStartPosition {
+    return _currentCommentStartPosition;
+  }
   set currentCommentStartPosition(Duration value) {
     _currentCommentStartPosition = value;
     notifyListeners();
   }
 
   Duration _currentCommentEndPosition = Duration.zero;
-  Duration get currentCommentEndPosition => _currentCommentEndPosition;
+  Duration get currentCommentEndPosition {
+    return _currentCommentEndPosition;
+  }
   set currentCommentEndPosition(Duration value) {
     _currentCommentEndPosition = value;
     notifyListeners();

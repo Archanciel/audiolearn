@@ -304,19 +304,20 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 : AppLocalizations.of(context)!.update,
           ),
           onPressed: () async {
+            Duration currentCommentStartPosition =
+                commentVMlistenFalse.currentCommentStartPosition;
+            Duration currentCommentEndPosition =
+                commentVMlistenFalse.currentCommentEndPosition;
             if (widget.isAddMode) {
               commentVMlistenFalse.addComment(
                 addedComment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
-                  commentStartPositionInTenthOfSeconds: (commentVMlistenFalse
-                              .currentCommentStartPosition.inMilliseconds /
-                          100)
-                      .round(),
-                  commentEndPositionInTenthOfSeconds: (commentVMlistenFalse
-                              .currentCommentEndPosition.inMilliseconds /
-                          100)
-                      .round(),
+                  commentStartPositionInTenthOfSeconds:
+                      (currentCommentStartPosition.inMilliseconds / 100)
+                          .round(),
+                  commentEndPositionInTenthOfSeconds:
+                      (currentCommentEndPosition.inMilliseconds / 100).round(),
                 ),
                 audioToComment: widget.commentableAudio,
               );
@@ -326,13 +327,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.commentStartPositionInTenthOfSeconds =
-                  (commentVMlistenFalse
-                              .currentCommentStartPosition.inMilliseconds /
+                  (currentCommentStartPosition.inMilliseconds /
                           100)
                       .round();
               commentToModify.commentEndPositionInTenthOfSeconds =
-                  (commentVMlistenFalse
-                              .currentCommentEndPosition.inMilliseconds /
+                  (currentCommentEndPosition.inMilliseconds /
                           100)
                       .round();
 
