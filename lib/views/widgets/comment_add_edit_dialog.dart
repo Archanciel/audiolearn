@@ -77,20 +77,18 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         commentVM.currentCommentStartPosition = Duration(
             milliseconds:
                 widget.comment!.commentStartPositionInTenthOfSeconds * 100);
-        Duration commentEndPosition = Duration(
+        commentVM.currentCommentEndPosition = Duration(
             milliseconds:
                 widget.comment!.commentEndPositionInTenthOfSeconds * 100);
-        commentVM.currentCommentEndPosition = commentEndPosition;
       } else {
         // here, we are creating a comment
-        final Duration durationDividedByAAudioPPlaySpeed = Duration(
+        final Duration durationDividedByAudioPlaySpeed = Duration(
             microseconds: (audioPlayerVM.currentAudioPosition.inMicroseconds /
                     widget.commentableAudio.audioPlaySpeed)
                 .round());
 
-        commentVM.currentCommentStartPosition =
-            durationDividedByAAudioPPlaySpeed;
-        commentVM.currentCommentEndPosition = durationDividedByAAudioPPlaySpeed;
+        commentVM.currentCommentStartPosition = durationDividedByAudioPlaySpeed;
+        commentVM.currentCommentEndPosition = durationDividedByAudioPlaySpeed;
       }
     });
   }
@@ -308,21 +306,6 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 commentVMlistenFalse.currentCommentStartPosition;
             Duration currentCommentEndPosition =
                 commentVMlistenFalse.currentCommentEndPosition;
-            double commentableAudioPlaySpeed =
-                widget.commentableAudio.audioPlaySpeed;
-
-            int commentStartPositionInTenthOfSeconds =
-                ((currentCommentStartPosition.inMicroseconds /
-                                commentableAudioPlaySpeed)
-                            .round() /
-                        100000)
-                    .round();
-            int commentEndPositionInTenthOfSeconds =
-                ((currentCommentEndPosition.inMicroseconds /
-                                commentableAudioPlaySpeed)
-                            .round() /
-                        100000)
-                    .round();
 
             if (widget.isAddMode) {
               commentVMlistenFalse.addComment(
