@@ -31,6 +31,7 @@ class CommentVM extends ChangeNotifier {
   Duration get currentCommentStartPosition {
     return _currentCommentStartPosition;
   }
+
   set currentCommentStartPosition(Duration value) {
     _currentCommentStartPosition = value;
     notifyListeners();
@@ -40,6 +41,7 @@ class CommentVM extends ChangeNotifier {
   Duration get currentCommentEndPosition {
     return _currentCommentEndPosition;
   }
+
   set currentCommentEndPosition(Duration value) {
     _currentCommentEndPosition = value;
     notifyListeners();
@@ -152,6 +154,7 @@ class CommentVM extends ChangeNotifier {
       );
     }
 
+    addedComment.playSpeed = audioToComment.audioPlaySpeed;
     commentLst.add(addedComment);
 
     _sortAndSaveCommentLst(
@@ -396,6 +399,23 @@ class CommentVM extends ChangeNotifier {
       (element) => element.id == modifiedComment.id,
     );
 
+    double modifiedCommentPlaySpeed = modifiedComment.playSpeed;
+    double audioPlaySpeed = commentedAudio.audioPlaySpeed;
+
+    if (modifiedCommentPlaySpeed != audioPlaySpeed) {
+      modifiedComment.commentStartPositionInTenthOfSeconds =
+          (modifiedComment.commentStartPositionInTenthOfSeconds *
+                  modifiedCommentPlaySpeed /
+                  audioPlaySpeed)
+              .round();
+      modifiedComment.commentEndPositionInTenthOfSeconds =
+          (modifiedComment.commentEndPositionInTenthOfSeconds *
+                  modifiedCommentPlaySpeed /
+                  audioPlaySpeed)
+              .round();
+      oldComment.playSpeed = modifiedCommentPlaySpeed;
+    }
+
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
     oldComment.commentStartPositionInTenthOfSeconds =
@@ -504,7 +524,7 @@ class CommentVM extends ChangeNotifier {
       if (commentFileName.endsWith('.multi.json')) {
         continue;
       }
-      
+
       List<Comment> audioCommentsLst = JsonDataService.loadListFromFile(
         jsonPathFileName: "$commentPath${path.separator}$commentFileName",
         type: Comment,
