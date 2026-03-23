@@ -399,22 +399,22 @@ class CommentVM extends ChangeNotifier {
       (element) => element.id == modifiedComment.id,
     );
 
-    double modifiedCommentPlaySpeed = modifiedComment.playSpeed;
-    double audioPlaySpeed = commentedAudio.audioPlaySpeed;
+    // double modifiedCommentPlaySpeed = modifiedComment.playSpeed;
+    // double audioPlaySpeed = commentedAudio.audioPlaySpeed;
 
-    if (modifiedCommentPlaySpeed != audioPlaySpeed) {
-      modifiedComment.commentStartPositionInTenthOfSeconds =
-          (modifiedComment.commentStartPositionInTenthOfSeconds *
-                  modifiedCommentPlaySpeed /
-                  audioPlaySpeed)
-              .round();
-      modifiedComment.commentEndPositionInTenthOfSeconds =
-          (modifiedComment.commentEndPositionInTenthOfSeconds *
-                  modifiedCommentPlaySpeed /
-                  audioPlaySpeed)
-              .round();
-      oldComment.playSpeed = modifiedCommentPlaySpeed;
-    }
+    // if (modifiedCommentPlaySpeed != audioPlaySpeed) {
+    //   modifiedComment.commentStartPositionInTenthOfSeconds =
+    //       (modifiedComment.commentStartPositionInTenthOfSeconds *
+    //               modifiedCommentPlaySpeed /
+    //               audioPlaySpeed)
+    //           .round();
+    //   modifiedComment.commentEndPositionInTenthOfSeconds =
+    //       (modifiedComment.commentEndPositionInTenthOfSeconds *
+    //               modifiedCommentPlaySpeed /
+    //               audioPlaySpeed)
+    //           .round();
+    //   oldComment.playSpeed = modifiedCommentPlaySpeed;
+    // }
 
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
@@ -422,6 +422,7 @@ class CommentVM extends ChangeNotifier {
         modifiedComment.commentStartPositionInTenthOfSeconds;
     oldComment.commentEndPositionInTenthOfSeconds =
         modifiedComment.commentEndPositionInTenthOfSeconds;
+    oldComment.playSpeed = commentedAudio.audioPlaySpeed;
 
     // If the modified comment last update date time is null, it
     // means that the comment was modified by the user.

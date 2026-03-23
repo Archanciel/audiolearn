@@ -72,14 +72,27 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
       if (widget.comment != null) {
         // here, we are editing a comment
+
         _titleController.text = widget.comment!.title;
         _commentController.text = widget.comment!.content;
-        commentVM.currentCommentStartPosition = Duration(
-            milliseconds:
-                widget.comment!.commentStartPositionInTenthOfSeconds * 100);
-        commentVM.currentCommentEndPosition = Duration(
-            milliseconds:
-                widget.comment!.commentEndPositionInTenthOfSeconds * 100);
+
+        double editedCommentPlaySpeed = widget.comment!.playSpeed;
+        double audioPlaySpeed = widget.commentableAudio.audioPlaySpeed;
+
+        if (editedCommentPlaySpeed != audioPlaySpeed) {
+          commentVM.currentCommentStartPosition = Duration(
+              milliseconds:
+                  (widget.comment!.commentStartPositionInTenthOfSeconds * 100 *
+                          editedCommentPlaySpeed /
+                          audioPlaySpeed)
+                      .round());
+          commentVM.currentCommentEndPosition = Duration(
+              milliseconds:
+                  (widget.comment!.commentEndPositionInTenthOfSeconds * 100  *
+                          editedCommentPlaySpeed /
+                          audioPlaySpeed)
+                      .round());
+        }
       } else {
         // here, we are creating a comment
         final Duration durationDividedByAudioPlaySpeed = Duration(
