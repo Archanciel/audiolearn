@@ -6707,7 +6707,7 @@ void main() {
       await tester.pumpAndSettle();
 
       String expectedCommentEndPositionWithTensOfSecondMin = '0:39.3';
-      String expectedCommentEndPositionWithTensOfSecondMax = '0:39.8';
+      String expectedCommentEndPositionWithTensOfSecondMax = '0:39.5';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -6761,7 +6761,7 @@ void main() {
 
       expect(
         actualCommentEndPositionSecondsStr,
-        expectedCommentEndPositionSeconds, // 0:41
+        expectedCommentEndPositionSeconds, // 0:42
         reason:
             'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
       );
