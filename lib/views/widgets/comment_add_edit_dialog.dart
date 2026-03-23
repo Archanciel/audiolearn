@@ -82,15 +82,26 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         if (editedCommentPlaySpeed != audioPlaySpeed) {
           commentVM.currentCommentStartPosition = Duration(
               milliseconds:
-                  (widget.comment!.commentStartPositionInTenthOfSeconds * 100 *
+                  (widget.comment!.commentStartPositionInTenthOfSeconds *
+                          100 *
                           editedCommentPlaySpeed /
                           audioPlaySpeed)
                       .round());
           commentVM.currentCommentEndPosition = Duration(
               milliseconds:
-                  (widget.comment!.commentEndPositionInTenthOfSeconds * 100  *
+                  (widget.comment!.commentEndPositionInTenthOfSeconds *
+                          100 *
                           editedCommentPlaySpeed /
                           audioPlaySpeed)
+                      .round());
+        } else {
+          commentVM.currentCommentStartPosition = Duration(
+              milliseconds:
+                  (widget.comment!.commentStartPositionInTenthOfSeconds * 100)
+                      .round());
+          commentVM.currentCommentEndPosition = Duration(
+              milliseconds:
+                  (widget.comment!.commentEndPositionInTenthOfSeconds * 100)
                       .round());
         }
       } else {
@@ -203,9 +214,9 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                             if (audioPlayerVMlistenFalse.isPlaying) {
                               await audioPlayerVMlistenFalse.pause();
 
-                              // Modify the end audio position if the end audio position is before or equal to the current audio position.
+                              // Modify the comment end position if the end position is before the current audio position.
                               if (commentVMlistenFalse
-                                      .currentCommentEndPosition <=
+                                      .currentCommentEndPosition <
                                   commentVMlistenFalse
                                       .currentCommentStartPosition) {
                                 commentVMlistenFalse.currentCommentEndPosition =
@@ -218,7 +229,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                               _commentEndPositionIsModified = false;
 
                               await _playFromCommentStartPosition(
-                                audioPlayerVM: audioPlayerVMlistenFalse,
+                                audioPlayerVMlistenFalse:
+                                    audioPlayerVMlistenFalse,
                                 commentVMlistenFalse: commentVMlistenFalse,
                               );
                             }
@@ -615,12 +627,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               });
             }
 
-            // Format the current audio position using your custom extension function.
-            String currentAudioPositionStr = Duration(
-                    microseconds: (currentAudioPosition.inMicroseconds /
-                            widget.commentableAudio.audioPlaySpeed)
-                        .round())
-                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
+            String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
+                addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
@@ -819,19 +827,23 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   }
 
   Future<void> _playFromCommentStartPosition({
-    required AudioPlayerVM audioPlayerVM,
+    required AudioPlayerVM audioPlayerVMlistenFalse,
     required CommentVM commentVMlistenFalse,
   }) async {
-    await audioPlayerVM.modifyAudioPlayerPosition(
-      durationPosition: commentVMlistenFalse.currentCommentStartPosition,
+    await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
+      durationPosition: Duration(
+          microseconds:
+              (commentVMlistenFalse.currentCommentStartPosition.inMicroseconds *
+                      widget.commentableAudio.audioPlaySpeed)
+                  .round()),
       isUndoCommandToAdd: true,
     );
 
-    await audioPlayerVM.playCurrentAudio(
+    await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
       commentEndPositionInTenthOfSeconds:
-          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds * widget.commentableAudio.audioPlaySpeed ~/ 100,
     );
   }
 
