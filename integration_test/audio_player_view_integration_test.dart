@@ -1099,7 +1099,7 @@ void main() {
         audioToListenIndex: 1,
         audioDurationStr: '5:53',
         audioPositionModification: AudioPositionModification.backward10sec,
-        audioPositionBeforePlayingStr: '0:46',
+        audioPositionBeforePlayingStr: '0:57',
         expectedMinPositionTimeStr: '0:46',
         expectedMaxPositionTimeStr: '0:58',
       );
@@ -7094,7 +7094,7 @@ void main() {
       );
       int actualAudioPlayerViewAudioPositionTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-              timeString: actualAudioPlayerViewAudioPosition); // 5:49
+              timeString: actualAudioPlayerViewAudioPosition); // 5:31 -> 3310 tenth of seconds
 
       // Adding 10 milliseconds to the actual audio player view audio
       // position avoids that the test fails sometimes because the
@@ -10795,7 +10795,7 @@ void main() {
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data,
-        '0:46',
+        '0:57',
       );
 
       // Now reopen the set value to target dialog to set the comment
