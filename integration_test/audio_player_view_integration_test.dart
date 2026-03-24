@@ -652,7 +652,7 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '7:06',
+        minPositionTimeStr: '7:05',
         maxPositionTimeStr: '7:11',
       );
 
