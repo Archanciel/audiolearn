@@ -20,12 +20,12 @@ void main() {
 
       // Tap the play button
       await tester.tap(playButton);
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Add delays to display the slider progression.
       for (int i = 0; i < 10; i++) {
         await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pumpAndSettle();
+        await tester.pump();
       }
 
       // Find the pause button (after playing)
@@ -34,7 +34,7 @@ void main() {
 
       // Tap the pause button
       await tester.tap(pauseButton);
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Assert that the pause button is disabled after pausing
       expect(playButton, findsOneWidget);
