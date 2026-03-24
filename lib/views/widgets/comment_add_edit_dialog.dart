@@ -627,8 +627,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               });
             }
 
-            String currentAudioPositionStr = currentAudioPosition.HHmmssZeroHH(
-                addRemainingOneDigitTenthOfSecond: true);
+            final int currentAudioPositionDividedByPlaySpeedInMicroSeconds =
+                (currentAudioPosition.inMicroseconds /
+                        widget.commentableAudio.audioPlaySpeed)
+                    .round();
+            final String currentAudioPositionStr = Duration(
+                    microseconds:
+                        currentAudioPositionDividedByPlaySpeedInMicroSeconds)
+                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
@@ -843,7 +849,9 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
       commentEndPositionInTenthOfSeconds:
-          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds * widget.commentableAudio.audioPlaySpeed ~/ 100,
+          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds *
+              widget.commentableAudio.audioPlaySpeed ~/
+              100,
     );
   }
 
