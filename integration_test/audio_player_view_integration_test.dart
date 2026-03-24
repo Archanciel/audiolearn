@@ -810,9 +810,6 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      await Future.delayed(const Duration(milliseconds: 2300));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
-
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
       expect(find.byIcon(Icons.play_arrow), findsOneWidget);
@@ -825,7 +822,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(previousDownloadedAudioTitle));
-      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
