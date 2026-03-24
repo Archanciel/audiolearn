@@ -8361,7 +8361,7 @@ void main() {
       // audio position in the audio player view.
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 1:01
       );
 
       // Tap five times on the forward comment end icon button, then
@@ -8535,8 +8535,8 @@ void main() {
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
-      String expectedAudioPlayerAudioPositionMin = '0:47';
-      String expectedAudioPlayerAudioPositionMax = '0:49';
+      String expectedAudioPlayerAudioPositionMin = '1:33';
+      String expectedAudioPlayerAudioPositionMax = '1:34';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -8557,8 +8557,8 @@ void main() {
       // Verify that the comment end position is now displayed
       // with added tenth of seconds value
 
-      String expectedCommentEndPositionMin = '0:51.0';
-      String expectedCommentEndPositionMax = '0:51.0';
+      String expectedCommentEndPositionMin = '1:09.4';
+      String expectedCommentEndPositionMax = '1:09.4';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -8591,8 +8591,8 @@ void main() {
       // Verify the comment end position displayed in the comment
       // dialog
 
-      expectedCommentEndPositionMin = '0:51.3';
-      expectedCommentEndPositionMax = '0:51.3';
+      expectedCommentEndPositionMin = '1:09.7';
+      expectedCommentEndPositionMax = '1:09.7';
 
       String actualCommentEndPositionWithTenthOfSecondsStr =
           tester.widget<Text>(commentEndTextWidgetFinder).data!;
@@ -8612,8 +8612,8 @@ void main() {
       // The audio position correspond to the comment start position
       // in seconds.
 
-      expectedAudioPlayerAudioPositionMin = '0:47';
-      expectedAudioPlayerAudioPositionMax = '0:49';
+      expectedAudioPlayerAudioPositionMin = '1:34';
+      expectedAudioPlayerAudioPositionMax = '1:35';
 
       // If this test fails, try to rexecute it several times. If
       // the test continue to fail, restart your computer and
@@ -8671,13 +8671,13 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentStartPositionStr), // 0:46
+            matching: find.text('1:05'),
           ),
           findsOneWidget);
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(expectedCommentEndPositionSeconds), // 0:51
+            matching: find.text('1:10'),
           ),
           findsOneWidget);
       expect(
@@ -8702,11 +8702,11 @@ void main() {
       await tester.pumpAndSettle();
 
       final Finder updatableCommentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 0:51.3
+          find.byKey(const Key('commentEndPositionText'));
 
       String updatableActualCommentEndPositionWithTenthOfSecondsStr = tester
           .widget<Text>(updatableCommentEndTextWidgetFinder)
-          .data!; // 0:51.3
+          .data!;
 
       expect(
         updatableActualCommentEndPositionWithTenthOfSecondsStr, // actual value on comment editing dialog
@@ -8759,7 +8759,13 @@ void main() {
       expect(
           find.descendant(
             of: commentListDialogFinder,
-            matching: find.text(commentStartPositionStr),
+            matching: find.text('1:05'),
+          ),
+          findsOneWidget);
+      expect(
+          find.descendant(
+            of: commentListDialogFinder,
+            matching: find.text('1:10'),
           ),
           findsOneWidget);
       expect(
@@ -8795,8 +8801,6 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      // expectedAudioPlayerAudioPositionMin = '5:00';
-      // expectedAudioPlayerAudioPositionMax = '5:01';
       expectedAudioPlayerAudioPositionMin = '5:00'; // normally 5:48
       expectedAudioPlayerAudioPositionMax = '5:49';
 
