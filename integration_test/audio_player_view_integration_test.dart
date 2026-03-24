@@ -73,13 +73,15 @@ void main() {
       expect(playPauseButtonFinder, findsNothing);
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Verify if the play button changes to pause button
+      // Verify if the play button changed to pause button
       expect(find.byIcon(Icons.pause), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pump();
 
       // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
@@ -157,6 +159,8 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pump();
 
+      // Necessary so that the audio player view audio positions are
+      // updated
       for (int i = 0; i < 10; i++) {
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pump();
@@ -289,14 +293,18 @@ void main() {
       );
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      // Necessary so that the audio player view audio positions are
+      // updated
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pump();
+      }
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Verify the last downloaded played audio title
       expect(find.text(previousEndDownloadedAudioTitleWithDuration),
@@ -374,12 +382,12 @@ void main() {
       // Playing the first downloaded audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
+      await tester.pump(const Duration(milliseconds: 1500));
       Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Now we want to tap on the audio downloaded after the first
       // downloaded audio of the playlist in order to start playing
@@ -405,12 +413,18 @@ void main() {
       // playlist.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      await tester.pump();
+
+      // Necessary so that the audio player view audio positions are
+      // updated
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pump();
+      }
 
       // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
@@ -475,14 +489,18 @@ void main() {
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+      // Necessary so that the audio player view audio positions are
+      // updated
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pump();
+      }
 
       // Click on the pause button
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Verify the last downloaded played audio title
       expect(
@@ -552,14 +570,13 @@ void main() {
       // Playing the audio during 2 seconds.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Now we want to tap on the first downloaded audio of the
       // playlist in order to start playing it.
@@ -602,14 +619,18 @@ void main() {
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      // Necessary so that the audio player view audio positions are
+      // updated
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pump();
+      }
 
       // Click on the pause button
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       // Verify the last downloaded played audio title
       expect(
@@ -778,10 +799,9 @@ void main() {
       // Click on play button.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       await Future.delayed(const Duration(seconds: 1));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Tapping 3 times on the forward 10 seconds icon button.
       for (int i = 0; i < 3; i++) {
