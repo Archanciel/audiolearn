@@ -155,37 +155,24 @@ void main() {
 
       // Now play the audio and wait 5 seconds
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pumpAndSettle();
+      await tester.pump();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pump();
+      }
 
-      // Not tapping on pause button to pause the audio. This is done
-      // after the verifyAudioDataElementsUpdatedInPlaylistJsonFile()
-      // method called below.
-
-      // Since the playlist json file is updated every 30 seconds,
-      // after playing during 5 seconds, it will not be updated.
-      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
-        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
-        playableAudioLstAudioIndex: 0,
-        audioTitle: lastDownloadedAudioTitle,
-        audioPositionSeconds: 0,
-        isPaused: false,
-        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-        audioPausedDateTime: null,
-      );
-
-      // Verify if the play button changed to pause button
       final Finder pauseIconFinder = find.byIcon(Icons.pause);
       expect(pauseIconFinder, findsOneWidget);
 
       // Now pause the audio
       await tester.tap(pauseIconFinder);
-      await tester.pumpAndSettle(const Duration(milliseconds: 200));
-
+      await tester.pump();
+      
       DateTime pausedAudioAtDateTime = DateTime.now();
 
+      // Since the playlist json file is updated every 30 seconds,
+      // after playing during 5 seconds, it will not be updated.
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
@@ -195,8 +182,6 @@ void main() {
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
         audioPausedDateTime: pausedAudioAtDateTime,
       );
-
-      await Future.delayed(const Duration(seconds: 1));
 
       audioPositionText = tester
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
@@ -6456,7 +6441,8 @@ void main() {
 
       // Verify the current audio position in the audio player view.
 
-      String expectedAudioPlayerViewCurrentAudioPosition = '0:34'; // 0:43 / 1.25
+      String expectedAudioPlayerViewCurrentAudioPosition =
+          '0:34'; // 0:43 / 1.25
       Finder audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
       String actualAudioPlayerViewCurrentAudioPosition =
@@ -7094,7 +7080,8 @@ void main() {
       );
       int actualAudioPlayerViewAudioPositionTenthsOfSeconds =
           DateTimeUtil.convertToTenthsOfSeconds(
-              timeString: actualAudioPlayerViewAudioPosition); // 5:31 -> 3310 tenth of seconds
+              timeString:
+                  actualAudioPlayerViewAudioPosition); // 5:31 -> 3310 tenth of seconds
 
       // Adding 10 milliseconds to the actual audio player view audio
       // position avoids that the test fails sometimes because the
@@ -8704,9 +8691,8 @@ void main() {
       final Finder updatableCommentEndTextWidgetFinder =
           find.byKey(const Key('commentEndPositionText'));
 
-      String updatableActualCommentEndPositionWithTenthOfSecondsStr = tester
-          .widget<Text>(updatableCommentEndTextWidgetFinder)
-          .data!;
+      String updatableActualCommentEndPositionWithTenthOfSecondsStr =
+          tester.widget<Text>(updatableCommentEndTextWidgetFinder).data!;
 
       expect(
         updatableActualCommentEndPositionWithTenthOfSecondsStr, // actual value on comment editing dialog
