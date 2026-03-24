@@ -172,7 +172,7 @@ void main() {
       // Now pause the audio
       await tester.tap(pauseIconFinder);
       await tester.pump();
-      
+
       DateTime pausedAudioAtDateTime = DateTime.now();
 
       // Since the playlist json file is updated every 30 seconds,
