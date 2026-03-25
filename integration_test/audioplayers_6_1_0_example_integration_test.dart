@@ -21,6 +21,7 @@ void main() {
       // Tap the play button
       await tester.tap(playButton);
       await tester.pump();
+      // await tester.pump(const Duration(seconds: 1)); // Works, but not usefull. Wait for the audio to start playing
 
       // Add delays to display the slider progression.
       for (int i = 0; i < 10; i++) {
@@ -35,6 +36,7 @@ void main() {
       // Tap the pause button
       await tester.tap(pauseButton);
       await tester.pump();
+      // await tester.pump(const Duration(seconds: 1)); // Works, but not usefull. Wait for the audio to start playing
 
       // Assert that the pause button is disabled after pausing
       expect(playButton, findsOneWidget);
