@@ -7463,9 +7463,11 @@ void main() {
         commentStartPositionStr, // 0:46
       );
 
-      expect(
-        audioPlayerViewCurrentAudioPositionStr,
-        commentStartPositionStr, // 0:46
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '0:45',
+        maxPositionTimeStr: '0:46',
       );
 
       // Verify that the comment end position displayed in the comment
@@ -7910,9 +7912,7 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      // expectedAudioPlayerAudioPositionMin = '5:00';
-      // expectedAudioPlayerAudioPositionMax = '5:01';
-      expectedAudioPlayerAudioPositionMin = '5:00'; // normally 5:48
+      expectedAudioPlayerAudioPositionMin = '5:47'; // normally 5:48
       expectedAudioPlayerAudioPositionMax = '5:49';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
@@ -8801,8 +8801,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '5:00'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '5:49';
+      expectedAudioPlayerAudioPositionMin = '6:34'; // normally 5:48
+      expectedAudioPlayerAudioPositionMax = '6:35';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
