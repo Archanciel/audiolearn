@@ -801,14 +801,20 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pump();
 
-      await Future.delayed(const Duration(seconds: 1));
+      Finder forward10sButtonFinder =
+          find.byKey(const Key('audioPlayerViewForward10sButton'));
 
-      // Tapping 3 times on the forward 10 seconds icon button.
+      // Tapping 3 times on the forward 10 seconds icon button
+      // before the audio is fully played.
       for (int i = 0; i < 3; i++) {
-        await tester
-            .tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
-        await tester.pumpAndSettle();
+        await tester.tap(forward10sButtonFinder);
+        await tester.pump();
+        // print('Tapped on forward 10s button $i time(s)');
       }
+
+      // Necessary so that the Icons.play_arrow is displayed.
+      // Otherwise, the Icons.pause is still displayed..
+      await tester.pumpAndSettle();
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
