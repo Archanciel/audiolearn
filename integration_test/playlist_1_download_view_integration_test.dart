@@ -189,6 +189,7 @@ void main() {
         isMusicQuality: false,
         playlistType: PlaylistType.youtube,
         isWarningConfirming: true,
+        positionStr: '1',
       );
 
       // Now tap on the delete button to empty the search text
@@ -647,6 +648,7 @@ void main() {
         isMusicQuality: true,
         playlistType: PlaylistType.youtube,
         isWarningConfirming: true,
+        positionStr: '1',
       );
 
       // Now tap on the delete button to empty the search text
@@ -1003,6 +1005,7 @@ void main() {
         isMusicQuality: true,
         playlistType: PlaylistType.local,
         isWarningConfirming: true,
+        positionStr: '1',
       );
 
       // The list of Playlist's should have one item now
@@ -1243,6 +1246,7 @@ void main() {
         isMusicQuality: false,
         playlistType: PlaylistType.local,
         isWarningConfirming: true,
+        positionStr: '1',
       );
 
       // The list of Playlist's should have one item now
@@ -1546,7 +1550,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Local playlist \"$correctedLocalPlaylistTitle\" of spoken quality added at the end of the playlist list.",
+            "Local playlist \"$correctedLocalPlaylistTitle\" of spoken quality added at the end of the playlist list at position 1.",
         isWarningConfirming: true,
       );
 
@@ -1596,7 +1600,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Local playlist \"$localPlaylistTitleWithoutSpace\" of spoken quality added at the end of the playlist list.",
+            "Local playlist \"$localPlaylistTitleWithoutSpace\" of spoken quality added at the end of the playlist list at position 1.",
         isWarningConfirming: true,
       );
 
@@ -2592,7 +2596,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "Essai" of spoken quality added at the end of the playlist list.',
+            'Youtube playlist "Essai" of spoken quality added at the end of the playlist list at position 1.',
         isWarningConfirming: true,
       );
 
@@ -2662,7 +2666,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            'Youtube playlist "audio_player_view_2_shorts_test" of spoken quality added at the end of the playlist list.',
+            'Youtube playlist "audio_player_view_2_shorts_test" of spoken quality added at the end of the playlist list at position 2.',
         isWarningConfirming: true,
       );
 
@@ -3984,7 +3988,7 @@ void main() {
       Text warningDialogMessage =
           tester.widget(find.byKey(const Key('warningDialogMessage')));
       expect(warningDialogMessage.data,
-          'Local playlist "$localAudioPlaylistTitle" of spoken quality added at the end of the playlist list.');
+          'Local playlist "$localAudioPlaylistTitle" of spoken quality added at the end of the playlist list at position 3.');
 
       // Close the warning dialog by tapping on the Ok button
       await tester.tap(find.byKey(const Key('warningDialogOkButton')));
@@ -4233,10 +4237,10 @@ void main() {
       // Verify the current audio position
       Text audioPositionText = tester
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-      expect(audioPositionText.data, '0:05');
+      expect(audioPositionText.data, '0:03');
 
       Finder audioTitlePositionTextFinder =
-          find.text("$copiedAudioTitle\n0:24");
+          find.text("$copiedAudioTitle\n0:16");
       expect(audioTitlePositionTextFinder, findsOneWidget);
 
       // Now play then pause the copied audio
@@ -4260,8 +4264,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '0:05',
-        maxPositionTimeStr: '0:08',
+        minPositionTimeStr: '0:03',
+        maxPositionTimeStr: '0:05',
       );
 
       // Return to the Playlist Download View
@@ -23683,6 +23687,7 @@ Future<void> _checkWarningDialog({
   required String playlistTitle,
   required bool isMusicQuality,
   required PlaylistType playlistType,
+  required String positionStr,
   bool findLast = false,
   bool isWarningConfirming = false,
 }) async {
@@ -23729,10 +23734,10 @@ Future<void> _checkWarningDialog({
 
   if (playlistType == PlaylistType.youtube) {
     expect(warningDialogMessage.data,
-        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list.');
+        'Youtube playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list at position $positionStr.');
   } else {
     expect(warningDialogMessage.data,
-        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list.');
+        'Local playlist "$playlistTitle" of ${isMusicQuality ? 'musical' : 'spoken'} quality added at the end of the playlist list at position $positionStr.');
   }
 
   // Close the warning dialog by tapping on the Ok button
