@@ -214,7 +214,7 @@ void main() {
 
       // Now go to the end of the audio
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle();
+      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
