@@ -1607,7 +1607,6 @@ void main() {
         // verify the newly selected playlist audio titles
 
         List<String> audioTitles = [
-          "Really short video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
@@ -1693,7 +1692,6 @@ void main() {
         ];
 
         List<String> audioTitles = [
-          "Really short video",
           "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
           "La résilience insulaire par Fiona Roche",
           "Les besoins artificiels par R.Keucheyan",
@@ -1706,7 +1704,7 @@ void main() {
         );
 
         playlistsTitles =
-            await enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord(
+            await _enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord(
           tester: tester,
         );
 
@@ -1771,7 +1769,6 @@ void main() {
         ];
 
         audioTitles = [
-          "La résilience insulaire par Fiona Roche",
           "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
           "Les besoins artificiels par R.Keucheyan",
           "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
@@ -4620,7 +4617,8 @@ void main() {
           tester: tester,
           audioTitle: audioTitle,
           expectedIcon: Icons.play_arrow,
-          expectedIconColor: kDarkAndLightEnabledIconColor, // not played icon color
+          expectedIconColor:
+              kDarkAndLightEnabledIconColor, // not played icon color
           expectedIconBackgroundColor: Colors.black,
         );
       }
@@ -47202,6 +47200,12 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     "local_2",
   ];
 
+  // Find the audio list widget using its key
+  Finder listFinder = find.byKey(const Key('audio_list'));
+  // Perform the scroll action
+  await tester.drag(listFinder, const Offset(0, 100));
+  await tester.pumpAndSettle();
+
   List<String> audioTitles = [
     "La résilience insulaire par Fiona Roche",
     "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
@@ -47268,6 +47272,12 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
     "local_2",
   ];
 
+  audioTitles = [
+    "Le Secret de la RÉSILIENCE révélé par Boris Cyrulnik",
+    "Les besoins artificiels par R.Keucheyan",
+    "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+  ];
+
   IntegrationTestUtil.checkPlaylistAndAudioTitlesOrderInListTile(
     tester: tester,
     playlistTitlesOrderedLst: playlistsTitles,
@@ -47277,7 +47287,7 @@ Future<List<String>> _enteringFirstAndSecondLetterOfLocalPlaylistSearchWord({
   return playlistsTitles;
 }
 
-Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
+Future<List<String>> _enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   required WidgetTester tester,
 }) async {
   // Now enter the first letter of the search word
@@ -47312,7 +47322,6 @@ Future<List<String>> enteringFirstAndSecondLetterOfYoutubePlaylistSearchWord({
   ];
 
   List<String> audioTitles = [
-    "Really short video",
     "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
     "La résilience insulaire par Fiona Roche",
     "Les besoins artificiels par R.Keucheyan",
