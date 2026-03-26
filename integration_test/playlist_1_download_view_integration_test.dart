@@ -9548,7 +9548,7 @@ void main() {
       // Verify the displayed selected audio title
       expect(
           find.text(
-              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26"),
           findsOneWidget);
 
       await IntegrationTestUtil.verifyTopButtonsState(
@@ -9721,7 +9721,7 @@ void main() {
       // Verify the displayed selected audio title
       expect(
           find.text(
-              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26"),
           findsOneWidget);
 
       await IntegrationTestUtil.verifyTopButtonsState(
@@ -9788,7 +9788,7 @@ void main() {
       // Verify the displayed current audio title
       expect(
           find.text(
-              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26"),
           findsOneWidget);
 
       // And return to the playlist download view
@@ -9838,7 +9838,7 @@ void main() {
       // Verify the displayed current audio title
       expect(
           find.text(
-              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32"),
+              "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26"),
           findsOneWidget);
 
       // And return to the playlist download view
@@ -9958,7 +9958,7 @@ void main() {
       // Verify the displayed current audio title
       expect(
           find.text(
-              'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29'),
+              'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11'),
           findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -10079,7 +10079,7 @@ void main() {
       // Verify the displayed current audio title
       expect(
           find.text(
-              "Quand les humoristes parlent d'écologie - Thomas VDB, Félix Djhan, Pierre Thévenoux\n5:39"),
+              "Quand les humoristes parlent d'écologie - Thomas VDB, Félix Djhan, Pierre Thévenoux\n4:31"),
           findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -10202,7 +10202,7 @@ void main() {
       // Verify the displayed current audio title
       expect(
           find.text(
-              "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)\n7:21"),
+              "5 minutes d'éco-anxiété pour se motiver à bouger (Ringenbach, Janco, Barrau, Servigne)\n5:53"),
           findsOneWidget);
 
       // Purge the test playlist directory so that the created test
@@ -11152,7 +11152,7 @@ void main() {
       audioTitleWithDurationString =
           tester.widget<Text>(audioPlayerViewAudioTitleFinder).data!;
 
-      expectedAudioAndDurationTitle = "$secondDownloadedAudioTitle\n6:29";
+      expectedAudioAndDurationTitle = "$secondDownloadedAudioTitle\n5:11";
 
       expect(
         audioTitleWithDurationString,
@@ -13553,7 +13553,7 @@ void main() {
 
         // Drag up to make sure that the audio to delete is visible
         // Find the audio list widget using its key
-        final Finder listFinder = find.byKey(const Key('audio_list'));
+        Finder listFinder = find.byKey(const Key('audio_list'));
 
         // Perform the scroll action
         await tester.drag(listFinder, const Offset(0, 100));
@@ -13573,6 +13573,12 @@ void main() {
           of: convertedCommentedAudioTitleToDeleteListTileTextWidgetFinder,
           matching: find.byType(ListTile),
         );
+
+        // Find the audio list widget using its key
+        listFinder = find.byKey(const Key('audio_list'));
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 200));
+        await tester.pumpAndSettle();
 
         // Now find the leading menu icon button of the Audio ListTile
         // and tap on it
@@ -13740,7 +13746,7 @@ void main() {
         final Finder listFinder = find.byKey(const Key('audio_list'));
 
         // Perform the scroll action
-        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.drag(listFinder, const Offset(0, 300));
         await tester.pumpAndSettle();
 
         String convertedUncommentedAudioTitleToDelete = "aaa";
@@ -14168,7 +14174,7 @@ void main() {
         final Finder listFinder = find.byKey(const Key('audio_list'));
 
         // Perform the scroll action
-        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.drag(listFinder, const Offset(0, 300));
         await tester.pumpAndSettle();
 
         String convertedCommentedAudioTitleToDelete = "aaa";
@@ -15019,7 +15025,7 @@ void main() {
         // Setting to this variables the currently selected audio title
         // in the audio player view
         String currentAudioTitleWithDuration =
-            "La résilience insulaire par Fiona Roche\n13:35";
+            "La résilience insulaire par Fiona Roche\n10:52";
 
         // Verify that the current audio is displayed with the correct
         // title with duration
@@ -15109,7 +15115,7 @@ void main() {
 
         // Setting to this variables the currently selected audio title/subTitle
         // of the 'S8 audio' playlist
-        String currentAudioTitleWithDuration = "bbb\n0:19";
+        String currentAudioTitleWithDuration = "bbb\n0:16";
 
         // Verify that the current audio is displayed with the correct
         // title with duration
@@ -15141,7 +15147,7 @@ void main() {
         final Finder listFinder = find.byKey(const Key('audio_list'));
 
         // Perform the scroll action
-        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.drag(listFinder, const Offset(0, 300));
         await tester.pumpAndSettle();
 
         String convertedCommentedAudioTitleToDelete = "aaa";
@@ -15425,7 +15431,7 @@ void main() {
           final Finder listFinder = find.byKey(const Key('audio_list'));
 
           // Perform the scroll action
-          await tester.drag(listFinder, const Offset(0, 100));
+          await tester.drag(listFinder, const Offset(0, 300));
           await tester.pumpAndSettle();
 
           String convertedCommentedAudioTitleToDelete = "aaa";
@@ -20761,7 +20767,7 @@ void main() {
         //                  et Barrau"
       );
 
-      String expectedAudioPlayerViewCurrentAudioPosition = '0:43';
+      String expectedAudioPlayerViewCurrentAudioPosition = '0:34';
 
       // Verify the initial comment position displayed in the
       // comment start and end positions in the comment dialog.
@@ -20771,17 +20777,17 @@ void main() {
           expectedAudioPlayerViewCurrentAudioPosition;
 
       final Finder commentStartTextWidgetFinder =
-          find.byKey(const Key('commentStartPositionText')); // 0:43
+          find.byKey(const Key('commentStartPositionText')); // 0:34
       final Finder commentEndTextWidgetFinder =
-          find.byKey(const Key('commentEndPositionText')); // 0:43
+          find.byKey(const Key('commentEndPositionText')); // 0:34
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 0:34
       );
       expect(
         tester.widget<Text>(commentEndTextWidgetFinder).data!,
-        commentStartAndEndInitialPosition, // 0:43
+        commentStartAndEndInitialPosition, // 0:34
       );
 
       // Tap on add text button
@@ -21491,7 +21497,7 @@ void main() {
           playableAudioLstAudioIndex: 2,
           audioPositionStr: '0:00',
           audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
+          audioRemainingDurationStr: '6:06',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
           audioPausedDateTime: null,
         );
@@ -21580,9 +21586,9 @@ void main() {
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
           playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
+          audioPositionStr: '4:09',
           audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
+          audioRemainingDurationStr: '1:02',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
           audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
         );
@@ -21670,9 +21676,9 @@ void main() {
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
           playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
+          audioPositionStr: '4:09',
           audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
+          audioRemainingDurationStr: '1:02',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
           audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
         );
@@ -21768,9 +21774,9 @@ void main() {
           playlistTitle: youtubePlaylistTitle,
           playedCommentAudioTitle: playedCommentAudioTitle,
           playableAudioLstAudioIndex: 3,
-          audioPositionStr: '5:11',
+          audioPositionStr: '4:09',
           audioPositionSeconds: 311,
-          audioRemainingDurationStr: '1:18',
+          audioRemainingDurationStr: '1:02',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
           audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
         );
@@ -21865,7 +21871,7 @@ void main() {
           playableAudioLstAudioIndex: 2,
           audioPositionStr: '0:00',
           audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
+          audioRemainingDurationStr: '6:06',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
           audioPausedDateTime: null,
         );
@@ -21959,7 +21965,7 @@ void main() {
           playableAudioLstAudioIndex: 2,
           audioPositionStr: '0:00',
           audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
+          audioRemainingDurationStr: '6:06',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
           audioPausedDateTime: null,
         );
@@ -22057,7 +22063,7 @@ void main() {
           playableAudioLstAudioIndex: 2,
           audioPositionStr: '0:00',
           audioPositionSeconds: 0,
-          audioRemainingDurationStr: '7:38',
+          audioRemainingDurationStr: '6:06',
           isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
           audioPausedDateTime: null,
         );
@@ -22511,9 +22517,9 @@ void main() {
         //   playlistTitle: youtubePlaylistTitle,
         //   playedCommentAudioTitle: thirdPlayedCommentAudioTitle,
         //   playableAudioLstAudioIndex: 3,
-        //   audioPositionStr: '5:11',
+        //   audioPositionStr: '4:09',
         //   audioPositionSeconds: 311,
-        //   audioRemainingDurationStr: '1:18',
+        //   audioRemainingDurationStr: '1:02',
         //   isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
         //   audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
         // );
@@ -22528,7 +22534,7 @@ void main() {
         //   playableAudioLstAudioIndex: 2,
         //   audioPositionStr: '0:00',
         //   audioPositionSeconds: 0,
-        //   audioRemainingDurationStr: '7:38',
+        //   audioRemainingDurationStr: '6:06',
         //   isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
         //   audioPausedDateTime: null,
         // );
