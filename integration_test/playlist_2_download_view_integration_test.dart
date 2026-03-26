@@ -3204,7 +3204,7 @@ void main() {
         await tester.tap(find.byKey(const Key('search_icon_button')));
         await tester.pumpAndSettle();
 
-        // Verify that the search text field content was not changed
+        // Verify that the 'Youtube link or search' text field content was not changed
         IntegrationTestUtil.verifyTextFieldContent(
           tester: tester,
           textFieldKeyStr: 'youtubeUrlOrSearchTextField',
@@ -3240,7 +3240,7 @@ void main() {
         await tester.tap(find.byKey(const Key('playlist_toggle_button')));
         await tester.pumpAndSettle();
 
-        // Verify that the search text field content was not changed
+        // Verify that the 'Youtube link or search' text field content was not changed
         IntegrationTestUtil.verifyTextFieldContent(
           tester: tester,
           textFieldKeyStr: 'youtubeUrlOrSearchTextField',
@@ -3257,7 +3257,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: [],
-          firstAudioListTileIndex: 6,
+          firstAudioListTileIndex: 5,
         );
 
         // Now tap on the search icon button to deactivate it
@@ -3676,7 +3676,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: [],
-          firstAudioListTileIndex: 6,
+          firstAudioListTileIndex: 5,
         );
 
         // Now tap on the search icon button to deactivate it
@@ -4101,10 +4101,10 @@ void main() {
       // Verify the current audio position
       Text audioPositionText = tester
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
-      expect(audioPositionText.data, '2:34');
+      expect(audioPositionText.data, '2:03');
 
       Finder audioTitlePositionTextFinder =
-          find.text("La résilience insulaire par Fiona Roche\n13:35");
+          find.text("La résilience insulaire par Fiona Roche\n10:52");
       expect(audioTitlePositionTextFinder, findsOneWidget);
 
       // Return to playlist download view
@@ -4161,7 +4161,7 @@ void main() {
         audioToPlayTitle:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11",
       );
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
@@ -4175,11 +4175,11 @@ void main() {
         audioToPlayTitle:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11",
         otherAudioTitleToTapOnBeforeRewinding:
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
         otherAudioTitleToTapOnBeforeRewindingDuration:
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n20:32",
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26",
       );
 
       // Now play then pause "Ce qui va vraiment sauver notre espèce
@@ -4195,11 +4195,11 @@ void main() {
         audioToPlayTitle:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11",
         otherAudioTitleToTapOnBeforeRewinding:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         otherAudioTitleToTapOnBeforeRewindingDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11",
       );
 
       // Rewind again all playlist audio to start position. Since
@@ -4253,11 +4253,11 @@ void main() {
         audioToPlayTitle:
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
         audioToPlayTitleAndDuration:
-            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n6:29",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau\n5:11",
         otherAudioTitleToTapOnBeforeRewinding:
             "Les besoins artificiels par R.Keucheyan",
         otherAudioTitleToTapOnBeforeRewindingDuration:
-            "Les besoins artificiels par R.Keucheyan\n19:05",
+            "Les besoins artificiels par R.Keucheyan\n15:16",
       );
 
       // Purge the test playlist directory so that the created test
@@ -5483,7 +5483,7 @@ void main() {
         final Finder listFinder = find.byKey(const Key('audio_list'));
 
         // Perform the scroll action
-        await tester.drag(listFinder, const Offset(0, 100));
+        await tester.drag(listFinder, const Offset(0, 200));
         await tester.pumpAndSettle();
 
         // Verify that the current audio is displayed with the correct
@@ -5522,6 +5522,10 @@ void main() {
           newAudioTitle: newAudioToSelectTitle,
           offsetValue: 500.0,
         );
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 600));
+        await tester.pumpAndSettle();
 
         currentAudioSubTitle = '0:00:09.9 61 Ko importé le 30/10/2024 à 08:26';
 
@@ -5613,6 +5617,13 @@ void main() {
           offsetValue: 100.0,
         );
 
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 600));
+        await tester.pumpAndSettle();
+
         currentAudioSubTitle = '0:00:09.9 61 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
@@ -5701,6 +5712,13 @@ void main() {
         // Tap the ListTile Playlist checkbox to select it: This ensure
         // another bug was solved
         await tester.tap(playlistToSelectListTileCheckboxWidgetFinder);
+        await tester.pumpAndSettle();
+
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 200));
         await tester.pumpAndSettle();
 
         String newAudioToSelectTitle =
@@ -5900,6 +5918,13 @@ void main() {
 
         String newAudioSubTitle =
             '0:10:14.1 3.75 Mo à 1.64 Mo/sec le 03/11/2024 à 15:19';
+
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9756,8 +9781,8 @@ void main() {
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
         final String pictureFilePathNameTwo =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
-        const String audioTitleOneDurationStr = '7:38';
-        const String audioTitleTwoDurationStr = '13:39';
+        const String audioTitleOneDurationStr = '6:06';
+        const String audioTitleTwoDurationStr = '10:55';
 
         List<String> movedAudioPictureFileNameLst = [
           pictureFileNameTwo,
@@ -11886,8 +11911,8 @@ void main() {
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameOne";
         final String pictureFilePathNameTwo =
             "$tempPlaylistPictureDir${path.separator}$pictureFileNameTwo";
-        const String audioTitleOneDurationStr = '7:38';
-        const String audioTitleTwoDurationStr = '13:39';
+        const String audioTitleOneDurationStr = '6:06';
+        const String audioTitleTwoDurationStr = '10:55';
 
         List<String> copiedAudioPictureFileNameLst = [
           pictureFileNameTwo,
@@ -14580,6 +14605,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         // Tap on the Ok button to set download date time.
@@ -14748,6 +14774,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true
         );
 
         // Tap on the Ok button to set download date time.
@@ -14904,6 +14931,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true
         );
 
         // Tap on the Ok button to set download date time.
@@ -45849,7 +45877,7 @@ Future<void> _selectAndApplySortFilterParms({
   await tester.tap(titleAscDropDownTextFinder);
   await tester.pumpAndSettle();
 
-  // Verify that the search text field content was not changed
+  // Verify that the 'Youtube link or search' text field content was not changed
   IntegrationTestUtil.verifyTextFieldContent(
     tester: tester,
     textFieldKeyStr: 'youtubeUrlOrSearchTextField',
