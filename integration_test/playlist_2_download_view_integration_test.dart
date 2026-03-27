@@ -14771,11 +14771,11 @@ void main() {
         const String playlistTitle = 'S8 audio';
 
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: playlistTitle,
-          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-          dragToBottom: true
-        );
+            tester: tester,
+            playlistTitle: playlistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_audio_mp3_files_to_zip',
+            dragToBottom: true);
 
         // Tap on the Ok button to set download date time.
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
@@ -14928,11 +14928,11 @@ void main() {
         const String playlistTitle = 'S8 audio';
 
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: playlistTitle,
-          playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
-          dragToBottom: true
-        );
+            tester: tester,
+            playlistTitle: playlistTitle,
+            playlistMenuKeyStr:
+                'popup_menu_save_playlist_audio_mp3_files_to_zip',
+            dragToBottom: true);
 
         // Tap on the Ok button to set download date time.
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
@@ -34939,7 +34939,7 @@ void main() {
         saveFromPartMessage:
             'Restored 2 playlist, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from',
         saveSincePartMessage:
-            '\n\nSince the playlists\n  "EMI",\n  "Local"\nwere created, they are positioned at the end of the playlist list.',
+            '\n\nSince the playlists\n  "EMI",\n  "Local"\nwere created, they are positioned at the end of the playlist list starting at position 3.',
         playlistTitlesOrderedLst: playlistTitles,
         audioTitlesOrderedLst: ['Seigneur'],
       );
@@ -34985,7 +34985,7 @@ void main() {
         saveFromPartMessage:
             'Restored 1 playlist saved individually, 1 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from',
         saveSincePartMessage:
-            '\n\nSince the playlist\n  "Local"\nwas created, it is positioned at the end of the playlist list.',
+            '\n\nSince the playlist\n  "Local"\nwas created, it is positioned at the end of the playlist list at position 4.',
         playlistTitlesOrderedLst: playlistTitles,
         audioTitlesOrderedLst: ['Seigneur'],
       );
@@ -35067,6 +35067,7 @@ void main() {
             "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
         savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: "Dieu je T'adore_mp3_from_2026-03-02_20_49_53_on_",
+        dragToBottom: true,
       );
 
       // Change the playlist root path to the 'newDir\\playlists' directory in order
@@ -35105,7 +35106,7 @@ void main() {
         saveFromPartMessage:
             'Restored 4 playlist, 3 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 4 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from',
         saveSincePartMessage:
-            "\n\nSince the playlists\n  \"Dieu je T'adore\",\n  \"EMI\",\n  \"Local\",\n  \"local 3\"\nwere created, they are positioned at the end of the playlist list.",
+            "\n\nSince the playlists\n  \"Dieu je T'adore\",\n  \"EMI\",\n  \"Local\",\n  \"local 3\"\nwere created, they are positioned at the end of the playlist list starting at position 2.",
         playlistTitlesOrderedLst: playlistTitles,
         audioTitlesOrderedLst: ["Dieu, je T'adore"],
       );
@@ -35159,7 +35160,7 @@ void main() {
         saveFromPartMessage:
             'Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 1 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from',
         saveSincePartMessage:
-            "\n\nSince the playlist\n  \"Dieu je T'adore\"\nwas created, it is positioned at the end of the playlist list.",
+            "\n\nSince the playlist\n  \"Dieu je T'adore\"\nwas created, it is positioned at the end of the playlist list at position 5.",
         playlistTitlesOrderedLst: playlistTitles,
         audioTitlesOrderedLst: ["Dieu, je T'adore"],
       );
@@ -38538,6 +38539,13 @@ void main() {
       await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
 
+      // Find the audio list widget using its key
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
+
       // Verify the converted audio sub title in the selected Youtube
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -38635,6 +38643,13 @@ void main() {
       Finder cancelButtonFinder =
           find.byKey(const Key('convertTextToAudioCloseButton'));
       await tester.tap(cancelButtonFinder);
+      await tester.pumpAndSettle();
+
+      // Find the audio list widget using its key
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
       await tester.pumpAndSettle();
 
       // Verify the converted audio sub title in the selected Youtube
@@ -44971,6 +44986,7 @@ Future<String> _saveUniquePlaylistAndItsMp3({
   required String savedAudioMessage,
   required String savedMp3DirectoryPath,
   required String mp3ZipNameFirstPart,
+  bool dragToBottom = false,
 }) async {
   await IntegrationTestUtil.typeOnPlaylistMenuItem(
     tester: tester,
@@ -45020,6 +45036,7 @@ Future<String> _saveUniquePlaylistAndItsMp3({
     tester: tester,
     playlistTitle: playlistToSaveTitle,
     playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+    dragToBottom: dragToBottom,
   );
 
   // Tap on the Ok button to accept the download date time.
