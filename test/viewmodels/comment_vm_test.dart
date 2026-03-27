@@ -149,7 +149,7 @@ void main() {
       ];
 
       for (int i = 0; i < commentLst.length; i++) {
-        validateComment(commentLst[i], expectedCommentsLst[i]);
+        _validateComment(commentLst[i], expectedCommentsLst[i]);
       }
 
       // Purge the test playlist directory so that the created test
@@ -234,7 +234,7 @@ void main() {
       ];
 
       for (int i = 0; i < commentLst.length; i++) {
-        validateComment(commentLst[i], expectedCommentsLst[i]);
+        _validateComment(commentLst[i], expectedCommentsLst[i]);
       }
 
       // Purge the test playlist directory so that the created test
@@ -384,8 +384,8 @@ void main() {
         deleted: false,
       );
 
-      validateComment(commentsLst[0], expectedCommentOne);
-      validateComment(commentsLst[4], expectedCommentFive);
+      _validateComment(commentsLst[0], expectedCommentOne);
+      _validateComment(commentsLst[4], expectedCommentFive);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -436,7 +436,7 @@ void main() {
       expect(commentLst.length, 1);
 
       // checking the content of the comment
-      validateComment(commentLst[0], testCommentOne);
+      _validateComment(commentLst[0], testCommentOne);
 
       // now, adding a new comment to the same file
 
@@ -468,8 +468,8 @@ void main() {
       // checking the content of the comments. Since the comments are
       // sorted by audioPositionSeconds, the first comment should be
       // testCommentTwo and the second testCommentOne
-      validateComment(commentLst[0], testCommentTwo);
-      validateComment(commentLst[1], testCommentOne);
+      _validateComment(commentLst[0], testCommentTwo);
+      _validateComment(commentLst[1], testCommentOne);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -524,7 +524,7 @@ void main() {
           1);
 
       // checking the content of the comment
-      validateComment(commentLst[0], testCommentOne);
+      _validateComment(commentLst[0], testCommentOne);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
@@ -786,7 +786,8 @@ void main() {
       // the returned Commentlist should have three element
       expect(commentLst.length, 3);
 
-      validateComment(commentLst[2], commentToModify);
+      commentToModify.playSpeed = audio.audioPlaySpeed;
+      _validateComment(commentLst[2], commentToModify);
       expect(commentLst[2].lastUpdateDateTime,
           DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()));
 
@@ -899,10 +900,10 @@ void main() {
       // the returned Commentlist should have four elements
       expect(commentLst.length, 4);
 
-      validateComment(commentLst[0], commentLst[0]); // unchanged comment
-      validateComment(commentLst[1], commentLst[1]); // unchanged comment
-      validateComment(commentLst[2], addedComment);
-      validateComment(commentLst[3], firstModifiedComment);
+      _validateComment(commentLst[0], commentLst[0]); // unchanged comment
+      _validateComment(commentLst[1], commentLst[1]); // unchanged comment
+      _validateComment(commentLst[2], addedComment);
+      _validateComment(commentLst[3], firstModifiedComment);
 
       expect(updateNumberLst[0], 1); // modified comment number
       expect(updateNumberLst[1], 1); // added comment number
@@ -962,7 +963,7 @@ void main() {
       // the returned Commentlist should have three element
       expect(commentLst.length, 1);
 
-      validateComment(commentLst[0], addedComment);
+      _validateComment(commentLst[0], addedComment);
 
       expect(updateNumberLst[0], 0); // modified comment number
       expect(updateNumberLst[1], 0); // added comment number
@@ -1210,7 +1211,7 @@ void main() {
   });
 }
 
-void validateComment(Comment actualComment, Comment expectedComment) {
+void _validateComment(Comment actualComment, Comment expectedComment) {
   expect(actualComment.id, expectedComment.id);
   expect(actualComment.title, expectedComment.title);
   expect(actualComment.content, expectedComment.content);
