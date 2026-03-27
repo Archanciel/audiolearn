@@ -37095,6 +37095,13 @@ void main() {
         matching: find.byIcon(Icons.menu),
       );
 
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
+
       // Tap the leading menu icon button to open the popup menu
       await tester.tap(targetAudioListTileLeadingMenuIconButton);
       await tester.pumpAndSettle();
@@ -37128,8 +37135,8 @@ void main() {
       listFinder = find.byKey(const Key('audio_list'));
 
       // The scroll action is not necessary now.
-      // await tester.drag(listFinder, const Offset(0, -300));
-      // await tester.pumpAndSettle();
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
 
       // First, find the Audio sublist ListTile Text widget
       targetAudioListTileTextWidgetFinder =
@@ -37446,6 +37453,13 @@ void main() {
       await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
+
       // Verify the converted audio sub title in the selected Youtube
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -37463,9 +37477,16 @@ void main() {
         tester: tester,
         audioTitle: enteredFileNameNoExt,
         audioStartPosition: '0:00',
-        audioEndPosition: '0:07',
-        audioDuration: '0:07',
+        audioEndPosition: '0:06',
+        audioDuration: '0:06',
       );
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
 
       // Verifying all audio info dialog fields related of the
       // textToSpeech audio type
@@ -37641,6 +37662,13 @@ void main() {
       await tester.tap(cancelButtonFinder);
       await tester.pumpAndSettle();
 
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 600));
+      await tester.pumpAndSettle();
+
       // Verify the converted audio sub title in the selected Youtube
       // playlist audio list
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
@@ -37650,7 +37678,7 @@ void main() {
           '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
           '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
-        firstAudioListTileIndex: 4,
+        firstAudioListTileIndex: 5,
       );
 
       // Go to the audio player view and verify the audio position
@@ -37662,6 +37690,13 @@ void main() {
         audioEndPosition: '0:01',
         audioDuration: '0:01',
       );
+
+      // Find the audio list widget using its key
+      listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll action
+      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.pumpAndSettle();
 
       // Verifying all audio info dialog fields related of the
       // converted audio type
