@@ -485,7 +485,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist\n  "Les plus belles chansons chrétiennes"\nwas created, it is positioned at the end of the playlist list.',
+              'Restored 1 playlist saved individually, 3 comment and 1 picture JSON files as well as 1 picture JPG file(s) in the application pictures directory and 22 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "/storage/emulated/0/Documents/test/audiolearn/Windows Les plus belles chansons chrétiennes.zip".\n\nSince the playlist\n  "Les plus belles chansons chrétiennes"\nwas created, it is positioned at the end of the playlist list at position 3.',
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -988,9 +988,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(forward10sButtonFinder);
         await tester.pumpAndSettle();
-        await tester.tap(forward10sButtonFinder);
-        await tester.pumpAndSettle();
-
+ 
         // Now go back to the playlist download view screen
 
         appScreenNavigationButton =
