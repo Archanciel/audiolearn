@@ -140,7 +140,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added at the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of spoken quality added at the end of the playlist list at position 1.",
         isWarningConfirming: true,
       );
 
@@ -307,7 +307,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added at the end of the playlist list.",
+            "Youtube playlist \"$globalTestPlaylistTitle\" of musical quality added at the end of the playlist list at position 1.",
         isWarningConfirming: true,
       );
 
@@ -1303,7 +1303,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of spoken quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list.",
+            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of spoken quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list at position 4.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -1381,7 +1381,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of musical quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list.",
+            "Youtube playlist \"le meilleur chant de canari/chant canari male\" of musical quality added with corrected title \"le meilleur chant de canari-chant canari male\" at the end of the playlist list at position 4.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -1454,7 +1454,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"testing : invalid playlist title with double point\" of spoken quality added with corrected title \"testing - invalid playlist title with double point\" at the end of the playlist list.",
+            "Youtube playlist \"testing : invalid playlist title with double point\" of spoken quality added with corrected title \"testing - invalid playlist title with double point\" at the end of the playlist list at position 4.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -1528,7 +1528,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"testing invalid \\ playlist title with backward invalid character\" of spoken quality added with corrected title \"testing invalid - playlist title with backward invalid character\" at the end of the playlist list.",
+            "Youtube playlist \"testing invalid \\ playlist title with backward invalid character\" of spoken quality added with corrected title \"testing invalid - playlist title with backward invalid character\" at the end of the playlist list at position 4.",
       );
 
       // Purge the test playlist directory so that the created test
@@ -1602,7 +1602,7 @@ Future<void> main() async {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Youtube playlist \"Restore: short / test \\ playlist\" of spoken quality added with corrected title \"Restore- short - test - playlist\" at the end of the playlist list.",
+            "Youtube playlist \"Restore: short / test \\ playlist\" of spoken quality added with corrected title \"Restore- short - test - playlist\" at the end of the playlist list at position 4.",
       );
 
       // Purge the test playlist directory so that the created test
