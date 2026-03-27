@@ -17382,6 +17382,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -17528,6 +17529,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -17677,6 +17679,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -17799,6 +17802,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -17899,6 +17903,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -18000,6 +18005,7 @@ void main() {
           tester: tester,
           playlistTitle: playlistToSaveTitle,
           playlistMenuKeyStr: 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+          dragToBottom: true,
         );
 
         await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -18450,12 +18456,19 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:09');
+          expect(aaaAudioDurationStr, '0:07');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
           await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
           await tester.pumpAndSettle();
 
           await IntegrationTestUtil.verifyAudioInfoDialog(
@@ -18865,12 +18878,19 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:09');
+          expect(aaaAudioDurationStr, '0:07');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
           await tester.tap(appScreenNavigationButton);
+          await tester.pumpAndSettle();
+
+          // Find the audio list widget using its key
+          listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
           await tester.pumpAndSettle();
 
           await IntegrationTestUtil.verifyAudioInfoDialog(
@@ -19054,6 +19074,7 @@ void main() {
             playlistTitle: youtubePlaylistTitle,
             playlistMenuKeyStr:
                 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+            dragToBottom: true,
           );
 
           await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -19261,7 +19282,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:09');
+          expect(aaaAudioDurationStr, '0:07');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -19448,6 +19469,7 @@ void main() {
             playlistTitle: youtubePlaylistTitle,
             playlistMenuKeyStr:
                 'popup_menu_save_playlist_audio_mp3_files_to_zip',
+            dragToBottom: true,
           );
 
           await IntegrationTestUtil.verifySetValueToTargetDialog(
@@ -19656,7 +19678,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:09');
+          expect(aaaAudioDurationStr, '0:07');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -19883,7 +19905,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 1.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20360,7 +20382,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 2.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20767,7 +20789,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 1.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -20956,7 +20978,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 2.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21182,7 +21204,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 6 comment and 3 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 1.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -21688,7 +21710,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 2 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn local selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 2.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -22132,7 +22154,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 5 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 9 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 1.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -22329,7 +22351,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list.',
+                  'Restored 4 playlist, 5 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 6 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from "C:\\development\\flutter\\audiolearn\\test\\data\\audio\\Windows audioLearn S8 audio selected.zip".\n\nDeleted 1 playlist(s)\n  "A restaurer"\nno longer present in the restore ZIP file and not created or modified after the ZIP creation.\n\nSince the playlists\n  "Empty",\n  "local_comment",\n  "local_delete_comment",\n  "S8 audio"\nwere created, they are positioned at the end of the playlist list starting at position 2.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -22444,6 +22466,13 @@ void main() {
             "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
             "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
+
+          // Find the audio list widget using its key
+          final Finder listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
+          await tester.pumpAndSettle();
 
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
@@ -22574,6 +22603,13 @@ void main() {
             "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
             "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
+
+          // Find the audio list widget using its key
+          final Finder listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
+          await tester.pumpAndSettle();
 
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
@@ -25629,7 +25665,7 @@ void main() {
             await IntegrationTestUtil.verifyAndCloseWarningDialog(
               tester: tester,
               warningDialogMessage:
-                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list starting at position 2.',
+                  'Restored 1 playlist saved individually, 2 comment and 3 picture JSON files as well as 2 picture JPG file(s) in the application pictures directory and 3 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from "C:\\development\\flutter\\audiolearn\\test\\data\\saved\\zip_files_for_restore_tests\\Windows Local restore- short - test - playlist.zip".\n\nSince the playlist\n  "Local restore- short - test - playlist"\nwas created, it is positioned at the end of the playlist list at position 2.',
               isWarningConfirming: true,
               warningTitle: 'CONFIRMATION',
             );
@@ -29720,6 +29756,13 @@ void main() {
             "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
 
+          // Find the audio list widget using its key
+          final Finder listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
+          await tester.pumpAndSettle();
+
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
             selectedPlaylistTitle: 'S8 audio',
@@ -29871,6 +29914,13 @@ void main() {
             "0:17:59.0 6.58 MB at 1.37 MB/sec on 23/06/2025 at 06:55",
             "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/07/2024 at 16:35",
           ];
+
+          // Find the audio list widget using its key
+          final Finder listFinder = find.byKey(const Key('audio_list'));
+
+          // Perform the scroll action
+          await tester.drag(listFinder, const Offset(0, 300));
+          await tester.pumpAndSettle();
 
           _verifyRestoredPlaylistAndAudio(
             tester: tester,
@@ -31857,7 +31907,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list.",
+              "Restored 2 playlist, 2 comment and 0 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) and the application settings from \"$restorableZipFilePathName\".\n\nDeleted 2 audio(s)\n  \"Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!\",\n  \"L’uniforme arrive en France en 2024\"\nand their comment(s) and picture(s) as well as their MP3 file.\n\nSince the playlists\n  \"local_3\",\n  \"local_4\"\nwere created, they are positioned at the end of the playlist list starting at position 5.",
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
@@ -32677,7 +32727,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nSince the playlist\n  \"Bible Bénie\"\nwas created, it is positioned at the end of the playlist list.",
+              "Restored 1 playlist saved individually, 1 comment and 1 picture JSON files as well as 0 picture JPG file(s) in the application pictures directory and 2 audio reference(s) and 0 added plus 0 deleted plus 0 modified comment(s) in existing audio comment file(s) from \"$restorableZipFilePathName\".\n\nSince the playlist\n  \"Bible Bénie\"\nwas created, it is positioned at the end of the playlist list at position 2.",
           isWarningConfirming: true,
           warningTitle: 'CONFIRMATION',
         );
