@@ -1301,7 +1301,7 @@ class _CommentListAddDialogContentState
 
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
-          milliseconds: comment.commentStartPositionInTenthOfSeconds * 100), // 420 * 100 = 42,000 ms = 42 seconds
+          milliseconds: comment.commentStartPositionInTenthOfSeconds * 100),
       isUndoCommandToAdd: true,
     );
 
@@ -1316,7 +1316,7 @@ class _CommentListAddDialogContentState
     await audioPlayerVMlistenFalse.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
       commentEndPositionInTenthOfSeconds:
-          comment.commentEndPositionInTenthOfSeconds, // 460
+          comment.commentEndPositionInTenthOfSeconds,
     );
   }
 
