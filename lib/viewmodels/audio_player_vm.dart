@@ -947,12 +947,25 @@ class AudioPlayerVM extends ChangeNotifier {
   void _startCommentEndTimer() {
     _cancelCommentEndTimer(); // Cancel any existing timer
 
-    // Calculate the end position in tenths of seconds based on the audio speed
-    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds -
-        (_currentAudio!.audioPositionSeconds * 10);
+    // Use _currentAudioPosition (updated by modifyAudioPlayerPosition) instead of
+    // _currentAudio!.audioPositionSeconds which is only updated by onPositionChanged
+    // while playing and therefore may not reflect a recent seek.
+    double audioPlaySpeed = _currentAudio!.audioPlaySpeed;
+    int currentPositionInTenths = _currentAudioPosition.inMilliseconds ~/ 100;
+    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds - currentPositionInTenths;
+
+    if (audioPlaySpeed != 1.0) {
+      if (audioPlaySpeed <= 1.5) {
+       timeUntilEndInTenthsOfSeconds  += 10;
+      } else if (audioPlaySpeed < 1.8) {
+       timeUntilEndInTenthsOfSeconds  += 12;
+      } else {
+        timeUntilEndInTenthsOfSeconds += 15;
+      }
+    }
 
     timeUntilEndInTenthsOfSeconds =
-        ((timeUntilEndInTenthsOfSeconds / _currentAudio!.audioPlaySpeed)
+        ((timeUntilEndInTenthsOfSeconds / audioPlaySpeed)
             .ceil());
 
     Duration timeUntilEnd = Duration(
