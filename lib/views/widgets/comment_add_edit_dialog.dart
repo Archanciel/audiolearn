@@ -838,8 +838,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   }) async {
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
-          microseconds:
-              (commentVMlistenFalse.currentCommentStartPosition.inMicroseconds *
+          milliseconds:
+              (commentVMlistenFalse.currentCommentStartPosition.inMilliseconds *
                       widget.commentableAudio.audioPlaySpeed)
                   .round()),
       isUndoCommandToAdd: true,
@@ -849,8 +849,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
       commentEndPositionInTenthOfSeconds:
-          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds *
-              widget.commentableAudio.audioPlaySpeed ~/
+          (commentVMlistenFalse.currentCommentEndPosition.inMilliseconds *
+              widget.commentableAudio.audioPlaySpeed).round() ~/
               100,
     );
   }
