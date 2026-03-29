@@ -605,9 +605,17 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
           valueListenable:
               audioPlayerVMlistenFalse.currentAudioPositionNotifier,
           builder: (context, currentAudioPosition, child) {
+            // Convert raw position to apparent (speed-adjusted) for comparison
+            // with currentCommentEndPosition, which is stored as apparent time.
+            final Duration apparentAudioPosition = Duration(
+              microseconds: (currentAudioPosition.inMicroseconds /
+                      widget.commentableAudio.audioPlaySpeed)
+                  .round(),
+            );
+
             // When the current comment end position is reached,
             // schedule a pause.
-            if (currentAudioPosition >=
+            if (apparentAudioPosition >=
                     commentVMlistenFalse.currentCommentEndPosition ||
                 // The 'or' test below is necessary to enable the
                 // pause of a comment whose end position is the same
@@ -626,14 +634,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               });
             }
 
-            final int currentAudioPositionDividedByPlaySpeedInMicroSeconds =
-                (currentAudioPosition.inMicroseconds /
-                        widget.commentableAudio.audioPlaySpeed)
-                    .round();
-            final String currentAudioPositionStr = Duration(
-                    microseconds:
-                        currentAudioPositionDividedByPlaySpeedInMicroSeconds)
-                .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: true);
+            // Reuse apparentAudioPosition already computed above
+            final String currentAudioPositionStr =
+                apparentAudioPosition.HHmmssZeroHH(
+                    addRemainingOneDigitTenthOfSecond: true);
+
             return Tooltip(
               message: AppLocalizations.of(context)!
                   .updateCommentStartEndPositionTooltip,
