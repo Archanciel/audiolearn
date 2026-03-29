@@ -718,14 +718,26 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // and check the 'Start' position checkbox.
                           '0:00.0',
                           // Uses the total duration from audioPlayerVM.
-                          (audioPlayerVMlistenFalse.currentAudioTotalDuration -
-                                  const Duration(milliseconds: 2000))
+                          Duration(
+                                  microseconds: ((audioPlayerVMlistenFalse
+                                                  .currentAudioTotalDuration
+                                                  .inMicroseconds -
+                                              2000000) /
+                                          widget
+                                              .commentableAudio.audioPlaySpeed)
+                                      .round())
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
                           // This duration string is used if the user empties the position field
                           // and check the 'End' position checkbox.
-                          audioPlayerVMlistenFalse.currentAudioTotalDuration
+                          Duration(
+                                  microseconds: (audioPlayerVMlistenFalse
+                                                  .currentAudioTotalDuration
+                                                  .inMicroseconds /
+                                          widget
+                                              .commentableAudio.audioPlaySpeed)
+                                      .round())
                               .HHmmssZeroHH(
                             addRemainingOneDigitTenthOfSecond: true,
                           ),
