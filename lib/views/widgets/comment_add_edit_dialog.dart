@@ -95,13 +95,18 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           audioPlaySpeed)
                       .round());
         } else {
+          // Always store as apparent (speed-adjusted) time: raw_ms / currentSpeed
           commentVM.currentCommentStartPosition = Duration(
-              milliseconds:
-                  (widget.comment!.commentStartPositionInTenthOfSeconds * 100)
+              microseconds:
+                  (widget.comment!.commentStartPositionInTenthOfSeconds *
+                          100000.0 /
+                          audioPlaySpeed)
                       .round());
           commentVM.currentCommentEndPosition = Duration(
-              milliseconds:
-                  (widget.comment!.commentEndPositionInTenthOfSeconds * 100)
+              microseconds:
+                  (widget.comment!.commentEndPositionInTenthOfSeconds *
+                          100000.0 /
+                          audioPlaySpeed)
                       .round());
         }
       } else {
@@ -250,14 +255,24 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                             valueListenable: audioPlayerVMlistenFalse
                                 .currentAudioPlayPauseNotifier,
                             builder: (context, isPlaying, child) {
+                              // Convert raw position to apparent for comparison with
+                              // currentCommentEndPosition (stored as apparent time).
+                              final Duration apparentCurrentAudioPosition =
+                                  Duration(
+                                microseconds: (audioPlayerVMlistenFalse
+                                            .currentAudioPosition
+                                            .inMicroseconds /
+                                        widget.commentableAudio.audioPlaySpeed)
+                                    .round(),
+                              );
+
                               // Evaluate and adjust play/pause state based on the current audio position.
                               if (!_commentEndPositionIsModified) {
                                 if (commentVMlistenFalse
                                         .currentCommentEndPosition >
                                     commentVMlistenFalse
                                         .currentCommentStartPosition) {
-                                  if (audioPlayerVMlistenFalse
-                                          .currentAudioPosition >=
+                                  if (apparentCurrentAudioPosition >= // ← was: audioPlayerVMlistenFalse.currentAudioPosition
                                       commentVMlistenFalse
                                           .currentCommentEndPosition) {
                                     if (_playButtonWasClicked) {
@@ -278,8 +293,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                                         .currentCommentEndPosition >
                                     commentVMlistenFalse
                                         .currentCommentStartPosition) {
-                                  if (audioPlayerVMlistenFalse
-                                          .currentAudioPosition >=
+                                  if (apparentCurrentAudioPosition >= // ← was: audioPlayerVMlistenFalse.currentAudioPosition
                                       commentVMlistenFalse
                                           .currentCommentEndPosition) {
                                     // You cannot await here, but you can
@@ -331,16 +345,27 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
             Duration currentCommentEndPosition =
                 commentVMlistenFalse.currentCommentEndPosition;
 
+            final double audioPlaySpeed =
+                widget.commentableAudio.audioPlaySpeed;
+
+            // currentComment*Position is apparent; convert back to raw tenths for storage
+            final int rawStartTenths =
+                (currentCommentStartPosition.inMilliseconds *
+                        audioPlaySpeed /
+                        100)
+                    .round();
+            final int rawEndTenths = (currentCommentEndPosition.inMilliseconds *
+                    audioPlaySpeed /
+                    100)
+                .round();
+
             if (widget.isAddMode) {
               commentVMlistenFalse.addComment(
                 addedComment: Comment(
                   title: _titleController.text,
                   content: _commentController.text,
-                  commentStartPositionInTenthOfSeconds:
-                      (currentCommentStartPosition.inMilliseconds / 100)
-                          .round(),
-                  commentEndPositionInTenthOfSeconds:
-                      (currentCommentEndPosition.inMilliseconds / 100).round(),
+                  commentStartPositionInTenthOfSeconds: rawStartTenths,
+                  commentEndPositionInTenthOfSeconds: rawEndTenths,
                 ),
                 audioToComment: widget.commentableAudio,
               );
@@ -350,9 +375,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
               commentToModify.commentStartPositionInTenthOfSeconds =
-                  (currentCommentStartPosition.inMilliseconds / 100).round();
-              commentToModify.commentEndPositionInTenthOfSeconds =
-                  (currentCommentEndPosition.inMilliseconds / 100).round();
+                  rawStartTenths;
+              commentToModify.commentEndPositionInTenthOfSeconds = rawEndTenths;
 
               commentVMlistenFalse.modifyComment(
                 modifiedComment: commentToModify,
@@ -859,37 +883,52 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
+    final double audioPlaySpeed = widget.commentableAudio.audioPlaySpeed;
+
     Duration modifiedCommentStartPosition =
         commentVMlistenFalse.currentCommentStartPosition +
             Duration(milliseconds: millisecondsChange);
 
-    Duration audioDuration = widget.commentableAudio.audioDuration;
+    // Clamp against apparent audio duration
+    final Duration apparentAudioDuration = Duration(
+      microseconds: (widget.commentableAudio.audioDuration.inMicroseconds /
+              audioPlaySpeed)
+          .round(),
+    );
 
     if (modifiedCommentStartPosition < const Duration(milliseconds: 0)) {
       modifiedCommentStartPosition = const Duration(milliseconds: 0);
     } else if (modifiedCommentStartPosition >
-        audioDuration - const Duration(milliseconds: 2000)) {
-      modifiedCommentStartPosition = audioDuration -
-          const Duration(milliseconds: 2000); // will play comment starting
-      //                                         2 sec before audio end position.
-      //                                         This will avoid a problem caused
-      //                                         by playing a comment whose position
-      //                                         is almost at the audio end position.
+        apparentAudioDuration - const Duration(milliseconds: 2000)) {
+      modifiedCommentStartPosition =
+          apparentAudioDuration - const Duration(milliseconds: 2000);
     }
 
     commentVMlistenFalse.currentCommentStartPosition =
         modifiedCommentStartPosition;
 
+    // Convert apparent → raw for the audio player seek
+    final Duration rawStartPosition = Duration(
+      microseconds:
+          (modifiedCommentStartPosition.inMicroseconds * audioPlaySpeed)
+              .round(),
+    );
+
     await audioPlayerVM.modifyAudioPlayerPosition(
-      durationPosition: modifiedCommentStartPosition,
+      durationPosition: rawStartPosition,
       isUndoCommandToAdd: true,
     );
 
+    // Convert apparent end → raw tenths for the comment timer
+    final int rawEndPositionInTenths =
+        (commentVMlistenFalse.currentCommentEndPosition.inMilliseconds *
+                audioPlaySpeed /
+                100)
+            .round();
+
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds:
-          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+      commentEndPositionInTenthOfSeconds: rawEndPositionInTenths,
     );
   }
 
@@ -898,31 +937,45 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     required CommentVM commentVMlistenFalse,
     required int millisecondsChange,
   }) async {
+    final double audioPlaySpeed = widget.commentableAudio.audioPlaySpeed;
+
     Duration modifiedCommentEndPosition =
         commentVMlistenFalse.currentCommentEndPosition +
             Duration(milliseconds: millisecondsChange);
 
-    Duration audioDuration = widget.commentableAudio.audioDuration;
+    // Clamp against apparent audio duration
+    final Duration apparentAudioDuration = Duration(
+      microseconds: (widget.commentableAudio.audioDuration.inMicroseconds /
+              audioPlaySpeed)
+          .round(),
+    );
 
-    if (modifiedCommentEndPosition > audioDuration) {
-      modifiedCommentEndPosition = audioDuration;
+    if (modifiedCommentEndPosition > apparentAudioDuration) {
+      modifiedCommentEndPosition = apparentAudioDuration;
     } else if (modifiedCommentEndPosition < const Duration(milliseconds: 0)) {
       modifiedCommentEndPosition = const Duration(milliseconds: 0);
     }
 
     commentVMlistenFalse.currentCommentEndPosition = modifiedCommentEndPosition;
 
+    // Convert apparent end → raw for the audio player seek
+    final Duration rawEndPosition = Duration(
+      microseconds:
+          (modifiedCommentEndPosition.inMicroseconds * audioPlaySpeed).round(),
+    );
+
     await audioPlayerVM.modifyAudioPlayerPosition(
-        durationPosition: modifiedCommentEndPosition -
-            const Duration(milliseconds: 4000), // will play comment starting
-        //                                      4 sec before new end position
+        durationPosition: rawEndPosition - const Duration(milliseconds: 4000),
         isUndoCommandToAdd: true);
+
+    // Convert apparent end → raw tenths for the comment timer
+    final int rawEndPositionInTenths =
+        (modifiedCommentEndPosition.inMilliseconds * audioPlaySpeed / 100)
+            .round();
 
     await audioPlayerVM.playCurrentAudio(
       rewindAudioPositionBasedOnPauseDuration: false,
-      // data used by the AudioPlayerVM Timer
-      commentEndPositionInTenthOfSeconds:
-          commentVMlistenFalse.currentCommentEndPosition.inMilliseconds ~/ 100,
+      commentEndPositionInTenthOfSeconds: rawEndPositionInTenths,
     );
   }
 }
