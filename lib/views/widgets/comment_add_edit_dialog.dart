@@ -231,7 +231,6 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                               await _playFromCommentStartPosition(
                                 audioPlayerVMlistenFalse:
                                     audioPlayerVMlistenFalse,
-                                commentVMlistenFalse: commentVMlistenFalse,
                               );
                             }
                           },
@@ -834,14 +833,11 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
   Future<void> _playFromCommentStartPosition({
     required AudioPlayerVM audioPlayerVMlistenFalse,
-    required CommentVM commentVMlistenFalse,
   }) async {
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
           milliseconds:
-              (commentVMlistenFalse.currentCommentStartPosition.inMilliseconds *
-                      widget.commentableAudio.audioPlaySpeed)
-                  .round()),
+              widget.comment!.commentStartPositionInTenthOfSeconds * 100),
       isUndoCommandToAdd: true,
     );
 
@@ -849,9 +845,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
       commentEndPositionInTenthOfSeconds:
-          (commentVMlistenFalse.currentCommentEndPosition.inMilliseconds *
-              widget.commentableAudio.audioPlaySpeed).round() ~/
-              100,
+          widget.comment!.commentEndPositionInTenthOfSeconds,
     );
   }
 
