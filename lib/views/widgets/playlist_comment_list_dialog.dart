@@ -598,14 +598,17 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   message:
                       AppLocalizations.of(context)!.commentStartPositionTooltip,
                   child: Text(
-                    // comment start position Text
+                    // comment start position Text — adapted to current play speed
                     key: const Key('commentStartPositionKey'),
                     style: const TextStyle(fontSize: 13),
                     Duration(
-                            milliseconds:
-                                comment.commentStartPositionInTenthOfSeconds *
-                                    100)
-                        .HHmmssZeroHH(),
+                      milliseconds:
+                          (comment.commentStartPositionInTenthOfSeconds *
+                                  100.0 *
+                                  comment.playSpeed /
+                                  currentAudio.audioPlaySpeed)
+                              .round(),
+                    ).HHmmssZeroHH(),
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -613,14 +616,17 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                   message:
                       AppLocalizations.of(context)!.commentEndPositionTooltip,
                   child: Text(
-                    // comment position Text
+                    // comment position Text — adapted to current play speed
                     key: const Key('commentEndPositionKey'),
                     style: const TextStyle(fontSize: 13),
                     Duration(
-                            milliseconds:
-                                comment.commentEndPositionInTenthOfSeconds *
-                                    100)
-                        .HHmmssZeroHH(),
+                      milliseconds:
+                          (comment.commentEndPositionInTenthOfSeconds *
+                                  100.0 *
+                                  comment.playSpeed /
+                                  currentAudio.audioPlaySpeed)
+                              .round(),
+                    ).HHmmssZeroHH(),
                   ),
                 ),
               ],
