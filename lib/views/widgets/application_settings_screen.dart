@@ -13,14 +13,17 @@ import '../../views/screen_mixin.dart';
 import '../../constants.dart';
 import '../../services/settings_data_service.dart';
 import '../../viewmodels/theme_provider_vm.dart';
+import '../playlist_download_view.dart';
 import 'audio_set_speed_dialog.dart';
 import 'confirm_action_dialog.dart';
 
 class ApplicationSettingsScreen extends StatefulWidget {
   final SettingsDataService settingsDataService;
+  final PlaylistDownloadView playlistDownloadView;
 
   const ApplicationSettingsScreen({
     required this.settingsDataService,
+    required this.playlistDownloadView,
     super.key,
   });
 
@@ -116,9 +119,11 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
             key: const Key('appSettingsBackButton'),
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              if (_applicationDialogPlaylistRootPath.isNotEmpty && _applicationDialogPlaylistRootPath != widget.settingsDataService.get(
-                      settingType: SettingType.dataLocation,
-                      settingSubType: DataLocation.playlistRootPath)) {
+              if (_applicationDialogPlaylistRootPath.isNotEmpty &&
+                  _applicationDialogPlaylistRootPath !=
+                      widget.settingsDataService.get(
+                          settingType: SettingType.dataLocation,
+                          settingSubType: DataLocation.playlistRootPath)) {
                 // If the playlist root path was modified but the user
                 // clicks on the back button instead of the save button,
                 // a warning is displayed to prevent losing the modified
@@ -388,7 +393,9 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
           //                                     since the Cancel button was clicked
         );
       }
-      // If result == ConfirmAction.cancel or null, do nothing
+
+      await widget.playlistDownloadView.playlistDownloadViewState
+          .reselectCurrentPlaylist();
     } else {
       playlistListVMlistenFalse.updatePlaylistRootPathAndSavePlaylistTitleOrder(
         actualPlaylistRootPath: settingsDataServicePlaylistRootPath,
@@ -398,6 +405,9 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
         //                                     previously saved playlist title order
         //                                     which does not exist
       );
+      
+      await widget.playlistDownloadView.playlistDownloadViewState
+          .reselectCurrentPlaylist();
     }
   }
 

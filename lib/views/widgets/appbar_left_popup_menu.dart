@@ -2,6 +2,7 @@ import 'package:audiolearn/models/comment.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
+import 'package:audiolearn/views/playlist_download_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
@@ -47,6 +48,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
   final ThemeProviderVM themeProvider;
   final SettingsDataService settingsDataService;
   final AudioLearnAppViewType audioLearnAppViewType;
+  final PlaylistDownloadView? playlistDownloadView;
 
   /// The AppBarLeadingPopupMenuWidget key is defined in the parent
   /// widget, i.e. MyHomePageState instance, to facilitate the widget
@@ -56,6 +58,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
     required this.audioLearnAppViewType,
     required this.themeProvider,
     required this.settingsDataService,
+    this.playlistDownloadView,
   });
 
   @override
@@ -640,6 +643,7 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
               builder: (BuildContext context) {
                 return ApplicationSettingsScreen(
                   settingsDataService: settingsDataService,
+                  playlistDownloadView: playlistDownloadView!,
                 );
               },
             );

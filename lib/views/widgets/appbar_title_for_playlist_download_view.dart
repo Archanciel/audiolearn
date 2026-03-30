@@ -11,6 +11,7 @@ import '../../views/screen_mixin.dart';
 /// parameter.
 class AppBarTitleForPlaylistDownloadView extends StatelessWidget
     with ScreenMixin {
+
   AppBarTitleForPlaylistDownloadView({
     super.key,
   });

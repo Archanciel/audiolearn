@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:audiolearn/utils/duration_expansion.dart';
+import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +44,8 @@ class PlaylistDownloadView extends StatefulWidget {
       (ScreenMixin.isHardwarePc()) ? 1 : 1.5;
   final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
   final bool isTest;
+  late _PlaylistDownloadViewState _playlistDownloadViewState;
+  _PlaylistDownloadViewState get playlistDownloadViewState => _playlistDownloadViewState;
 
   PlaylistDownloadView({
     super.key,
@@ -53,7 +56,7 @@ class PlaylistDownloadView extends StatefulWidget {
   });
 
   @override
-  State<PlaylistDownloadView> createState() => _PlaylistDownloadViewState();
+  State<PlaylistDownloadView> createState() => _playlistDownloadViewState =_PlaylistDownloadViewState();
 }
 
 class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
@@ -106,6 +109,39 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     _playlistScrollController.dispose();
 
     super.dispose();
+  }
+
+  /// Deselects then reselects the currently selected playlist,
+  /// exactly as if the user clicked the playlist checkbox twice.
+  /// 
+  /// This method is called when the playlists root dir is changed
+  /// by the application settings screen.
+  Future<void> reselectCurrentPlaylist() async {
+    final PlaylistListVM playlistListVMlistenFalse =
+        Provider.of<PlaylistListVM>(context, listen: false);
+    final AudioPlayerVM audioPlayerVMlistenFalse =
+        Provider.of<AudioPlayerVM>(context, listen: false);
+
+    final Playlist? selectedPlaylist =
+        playlistListVMlistenFalse.uniqueSelectedPlaylist;
+
+    if (selectedPlaylist == null) {
+      return;
+    }
+
+    // Simulate unchecking the playlist checkbox
+    playlistListVMlistenFalse.setPlaylistSelection(
+      playlistSelectedOrUnselected: selectedPlaylist,
+      isPlaylistSelected: false,
+    );
+    await audioPlayerVMlistenFalse.setCurrentAudioFromSelectedPlaylist();
+
+    // Simulate rechecking the playlist checkbox
+    playlistListVMlistenFalse.setPlaylistSelection(
+      playlistSelectedOrUnselected: selectedPlaylist,
+      isPlaylistSelected: true,
+    );
+    await audioPlayerVMlistenFalse.setCurrentAudioFromSelectedPlaylist();
   }
 
   void _onTextChanged() {
