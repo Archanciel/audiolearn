@@ -236,3 +236,5 @@ const int kFullyListenedBufferSeconds = 10;
 // Used by audio extractor functionality
 const double kDefaultSilenceDuration = 1.0; // in seconds
 const double kDefaultSilenceDurationBetweenMp3 = 2.0; // in seconds
+
+const double kAddedOrUpdatedCommentPlaySpeed = 1.0;
