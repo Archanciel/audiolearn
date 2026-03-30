@@ -238,10 +238,12 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       appBar: AppBar(
         title: _appBarTitleWidgetLst[_currentIndex],
         leading: AppBarLeftPopupMenuWidget(
-            key: const Key('appBarLeadingPopupMenuWidget'),
-            audioLearnAppViewType: _audioLearnAppViewTypeLst[_currentIndex],
-            themeProvider: themeProviderVMlistenTrue,
-            settingsDataService: widget.settingsDataService),
+          key: const Key('appBarLeadingPopupMenuWidget'),
+          audioLearnAppViewType: _audioLearnAppViewTypeLst[_currentIndex],
+          themeProvider: themeProviderVMlistenTrue,
+          settingsDataService: widget.settingsDataService,
+          playlistDownloadView: _screenWidgetLst[0] as PlaylistDownloadView,
+        ),
         actions: appBarApplicationActionLst,
       ),
       resizeToAvoidBottomInset: true,
