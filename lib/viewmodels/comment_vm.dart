@@ -154,7 +154,7 @@ class CommentVM extends ChangeNotifier {
       );
     }
 
-    addedComment.playSpeed = audioToComment.audioPlaySpeed;
+    addedComment.playSpeed = kAddedOrUpdatedCommentPlaySpeed;
     commentLst.add(addedComment);
 
     _sortAndSaveCommentLst(
@@ -399,30 +399,13 @@ class CommentVM extends ChangeNotifier {
       (element) => element.id == modifiedComment.id,
     );
 
-    // double modifiedCommentPlaySpeed = modifiedComment.playSpeed;
-    // double audioPlaySpeed = commentedAudio.audioPlaySpeed;
-
-    // if (modifiedCommentPlaySpeed != audioPlaySpeed) {
-    //   modifiedComment.commentStartPositionInTenthOfSeconds =
-    //       (modifiedComment.commentStartPositionInTenthOfSeconds *
-    //               modifiedCommentPlaySpeed /
-    //               audioPlaySpeed)
-    //           .round();
-    //   modifiedComment.commentEndPositionInTenthOfSeconds =
-    //       (modifiedComment.commentEndPositionInTenthOfSeconds *
-    //               modifiedCommentPlaySpeed /
-    //               audioPlaySpeed)
-    //           .round();
-    //   oldComment.playSpeed = modifiedCommentPlaySpeed;
-    // }
-
     oldComment.title = modifiedComment.title;
     oldComment.content = modifiedComment.content;
     oldComment.commentStartPositionInTenthOfSeconds =
         modifiedComment.commentStartPositionInTenthOfSeconds;
     oldComment.commentEndPositionInTenthOfSeconds =
         modifiedComment.commentEndPositionInTenthOfSeconds;
-    oldComment.playSpeed = commentedAudio.audioPlaySpeed;
+    oldComment.playSpeed = kAddedOrUpdatedCommentPlaySpeed;
 
     // If the modified comment last update date time is null, it
     // means that the comment was modified by the user.
