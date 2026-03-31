@@ -12683,7 +12683,19 @@ void main() {
            that the playlist sort order was reset to the initial sort order since the
            user accepted the previously saved sort order. Then, remodify the path to the
            previously modified value and verify that the playlist sort order was reset
-           to the new order since the user accepted the previously saved sort order.''',
+           to the new order since the user accepted the previously saved sort order.
+           
+           This test also verifies that after changing the playlist root path, the comment
+           of the selected playlist unique audio in different than the comment of the selected
+           playlist unique audio in the initial playlist root path which was verified before
+           the playlist root path change.
+           
+           Then, do the same verification after resetting the playlist root path to the initial
+           value. This test part ensure that the bug correction related to the fact that after
+           changing the playlist root path and accepting to restore the previous playlist titles
+           order, the comment of the selected playlist unique audio was not updated to be the comment
+           of the selected playlist unique audio in the restored playlist root path, is fixed and that
+           this bug fix is not broken after resetting the playlist root path to the initial value.''',
           (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
@@ -12741,6 +12753,14 @@ void main() {
           true,
         );
 
+        // Tap on the selected playlist unique audio title to open the
+        // audio player view in order to verify the selected playlist
+        // unique audio unique comment title
+        await verifyCommentAndReturnToPlaylistDownloadView(
+          tester: tester,
+          expectedCommentTitle: 'comment audio directory',
+        );
+
         // Now, set the playlist root path to the modified value
 
         List<String> modifiedDirPlaylistTitlesOrder = [
@@ -12770,6 +12790,14 @@ void main() {
           confirmOrCancelAction: true, // Confirm button is tapped
         );
 
+        // Tap on the selected playlist unique audio title to open the
+        // audio player view in order to verify the selected playlist
+        // unique audio unique comment title
+        await verifyCommentAndReturnToPlaylistDownloadView(
+          tester: tester,
+          expectedCommentTitle: 'comment new directory',
+        );
+
         // Now, reset the playlist root path to the initial value
 
         String audioPlaylistsExpectedSettingsContent =
@@ -12788,6 +12816,14 @@ void main() {
           confirmDialogMessage:
               "A previous playlist titles order file is available in the selected playlist root path. Do you want to restore this saved order or keep the current playlist titles order? Click on \"Confirm\" to restore the saved order or on \"Cancel\" to keep the current order.",
           confirmOrCancelAction: true, // Confirm button is tapped
+        );
+
+        // Tap on the selected playlist unique audio title to open the
+        // audio player view in order to verify the selected playlist
+        // unique audio unique comment title
+        await verifyCommentAndReturnToPlaylistDownloadView(
+          tester: tester,
+          expectedCommentTitle: 'comment audio directory',
         );
 
         // The playlist titles order is the initial one since 'Cancel'
@@ -44825,6 +44861,61 @@ void main() {
       });
     });
   });
+}
+
+Future<void> verifyCommentAndReturnToPlaylistDownloadView({
+  required WidgetTester tester,
+  required String expectedCommentTitle,
+}) async {
+  // Tap on the selected playlist unique audio title to open the
+  // audio player view
+
+  final Finder alreadyCommentedAudioFinder =
+      find.text('audio learn test short video one');
+  await tester.tap(alreadyCommentedAudioFinder);
+  await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+  // Tap on the comment icon button to open the comment add list
+  // dialog
+  final Finder commentInkWellButtonFinder = find.byKey(
+    const Key('commentsInkWellButton'),
+  );
+
+  await tester.tap(commentInkWellButtonFinder);
+  await tester.pumpAndSettle();
+
+  // Verify that the comment list dialog now displays the
+  // correct comment
+
+  // Find the list body containing the comments
+  final Finder commentListDialogFinder =
+      find.byKey(const Key('audioCommentsListKey'));
+
+  List<String> expectedTitles = [
+    expectedCommentTitle,
+  ];
+
+  final Finder commentTitlesFinder = find.descendant(
+    of: commentListDialogFinder,
+    matching: find.byKey(const Key('commentTitleKey')),
+  );
+
+  final Finder specificCommentTitleFinder = commentTitlesFinder.at(0);
+
+  expect(
+    tester.widget<Text>(specificCommentTitleFinder).data,
+    expectedTitles[0],
+  );
+
+  // Now close the comment list dialog
+  await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+  await tester.pumpAndSettle();
+
+  // And return to playlist download view
+  final Finder playlistDownloadViewNavigationButton =
+      find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+  await tester.tap(playlistDownloadViewNavigationButton);
+  await tester.pumpAndSettle();
 }
 
 Future<void> _restoreMultipleOrSinglePlaylistMp3({
