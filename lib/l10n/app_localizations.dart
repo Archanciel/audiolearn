@@ -4768,7 +4768,7 @@ abstract class AppLocalizations {
   /// No description provided for @movedPlaylistMessage.
   ///
   /// In en, this message translates to:
-  /// **'The playlist {playlist} was moved from position {positionFrom} to position {positionTo}.'**
+  /// **'The playlist \"{playlist}\" was moved from position {positionFrom} to position {positionTo}.'**
   String movedPlaylistMessage(
       Object playlist, Object positionFrom, Object positionTo);
 }
