@@ -27,11 +27,11 @@ enum CallerDialog {
 class CommentAddEditDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
   final CallerDialog callerDialog;
-  final Comment? comment;
+  Comment? comment;
   final bool isAddMode;
   final Audio commentableAudio;
 
-  const CommentAddEditDialog({
+  CommentAddEditDialog({
     super.key,
     required this.settingsDataService,
     required this.callerDialog,
@@ -118,6 +118,19 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
         commentVM.currentCommentStartPosition = durationDividedByAudioPlaySpeed;
         commentVM.currentCommentEndPosition = durationDividedByAudioPlaySpeed;
+
+        widget.comment = Comment(
+          title: '',
+          content: '',
+          commentStartPositionInTenthOfSeconds:
+              (durationDividedByAudioPlaySpeed.inMilliseconds /
+                      100)
+                  .round(),
+          commentEndPositionInTenthOfSeconds:
+              (durationDividedByAudioPlaySpeed.inMilliseconds /
+                      100)
+                  .round(),
+        );
       }
     });
   }
