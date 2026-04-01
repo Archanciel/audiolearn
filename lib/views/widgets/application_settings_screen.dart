@@ -394,6 +394,15 @@ class _ApplicationSettingsScreenState extends State<ApplicationSettingsScreen>
         );
       }
 
+      // This fixes a bug. In the situation when the playlist root path is
+      // modified and if in the previous playlist root path the selected
+      // playlist was the same as the selected playlist in the new playlist
+      // root path and if the audios of both playlists have different comments,
+      // without reselecting the selected playlist after modifying the playlist
+      // root path, the comments of the audios of the selected playlist are not
+      // updated to the comments of the new playlist root path but remain the
+      // same as the comments of the previous playlist root path if the user
+      // clicked on the same audio and displayed its comments.
       await widget.playlistDownloadView.playlistDownloadViewState
           .reselectCurrentPlaylist();
     } else {
