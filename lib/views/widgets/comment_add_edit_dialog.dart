@@ -919,6 +919,17 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     commentVMlistenFalse.currentCommentStartPosition =
         modifiedCommentStartPosition;
 
+    if (widget.comment != null) {
+      // Necessary, otherwise clicking on the play button after modifying the
+      // comment start position plays the comment using the old comment start position
+      // value stored in widget.comment!.commentStartPositionInTenthOfSeconds instead
+      // of the new comment start position value stored in commentVMlistenFalse.
+      // currentCommentStartPosition.
+      widget.comment!.commentStartPositionInTenthOfSeconds =
+          (modifiedCommentStartPosition.inMilliseconds * audioPlaySpeed / 100)
+              .round();
+    }
+
     // Convert apparent → raw for the audio player seek
     final Duration rawStartPosition = Duration(
       microseconds:
@@ -969,6 +980,17 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     }
 
     commentVMlistenFalse.currentCommentEndPosition = modifiedCommentEndPosition;
+
+    if (widget.comment != null) {
+      // Necessary, otherwise clicking on the play button after modifying the
+      // comment end position plays the comment using the old comment end position
+      // value stored in widget.comment!.commentEndPositionInTenthOfSeconds instead
+      // of the new comment end position value stored in commentVMlistenFalse.
+      // currentCommentEndPosition.
+      widget.comment!.commentEndPositionInTenthOfSeconds =
+          (modifiedCommentEndPosition.inMilliseconds * audioPlaySpeed / 100)
+              .round();
+    }
 
     // Convert apparent end → raw for the audio player seek
     final Duration rawEndPosition = Duration(
