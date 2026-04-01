@@ -27,11 +27,11 @@ enum CallerDialog {
 class CommentAddEditDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
   final CallerDialog callerDialog;
-  Comment? comment;
+  final Comment? comment;
   final bool isAddMode;
   final Audio commentableAudio;
 
-  CommentAddEditDialog({
+  const CommentAddEditDialog({
     super.key,
     required this.settingsDataService,
     required this.callerDialog,
@@ -52,6 +52,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   bool _commentEndPositionChangedInTenthOfSeconds = false;
   bool _playButtonWasClicked = true;
   bool _commentEndPositionIsModified = false;
+  late Comment _comment;
 
   @override
   void initState() {
@@ -72,42 +73,39 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
       if (widget.comment != null) {
         // here, we are editing a comment
+        _comment = widget.comment!;
 
-        _titleController.text = widget.comment!.title;
-        _commentController.text = widget.comment!.content;
+        _titleController.text = _comment.title;
+        _commentController.text = _comment.content;
 
-        double editedCommentPlaySpeed = widget.comment!.playSpeed;
+        double editedCommentPlaySpeed = _comment.playSpeed;
         double audioPlaySpeed = widget.commentableAudio.audioPlaySpeed;
 
         if (editedCommentPlaySpeed != audioPlaySpeed) {
           commentVM.currentCommentStartPosition = Duration(
-              milliseconds:
-                  (widget.comment!.commentStartPositionInTenthOfSeconds *
-                          100 *
-                          editedCommentPlaySpeed /
-                          audioPlaySpeed)
-                      .round());
+              milliseconds: (_comment.commentStartPositionInTenthOfSeconds *
+                      100 *
+                      editedCommentPlaySpeed /
+                      audioPlaySpeed)
+                  .round());
           commentVM.currentCommentEndPosition = Duration(
-              milliseconds:
-                  (widget.comment!.commentEndPositionInTenthOfSeconds *
-                          100 *
-                          editedCommentPlaySpeed /
-                          audioPlaySpeed)
-                      .round());
+              milliseconds: (_comment.commentEndPositionInTenthOfSeconds *
+                      100 *
+                      editedCommentPlaySpeed /
+                      audioPlaySpeed)
+                  .round());
         } else {
           // Always store as apparent (speed-adjusted) time: raw_ms / currentSpeed
           commentVM.currentCommentStartPosition = Duration(
-              microseconds:
-                  (widget.comment!.commentStartPositionInTenthOfSeconds *
-                          100000.0 /
-                          audioPlaySpeed)
-                      .round());
+              microseconds: (_comment.commentStartPositionInTenthOfSeconds *
+                      100000.0 /
+                      audioPlaySpeed)
+                  .round());
           commentVM.currentCommentEndPosition = Duration(
-              microseconds:
-                  (widget.comment!.commentEndPositionInTenthOfSeconds *
-                          100000.0 /
-                          audioPlaySpeed)
-                      .round());
+              microseconds: (_comment.commentEndPositionInTenthOfSeconds *
+                      100000.0 /
+                      audioPlaySpeed)
+                  .round());
         }
       } else {
         // here, we are creating a comment
@@ -119,17 +117,13 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
         commentVM.currentCommentStartPosition = durationDividedByAudioPlaySpeed;
         commentVM.currentCommentEndPosition = durationDividedByAudioPlaySpeed;
 
-        widget.comment = Comment(
+        _comment = Comment(
           title: '',
           content: '',
           commentStartPositionInTenthOfSeconds:
-              (durationDividedByAudioPlaySpeed.inMilliseconds /
-                      100)
-                  .round(),
+              (durationDividedByAudioPlaySpeed.inMilliseconds / 100).round(),
           commentEndPositionInTenthOfSeconds:
-              (durationDividedByAudioPlaySpeed.inMilliseconds /
-                      100)
-                  .round(),
+              (durationDividedByAudioPlaySpeed.inMilliseconds / 100).round(),
         );
       }
     });
@@ -383,7 +377,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                 audioToComment: widget.commentableAudio,
               );
             } else {
-              Comment commentToModify = widget.comment!;
+              Comment commentToModify = _comment;
 
               commentToModify.title = _titleController.text;
               commentToModify.content = _commentController.text;
@@ -746,8 +740,8 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                           // and check the 'End' position checkbox.
                           Duration(
                                   microseconds: (audioPlayerVMlistenFalse
-                                                  .currentAudioTotalDuration
-                                                  .inMicroseconds /
+                                              .currentAudioTotalDuration
+                                              .inMicroseconds /
                                           widget
                                               .commentableAudio.audioPlaySpeed)
                                       .round())
@@ -890,8 +884,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
   }) async {
     await audioPlayerVMlistenFalse.modifyAudioPlayerPosition(
       durationPosition: Duration(
-          milliseconds:
-              widget.comment!.commentStartPositionInTenthOfSeconds * 100),
+          milliseconds: _comment.commentStartPositionInTenthOfSeconds * 100),
       isUndoCommandToAdd: true,
     );
 
@@ -899,7 +892,7 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
       rewindAudioPositionBasedOnPauseDuration: false,
       // data used by the AudioPlayerVM Timer
       commentEndPositionInTenthOfSeconds:
-          widget.comment!.commentEndPositionInTenthOfSeconds,
+          _comment.commentEndPositionInTenthOfSeconds,
     );
   }
 
@@ -932,16 +925,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
     commentVMlistenFalse.currentCommentStartPosition =
         modifiedCommentStartPosition;
 
-    if (widget.comment != null) {
-      // Necessary, otherwise clicking on the play button after modifying the
-      // comment start position plays the comment using the old comment start position
-      // value stored in widget.comment!.commentStartPositionInTenthOfSeconds instead
-      // of the new comment start position value stored in commentVMlistenFalse.
-      // currentCommentStartPosition.
-      widget.comment!.commentStartPositionInTenthOfSeconds =
-          (modifiedCommentStartPosition.inMilliseconds * audioPlaySpeed / 100)
-              .round();
-    }
+    // Necessary, otherwise clicking on the play button after modifying the
+    // comment start position plays the comment using the old comment start position
+    // value stored in _comment.commentStartPositionInTenthOfSeconds instead
+    // of the new comment start position value stored in commentVMlistenFalse.
+    // currentCommentStartPosition.
+    _comment.commentStartPositionInTenthOfSeconds =
+        (modifiedCommentStartPosition.inMilliseconds * audioPlaySpeed / 100)
+            .round();
 
     // Convert apparent → raw for the audio player seek
     final Duration rawStartPosition = Duration(
@@ -994,16 +985,14 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
 
     commentVMlistenFalse.currentCommentEndPosition = modifiedCommentEndPosition;
 
-    if (widget.comment != null) {
-      // Necessary, otherwise clicking on the play button after modifying the
-      // comment end position plays the comment using the old comment end position
-      // value stored in widget.comment!.commentEndPositionInTenthOfSeconds instead
-      // of the new comment end position value stored in commentVMlistenFalse.
-      // currentCommentEndPosition.
-      widget.comment!.commentEndPositionInTenthOfSeconds =
-          (modifiedCommentEndPosition.inMilliseconds * audioPlaySpeed / 100)
-              .round();
-    }
+    // Necessary, otherwise clicking on the play button after modifying the
+    // comment end position plays the comment using the old comment end position
+    // value stored in _comment.commentEndPositionInTenthOfSeconds instead
+    // of the new comment end position value stored in commentVMlistenFalse.
+    // currentCommentEndPosition.
+    _comment.commentEndPositionInTenthOfSeconds =
+        (modifiedCommentEndPosition.inMilliseconds * audioPlaySpeed / 100)
+            .round();
 
     // Convert apparent end → raw for the audio player seek
     final Duration rawEndPosition = Duration(
