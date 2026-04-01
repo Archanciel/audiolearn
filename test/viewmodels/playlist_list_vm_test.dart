@@ -974,7 +974,7 @@ void main() {
       // Copy the test initial audio data to the app dir
       DirUtil.copyFilesFromDirAndSubDirsToDirectory(
         sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_json_only_test",
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_comment_json_only_unit_test",
         destinationRootPath: kApplicationPathWindowsTest,
       );
 
