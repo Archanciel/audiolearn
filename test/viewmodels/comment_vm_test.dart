@@ -786,7 +786,7 @@ void main() {
       // the returned Commentlist should have three element
       expect(commentLst.length, 3);
 
-      commentToModify.playSpeed = audio.audioPlaySpeed;
+      commentToModify.playSpeed = 1.0; // play speed is not modified by modifyComment
       _validateComment(commentLst[2], commentToModify);
       expect(commentLst[2].lastUpdateDateTime,
           DateTimeUtil.getDateTimeLimitedToSeconds(DateTime.now()));
