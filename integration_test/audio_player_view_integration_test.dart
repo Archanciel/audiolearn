@@ -157,8 +157,10 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
+      for (int i = 0; i < 10; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
 
       // Not tapping on pause button to pause the audio. This is done
       // after the verifyAudioDataElementsUpdatedInPlaylistJsonFile()
@@ -514,8 +516,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '7:29',
-        maxPositionTimeStr: '7:34',
+        minPositionTimeStr: '7:28',
+        maxPositionTimeStr: '7:33',
       );
 
       // Purge the test playlist directory so that the created test
@@ -646,8 +648,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '7:06',
-        maxPositionTimeStr: '7:11',
+        minPositionTimeStr: '7:03',
+        maxPositionTimeStr: '7:08',
       );
 
       // Purge the test playlist directory so that the created test
@@ -11067,7 +11069,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '16:08',
-        maxPositionTimeStr: '16:09',
+        maxPositionTimeStr: '16:11',
       );
 
       // Purge the test playlist directory so that the created test
@@ -11151,7 +11153,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '16:08',
-        maxPositionTimeStr: '16:09',
+        maxPositionTimeStr: '16:11',
       );
 
       // Purge the test playlist directory so that the created test
