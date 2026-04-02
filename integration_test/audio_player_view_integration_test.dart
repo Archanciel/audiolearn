@@ -6593,9 +6593,17 @@ void main() {
         commentEndPositionStr, // 0:34
       );
 
-      expect(
-        audioPlayerViewCurrentAudioPositionStr,
-        '0:30',
+      // Verify the current audio position in the audio player view.
+      // The audio position correspond to the comment start position
+      // in seconds.
+      String expectedAudioPlayerAudioPositionMin = '0:36';
+      String expectedAudioPlayerAudioPositionMax = '0:37';
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
+        maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
       // Verify that the comment end position displayed in the comment
@@ -6693,15 +6701,15 @@ void main() {
       // Verify the comment start position displayed in the comment
       // dialog
       String expectedCommentStartPositionWithTensOfSecond = '0:37.5';
-      String actualCommentStartPositionWithTensOfSecondStr = tester
+      String actualCommentStartPositionWithTenthOfSecondsStr = tester
           .widget<Text>(find.byKey(const Key('commentStartPositionText')))
           .data!;
 
       expect(
-        actualCommentStartPositionWithTensOfSecondStr,
+        actualCommentStartPositionWithTenthOfSecondsStr,
         expectedCommentStartPositionWithTensOfSecond, // 0:37.5
         reason:
-            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Tap on the play/pause button to stop playing the audio
@@ -6772,14 +6780,14 @@ void main() {
         actualCommentEndPositionSecondsStr,
         expectedCommentEndPositionSeconds, // 0:42
         reason:
-            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
-      String expectedAudioPlayerAudioPositionMin = '0:30';
-      String expectedAudioPlayerAudioPositionMax = '0:32';
+      expectedAudioPlayerAudioPositionMin = '0:38';
+      expectedAudioPlayerAudioPositionMax = '0:39';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -6855,8 +6863,8 @@ void main() {
       // The audio position correspond to the comment start position
       // in seconds.
 
-      expectedAudioPlayerAudioPositionMin = '0:30';
-      expectedAudioPlayerAudioPositionMax = '0:32';
+      expectedAudioPlayerAudioPositionMin = '0:39';
+      expectedAudioPlayerAudioPositionMax = '0:40';
 
       // If this test fails, try to rexecute it several times. If
       // the test continue to fail, restart your computer and
@@ -6889,10 +6897,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays the
@@ -6980,10 +6994,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -7041,8 +7061,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '5:00';
-      expectedAudioPlayerAudioPositionMax = '5:35';
+      expectedAudioPlayerAudioPositionMin = '5:39';
+      expectedAudioPlayerAudioPositionMax = '5:41';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -7577,15 +7597,15 @@ void main() {
       // Verify the comment start position displayed in the comment
       // dialog
       String expectedCommentStartPositionWithTensOfSecond = '0:46.1';
-      String actualCommentStartPositionWithTensOfSecondStr = tester
+      String actualCommentStartPositionWithTenthOfSecondsStr = tester
           .widget<Text>(find.byKey(const Key('commentStartPositionText')))
           .data!;
 
       expect(
-        actualCommentStartPositionWithTensOfSecondStr,
+        actualCommentStartPositionWithTenthOfSecondsStr,
         expectedCommentStartPositionWithTensOfSecond, // 0:46.1
         reason:
-            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Tap on the play/pause button to stop playing the audio
@@ -7656,7 +7676,7 @@ void main() {
         actualCommentEndPositionSecondsStr,
         expectedCommentEndPositionSeconds, // 0:51
         reason:
-            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Verify the current audio position in the audio player view.
@@ -7773,10 +7793,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays the
@@ -7861,10 +7887,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -8460,15 +8492,15 @@ void main() {
       // dialog
       String expectedCommentStartPositionWithTensOfSecond =
           '1:04.5'; // 1:04.4 + 3*0.1 - 2*0.1 seconds
-      String actualCommentStartPositionWithTensOfSecondStr = tester
+      String actualCommentStartPositionWithTenthOfSecondsStr = tester
           .widget<Text>(find.byKey(const Key('commentStartPositionText')))
           .data!;
 
       expect(
-        actualCommentStartPositionWithTensOfSecondStr,
+        actualCommentStartPositionWithTenthOfSecondsStr,
         expectedCommentStartPositionWithTensOfSecond, // 1:04.5
         reason:
-            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment start position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Tap on the play/pause button to stop playing the audio
@@ -8539,7 +8571,7 @@ void main() {
         actualCommentEndPositionSecondsStr,
         expectedCommentEndPositionSeconds, // 0:51
         reason:
-            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTensOfSecondStr',
+            'Expected comment end position not found. Real value: $actualCommentStartPositionWithTenthOfSecondsStr',
       );
 
       // Verify the current audio position in the audio player view.
@@ -8656,10 +8688,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays the
@@ -8743,10 +8781,16 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSecondsStr:
-            actualCommentStartPositionWithTensOfSecondStr,
-        commentEndPositionTenthOfSecondsStr:
-            actualCommentEndPositionWithTenthOfSecondsStr,
+        commentStartPositionTenthOfSeconds: (double.parse(
+                    actualCommentStartPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+        commentEndPositionTenthOfSeconds: (double.parse(
+                    actualCommentEndPositionWithTenthOfSecondsStr
+                        .substring(2)) *
+                12.5)
+            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -13239,8 +13283,8 @@ void _verifyCommentDataStoredInCommentJsonFile({
   required String audioFileNameNoExt,
   required String commentTitle,
   required String commentContent,
-  required String commentStartPositionTenthOfSecondsStr,
-  required String commentEndPositionTenthOfSecondsStr,
+  required int commentStartPositionTenthOfSeconds,
+  required int commentEndPositionTenthOfSeconds,
 }) {
   final String commentPath =
       "$kApplicationPathWindowsTest${path.separator}$playlistTitle${path.separator}$kCommentDirName";
@@ -13256,11 +13300,6 @@ void _verifyCommentDataStoredInCommentJsonFile({
     type: Comment,
   );
 
-  int commentStartPositionTenthOfSeconds =
-      DateTimeUtil.convertToTenthsOfSeconds(
-          timeString: commentStartPositionTenthOfSecondsStr);
-  int commentEndPositionTenthOfSeconds = DateTimeUtil.convertToTenthsOfSeconds(
-      timeString: commentEndPositionTenthOfSecondsStr);
   Comment loadedComment = loadedCommentLst.first;
 
   expect(loadedComment.title, commentTitle);
@@ -13269,13 +13308,13 @@ void _verifyCommentDataStoredInCommentJsonFile({
     loadedComment.commentStartPositionInTenthOfSeconds,
     commentStartPositionTenthOfSeconds,
     reason:
-        "json commentStartPositionInTenthOfSeconds: ${loadedComment.commentStartPositionInTenthOfSeconds}, expected $commentStartPositionTenthOfSeconds for $commentStartPositionTenthOfSecondsStr",
+        "json commentStartPositionInTenthOfSeconds: ${loadedComment.commentStartPositionInTenthOfSeconds}, expected $commentStartPositionTenthOfSeconds for $commentStartPositionTenthOfSeconds",
   );
   expect(
     loadedComment.commentEndPositionInTenthOfSeconds,
     commentEndPositionTenthOfSeconds,
     reason:
-        "json commentEndPositionInTenthOfSeconds: ${loadedComment.commentEndPositionInTenthOfSeconds}, expected $commentEndPositionTenthOfSeconds for $commentEndPositionTenthOfSecondsStr",
+        "json commentEndPositionInTenthOfSeconds: ${loadedComment.commentEndPositionInTenthOfSeconds}, expected $commentEndPositionTenthOfSeconds for $commentEndPositionTenthOfSeconds",
   );
 }
 
