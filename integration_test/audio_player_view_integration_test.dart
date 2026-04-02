@@ -8391,9 +8391,17 @@ void main() {
         commentEndPositionStr, // 1:01
       );
 
-      expect(
-        audioPlayerViewCurrentAudioPositionStr,
-        '1:32', // 1:04 / 0.7
+      // Verify the current audio position in the audio player view.
+      // The audio position correspond to the comment start position
+      // in seconds.
+      String expectedAudioPlayerAudioPositionMin = '1:03';
+      String expectedAudioPlayerAudioPositionMax = '1:04';
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedAudioPlayerAudioPositionMin,
+        maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
       // Verify that the comment end position displayed in the comment
@@ -8577,8 +8585,8 @@ void main() {
       // Verify the current audio position in the audio player view.
       // The audio position correspond to the comment start position
       // in seconds.
-      String expectedAudioPlayerAudioPositionMin = '1:33';
-      String expectedAudioPlayerAudioPositionMax = '1:34';
+      expectedAudioPlayerAudioPositionMin = '1:04';
+      expectedAudioPlayerAudioPositionMax = '1:05';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -8654,8 +8662,8 @@ void main() {
       // The audio position correspond to the comment start position
       // in seconds.
 
-      expectedAudioPlayerAudioPositionMin = '1:34';
-      expectedAudioPlayerAudioPositionMax = '1:35';
+      expectedAudioPlayerAudioPositionMin = '1:04';
+      expectedAudioPlayerAudioPositionMax = '1:05';
 
       // If this test fails, try to rexecute it several times. If
       // the test continue to fail, restart your computer and
@@ -8688,16 +8696,18 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: commentText,
-        commentStartPositionTenthOfSeconds: (double.parse(
-                    actualCommentStartPositionWithTenthOfSecondsStr
-                        .substring(2)) *
+        commentStartPositionTenthOfSeconds: ((double.parse(
+                        actualCommentStartPositionWithTenthOfSecondsStr
+                            .substring(3)) +
+                    60) *
                 7)
-            .round(), // 0:46.1 -> 46.1 * 10 * 0.7 -> 461
-        commentEndPositionTenthOfSeconds: (double.parse(
-                    actualCommentEndPositionWithTenthOfSecondsStr
-                        .substring(2)) *
+            .round(), // 1:04.5 -> (60 + 4.5) * 10 * 0.7 -> 461
+        commentEndPositionTenthOfSeconds: ((double.parse(
+                        actualCommentEndPositionWithTenthOfSecondsStr
+                            .substring(3)) +
+                    60) *
                 7)
-            .round(), // 0:51.3 -> 51.3 * 10 * 0.7 -> 513
+            .round(), // 1:09.7 -> (60 + 9.7)  * 10 * 0.7 -> 513
       );
 
       // Verify that the comment list dialog now displays the
@@ -8781,16 +8791,18 @@ void main() {
         audioFileNameNoExt: uncommentedAudioFileNameNoExt,
         commentTitle: commentTitle,
         commentContent: updatedCommentText,
-        commentStartPositionTenthOfSeconds: (double.parse(
-                    actualCommentStartPositionWithTenthOfSecondsStr
-                        .substring(2)) *
-                12.5)
-            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
-        commentEndPositionTenthOfSeconds: (double.parse(
-                    actualCommentEndPositionWithTenthOfSecondsStr
-                        .substring(2)) *
-                12.5)
-            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
+        commentStartPositionTenthOfSeconds: ((double.parse(
+                        actualCommentStartPositionWithTenthOfSecondsStr
+                            .substring(3)) +
+                    60) *
+                7)
+            .round(), // 1:04.5 -> (60 + 4.5) * 10 * 0.7 -> 461
+        commentEndPositionTenthOfSeconds: ((double.parse(
+                        actualCommentEndPositionWithTenthOfSecondsStr
+                            .substring(3)) +
+                    60) *
+                7)
+            .round(), // 1:09.7 -> (60 + 9.7)  * 10 * 0.7 -> 513
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -8854,8 +8866,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '6:34'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '6:35';
+      expectedAudioPlayerAudioPositionMin = '6:04'; // normally 5:48
+      expectedAudioPlayerAudioPositionMax = '6:05';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -11062,8 +11074,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '16:09',
-        maxPositionTimeStr: '16:14',
+        minPositionTimeStr: '16:08',
+        maxPositionTimeStr: '16:09',
       );
 
       // Purge the test playlist directory so that the created test
@@ -11146,8 +11158,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '16:09',
-        maxPositionTimeStr: '16:14',
+        minPositionTimeStr: '16:08',
+        maxPositionTimeStr: '16:09',
       );
 
       // Purge the test playlist directory so that the created test
