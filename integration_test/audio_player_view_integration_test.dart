@@ -7796,13 +7796,13 @@ void main() {
         commentStartPositionTenthOfSeconds: (double.parse(
                     actualCommentStartPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+                10)
+            .round(), // 0:46.1 -> 46.1 * 10 * 1.0 -> 461
         commentEndPositionTenthOfSeconds: (double.parse(
                     actualCommentEndPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
+                10)
+            .round(), // 0:51.3 -> 51.3 * 10 * 1.0 -> 513
       );
 
       // Verify that the comment list dialog now displays the
@@ -7890,13 +7890,13 @@ void main() {
         commentStartPositionTenthOfSeconds: (double.parse(
                     actualCommentStartPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+                10)
+            .round(), // 0:46.1 -> 46.1 * 10 * 1.0 -> 461
         commentEndPositionTenthOfSeconds: (double.parse(
                     actualCommentEndPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
+                10)
+            .round(), // 0:51.3 -> 51.3 * 10 * 1.0 -> 513
       );
 
       // Verify that the comment list dialog now displays correctly the
@@ -8691,13 +8691,13 @@ void main() {
         commentStartPositionTenthOfSeconds: (double.parse(
                     actualCommentStartPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:37.5 -> 37.5 * 10 * 1.25 = 468.75 -> 469
+                7)
+            .round(), // 0:46.1 -> 46.1 * 10 * 0.7 -> 461
         commentEndPositionTenthOfSeconds: (double.parse(
                     actualCommentEndPositionWithTenthOfSecondsStr
                         .substring(2)) *
-                12.5)
-            .round(), // 0:42.7 -> 42.7 * 10 * 1.25 = 533.75 -> 534
+                7)
+            .round(), // 0:51.3 -> 51.3 * 10 * 0.7 -> 513
       );
 
       // Verify that the comment list dialog now displays the
