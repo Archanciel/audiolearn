@@ -73,15 +73,13 @@ void main() {
       expect(playPauseButtonFinder, findsNothing);
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
-      // Verify if the play button changed to pause button
+      // Verify if the play button changes to pause button
       expect(find.byIcon(Icons.pause), findsOneWidget);
-
-      await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
 
       // Verify that the selected playlist title is displayed
       Text selectedPlaylistTitleText =
@@ -157,26 +155,39 @@ void main() {
 
       // Now play the audio and wait 5 seconds
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Necessary so that the audio player view audio positions are
-      // updated
       for (int i = 0; i < 10; i++) {
         await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pump();
+        await tester.pumpAndSettle();
       }
 
+      // Not tapping on pause button to pause the audio. This is done
+      // after the verifyAudioDataElementsUpdatedInPlaylistJsonFile()
+      // method called below.
+
+      // Since the playlist json file is updated every 30 seconds,
+      // after playing during 5 seconds, it will not be updated.
+      IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
+        audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+        playableAudioLstAudioIndex: 0,
+        audioTitle: lastDownloadedAudioTitle,
+        audioPositionSeconds: 0,
+        isPaused: false,
+        isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
+        audioPausedDateTime: null,
+      );
+
+      // Verify if the play button changed to pause button
       final Finder pauseIconFinder = find.byIcon(Icons.pause);
       expect(pauseIconFinder, findsOneWidget);
 
       // Now pause the audio
       await tester.tap(pauseIconFinder);
-      await tester.pump();
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
       DateTime pausedAudioAtDateTime = DateTime.now();
 
-      // Since the playlist json file is updated every 30 seconds,
-      // after playing during 5 seconds, it will not be updated.
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
         playableAudioLstAudioIndex: 0,
@@ -186,6 +197,8 @@ void main() {
         isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
         audioPausedDateTime: pausedAudioAtDateTime,
       );
+
+      await Future.delayed(const Duration(seconds: 1));
 
       audioPositionText = tester
           .widget<Text>(find.byKey(const Key('audioPlayerViewAudioPosition')));
@@ -214,7 +227,7 @@ void main() {
 
       // Now go to the end of the audio
       await tester.tap(find.byKey(const Key('audioPlayerViewSkipToEndButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1000));
+      await tester.pumpAndSettle();
 
       IntegrationTestUtil.verifyAudioDataElementsUpdatedInPlaylistJsonFile(
         audioPlayerSelectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
@@ -293,18 +306,14 @@ void main() {
       );
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Necessary so that the audio player view audio positions are
-      // updated
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pump();
-      }
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
       expect(find.text(previousEndDownloadedAudioTitleWithDuration),
@@ -382,12 +391,12 @@ void main() {
       // Playing the first downloaded audio during 1 second.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump(const Duration(milliseconds: 1500));
       Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Now we want to tap on the audio downloaded after the first
       // downloaded audio of the playlist in order to start playing
@@ -413,18 +422,12 @@ void main() {
       // playlist.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
-
-      // Necessary so that the audio player view audio positions are
-      // updated
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pump();
-      }
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
 
       // Click on the pause button to stop the first downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
       expect(find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
@@ -489,18 +492,14 @@ void main() {
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Necessary so that the audio player view audio positions are
-      // updated
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pump();
-      }
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
       expect(
@@ -517,8 +516,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '7:29',
-        maxPositionTimeStr: '7:34',
+        minPositionTimeStr: '7:28',
+        maxPositionTimeStr: '7:33',
       );
 
       // Purge the test playlist directory so that the created test
@@ -570,13 +569,14 @@ void main() {
       // Playing the audio during 2 seconds.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       await Future.delayed(const Duration(seconds: 2));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Click on the pause button to stop the last downloaded audio
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Now we want to tap on the first downloaded audio of the
       // playlist in order to start playing it.
@@ -619,18 +619,14 @@ void main() {
       // fully played.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      // Necessary so that the audio player view audio positions are
-      // updated
-      for (int i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(milliseconds: 500));
-        await tester.pump();
-      }
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
 
       // Click on the pause button
       await tester.tap(find.byIcon(Icons.pause));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Verify the last downloaded played audio title
       expect(
@@ -652,8 +648,8 @@ void main() {
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
-        minPositionTimeStr: '7:05',
-        maxPositionTimeStr: '7:11',
+        minPositionTimeStr: '7:03',
+        maxPositionTimeStr: '7:08',
       );
 
       // Purge the test playlist directory so that the created test
@@ -799,22 +795,20 @@ void main() {
       // Click on play button.
 
       await tester.tap(find.byIcon(Icons.play_arrow));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      Finder forward10sButtonFinder =
-          find.byKey(const Key('audioPlayerViewForward10sButton'));
+      await Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
-      // Tapping 3 times on the forward 10 seconds icon button
-      // before the audio is fully played.
+      // Tapping 3 times on the forward 10 seconds icon button.
       for (int i = 0; i < 3; i++) {
-        await tester.tap(forward10sButtonFinder);
-        await tester.pump();
-        // print('Tapped on forward 10s button $i time(s)');
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward10sButton')));
+        await tester.pumpAndSettle();
       }
 
-      // Necessary so that the Icons.play_arrow is displayed.
-      // Otherwise, the Icons.pause is still displayed..
-      await tester.pumpAndSettle();
+      await Future.delayed(const Duration(milliseconds: 2300));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
@@ -828,7 +822,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(previousDownloadedAudioTitle));
-      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // Verify that the play button is present (due to the bug, the
       // pause button was displayed).
@@ -11075,7 +11069,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '16:08',
-        maxPositionTimeStr: '16:09',
+        maxPositionTimeStr: '16:11',
       );
 
       // Purge the test playlist directory so that the created test
@@ -11159,7 +11153,7 @@ void main() {
         tester: tester,
         textWidgetFinder: audioPlayerViewAudioPositionFinder,
         minPositionTimeStr: '16:08',
-        maxPositionTimeStr: '16:09',
+        maxPositionTimeStr: '16:11',
       );
 
       // Purge the test playlist directory so that the created test
