@@ -770,11 +770,21 @@ class _CommentAddEditDialogState extends State<CommentAddEditDialog>
                     if (checkboxIndexStr == '0') {
                       // The case when the Comment Start Position checkbox is checked.
                       commentVMlistenFalse.currentCommentStartPosition =
-                          positionDuration;
+                          positionDuration; // If deleted, editing the comment position no longer works
+                      _comment.commentStartPositionInTenthOfSeconds =
+                          (positionDuration.inMilliseconds *
+                                  widget.commentableAudio.audioPlaySpeed /
+                                  100)
+                              .round();
                     } else {
                       // The case when the Comment End Position checkbox is checked.
                       commentVMlistenFalse.currentCommentEndPosition =
-                          positionDuration;
+                          positionDuration; // If deleted, editing the comment position no longer works
+                      _comment.commentEndPositionInTenthOfSeconds =
+                          (positionDuration.inMilliseconds *
+                                  widget.commentableAudio.audioPlaySpeed /
+                                  100)
+                              .round();
                     }
 
                     // Updating the display format according to the provided position.
