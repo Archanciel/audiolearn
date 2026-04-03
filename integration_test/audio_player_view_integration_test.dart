@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:audiolearn/views/playlist_download_view.dart';
-import 'package:audiolearn/views/widgets/audio_playable_list_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -10680,7 +10678,7 @@ void main() {
       Finder setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
 
       // This finder obtained as descendant of its enclosing dialog does
-      // able to change the value of the TextField
+      // enable to change the value of the TextField
       Finder setValueToTargetDialogEditTextFinder = find.descendant(
         of: setValueToTargetDialogFinder,
         matching: find.byType(TextField),
@@ -12004,7 +12002,7 @@ void main() {
               "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
         );
 
-        // Now delete the existing comments
+        // Now delete the existing comment
 
         Finder audioCommentsLstFinder = find.byKey(const Key(
           'audioCommentsListKey',
@@ -12023,11 +12021,194 @@ void main() {
           deletedCommentTitle: 'La prière du Maître',
         );
 
-        // Ensure that the audio position is updated
-        for (int i = 0; i < 4; i++) {
-          await Future.delayed(const Duration(milliseconds: 500));
-          await tester.pumpAndSettle();
-        }
+        final Finder audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        String actualAudioPlayerViewCurrentAudioPosition =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+        // Verify that the Text widget contains the expected content
+        expect(actualAudioPlayerViewCurrentAudioPosition,
+            '1:31' // initialized in test data ...
+            );
+
+        // Tap on the Add comment icon button to open the add edit comment
+        // dialog
+        await tester
+            .tap(find.byKey(const Key('addPositionedCommentIconButtonKey')));
+        await tester.pumpAndSettle();
+
+        // Enter comment title text
+        String commentTitle = 'Comment added at 1.0';
+        final Finder textFieldFinder =
+            find.byKey(const Key('commentTitleTextField'));
+
+        await tester.enterText(
+          textFieldFinder,
+          commentTitle,
+        );
+        await tester.pumpAndSettle();
+
+        // Enter comment text
+        String commentText = 'First comment';
+        final Finder commentContentTextFieldFinder =
+            find.byKey(const Key('commentContentTextField'));
+
+        await tester.enterText(
+          commentContentTextFieldFinder,
+          commentText,
+        );
+        await tester.pumpAndSettle();
+
+        // Verify the initial comment position displayed in the
+        // comment start and end positions in the comment dialog.
+        // This position was the audio player view position when
+        // the comment dialog was opened.
+        String commentStartAndEndInitialPosition =
+            actualAudioPlayerViewCurrentAudioPosition;
+
+        final Finder commentStartTextWidgetFinder =
+            find.byKey(const Key('commentStartPositionText'));
+        final Finder commentEndTextWidgetFinder =
+            find.byKey(const Key('commentEndPositionText'));
+
+        expect(
+          tester.widget<Text>(commentStartTextWidgetFinder).data!,
+          commentStartAndEndInitialPosition,
+        );
+        expect(
+          tester.widget<Text>(commentEndTextWidgetFinder).data!,
+          commentStartAndEndInitialPosition,
+        );
+
+        // Now tap on select position text button to open the set
+        // value to target dialog enabling to modify the comment
+        // start position
+
+        Finder openDefinePositionDialogTextButtonFinder =
+            find.byKey(const Key('selectCommentPositionTextButton'));
+
+        await tester.tap(openDefinePositionDialogTextButtonFinder);
+        await tester.pumpAndSettle();
+
+        Finder setValueToTargetDialogFinder =
+            find.byType(SetValueToTargetDialog);
+
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        Finder setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
+
+        // Now modify the position in the dialog
+        String positionTextToEnterWithTenthOfSeconds = '0:02.0';
+        tester
+            .widget<TextField>(setValueToTargetDialogEditTextFinder)
+            .controller!
+            .text = positionTextToEnterWithTenthOfSeconds;
+        await tester.pumpAndSettle();
+
+        // Select the first checkbox (Start position)
+        await tester.tap(find.byKey(const Key('checkbox_0_key')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to set the new position in the comment
+        // previous dialog
+
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Now tap on select position text button to open the set
+        // value to target dialog enabling to modify the comment
+        // end position
+
+        openDefinePositionDialogTextButtonFinder =
+            find.byKey(const Key('selectCommentPositionTextButton'));
+
+        await tester.tap(openDefinePositionDialogTextButtonFinder);
+        await tester.pumpAndSettle();
+
+        setValueToTargetDialogFinder = find.byType(SetValueToTargetDialog);
+
+        // This finder obtained as descendant of its enclosing dialog does
+        // enable to change the value of the TextField
+        setValueToTargetDialogEditTextFinder = find.descendant(
+          of: setValueToTargetDialogFinder,
+          matching: find.byType(TextField),
+        );
+
+        // Now modify the position in the dialog
+        positionTextToEnterWithTenthOfSeconds = '0:10.0';
+        tester
+            .widget<TextField>(setValueToTargetDialogEditTextFinder)
+            .controller!
+            .text = positionTextToEnterWithTenthOfSeconds;
+        await tester.pumpAndSettle();
+
+        // Select the second checkbox (End position)
+        await tester.tap(find.byKey(const Key('checkbox_1_key')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Ok button to set the new position in the comment
+        // previous dialog
+
+        await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
+        await tester.pumpAndSettle();
+
+        // Tap on the Add comment button to save the comment
+
+        final Finder addOrUpdateCommentTextButton =
+            find.byKey(const Key('addOrUpdateCommentTextButton'));
+
+        // Tap on the Add comment button to save the comment
+        await tester.tap(addOrUpdateCommentTextButton);
+        await tester.pumpAndSettle();
+
+        // Verify that the comment list dialog now displays the
+        // added comment
+
+        // Find the list body containing the comments
+        final Finder commentListDialogFinder =
+            find.byKey(const Key('audioCommentsListKey'));
+
+        List<String> expectedTitles = [
+          commentTitle,
+        ];
+
+        List<String> expectedContents = [
+          commentText,
+        ];
+
+        List<String> expectedStartPositions = [
+          '0:02',
+        ];
+
+        List<String> expectedEndPositions = [
+          '0:10',
+        ];
+
+        List<String> expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        List<String> expectedUpdateDates = [
+          '', // Text widget not displayed since update date == creation date
+        ];
+
+        // Verify content of each list item
+        Finder itemsFinder =
+            IntegrationTestUtil.verifyCommentsInCommentListDialog(
+                tester: tester,
+                commentListDialogFinder: commentListDialogFinder,
+                commentsNumber: 1,
+                expectedTitlesLst: expectedTitles,
+                expectedContentsLst: expectedContents,
+                expectedStartPositionsLst: expectedStartPositions,
+                expectedEndPositionsLst: expectedEndPositions,
+                expectedCreationDatesLst: expectedCreationDates,
+                expectedUpdateDatesLst: expectedUpdateDates);
+
+        await Future.delayed(const Duration(milliseconds: 200));
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
