@@ -11956,10 +11956,8 @@ void main() {
         );
       });
     });
-    group(
-        '''Create comments at different audio play speed.''', () {
-      testWidgets(
-          '''First comment at 1.0.''', (
+    group('''Create comments at different audio play speed.''', () {
+      testWidgets('''First comment at 1.0.''', (
         WidgetTester tester,
       ) async {
         const String previousEndDownloadedAudioTitle =
@@ -12004,6 +12002,25 @@ void main() {
           commentTitle: "La prière du Maître",
           commentContent:
               "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
+        );
+
+        // Now delete the existing comments
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Find all the list items GestureDetector's
+        final Finder gestureDetectorsFinder = find.descendant(
+            // 3 GestureDetector per comment item
+            of: audioCommentsLstFinder,
+            matching: find.byType(GestureDetector));
+
+        await deleteComment(
+          tester: tester,
+          gestureDetectorsFinder: gestureDetectorsFinder,
+          deletedCommentIndex: 0,
+          deletedCommentTitle: 'La prière du Maître',
         );
 
         // Ensure that the audio position is updated
@@ -12083,7 +12100,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the comment list dialog now displays the
-        // added comment
+        // existing comment
 
         // Verify the first played audio comment list add dialog
         _verifyCommentListAddDialog(
@@ -12098,7 +12115,7 @@ void main() {
           await tester.pumpAndSettle();
         }
 
-        // Verify the first played audio comment list add dialog
+        // Verify the second played audio comment list add dialog
         _verifyCommentListAddDialog(
           commentTitle: "Les paroles ...",
           commentContent:
