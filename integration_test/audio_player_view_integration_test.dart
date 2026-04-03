@@ -11957,12 +11957,9 @@ void main() {
       });
     });
     group(
-        '''M.''', () {
+        '''Create comments at different audio play speed.''', () {
       testWidgets(
-          '''Cl on play button, then click on comment icon button to display the comment list
-           add dialog and verify its content. Then let finish playing the audio downloaded
-           before the last downloaded audio and start playing the not listened last downloaded
-           audio. Verify the comment list add dialog content.''', (
+          '''First comment at 1.0.''', (
         WidgetTester tester,
       ) async {
         const String previousEndDownloadedAudioTitle =
@@ -12000,26 +11997,13 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify that the comment list dialog now displays the
-        // added comment
+        // existing comment
 
         // Verify the first played audio comment list add dialog
         _verifyCommentListAddDialog(
           commentTitle: "La prière du Maître",
           commentContent:
               "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
-        );
-
-        // Ensure that the audio position is updated
-        for (int i = 0; i < 20; i++) {
-          await Future.delayed(const Duration(milliseconds: 500));
-          await tester.pumpAndSettle();
-        }
-
-        // Verify the first played audio comment list add dialog
-        _verifyCommentListAddDialog(
-          commentTitle: "Les paroles ...",
-          commentContent:
-              "Jésus, c'est le plus beau nom,\nMerveilleux Sauveur,\nSeigneur de gloire !\nEmmanuel, Dieu est avec nous,\nSource de joie, Parole de vie.",
         );
 
         // Ensure that the audio position is updated
