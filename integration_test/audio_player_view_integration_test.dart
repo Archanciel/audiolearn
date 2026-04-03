@@ -11957,6 +11957,85 @@ void main() {
       });
     });
     group(
+        '''M.''', () {
+      testWidgets(
+          '''Cl on play button, then click on comment icon button to display the comment list
+           add dialog and verify its content. Then let finish playing the audio downloaded
+           before the last downloaded audio and start playing the not listened last downloaded
+           audio. Verify the comment list add dialog content.''', (
+        WidgetTester tester,
+      ) async {
+        const String previousEndDownloadedAudioTitle =
+            'Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!';
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName:
+              'audio_player_comment_add_edit_dialog_display_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Now we want to tap on the audio downloaded before the last
+        // downloaded audio of the playlist in order to open the
+        // AudioPlayerView displaying the audio.
+
+        // First, get the previous end downloaded audio ListTile Text
+        // widget finder and tap on it
+        final Finder previousEndDownloadedAudioListTileTextWidgetFinder =
+            find.text(previousEndDownloadedAudioTitle);
+
+        await tester.tap(previousEndDownloadedAudioListTileTextWidgetFinder);
+        await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+          tester: tester,
+        );
+
+        // Tap on the comment icon button to open the comment add list
+        // dialog
+
+        Finder commentInkWellButtonFinder = find.byKey(
+          const Key('commentsInkWellButton'),
+        );
+
+        await tester.tap(commentInkWellButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify that the comment list dialog now displays the
+        // added comment
+
+        // Verify the first played audio comment list add dialog
+        _verifyCommentListAddDialog(
+          commentTitle: "La prière du Maître",
+          commentContent:
+              "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
+        );
+
+        // Ensure that the audio position is updated
+        for (int i = 0; i < 20; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+        }
+
+        // Verify the first played audio comment list add dialog
+        _verifyCommentListAddDialog(
+          commentTitle: "Les paroles ...",
+          commentContent:
+              "Jésus, c'est le plus beau nom,\nMerveilleux Sauveur,\nSeigneur de gloire !\nEmmanuel, Dieu est avec nous,\nSource de joie, Parole de vie.",
+        );
+
+        // Ensure that the audio position is updated
+        for (int i = 0; i < 4; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+        }
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
+    group(
         '''Playing audio with the displayed comment list add dialog. When the next audio starts,
             the comment list add dialog remains displayed, showing the current playing audio
             comment(s).''', () {
@@ -12011,12 +12090,11 @@ void main() {
 
         // Tap on the comment icon button to open the comment add list
         // dialog
+
         Finder commentInkWellButtonFinder = find.byKey(
           const Key('commentsInkWellButton'),
         );
 
-        // Tap on the comment icon button to open the comment add list
-        // dialog
         await tester.tap(commentInkWellButtonFinder);
         await tester.pumpAndSettle();
 
