@@ -12155,6 +12155,19 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
+        // Now tap on the comment play buttonj to verify that the comment
+        // is played from 0:02 to 0:10 position
+        final Finder commentPlayIconButtonFinder = find.byKey(
+          const Key('playPauseIconButton'),
+        );
+        await tester.tap(commentPlayIconButtonFinder);
+
+        // Ensure that the audio position is updated
+        for (int i = 0; i < 25; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+        }       
+
         // Tap on the Add comment button to save the comment
 
         final Finder addOrUpdateCommentTextButton =
