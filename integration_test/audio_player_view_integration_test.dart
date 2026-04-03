@@ -157,6 +157,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.play_arrow));
       await tester.pumpAndSettle();
 
+      // Ensure that the audio position is updated
       for (int i = 0; i < 10; i++) {
         await Future.delayed(const Duration(milliseconds: 500));
         await tester.pumpAndSettle();
@@ -12029,8 +12030,11 @@ void main() {
               "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
         );
 
-        await Future.delayed(const Duration(seconds: 10));
-        await tester.pumpAndSettle();
+        // Ensure that the audio position is updated
+        for (int i = 0; i < 20; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+        }
 
         // Verify the first played audio comment list add dialog
         _verifyCommentListAddDialog(
@@ -12038,6 +12042,12 @@ void main() {
           commentContent:
               "Jésus, c'est le plus beau nom,\nMerveilleux Sauveur,\nSeigneur de gloire !\nEmmanuel, Dieu est avec nous,\nSource de joie, Parole de vie.",
         );
+
+        // Ensure that the audio position is updated
+        for (int i = 0; i < 4; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          await tester.pumpAndSettle();
+        }
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
