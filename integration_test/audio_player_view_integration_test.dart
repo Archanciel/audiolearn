@@ -11955,7 +11955,9 @@ void main() {
       });
     });
     group('''Create comments at different audio play speed.''', () {
-      testWidgets('''First comment at 1.0.''', (
+      testWidgets(
+          '''At 1.0, before audio current position set comment start and end positions.''',
+          (
         WidgetTester tester,
       ) async {
         const String previousEndDownloadedAudioTitle =
@@ -11992,17 +11994,7 @@ void main() {
         await tester.tap(commentInkWellButtonFinder);
         await tester.pumpAndSettle();
 
-        // Verify that the comment list dialog now displays the
-        // existing comment
-
-        // Verify the first played audio comment list add dialog
-        _verifyCommentListAddDialog(
-          commentTitle: "La prière du Maître",
-          commentContent:
-              "« Mon Dieu, je Te donne mon cœur!\r\nL'amour a jailli de mon âme, toujours Ton Esprit me réclame. \r\nLe jour Ta lumière m'enflamme, de joie je Te donne mon cœur! »",
-        );
-
-        // Now delete the existing comment
+        // Delete the existing comment
 
         Finder audioCommentsLstFinder = find.byKey(const Key(
           'audioCommentsListKey',
@@ -12021,7 +12013,7 @@ void main() {
           deletedCommentTitle: 'La prière du Maître',
         );
 
-        final Finder audioPlayerViewAudioPositionFinder =
+        Finder audioPlayerViewAudioPositionFinder =
             find.byKey(const Key('audioPlayerViewAudioPosition'));
         String actualAudioPlayerViewCurrentAudioPosition =
             tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
@@ -12073,11 +12065,11 @@ void main() {
 
         expect(
           tester.widget<Text>(commentStartTextWidgetFinder).data!,
-          commentStartAndEndInitialPosition,
+          commentStartAndEndInitialPosition, // '1:31'
         );
         expect(
           tester.widget<Text>(commentEndTextWidgetFinder).data!,
-          commentStartAndEndInitialPosition,
+          commentStartAndEndInitialPosition, // '1:31'
         );
 
         // Now tap on select position text button to open the set
@@ -12101,11 +12093,11 @@ void main() {
         );
 
         // Now modify the position in the dialog
-        String positionTextToEnterWithTenthOfSeconds = '0:02.0';
+        const String startPositionTextWithTenthOfSeconds = '0:02.0';
         tester
             .widget<TextField>(setValueToTargetDialogEditTextFinder)
             .controller!
-            .text = positionTextToEnterWithTenthOfSeconds;
+            .text = startPositionTextWithTenthOfSeconds;
         await tester.pumpAndSettle();
 
         // Select the first checkbox (Start position)
@@ -12138,11 +12130,12 @@ void main() {
         );
 
         // Now modify the position in the dialog
-        positionTextToEnterWithTenthOfSeconds = '0:10.0';
+        const String endPositionTextWithTenthOfSeconds = '0:10.0';
+
         tester
             .widget<TextField>(setValueToTargetDialogEditTextFinder)
             .controller!
-            .text = positionTextToEnterWithTenthOfSeconds;
+            .text = endPositionTextWithTenthOfSeconds;
         await tester.pumpAndSettle();
 
         // Select the second checkbox (End position)
@@ -12155,25 +12148,32 @@ void main() {
         await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
         await tester.pumpAndSettle();
 
-        // Tap on the comment play button to play the comment and verify that the audio is
-        // played from 0:02 to 0:10 position
+        // Tap on the comment play button to play the comment and verify
+        // that the audio is played from 0:02 to 0:10 position
         Finder commentPlayIconButtonFinder =
             find.byKey(const Key('playPauseIconButton'));
         await tester.tap(commentPlayIconButtonFinder);
         await tester.pumpAndSettle();
 
-        // Ensure that the audio position is updated
+        // Ensure that the audio position is updated in the audio player view
         for (int i = 0; i < 16; i++) {
           await Future.delayed(const Duration(milliseconds: 500));
           await tester.pumpAndSettle();
         }
+
+        audioPlayerViewAudioPositionFinder =
+            find.byKey(const Key('audioPlayerViewAudioPosition'));
+        String modifiedAudioPlayerViewCurrentAudioPosition =
+            tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
+
+        // Verify that the Text widget contains the expected content
+        expect(modifiedAudioPlayerViewCurrentAudioPosition, '0:10');
 
         // Tap on the Add comment button to save the comment
 
         final Finder addOrUpdateCommentTextButton =
             find.byKey(const Key('addOrUpdateCommentTextButton'));
 
-        // Tap on the Add comment button to save the comment
         await tester.tap(addOrUpdateCommentTextButton);
         await tester.pumpAndSettle();
 
@@ -12193,11 +12193,11 @@ void main() {
         ];
 
         List<String> expectedStartPositions = [
-          '0:02',
+          startPositionTextWithTenthOfSeconds.substring(0, 4) // '0:02',
         ];
 
         List<String> expectedEndPositions = [
-          '0:10',
+          endPositionTextWithTenthOfSeconds.substring(0, 4) // '0:10',
         ];
 
         List<String> expectedCreationDates = [
