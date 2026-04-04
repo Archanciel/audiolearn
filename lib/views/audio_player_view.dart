@@ -1358,7 +1358,6 @@ class _AudioPlayerViewState extends State<AudioPlayerView>
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      key: const Key('audioPlayerViewBackward1mButton'),
                       onTap: () async => await audioPlayerVMlistenFalse
                           .changeAudioPlayPosition(
                         posOrNegPositionModificationInSeconds:
