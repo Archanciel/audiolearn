@@ -11961,6 +11961,8 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
+          commentTitle: 'Comment added at 1.0',
+          commentText: 'First comment',
           startPositionTextWithTenthOfSeconds: '0:02.0',
           endPositionTextWithTenthOfSeconds: '0:10.0',
         );
@@ -11978,6 +11980,8 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
+          commentTitle: 'Comment added at 1.0',
+          commentText: 'Second comment',
           backwardOneMinute: 1,
           backwardTenSeconds: 3,
           startPositionTextWithTenthOfSeconds: '0:10.0',
@@ -11997,8 +12001,11 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
-          startPositionTextWithTenthOfSeconds: '0:02.0',
-          endPositionTextWithTenthOfSeconds: '0:10.0',
+          commentTitle: 'Comment added at 0.5',
+          commentText: 'First comment',
+          startPositionTextWithTenthOfSeconds: '0:20.7',
+          endPositionTextWithTenthOfSeconds: '0:36.5',
+          audioPlaySpeedToSet: 0.5,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12014,10 +12021,12 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
-          backwardOneMinute: 1,
-          backwardTenSeconds: 3,
-          startPositionTextWithTenthOfSeconds: '0:10.0',
-          endPositionTextWithTenthOfSeconds: '0:18.0',
+          commentTitle: 'Comment added at 0.5',
+          commentText: 'Second comment',
+          startPositionTextWithTenthOfSeconds: '0:40.6',
+          endPositionTextWithTenthOfSeconds: '0:56.7',
+          audioPlaySpeedToSet: 0.5,
+          backwardOneMinute: 3,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12033,8 +12042,11 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
-          startPositionTextWithTenthOfSeconds: '0:02.0',
-          endPositionTextWithTenthOfSeconds: '0:10.0',
+          commentTitle: 'Comment added at 2.0',
+          commentText: 'First comment',
+          startPositionTextWithTenthOfSeconds: '0:09.1',
+          endPositionTextWithTenthOfSeconds: '0:14.4',
+          audioPlaySpeedToSet: 2.0,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12050,10 +12062,12 @@ void main() {
       ) async {
         await _createCommentUnderPlaySpeed(
           tester: tester,
-          backwardOneMinute: 1,
-          backwardTenSeconds: 3,
-          startPositionTextWithTenthOfSeconds: '0:10.0',
-          endPositionTextWithTenthOfSeconds: '0:18.0',
+          commentTitle: 'Comment added at 2.0',
+          commentText: 'Second comment',
+          startPositionTextWithTenthOfSeconds: '0:29.0',
+          endPositionTextWithTenthOfSeconds: '0:34.7',
+          audioPlaySpeedToSet: 2.0,
+          backwardTenSeconds: 4,
         );
 
         // Purge the test playlist directory so that the created test
@@ -12716,10 +12730,13 @@ void main() {
 
 Future<void> _createCommentUnderPlaySpeed({
   required WidgetTester tester,
+  required String commentTitle,
+  required String commentText,
   int backwardOneMinute = 0,
   int backwardTenSeconds = 0,
   required String startPositionTextWithTenthOfSeconds,
   required String endPositionTextWithTenthOfSeconds,
+  double audioPlaySpeedToSet = 1.0,
 }) async {
   const String previousEndDownloadedAudioTitle =
       'Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!';
@@ -12789,6 +12806,44 @@ Future<void> _createCommentUnderPlaySpeed({
       '1:31' // initialized in test data ...
       );
 
+  // Set the audio play speed
+
+  if (audioPlaySpeedToSet != 1.0) {
+    // Now open the audio play speed dialog
+    await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+    await tester.pumpAndSettle();
+
+    if (audioPlaySpeedToSet == 0.5) {
+      // Now select the 0.7x play speed
+      await tester.tap(find.text('0.7x'));
+      await tester.pumpAndSettle();
+
+      // Then click twice on the minus icon button to reach the 0.50x
+      // play speed
+
+      for (int i = 0; i < 2; i++) {
+        await tester.tap(find.byKey(const Key('minusButtonKey')));
+        await tester.pumpAndSettle();
+      }
+    } else if (audioPlaySpeedToSet == 2.0) {
+      // Now select the 1.5x play speed
+      await tester.tap(find.text('1.5x'));
+      await tester.pumpAndSettle();
+
+      // Then click five times on the plus icon button to reach the 2.00x
+      // play speed
+
+      for (int i = 0; i < 5; i++) {
+        await tester.tap(find.byKey(const Key('plusButtonKey')));
+        await tester.pumpAndSettle();
+      }
+    }
+
+    // And click on the Ok button
+    await tester.tap(find.text('Ok'));
+    await tester.pumpAndSettle();
+  }
+
   // change the current audio play position
 
   if (backwardOneMinute > 0) {
@@ -12824,7 +12879,6 @@ Future<void> _createCommentUnderPlaySpeed({
   await tester.pumpAndSettle();
 
   // Enter comment title text
-  String commentTitle = 'Comment added at 1.0';
   final Finder textFieldFinder = find.byKey(const Key('commentTitleTextField'));
 
   await tester.enterText(
@@ -12834,7 +12888,6 @@ Future<void> _createCommentUnderPlaySpeed({
   await tester.pumpAndSettle();
 
   // Enter comment text
-  String commentText = 'First comment';
   final Finder commentContentTextFieldFinder =
       find.byKey(const Key('commentContentTextField'));
 
@@ -12945,8 +12998,17 @@ Future<void> _createCommentUnderPlaySpeed({
   await tester.pumpAndSettle();
 
   // Ensure that the audio position is updated in the audio player view
-  for (int i = 0; i < 16; i++) {
-    await Future.delayed(const Duration(milliseconds: 500));
+  int updateNumber = 0;
+
+  if (audioPlaySpeedToSet == 2.0) {
+    updateNumber = 22;
+  } else {
+    updateNumber = 16;
+  }
+
+  for (int i = 0; i < updateNumber; i++) {
+    await Future.delayed(
+        Duration(milliseconds: ((500 / audioPlaySpeedToSet).round())));
     await tester.pumpAndSettle();
   }
 
@@ -12954,13 +13016,27 @@ Future<void> _createCommentUnderPlaySpeed({
       find.byKey(const Key('audioPlayerViewAudioPosition'));
   String modifiedAudioPlayerViewCurrentAudioPosition =
       tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
-
+  // Compute current audio position minus 1 second
+  String modifiedAudioPlayerViewCurrentAudioPositionMinus1 =
+      DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+          timeWithTenthOfSecondsStr: Duration(
+                  milliseconds: DateTimeUtil.convertToTenthsOfSeconds(
+                              timeString:
+                                  modifiedAudioPlayerViewCurrentAudioPosition) *
+                          100 -
+                      1000)
+              .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false));
   String endPositionTextWithSeconds =
-      endPositionTextWithTenthOfSeconds.substring(0, 4); // 0:02.0 -> 0:02
+      DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+          timeWithTenthOfSecondsStr: endPositionTextWithTenthOfSeconds);
 
   // Verify that the Text widget contains the expected content
   expect(
-      modifiedAudioPlayerViewCurrentAudioPosition, endPositionTextWithSeconds);
+      modifiedAudioPlayerViewCurrentAudioPosition ==
+              endPositionTextWithSeconds ||
+          modifiedAudioPlayerViewCurrentAudioPositionMinus1 ==
+              endPositionTextWithSeconds,
+      isTrue); // in case of small delay in stopping the audio after reaching the end position);
 
   // Tap on the Add comment button to save the comment
 
@@ -12986,7 +13062,8 @@ Future<void> _createCommentUnderPlaySpeed({
   ];
 
   List<String> expectedStartPositions = [
-    startPositionTextWithTenthOfSeconds.substring(0, 4),
+    DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+        timeWithTenthOfSecondsStr: startPositionTextWithTenthOfSeconds),
   ];
 
   List<String> expectedEndPositions = [
