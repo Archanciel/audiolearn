@@ -11990,6 +11990,78 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
+      testWidgets(
+          '''At 0.5, before audio current position set comment start and end positions.''',
+          (
+        WidgetTester tester,
+      ) async {
+        await _createCommentUnderPlaySpeed(
+          tester: tester,
+          startPositionTextWithTenthOfSeconds: '0:02.0',
+          endPositionTextWithTenthOfSeconds: '0:10.0',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''At 0.5, after audio current position set comment start and end positions.''',
+          (
+        WidgetTester tester,
+      ) async {
+        await _createCommentUnderPlaySpeed(
+          tester: tester,
+          backwardOneMinute: 1,
+          backwardTenSeconds: 3,
+          startPositionTextWithTenthOfSeconds: '0:10.0',
+          endPositionTextWithTenthOfSeconds: '0:18.0',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''At 2.0, before audio current position set comment start and end positions.''',
+          (
+        WidgetTester tester,
+      ) async {
+        await _createCommentUnderPlaySpeed(
+          tester: tester,
+          startPositionTextWithTenthOfSeconds: '0:02.0',
+          endPositionTextWithTenthOfSeconds: '0:10.0',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''At 2.0, after audio current position set comment start and end positions.''',
+          (
+        WidgetTester tester,
+      ) async {
+        await _createCommentUnderPlaySpeed(
+          tester: tester,
+          backwardOneMinute: 1,
+          backwardTenSeconds: 3,
+          startPositionTextWithTenthOfSeconds: '0:10.0',
+          endPositionTextWithTenthOfSeconds: '0:18.0',
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
     group(
         '''Playing audio with the displayed comment list add dialog. When the next audio starts,
