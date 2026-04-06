@@ -727,7 +727,7 @@ class AudioDownloadVM extends ChangeNotifier {
         originalPlaylistTitle: youtubePlaylistTitleToCorrect,
         playlistQuality: playlistQuality,
         correctedPlaylistTitle: addedPlaylist.title,
-        playlistPosition: _listOfPlaylist.length, 
+        playlistPosition: _listOfPlaylist.length,
       );
     }
 
@@ -1896,9 +1896,13 @@ class AudioDownloadVM extends ChangeNotifier {
       String fileName = filePathName.split(path.separator).last;
       String targetMp4ToMp3FileName = '';
 
-      if (fileName.toLowerCase().endsWith('.mp4')) {
+      final String fileNameLowerCase = fileName.toLowerCase();
+      if (fileNameLowerCase.endsWith('.mp4') ||
+          (fileNameLowerCase.endsWith('.m4a'))) {
         File tmpMp4File = File(filePathName);
-        targetMp4ToMp3FileName = fileName.replaceFirst('mp4', 'mp3');
+        targetMp4ToMp3FileName = fileName.endsWith('.mp4')
+            ? fileName.replaceFirst('mp4', 'mp3')
+            : fileName.replaceFirst('m4a', 'mp3');
         File targetMp4ToMp3File = File(
             '${targetPlaylist.downloadPath}${path.separator}$targetMp4ToMp3FileName');
 
@@ -2622,6 +2626,10 @@ class AudioDownloadVM extends ChangeNotifier {
     required Audio audio,
   }) {
     DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+    DirUtil.deleteFileIfExist(
+      // deleting the audio mp3 aswell.
+      pathFileName: audio.filePathName.replaceAll(RegExp(r'mp4|m4a'), 'mp3'),
+    );
 
     // Since the audio mp3 file has been deleted, the audio is no
     // longer in the playlist playable audio list
@@ -2648,6 +2656,10 @@ class AudioDownloadVM extends ChangeNotifier {
   }) {
     for (Audio audio in audioToDeleteLst) {
       DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+      DirUtil.deleteFileIfExist(
+        // deleting the audio mp3 aswell.
+        pathFileName: audio.filePathName.replaceAll(RegExp(r'mp4|m4a'), 'mp3'),
+      );
     }
 
     // since the audio mp3 files has been deleted, the audio are no
@@ -2675,6 +2687,10 @@ class AudioDownloadVM extends ChangeNotifier {
   }) {
     for (Audio audio in audioToDeleteLst) {
       DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+      DirUtil.deleteFileIfExist(
+        // deleting the audio mp3 aswell.
+        pathFileName: audio.filePathName.replaceAll(RegExp(r'mp4|m4a'), 'mp3'),
+      );
     }
 
     // Since the audio mp3 files has been deleted, the audio are no
@@ -2703,6 +2719,10 @@ class AudioDownloadVM extends ChangeNotifier {
     required Audio audio,
   }) {
     DirUtil.deleteFileIfExist(pathFileName: audio.filePathName);
+    DirUtil.deleteFileIfExist(
+      // deleting the audio mp3 aswell.
+      pathFileName: audio.filePathName.replaceAll(RegExp(r'mp4|m4a'), 'mp3'),
+    );
 
     Playlist? enclosingPlaylist = audio.enclosingPlaylist;
 
