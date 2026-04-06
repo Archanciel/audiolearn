@@ -1521,6 +1521,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
       allowedExtensions: [
         'mp3',
         'mp4',
+        'm4a',
       ],
       allowMultiple: true,
       initialDirectory: DirUtil.getApplicationPath(),
