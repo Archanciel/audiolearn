@@ -2028,7 +2028,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
       Audio? existingAudio;
 
-      if (!fileName.endsWith('.mp4')) {
+      if (!fileName.endsWith('.mp4') ) {
         // the case if the audio file was not converted from mp4 to mp3
         File(filePathName).copySync(targetFilePathName);
 
