@@ -2032,20 +2032,14 @@ class AudioDownloadVM extends ChangeNotifier {
 
       if (!fileName.endsWith('.mp4') && !fileName.endsWith('.m4a')) {
         // the case if the audio file was not converted from mp4 or m4a to mp3
-        File(filePathName).copySync(targetFilePathName);
-
         existingAudio = targetPlaylist.getAudioByFileNameNoExt(
           audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
         );
       } else if (fileName.endsWith('.mp4')) {
-        File(filePathName).copySync(targetFilePathName);
-
         existingAudio = targetPlaylist.getAudioByFileNameNoExt(
           audioFileNameNoExt: fileName.replaceFirst('.mp4', ''),
         );
       } else if (fileName.endsWith('.m4a')) {
-        File(filePathName).copySync(targetFilePathName);
-
         existingAudio = targetPlaylist.getAudioByFileNameNoExt(
           audioFileNameNoExt: fileName.replaceFirst('.m4a', ''),
         );
