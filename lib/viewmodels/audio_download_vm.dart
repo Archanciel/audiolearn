@@ -1916,6 +1916,7 @@ class AudioDownloadVM extends ChangeNotifier {
 
         _mp4ConvertingToMp3FileName = fileName;
         _isImportedMp4ConvertingToMp3 = true;
+
         notifyListeners();
 
         // 1) get attributes (bitrate, sampleRate, channels)
@@ -1953,6 +1954,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         _isImportedMp4ConvertingToMp3 = false;
+
         notifyListeners();
 
         if (!ok) {
@@ -2028,8 +2030,8 @@ class AudioDownloadVM extends ChangeNotifier {
 
       Audio? existingAudio;
 
-      if (!fileName.endsWith('.mp4') || !fileName.endsWith('.m4a')) {
-        // the case if the audio file was not converted from mp4 to mp3
+      if (!fileName.endsWith('.mp4') && !fileName.endsWith('.m4a')) {
+        // the case if the audio file was not converted from mp4 or m4a to mp3
         File(filePathName).copySync(targetFilePathName);
 
         existingAudio = targetPlaylist.getAudioByFileNameNoExt(
@@ -2053,15 +2055,24 @@ class AudioDownloadVM extends ChangeNotifier {
       // playlist downloaded audio list and playable audio list.
 
       if (existingAudio == null) {
-        String mp3FileName = fileName.replaceFirst('mp4', 'mp3');
+        String mp3FileName;
+
+        if (fileName.endsWith('.mp4')) {
+          mp3FileName = fileName.replaceFirst('.mp4', '.mp3');
+        } else if (fileName.endsWith('.m4a')) {
+          mp3FileName = fileName.replaceFirst('.m4a', '.mp3');
+        } else {
+          mp3FileName = fileName; // or handle differently
+        }
+
         Audio importedAudio = await _createImportedAudio(
           targetPlaylist: targetPlaylist,
           audioPlayer: audioPlayer,
-          targetFilePathName: (targetFilePathName.contains('mp4'))
+          targetFilePathName: (targetFilePathName.contains('mp4') ||
+                  targetFilePathName.contains('m4a'))
               ? '${targetPlaylist.downloadPath}${path.separator}$mp3FileName'
               : targetFilePathName,
-          importedFileName:
-              (targetFilePathName.contains('mp4')) ? mp3FileName : fileName,
+          importedFileName: mp3FileName,
         );
 
         importedAudio.isAudioMusicQuality =
