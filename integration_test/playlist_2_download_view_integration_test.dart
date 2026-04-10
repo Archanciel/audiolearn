@@ -37047,6 +37047,15 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
 
+      // Copy this test data before initializing the application
+      // so that the import_audio_file_test settings.json file will
+      // be replaced by the correct one.
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
       const String targetPlaylistTitle = 'urgent_actus_17-12-2023';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -37054,12 +37063,7 @@ void main() {
         savedTestDataDirName: 'import_audios_integr_test',
         selectedPlaylistTitle: targetPlaylistTitle,
         tapOnPlaylistToggleButton: false,
-      );
-
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}import_audio_file_test",
-        destinationRootPath: kApplicationPathWindowsTest,
+        doPurgeAppDir: false,
       );
 
       // Replace the platform instance with your mock
