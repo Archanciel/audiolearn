@@ -415,12 +415,15 @@ class IntegrationTestUtil {
     String? replacePlaylistJsonFileName,
     bool tapOnPlaylistToggleButton = true,
     bool setAppSizeToAndroidSize = false,
+    bool doPurgeAppDir = true,
   }) async {
-    // Purge the test playlist directory if it exists so that the
-    // playlist list is empty
-    DirUtil.deleteFilesInDirAndSubDirsWithRetry(
-      rootPath: kApplicationPathWindowsTest,
-    );
+    if (doPurgeAppDir) {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirsWithRetry(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    }
 
     if (setAppSizeToAndroidSize) {
       // Create a 'isAppSizeNotTest.txt' file to indicate that the app is
