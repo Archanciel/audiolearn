@@ -37081,6 +37081,8 @@ void main() {
       const String fileName_4 = "Really short video.mp3";
       const String fileName_5 =
           "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet.mp3";
+      const String fileName_6 = "AUD-20260314-WA0001.m4a";
+      const String filename6Mp3 = "AUD-20260314-WA0001.mp3";
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
@@ -37139,6 +37141,11 @@ void main() {
             path:
                 "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_5",
             size: 3600082),
+        PlatformFile(
+            name: fileName_6,
+            path:
+                "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_6",
+            size: 35121538),
       ]);
 
       // Second import operation
@@ -37152,7 +37159,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "Audio(s)\n\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
+            "Audio(s)\n\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\",\n\"$filename6Mp3\"\n\nimported to Youtube playlist \"$targetPlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -37162,8 +37169,9 @@ void main() {
             "Audio(s)\n\n\"$fileName_1\",\n\"$filename2Mp3\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
       );
 
-      // Now, delete an audio and re-import the same files to verify that
-      // the deleted audio import work
+      // Now, delete an audio and re-import the same files to verify
+      // that the deleted audio import work
+
       // Find the audio list widget using its key
       Finder listFinder = find.byKey(const Key('audio_list'));
 
@@ -37192,8 +37200,8 @@ void main() {
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
 
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
+      // Perform the scroll up action
+      await tester.drag(listFinder, const Offset(0, 400));
       await tester.pumpAndSettle();
 
       // Tap the leading menu icon button to open the popup menu
@@ -37223,8 +37231,10 @@ void main() {
         targetPlaylistTitle: targetPlaylistTitle,
       );
 
-      // Now, delete an audio from Youtube playlist aswell and re-import the same files to verify that
-      // mp4 file. Verify that the deleted audio import work.
+      // Now, delete an audio from Youtube playlist aswell and
+      // re-import the same files to verify that the deleted audio
+      // import work.
+
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
 
