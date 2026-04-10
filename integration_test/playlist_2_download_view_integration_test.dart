@@ -37084,12 +37084,12 @@ void main() {
 
       mockFilePicker.setSelectedFiles([
         PlatformFile(
-            name: fileName_1,
+            name: fileName_1, // "audio learn test short video one.mp3"
             path:
                 "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_1",
             size: 143679),
         PlatformFile(
-            name: fileName_2,
+            name: fileName_2, // "La vraie prière.mp4"
             path:
                 "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_2",
             size: 17689541),
