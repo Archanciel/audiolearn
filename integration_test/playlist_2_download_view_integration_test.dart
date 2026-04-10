@@ -37179,41 +37179,15 @@ void main() {
       await tester.drag(listFinder, const Offset(0, -100));
       await tester.pumpAndSettle();
 
-      // First, find the Audio sublist ListTile Text widget
-      Finder targetAudioListTileTextWidgetFinder =
-          find.text(filename2Mp3.replaceFirst('.mp3', ''));
-
-      // Then obtain the Audio ListTile widget enclosing the Text widget by
-      // finding its ancestor
-      Finder targetAudioListTileWidgetFinder = find.ancestor(
-        of: targetAudioListTileTextWidgetFinder,
-        matching: find.byType(ListTile),
+      await _deleteAudioFromPlaylist(
+        tester: tester,
+        audioTitle:
+            filename2Mp3.replaceFirst('.mp3', ''), // "La vraie prière.mp3"
+        // without the .mp3 extension since the Text widget in the ListTile
+        // does not contain the extension
+        scrollUpOrDownAudioList: 400, // Scroll up to make the target audio
+        //                               visible in the list
       );
-
-      // Now find the leading menu icon button of the Audio ListTile and tap
-      // on it
-      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
-        of: targetAudioListTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Find the audio list widget using its key
-      listFinder = find.byKey(const Key('audio_list'));
-
-      // Perform the scroll up action
-      await tester.drag(listFinder, const Offset(0, 400));
-      await tester.pumpAndSettle();
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(targetAudioListTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the popup menu delete audio item and tap on it
-      Finder popupDisplayAudioInfoMenuItemFinder =
-          find.byKey(const Key("popup_menu_delete_audio"));
-
-      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
-      await tester.pumpAndSettle();
 
       // Now, the La vraie prière mp3 audio was deleted from the playlist
       // directopy. Verify that it can be re-imported.
@@ -37243,19 +37217,19 @@ void main() {
       await tester.pumpAndSettle();
 
       // First, find the Audio sublist ListTile Text widget
-      targetAudioListTileTextWidgetFinder =
+      Finder targetAudioListTileTextWidgetFinder =
           find.text(filename2Mp3.replaceFirst('.mp3', ''));
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
-      targetAudioListTileWidgetFinder = find.ancestor(
+      Finder targetAudioListTileWidgetFinder = find.ancestor(
         of: targetAudioListTileTextWidgetFinder,
         matching: find.byType(ListTile),
       );
 
       // Now find the leading menu icon button of the Audio ListTile and tap
       // on it
-      targetAudioListTileLeadingMenuIconButton = find.descendant(
+      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
         of: targetAudioListTileWidgetFinder,
         matching: find.byIcon(Icons.menu),
       );
@@ -37265,7 +37239,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Now find the popup menu delete audio fromplaylist aswell item and tap on it
-      popupDisplayAudioInfoMenuItemFinder =
+      Finder popupDisplayAudioInfoMenuItemFinder =
           find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
 
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
@@ -47744,4 +47718,45 @@ void _verifyPictureAudioMapAfterPlaylistRestoration({
   );
   expect(pictureAudioMapLst[2],
       "Prières du Maître|Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
+}
+
+Future<void> _deleteAudioFromPlaylist({
+  required WidgetTester tester,
+  required String audioTitle,
+  required double scrollUpOrDownAudioList,
+}) async {
+  // First, find the Audio sublist ListTile Text widget
+  Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
+
+  // Then obtain the Audio ListTile widget enclosing the Text widget by
+  // finding its ancestor
+  Finder targetAudioListTileWidgetFinder = find.ancestor(
+    of: targetAudioListTileTextWidgetFinder,
+    matching: find.byType(ListTile),
+  );
+
+  // Now find the leading menu icon button of the Audio ListTile and tap
+  // on it
+  Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+    of: targetAudioListTileWidgetFinder,
+    matching: find.byIcon(Icons.menu),
+  );
+
+  // Find the audio list widget using its key
+  Finder listFinder = find.byKey(const Key('audio_list'));
+
+  // Perform the scroll up action
+  await tester.drag(listFinder, Offset(0, scrollUpOrDownAudioList));
+  await tester.pumpAndSettle();
+
+  // Tap the leading menu icon button to open the popup menu
+  await tester.tap(targetAudioListTileLeadingMenuIconButton);
+  await tester.pumpAndSettle();
+
+  // Now find the popup menu delete audio item and tap on it
+  Finder popupDisplayAudioInfoMenuItemFinder =
+      find.byKey(const Key("popup_menu_delete_audio"));
+
+  await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+  await tester.pumpAndSettle();
 }
