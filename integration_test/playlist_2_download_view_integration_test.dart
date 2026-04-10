@@ -37203,8 +37203,8 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Now, the La vraie prière mp3 audio is deleted from the playlist
-      // directopy. It can be re-imported.
+      // Now, the La vraie prière mp3 audio was deleted from the playlist
+      // directopy. Verify that it can be re-imported.
 
       await _thirdReImport(
         tester: tester,
