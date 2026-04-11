@@ -37176,7 +37176,7 @@ void main() {
       Finder listFinder = find.byKey(const Key('audio_list'));
 
       // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, -100));
+      await tester.drag(listFinder, const Offset(0, 400));
       await tester.pumpAndSettle();
 
       await _deleteAudioFromPlaylist(
@@ -37185,11 +37185,9 @@ void main() {
             filename2Mp3.replaceFirst('.mp3', ''), // "La vraie prière.mp3"
         // without the .mp3 extension since the Text widget in the ListTile
         // does not contain the extension
-        scrollUpOrDownAudioList: 400, // Scroll up to make the target audio
-        //                               visible in the list
       );
 
-      // Now, the La vraie prière mp3 audio was deleted from the playlist
+      // Now, since La vraie prière mp3 audio was deleted from the playlist
       // directopy. Verify that it can be re-imported.
 
       await _thirdReImport(
@@ -37202,6 +37200,7 @@ void main() {
         fileName_3: fileName_3,
         fileName_4: fileName_4,
         fileName_5: fileName_5,
+        fileName_6: filename6Mp3,
         targetPlaylistTitle: targetPlaylistTitle,
       );
 
@@ -37258,6 +37257,7 @@ void main() {
         fileName_3: fileName_3,
         fileName_4: fileName_4,
         fileName_5: fileName_5,
+        fileName_6: filename6Mp3,
         targetPlaylistTitle: targetPlaylistTitle,
       );
 
@@ -45615,6 +45615,7 @@ Future<void> _thirdReImport({
   required String filename3Mp3,
   required String fileName_4,
   required String fileName_5,
+  required String fileName_6,
   required String targetPlaylistTitle,
 }) async {
   mockFilePicker = MockFilePicker();
@@ -45646,6 +45647,11 @@ Future<void> _thirdReImport({
         path:
             "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_5",
         size: 3600082),
+    PlatformFile(
+        name: fileName_6,
+        path:
+            "$kApplicationPathWindowsTest${path.separator}Files to import${path.separator}$fileName_6",
+        size: 35121538),
   ]);
 
   // Third import operation
@@ -45666,7 +45672,7 @@ Future<void> _thirdReImport({
   await IntegrationTestUtil.verifyAndCloseWarningDialog(
     tester: tester,
     warningDialogMessage:
-        "Audio(s)\n\n\"$fileName_1\",\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
+        "Audio(s)\n\n\"$fileName_1\",\n\"$filename3Mp3\",\n\"$fileName_4\",\n\"$fileName_5\",\n\"$fileName_6\"\n\nNOT imported to Youtube playlist \"$targetPlaylistTitle\" since the playlist directory already contains the audio(s).",
   );
 }
 
@@ -47723,7 +47729,6 @@ void _verifyPictureAudioMapAfterPlaylistRestoration({
 Future<void> _deleteAudioFromPlaylist({
   required WidgetTester tester,
   required String audioTitle,
-  required double scrollUpOrDownAudioList,
 }) async {
   // First, find the Audio sublist ListTile Text widget
   Finder targetAudioListTileTextWidgetFinder = find.text(audioTitle);
@@ -47741,13 +47746,6 @@ Future<void> _deleteAudioFromPlaylist({
     of: targetAudioListTileWidgetFinder,
     matching: find.byIcon(Icons.menu),
   );
-
-  // Find the audio list widget using its key
-  Finder listFinder = find.byKey(const Key('audio_list'));
-
-  // Perform the scroll up action
-  await tester.drag(listFinder, Offset(0, scrollUpOrDownAudioList));
-  await tester.pumpAndSettle();
 
   // Tap the leading menu icon button to open the popup menu
   await tester.tap(targetAudioListTileLeadingMenuIconButton);
