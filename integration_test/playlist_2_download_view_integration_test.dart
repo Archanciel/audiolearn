@@ -37212,12 +37212,12 @@ void main() {
       listFinder = find.byKey(const Key('audio_list'));
 
       // The scroll action is not necessary now.
-      await tester.drag(listFinder, const Offset(0, 300));
+      await tester.drag(listFinder, const Offset(0, 800));
       await tester.pumpAndSettle();
 
       // First, find the Audio sublist ListTile Text widget
       Finder targetAudioListTileTextWidgetFinder =
-          find.text(filename2Mp3.replaceFirst('.mp3', ''));
+          find.text(filename6Mp3.replaceFirst('.mp3', ''));
 
       // Then obtain the Audio ListTile widget enclosing the Text widget by
       // finding its ancestor
@@ -37244,15 +37244,15 @@ void main() {
       await tester.tap(popupDisplayAudioInfoMenuItemFinder);
       await tester.pumpAndSettle();
 
-      // Now, the La vraie prière mp3 audio is deleted from the playlist
+      // Now, the AUD-20260314-WA0001 mp3 audio is deleted from the playlist
       // directopy. It can be re-imported.
 
       await _thirdReImport(
         tester: tester,
         mockFilePicker: mockFilePicker,
         fileName_1: fileName_1,
-        fileName_2: fileName_2,
-        filename2Mp3: filename2Mp3,
+        fileName_2: fileName_6,
+        filename2Mp3: filename6Mp3,
         filename3Mp3: filename3Mp3,
         fileName_3: fileName_3,
         fileName_4: fileName_4,
