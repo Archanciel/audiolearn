@@ -37177,7 +37177,7 @@ void main() {
 
       // Perform the scroll action
       await tester.drag(listFinder, const Offset(0, 400));
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       await _deleteAudioFromPlaylist(
         tester: tester,
@@ -37204,9 +37204,9 @@ void main() {
         targetPlaylistTitle: targetPlaylistTitle,
       );
 
-      // Now, delete an imported m4a audio from Youtube playlist
-      // aswell and re-import the same files to verify that the
-      // deleted audio import work.
+      // Now, delete an audio from Youtube playlist aswell and
+      // re-import the same files to verify that the deleted audio
+      // import work.
 
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
@@ -37215,13 +37215,34 @@ void main() {
       await tester.drag(listFinder, const Offset(0, 800));
       await tester.pumpAndSettle();
 
-      await _deleteAudioFromPlaylist(
-        tester: tester,
-        audioTitle:
-            filename6Mp3.replaceFirst('.mp3', ''), // "AUD-20260314-WA0001.mp3"
-        // without the .mp3 extension since the Text widget in the ListTile
-        // does not contain the extension
+      // First, find the Audio sublist ListTile Text widget
+      Finder targetAudioListTileTextWidgetFinder =
+          find.text(filename6Mp3.replaceFirst('.mp3', ''));
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
       );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu delete audio fromplaylist aswell item and tap on it
+      Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
 
       // Now, the AUD-20260314-WA0001 mp3 audio is deleted from the playlist
       // directopy. It can be re-imported.
@@ -37230,8 +37251,8 @@ void main() {
         tester: tester,
         mockFilePicker: mockFilePicker,
         fileName_1: fileName_1,
-        fileName_2: fileName_2,
-        filename2Mp3: filename2Mp3,
+        fileName_2: fileName_6,
+        filename2Mp3: filename6Mp3,
         filename3Mp3: filename3Mp3,
         fileName_3: fileName_3,
         fileName_4: fileName_4,
