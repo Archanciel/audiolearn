@@ -37034,12 +37034,12 @@ void main() {
     });
     testWidgets(
         '''Import 1 mp4 video file and 1 audio mp3, both not present in the target playlist.
-           Verify the import confirmation. Then import again all the mp4/mp3 files present
+           Verify the import confirmation. Then import again all the mp4/m4a/mp3 files present
            in the source directory and verify the warning and the confirmation displayed.
            
            Then, delete an audio in the target playlist as well as a mp3 converted from
-           mp4 and re-import the same files to verify that the import work. Finally, delete those
-           mp3' from playlist as well and reverify that the import work.''',
+           mp4 or m4a and re-import the same files to verify that the import work. Finally,
+           delete those mp3' from playlist as well and reverify that the import work.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
