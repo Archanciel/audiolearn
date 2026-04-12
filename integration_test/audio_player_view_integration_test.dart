@@ -11248,6 +11248,114 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''Fully play comment whose end = audio end and verify that the next not
+           fully played audio starts playing at the next audio play speed.
+           
+           to remove: Click on play button to finish playing the audio downloaded before
+           the last downloaded audio and start playing the partially listened
+           last downloaded audio.''', (
+      WidgetTester tester,
+    ) async {
+      const String audioPlayerSelectedPlaylistTitle = 'S8 audio';
+      const String secondDownloadedAudioTitle =
+          'Ce qui va vraiment sauver notre espèce par Jancovici et Barrau';
+      const String firstDownloadedAudioTitle =
+          '3 fois où Aurélien Barrau tire à balles réelles sur les riches';
+      const String lastDownloadedAudioTitleWithDuration =
+          "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)\n16:26";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName:
+            'audio_player_view_first_to_last_audio_corrected_test',
+        selectedPlaylistTitle: audioPlayerSelectedPlaylistTitle,
+      );
+
+      // First, we modify the audio position of the first downloaded audio
+      // of the playlist. First, get the first downloaded audio ListTile Text
+      // widget finder and tap on it
+      final Finder
+          playlistDownloadViewFirstDownloadedAudioListTileTextWidgetFinder =
+          find.text(firstDownloadedAudioTitle);
+
+      await tester.tap(
+          playlistDownloadViewFirstDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Tapping 5 times on the forward 1 minute icon button. Now, the first
+      // downloaded audio of the playlist is partially listened.
+      for (int i = 0; i < 5; i++) {
+        await tester
+            .tap(find.byKey(const Key('audioPlayerViewForward1mButton')));
+        await tester.pumpAndSettle();
+      }
+
+      // Playing the first downloaded audio during 1 second.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      Future.delayed(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1500));
+
+      // Click on the pause button to stop the first downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Now we want to tap on the audio downloaded after the first
+      // downloaded audio of the playlist in order to start playing
+      // it.
+
+      // First, go back to the playlist download view.
+      final Finder appScreenNavigationButton =
+          find.byKey(const ValueKey('playlistDownloadViewIconButton'));
+      await tester.tap(appScreenNavigationButton);
+      await tester.pumpAndSettle();
+
+      // Then, get the second downloaded audio ListTile Text widget
+      // finder and tap on it
+      final Finder secondDownloadedAudioListTileTextWidgetFinder =
+          find.text(secondDownloadedAudioTitle);
+
+      await tester.tap(secondDownloadedAudioListTileTextWidgetFinder);
+      await tester.pumpAndSettle(const Duration(milliseconds: 500));
+
+      // Now we tap on the play button in order to finish
+      // playing the audio downloaded after the first downloaded
+      // audio and start playing the first downloaded audio of the
+      // playlist.
+
+      await tester.tap(find.byIcon(Icons.play_arrow));
+      await Future.delayed(const Duration(seconds: 5));
+      await tester.pumpAndSettle();
+
+      // Click on the pause button to stop the first downloaded audio
+      await tester.tap(find.byIcon(Icons.pause));
+      await tester.pumpAndSettle();
+
+      // Verify the last downloaded played audio title
+      expect(find.text(lastDownloadedAudioTitleWithDuration), findsOneWidget);
+
+      // Ensure that the bug corrected on AudioPlayerVM on 06-06-2024
+      // no longer happens. This bug impacted the application during
+      // 3 weeks before it was discovered !!!!
+      final Finder audioPlayerViewAudioPositionFinder =
+          find.byKey(const Key('audioPlayerViewAudioPosition'));
+
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: '16:07',
+        maxPositionTimeStr: '16:12',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
     group('Tests executable only with audioplayers 6.4.0 or higher', () {
       testWidgets(
           '''Verify that after typing once on the decrease end position comment button in very short
