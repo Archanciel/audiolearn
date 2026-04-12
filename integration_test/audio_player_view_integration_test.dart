@@ -8727,6 +8727,35 @@ void main() {
         maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
+      // Now tap on the comment add edit dialog play/pause button
+      // to totally play the comment
+
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+
+      // Ensure that the audio position is updated
+      for (int i = 0; i < 12; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
+
+      // Verify the current audio position in the audio player view.
+      // The audio position correspond to the comment start position
+      // in seconds.
+
+      expectedCommentEndPositionMin = '1:10';
+      expectedCommentEndPositionMax = '1:10';
+
+      // If this test fails, try to rexecute it several times. If
+      // the test continue to fail, restart your computer and
+      // execute flutter clean, then flutter pub get and finally
+      // flutter gen-l10n. This is crazy, but it solves the problem !
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
+      );
+
       // Tap on the add/edit comment button to save the comment
 
       final Finder addOrUpdateCommentTextButton =
@@ -8917,8 +8946,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '6:04'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '6:05';
+      expectedAudioPlayerAudioPositionMin = '6:10'; // normally 5:48
+      expectedAudioPlayerAudioPositionMax = '6:11';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
