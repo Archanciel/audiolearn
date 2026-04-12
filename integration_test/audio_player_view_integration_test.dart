@@ -6255,7 +6255,7 @@ void main() {
           rootPath: kApplicationPathWindowsTest,
         );
       });
-      testWidgets('''Playing from PlaylistCommentDialog a comment on audio
+      testWidgets('''Playing from PlaylistCommentListDialog a comment on audio
                      paused more than 1 hour ago.''',
           (WidgetTester tester) async {
         const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
@@ -6291,7 +6291,7 @@ void main() {
         await tester.pumpAndSettle(); // Wait for popup menu to appear
 
         // Now find the playlist comment popup menu item and tap on it
-        // to open the PlaylistCommentDialog
+        // to open the PlaylistCommentListDialog
         final Finder popupDeletePlaylistMenuItem =
             find.byKey(const Key("popup_menu_display_playlist_audio_comments"));
 
@@ -6367,7 +6367,8 @@ void main() {
     testWidgets(
         '''Play speed 1.25. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''',
+           comment position and tap on the comment add edit dialog play/pause button to totally
+           play the comment. Finally delete it.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -7262,7 +7263,8 @@ void main() {
     testWidgets(
         '''Play speed 1.0. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''',
+           comment position and tap on the comment add edit dialog play/pause button to totally
+           play the comment. Finally delete it.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
@@ -7477,8 +7479,6 @@ void main() {
       // Obtain the current audio position in the audio player view
       audioPlayerViewAudioPositionFinder =
           find.byKey(const Key('audioPlayerViewAudioPosition'));
-      String audioPlayerViewCurrentAudioPositionStr =
-          tester.widget<Text>(audioPlayerViewAudioPositionFinder).data!;
 
       expect(
         tester.widget<Text>(commentStartTextWidgetFinder).data!,
@@ -7765,6 +7765,35 @@ void main() {
         maxPositionTimeStr: expectedAudioPlayerAudioPositionMax,
       );
 
+      // Now tap on the comment add edit dialog play/pause button
+      // to totally play the comment
+
+      await tester.tap(find.byKey(const Key('playPauseIconButton')));
+
+      // Ensure that the audio position is updated
+      for (int i = 0; i < 12; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+      }
+
+      // Verify the current audio position in the audio player view.
+      // The audio position correspond to the comment start position
+      // in seconds.
+
+      expectedCommentEndPositionMin = '0:51';
+      expectedCommentEndPositionMax = '0:51';
+
+      // If this test fails, try to rexecute it several times. If
+      // the test continue to fail, restart your computer and
+      // execute flutter clean, then flutter pub get and finally
+      // flutter gen-l10n. This is crazy, but it solves the problem !
+      IntegrationTestUtil.verifyPositionBetweenMinMax(
+        tester: tester,
+        textWidgetFinder: audioPlayerViewAudioPositionFinder,
+        minPositionTimeStr: expectedCommentEndPositionMin,
+        maxPositionTimeStr: expectedCommentEndPositionMax,
+      );
+
       // Tap on the add/edit comment button to save the comment
 
       final Finder addOrUpdateCommentTextButton =
@@ -7946,8 +7975,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '5:47'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '5:49';
+      expectedAudioPlayerAudioPositionMin = '5:51';
+      expectedAudioPlayerAudioPositionMax = '5:52';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -8154,7 +8183,8 @@ void main() {
     testWidgets(
         '''Play speed 0.7. With comment icon button, manage comments in initially empty playlist.
            Copy audio to the empty playlist, add a comment, then edit it, define start, then end,
-           comment position and finally delete it.''',
+           comment position and tap on the comment add edit dialog play/pause button to totally
+           play the comment. Finally delete it.''',
         (WidgetTester tester) async {
       const String youtubePlaylistTitle = 'S8 audio'; // Youtube playlist
       const String emptyPlaylistTitle = 'Empty'; // Local empty playlist
