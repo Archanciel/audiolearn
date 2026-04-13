@@ -32,10 +32,18 @@ class PlaylistCommentListDialog extends StatefulWidget {
   final SettingsDataService settingsDataService;
   final Playlist currentPlaylist;
 
+  // this instance variable stores the function defined in
+  // _MyHomePageState which causes the PageView widget to drag
+  // to another screen according to the passed index.
+  // This function is necessary since it is passed to the
+  // constructor of AudioListItemWidget.
+  final Function(int) onPageChangedFunction;
+
   const PlaylistCommentListDialog({
     super.key,
     required this.settingsDataService,
     required this.currentPlaylist,
+    required this.onPageChangedFunction,
   });
 
   @override
@@ -265,9 +273,26 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       widgetsLst.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            commentedAudioTitle,
-            style: commentedAudioTitleTextStyle,
+          child: GestureDetector(
+            // This GestureDetector allows to click anywhere
+            //                         on the audio title item to open the audio in
+            //                         the audio player screen
+            onTap: () async {
+              Navigator.of(context).pop(); // closes the current dialog
+
+              await UiUtil.dragToAudioPlayerView(
+                audioPlayerVMlistenFalse:
+                    audioPlayerVMlistenFalse, // dragging to the AudioPlayerView
+                //                               screen after typing on audio title
+                audio: audioRelatedToFileNameNoExt,
+                onPageChangedFunction: widget.onPageChangedFunction,
+              );
+            },
+
+            child: Text(
+              commentedAudioTitle,
+              style: commentedAudioTitleTextStyle,
+            ),
           ),
         ),
       );

@@ -482,6 +482,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   child: PlaylistListItem(
                     settingsDataService: widget.settingsDataService,
                     playlist: playlist,
+                    onPageChangedFunction: widget.onPageChangedFunction,
                   ),
                 );
               },

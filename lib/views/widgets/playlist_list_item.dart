@@ -80,9 +80,17 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
   // is toggled (reduced) to make space for the audio player widget.
   final bool toggleListIfSelected;
 
+  // this instance variable stores the function defined in
+  // _MyHomePageState which causes the PageView widget to drag
+  // to another screen according to the passed index.
+  // This function is necessary since it is passed to the
+  // constructor of AudioListItemWidget.
+  final Function(int) onPageChangedFunction;
+
   PlaylistListItem({
     required this.settingsDataService,
     required this.playlist,
+    required this.onPageChangedFunction,
     this.toggleListIfSelected = false,
     super.key,
   });
@@ -439,6 +447,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
               builder: (context) => PlaylistCommentListDialog(
                 settingsDataService: settingsDataService,
                 currentPlaylist: playlist,
+                onPageChangedFunction: onPageChangedFunction,
               ),
             );
             break;

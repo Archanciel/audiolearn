@@ -110,10 +110,13 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       ),
       title: GestureDetector(
         onTap: () async {
-          await _dragToAudioPlayerView(
-              audioPlayerVMlistenFalse:
-                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView
-          //                                    screen after typing on audio title
+          await UiUtil.dragToAudioPlayerView(
+            audioPlayerVMlistenFalse:
+                audioPlayerVMlistenFalse, // dragging to the AudioPlayerView
+            //                               screen after typing on audio title
+            audio: audio,
+            onPageChangedFunction: onPageChangedFunction,
+          );
         },
         child: Text(audio.validVideoTitle,
             style: TextStyle(
@@ -124,10 +127,13 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       ),
       subtitle: GestureDetector(
         onTap: () async {
-          await _dragToAudioPlayerView(
-              audioPlayerVMlistenFalse:
-                  audioPlayerVMlistenFalse); // dragging to the AudioPlayerView
-          //                                    screen after typing on sub-title
+          await UiUtil.dragToAudioPlayerView(
+            audioPlayerVMlistenFalse:
+                audioPlayerVMlistenFalse, // dragging to the AudioPlayerView
+            //                               screen after typing on audio title
+            audio: audio,
+            onPageChangedFunction: onPageChangedFunction,
+          );
         },
         child: Text(
           key: const Key('audio_item_subtitle'),
@@ -597,41 +603,6 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
       //                   icon button
     );
     await audioPlayerVMlistenFalse.playCurrentAudio();
-
-    // dragging to the AudioPlayerView screen
-    onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
-  }
-
-  /// Method called when the user clicks on the audio list item audio title or
-  /// subtitle. This switches to the AudioPlayerView screen without playing the
-  /// clicked audio.
-  Future<void> _dragToAudioPlayerView({
-    required AudioPlayerVM audioPlayerVMlistenFalse,
-  }) async {
-    Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
-
-    if (audioPlayerVMcurrentAudio != null &&
-        !audioPlayerVMcurrentAudio.isPaused && // is playing
-        audioPlayerVMcurrentAudio != audio) {
-      // If clicking on another audio item, the audio player VM current
-      // audio is paused if it is playing. If it is not paused, the
-      // position of the clicked audio will be set to zero by the
-      // audioPlayer onPositionChanged listener.
-      await audioPlayerVMlistenFalse.pause();
-    }
-
-    await audioPlayerVMlistenFalse.setCurrentAudio(
-      audio: audio,
-    );
-
-    await audioPlayerVMlistenFalse.goToAudioPlayPosition(
-      durationPosition: Duration(
-        seconds: audio.audioPositionSeconds,
-      ),
-      isUndoRedo: true, // necessary to avoid creating an undo
-      //                   command which would activate the undo
-      //                   icon button
-    );
 
     // dragging to the AudioPlayerView screen
     onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);

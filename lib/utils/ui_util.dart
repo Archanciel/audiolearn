@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audiolearn/models/playlist.dart';
+import 'package:audiolearn/views/screen_mixin.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -842,4 +843,43 @@ class UiUtil {
     }
     return translatedDateFormatStr;
   }
+
+  
+  /// Method called when the user clicks on the audio list item audio title or
+  /// subtitle. This switches to the AudioPlayerView screen without playing the
+  /// clicked audio.
+  static Future<void> dragToAudioPlayerView({
+    required AudioPlayerVM audioPlayerVMlistenFalse,
+    required Audio audio,
+    required Function(int) onPageChangedFunction,
+  }) async {
+    Audio? audioPlayerVMcurrentAudio = audioPlayerVMlistenFalse.currentAudio;
+
+    if (audioPlayerVMcurrentAudio != null &&
+        !audioPlayerVMcurrentAudio.isPaused && // is playing
+        audioPlayerVMcurrentAudio != audio) {
+      // If clicking on another audio item, the audio player VM current
+      // audio is paused if it is playing. If it is not paused, the
+      // position of the clicked audio will be set to zero by the
+      // audioPlayer onPositionChanged listener.
+      await audioPlayerVMlistenFalse.pause();
+    }
+
+    await audioPlayerVMlistenFalse.setCurrentAudio(
+      audio: audio,
+    );
+
+    await audioPlayerVMlistenFalse.goToAudioPlayPosition(
+      durationPosition: Duration(
+        seconds: audio.audioPositionSeconds,
+      ),
+      isUndoRedo: true, // necessary to avoid creating an undo
+      //                   command which would activate the undo
+      //                   icon button
+    );
+
+    // dragging to the AudioPlayerView screen
+    onPageChangedFunction(ScreenMixin.AUDIO_PLAYER_VIEW_DRAGGABLE_INDEX);
+  }
+
 }
