@@ -104,15 +104,21 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
       },
       child: AlertDialog(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
-              child: Text(
-                (audioSFparmsName.isNotEmpty)
-                    ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
-                    : AppLocalizations.of(context)!.playlistCommentsDialogTitle,
-                textAlign: TextAlign.center,
-                maxLines: 4,
-                softWrap: true,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  (audioSFparmsName.isNotEmpty)
+                      ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
+                      : AppLocalizations.of(context)!
+                          .playlistCommentsDialogTitle,
+                  textAlign: TextAlign.center,
+                  maxLines: 4,
+                  softWrap: true,
+                ),
               ),
             ),
           ],
