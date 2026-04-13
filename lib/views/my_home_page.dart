@@ -119,6 +119,7 @@ class _MyHomePageState extends State<MyHomePage> with ScreenMixin {
       ))
       ..add(AudioPlayerView(
         settingsDataService: widget.settingsDataService,
+        onPageChangedFunction: changePage,
       ));
     // ..add(const AudioExtractorView());
 
