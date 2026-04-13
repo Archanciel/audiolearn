@@ -21271,7 +21271,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3,
+          itemIndex: 1,
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -21361,7 +21361,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 3,
+          itemIndex: 1,
           typeOnPauseAfterPlay: true,
           maxPlayDurationSeconds: 1.5,
         );
@@ -21451,7 +21451,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
+          itemIndex: 3,
           typeOnPauseAfterPlay: false,
         );
 
@@ -21550,7 +21550,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
+          itemIndex: 2,
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -21640,7 +21640,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
+          itemIndex: 2,
           typeOnPauseAfterPlay: true,
           maxPlayDurationSeconds: 1.5,
         );
@@ -21730,7 +21730,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 6,
+          itemIndex: 2,
           typeOnPauseAfterPlay: false,
         );
 
@@ -21829,7 +21829,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
+          itemIndex: 3,
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -21923,7 +21923,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
+          itemIndex: 3,
           typeOnPauseAfterPlay: true,
           maxPlayDurationSeconds: 1.5,
         );
@@ -22017,7 +22017,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9,
+          itemIndex: 3,
           typeOnPauseAfterPlay: false,
         );
 
@@ -22112,7 +22112,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 9, // First comment of the second audio on IA
+          itemIndex: 3, // First comment of the second audio on IA
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -22121,10 +22121,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        Finder playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(9),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        Finder playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(3);
 
         // Find the Icon widget inside the IconButton
         Finder iconFinder = find.descendant(
@@ -22153,7 +22155,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 15, // Third comment of the second audio on IA
+          itemIndex: 5, // Third comment of the second audio on IA
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -22162,10 +22164,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(9),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(9);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22179,10 +22183,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(15),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(5);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22204,7 +22210,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 12, // Second comment of the second audio on IA
+          itemIndex: 4, // Second comment of the second audio on IA
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -22213,10 +22219,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(15),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(5);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22230,10 +22238,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(12),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(4);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22280,10 +22290,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(12),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(4);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22305,10 +22317,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(0),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(0);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22338,7 +22352,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 24, // first comment of the fourth audio
+          itemIndex: 8, // first comment of the fourth audio
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -22355,10 +22369,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(0),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(0);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22380,10 +22396,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(24),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(8);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22405,7 +22423,7 @@ void main() {
         await IntegrationTestUtil.playComment(
           tester: tester,
           gestureDetectorsFinder: gestureDetectorsFinder,
-          itemIndex: 27, // second comment of the fourth audio
+          itemIndex: 9, // second comment of the fourth audio
           typeOnPauseAfterPlay: false,
           maxPlayDurationSeconds: 3,
         );
@@ -22414,10 +22432,12 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(24),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(8);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22433,10 +22453,12 @@ void main() {
 
         // Checking the currently played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(27),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(9);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22451,10 +22473,12 @@ void main() {
 
         // Checking the last played comment icon button
 
-        playIconButtonFinder = find.descendant(
-          of: gestureDetectorsFinder.at(27),
-          matching: find.byKey(const Key('playPauseIconButton')),
-        );
+        playIconButtonFinder = find
+            .descendant(
+              of: gestureDetectorsFinder,
+              matching: find.byKey(const Key('playPauseIconButton')),
+            )
+            .at(9);
 
         // Find the Icon widget inside the IconButton
         iconFinder = find.descendant(
@@ -22465,79 +22489,6 @@ void main() {
         // Now get the Icon widget and check its type
         iconWidget = tester.widget<Icon>(iconFinder);
         expect(iconWidget.icon, Icons.play_arrow);
-
-        // // Tap on Close text button
-        // await tester.tap(
-        //     find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
-        // await tester.pumpAndSettle();
-
-        // // Now, re-open the playlist comment dialog
-        // playlistCommentListDialogFinder =
-        //     await IntegrationTestUtil.openPlaylistCommentDialog(
-        //   tester: tester,
-        //   playlistTitle: youtubePlaylistTitle,
-        // );
-
-        // // Verify the color of the audio titles in the playlist comment dialog
-
-        // await _verifyAudioTitlesColorInPlaylistCommentDialog(
-        //   tester: tester,
-        //   playlistCommentListDialogFinder: playlistCommentListDialogFinder,
-        // );
-
-        // // Tap on Close text button
-        // await tester.tap(
-        //     find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
-        // await tester.pumpAndSettle();
-
-        // // Tap on the 'Toggle List' button to hide the playlist list
-        // await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        // await tester.pumpAndSettle();
-
-        // // When starting playing an other comment, the corresponding played
-        // // comment audio modification was undone. Verifying that for second
-        // // comment audio
-        // await _verifyUndoneListenedAudioPosition(
-        //   tester: tester,
-        //   playlistTitle: youtubePlaylistTitle,
-        //   playedCommentAudioTitle: secondPlayedCommentAudioTitle,
-        //   playableAudioLstAudioIndex: 1,
-        //   audioPositionStr: '1:17:54',
-        //   audioPositionSeconds: 4674,
-        //   audioRemainingDurationStr: '0:00',
-        //   isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        //   audioPausedDateTime: DateTime(2024, 9, 8, 14, 38, 43),
-        // );
-
-        // // When starting playing an other comment, the corresponding played
-        // // comment audio modification was undone. Verifying that for third
-        // // comment audio
-        // await _verifyUndoneListenedAudioPosition(
-        //   tester: tester,
-        //   playlistTitle: youtubePlaylistTitle,
-        //   playedCommentAudioTitle: thirdPlayedCommentAudioTitle,
-        //   playableAudioLstAudioIndex: 3,
-        //   audioPositionStr: '4:09',
-        //   audioPositionSeconds: 311,
-        //   audioRemainingDurationStr: '1:02',
-        //   isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: true,
-        //   audioPausedDateTime: DateTime(2024, 9, 9, 19, 47, 23),
-        // );
-
-        // // When starting playing an other comment, the corresponding played
-        // // comment audio modification was undone. Verifying that for fourth
-        // // comment audio
-        // await _verifyUndoneListenedAudioPosition(
-        //   tester: tester,
-        //   playlistTitle: youtubePlaylistTitle,
-        //   playedCommentAudioTitle: fourthPlayedCommentAudioTitle,
-        //   playableAudioLstAudioIndex: 2,
-        //   audioPositionStr: '0:00',
-        //   audioPositionSeconds: 0,
-        //   audioRemainingDurationStr: '6:06',
-        //   isPlayingOrPausedWithPositionBetweenAudioStartAndEnd: false,
-        //   audioPausedDateTime: null,
-        // );
 
         // Purge the test playlist directory so that the created test
         // files are not uploaded to GitHub
