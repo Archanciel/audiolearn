@@ -22674,7 +22674,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 6, // Third comment of the audio on IA
+        itemIndex: 2, // Third comment of the audio on IA
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -22708,7 +22708,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 9, // Fourth comment of the audio on IA
+        itemIndex: 3, // Fourth comment of the audio on IA
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -22830,7 +22830,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 3, // second comment of the IA audio
+        itemIndex: 1, // second comment of the IA audio
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
@@ -22888,7 +22888,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 12, // last comment of the IA audio
+        itemIndex: 4, // last comment of the IA audio
         typeOnPauseAfterPlay: false,
         maxPlayDurationSeconds: 3,
       );
