@@ -20500,7 +20500,7 @@ void main() {
       );
     });
   });
-  group('Playlist PlaylistCommentListDialog dialog test', () {
+  group('PlaylistCommentListDialog test', () {
     testWidgets(
         '''On empty playlist, opening the playlist audio comments dialog.''',
         (WidgetTester tester) async {
@@ -21223,6 +21223,42 @@ void main() {
       await tester.tap(
           find.byKey(const Key('playlistCommentListCloseDialogTextButton')));
       await tester.pumpAndSettle();
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets('''Click on an audio title in the playlist comment dialog in
+           order to open the audio in the audio player view.''',
+        (WidgetTester tester) async {
+      const String playlistTitle = '1 long music'; // Youtube playlist
+      const String playedCommentAudioTitle =
+          "Quand Dieu transforme l’épreuve en victoire";
+      const String playedCommentAudioTitleDuration =
+          "Quand Dieu transforme l’épreuve en victoire\n26:20";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+        selectedPlaylistTitle: playlistTitle,
+      );
+
+      // First, open the playlist comment dialog
+      await IntegrationTestUtil.openPlaylistCommentDialog(
+        tester: tester,
+        playlistTitle: playlistTitle,
+      );
+
+      // Tap on the first audio title to open it in the audio player view
+      await tester.tap(find.text(playedCommentAudioTitle).last);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify audio title displayed in the audio player view
+      expect(find.text(playedCommentAudioTitleDuration), findsOneWidget);
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
