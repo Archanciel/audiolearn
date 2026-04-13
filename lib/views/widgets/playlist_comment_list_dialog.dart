@@ -107,6 +107,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
+              // The FittedBox will scale the text to fit the available space
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
