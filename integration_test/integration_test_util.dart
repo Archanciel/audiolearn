@@ -1839,10 +1839,17 @@ class IntegrationTestUtil {
     required bool typeOnPauseAfterPlay,
     double maxPlayDurationSeconds = 1,
   }) async {
-    final Finder playIconButtonFinder = find.descendant(
-      of: gestureDetectorsFinder.at(itemIndex),
-      matching: find.byKey(const Key('playPauseIconButton')),
-    );
+    // Searching playPauseIconButton across all GestureDetectors and then
+    // picking by index avoids the offset caused by the additional audio
+    // title GestureDetectors added in the new PlaylistCommentListDialog.
+    // Since playPauseIconButton only exists inside comment GestureDetectors,
+    // itemIndex still correctly targets the nth comment.
+    final Finder playIconButtonFinder = find
+        .descendant(
+          of: gestureDetectorsFinder,
+          matching: find.byKey(const Key('playPauseIconButton')),
+        )
+        .at(itemIndex);
 
     await tester.tap(playIconButtonFinder);
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
