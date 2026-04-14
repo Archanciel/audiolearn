@@ -121,12 +121,12 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                 alignment: Alignment.centerLeft,
                 child: Text(
                   (audioSFparmsName.isNotEmpty)
-                      ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
+                      ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle}\n($audioSFparmsName)'
                       : AppLocalizations.of(context)!
                           .playlistCommentsDialogTitle,
                   style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
-                  maxLines: 2,
+                  maxLines: 4,
                 ),
               ),
             ),
