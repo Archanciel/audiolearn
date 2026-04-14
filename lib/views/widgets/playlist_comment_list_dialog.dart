@@ -160,11 +160,13 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                                     }
                                   : null,
                             ),
-                            Text(
-                              ')',
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                            Transform.translate(
+                              offset: const Offset(
+                                  -6, 0), // pull ')' left to close the gap
+                              child: Text(
+                                ')',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                             ),
                           ],
                         )
