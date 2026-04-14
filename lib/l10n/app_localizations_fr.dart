@@ -1010,7 +1010,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get playlistCommentsDialogTitle =>
-      'Commentaires des audios de la playlist';
+      'Commentaires\ndes audios de la playlist';
 
   @override
   String get addPositionedCommentTooltip =>

@@ -124,9 +124,9 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle} ($audioSFparmsName)'
                       : AppLocalizations.of(context)!
                           .playlistCommentsDialogTitle,
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
-                  maxLines: 4,
-                  softWrap: true,
+                  maxLines: 2,
                 ),
               ),
             ),
