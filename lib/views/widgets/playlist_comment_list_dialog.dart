@@ -59,6 +59,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
   // Variables to manage the scrolling of the dialog
   final ScrollController _scrollController = ScrollController();
   int _previousCurrentCommentLinesNumber = 0;
+  bool _areSFParmsAppliedToComments = true;
 
   @override
   void dispose() {
@@ -132,37 +133,41 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              '($audioSFparmsName ',
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
+                            Transform.translate(
+                              offset: const Offset(0,
+                                  -3), // Reduces the space between the checkbox and the ')'
+                              child: Text(
+                                '($audioSFparmsName ',
+                                style: Theme.of(context).textTheme.titleLarge,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                              ),
                             ),
                             Checkbox(
-                              key: const Key('audio_quality_checkbox'),
+                              key: const Key(
+                                  'apply_SF_parms_to_comments_checkbox'),
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
                               visualDensity: VisualDensity.compact,
                               fillColor: WidgetStateColor.resolveWith(
                                 (Set<WidgetState> states) {
-                                  if (states.contains(WidgetState.disabled)) {
-                                    return Colors.grey.shade800;
-                                  }
                                   return kDarkAndLightEnabledIconColor;
                                 },
                               ),
-                              value: true,
-                              onChanged: (true)
-                                  ? (bool? value) {
-                                      // bool isHighQuality = value ?? false;
-                                      // audioDownloadVMlistenTrue.setAudioQuality(
-                                      //     isAudioDownloadHighQuality: isHighQuality);
-                                    }
-                                  : null,
+                              value: _areSFParmsAppliedToComments,
+                              onChanged: (bool? value) {
+                                _areSFParmsAppliedToComments = value ?? false;
+                                setState(() {
+                                  // playlistListVMlistenFalse
+                                  //     .setApplySortFilterParametersToPlaylistAudioComments(
+                                  //   apply: _areSFParmsAppliedToComments,
+                                  // );
+                                });
+                              },
                             ),
                             Transform.translate(
-                              offset: const Offset(
-                                  -6, 0), // pull ')' left to close the gap
+                              offset: const Offset(-6,
+                                  -3), // Reduces the space between the checkbox and the ')'
                               child: Text(
                                 ')',
                                 style: Theme.of(context).textTheme.titleLarge,
@@ -192,14 +197,19 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
             final List<String> commentFileNameNoExtLst =
                 playlistAudioCommentsMap.keys.toList();
 
-            final List<String> sortedAudioFileNameNoExtLst =
-                playlistListVMlistenFalse
-                    .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
-                        selectedPlaylist: currentPlaylist,
-                        audioLearnAppViewType:
-                            AudioLearnAppViewType.playlistDownloadView,
-                        commentFileNameNoExtLst: commentFileNameNoExtLst,
-                        audioSortFilterParametersName: audioSFparmsName);
+            List<String> sortedAudioFileNameNoExtLst;
+
+            if (_areSFParmsAppliedToComments) {
+              sortedAudioFileNameNoExtLst = playlistListVMlistenFalse
+                  .getSortedPlaylistAudioCommentFileNamesApplyingSortFilterParameters(
+                      selectedPlaylist: currentPlaylist,
+                      audioLearnAppViewType:
+                          AudioLearnAppViewType.playlistDownloadView,
+                      commentFileNameNoExtLst: commentFileNameNoExtLst,
+                      audioSortFilterParametersName: audioSFparmsName);
+            } else {
+              sortedAudioFileNameNoExtLst = commentFileNameNoExtLst;
+            }
 
             return SingleChildScrollView(
               controller: _scrollController,
