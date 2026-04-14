@@ -157,12 +157,7 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
                               value: _areSFParmsAppliedToComments,
                               onChanged: (bool? value) {
                                 _areSFParmsAppliedToComments = value ?? false;
-                                setState(() {
-                                  // playlistListVMlistenFalse
-                                  //     .setApplySortFilterParametersToPlaylistAudioComments(
-                                  //   apply: _areSFParmsAppliedToComments,
-                                  // );
-                                });
+                                setState(() {});
                               },
                             ),
                             Transform.translate(
@@ -291,10 +286,14 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
     List<Widget> widgetsLst = [];
 
     for (String audioFileNameNoExt in sortedAudioFileNameNoExtLst) {
-      Audio audioRelatedToFileNameNoExt =
+      Audio? audioRelatedToFileNameNoExt =
           currentPlaylist.getAudioByFileNameNoExt(
         audioFileNameNoExt: audioFileNameNoExt,
-      )!;
+      );
+
+      if (audioRelatedToFileNameNoExt == null) {
+        continue; // if no audio corresponds to the audio file name, we skip it
+      }
 
       // List containing the audio title text color and the audio title
       // background color.
