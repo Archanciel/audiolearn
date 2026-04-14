@@ -116,18 +116,60 @@ class _PlaylistCommentListDialogState extends State<PlaylistCommentListDialog>
           children: [
             Flexible(
               // The FittedBox will scale the text to fit the available space
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
+              child: Column(
+                children: [
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      AppLocalizations.of(context)!.playlistCommentsDialogTitle,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
+                  ),
                   (audioSFparmsName.isNotEmpty)
-                      ? '${AppLocalizations.of(context)!.playlistCommentsDialogTitle}\n($audioSFparmsName)'
-                      : AppLocalizations.of(context)!
-                          .playlistCommentsDialogTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                  maxLines: 4,
-                ),
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '($audioSFparmsName ',
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                            ),
+                            Checkbox(
+                              key: const Key('audio_quality_checkbox'),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                              fillColor: WidgetStateColor.resolveWith(
+                                (Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.disabled)) {
+                                    return Colors.grey.shade800;
+                                  }
+                                  return kDarkAndLightEnabledIconColor;
+                                },
+                              ),
+                              value: true,
+                              onChanged: (true)
+                                  ? (bool? value) {
+                                      // bool isHighQuality = value ?? false;
+                                      // audioDownloadVMlistenTrue.setAudioQuality(
+                                      //     isAudioDownloadHighQuality: isHighQuality);
+                                    }
+                                  : null,
+                            ),
+                            Text(
+                              ')',
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
             ),
           ],
