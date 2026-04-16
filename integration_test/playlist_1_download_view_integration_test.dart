@@ -21266,6 +21266,43 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets('''Click on the SF checkbox of the playlist comment dialog in order
+               to remove the impact of the applied playlist soer/filter parameters on
+               the audios and their comments listed in the playlist comment dialog.''',
+        (WidgetTester tester) async {
+      const String playlistTitle = '1 long music'; // Youtube playlist
+      const String playedCommentAudioTitle =
+          "Quand Dieu transforme l’épreuve en victoire";
+      const String playedCommentAudioTitleDuration =
+          "Quand Dieu transforme l’épreuve en victoire\n26:20";
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'extract_comments_to_mp3_test',
+        selectedPlaylistTitle: playlistTitle,
+      );
+
+      // First, open the playlist comment dialog
+      await IntegrationTestUtil.openPlaylistCommentDialog(
+        tester: tester,
+        playlistTitle: playlistTitle,
+      );
+
+      // Tap on the first audio title to open it in the audio player view
+      await tester.tap(find.text(playedCommentAudioTitle).last);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Verify audio title displayed in the audio player view
+      expect(find.text(playedCommentAudioTitleDuration), findsOneWidget);
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
     group('Playing one comment, fully played audio', () {
       testWidgets('''One comment full play color verification. Play one comment
            completely. Then close the playlist comment dialog and reopen it.

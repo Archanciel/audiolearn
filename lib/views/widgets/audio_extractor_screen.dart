@@ -627,7 +627,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) async {
     // Prompt for filename
     final TextEditingController fileNameController = TextEditingController(
-      text: (_loadedCommentsFileName != null) ? path.basenameWithoutExtension(_loadedCommentsFileName!).replaceAll('.multi', '') : '',
+      text: (_loadedCommentsFileName != null)
+          ? path
+              .basenameWithoutExtension(_loadedCommentsFileName!)
+              .replaceAll('.multi', '')
+          : '',
     );
 
     final String? fileName = await showDialog<String>(
@@ -1343,7 +1347,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                     message:
                         AppLocalizations.of(context)!.commentEndPositionTooltip,
                     child: Text(
-                      TimeFormatUtil.formatSeconds(segment.endPosition),
+                      TimeFormatUtil.formatSeconds(
+                          segment.endPosition / segment.playSpeed),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -1406,7 +1411,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   const SizedBox(height: 8),
                   // Subtitle (duration)
                   Text(
-                    "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration)}"
+                    "${AppLocalizations.of(context)!.duration}: ${TimeFormatUtil.formatSeconds(segment.duration / segment.playSpeed)}"
                     "${segment.silenceDuration > 0 ? ' + ${AppLocalizations.of(context)!.silence} ${TimeFormatUtil.formatSeconds(segment.silenceDuration)}' : ''}",
                     style: const TextStyle(fontSize: 12),
                   ),
@@ -1540,6 +1545,13 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     required AudioExtractorVM audioExtractorVM,
     required ExtractMp3AudioPlayerVM audioPlayerVM,
   }) {
+    double secondsDuration = -1.0;
+    if (audioExtractorVM.previewSegmentDuration != null) {
+      secondsDuration = (audioExtractorVM.previewSegmentDuration! /
+              audioExtractorVM.currentAudio.audioPlaySpeed)
+          .roundToDouble();
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min, // ✅ Shrink column to content
       children: [
@@ -1608,11 +1620,11 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                       Text(
                         key: const Key('extractedAudioDurationTextKey'),
                         TimeFormatUtil.formatSeconds(
-                          audioExtractorVM
-                                  .previewSegmentDuration ?? // Preview duration if available
-                              (audioExtractorVM.isMultiAudioMode
+                          (secondsDuration != -1)
+                              ? secondsDuration
+                              : (audioExtractorVM.isMultiAudioMode)
                                   ? audioExtractorVM.totalDurationMultiAudio
-                                  : audioExtractorVM.totalDuration),
+                                  : audioExtractorVM.totalDuration,
                         ),
                       ),
                     ],
@@ -1631,6 +1643,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
               ],
             ),
           ),
+
         if (audioPlayerVM.hasError)
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -2355,7 +2368,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
           content: Text(
             '▶ ${segment.commentTitle}  '
             '(${TimeFormatUtil.formatSeconds(segment.startPosition)} → '
-            '${TimeFormatUtil.formatSeconds(segment.endPosition)})',
+            '${TimeFormatUtil.formatSeconds(segment.endPosition / segment.playSpeed)})',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
