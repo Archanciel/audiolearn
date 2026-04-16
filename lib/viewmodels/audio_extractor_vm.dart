@@ -32,6 +32,7 @@ class AudioExtractorVM extends ChangeNotifier {
   ExtractionResult get extractionResult => _extractionResult;
 
   late Audio _currentAudio;
+  Audio get currentAudio => _currentAudio;
   set currentAudio(Audio audio) {
     _currentAudio = audio;
   }
