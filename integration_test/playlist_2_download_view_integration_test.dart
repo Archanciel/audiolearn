@@ -44701,7 +44701,7 @@ void main() {
             reason:
                 'Last update date time should be today\'s date with current hour and minute');
 
-        String totalDurationStr = '2:34.1';
+        String totalDurationStr = '2:30.5';
 
         // Verify the total duration text
         Finder totalDurationTextFinder =
@@ -44784,7 +44784,7 @@ void main() {
         await tester.tap(saveEditedCommentButtonFinder);
         await tester.pumpAndSettle();
 
-        totalDurationStr = '2:22.3';
+        totalDurationStr = '2:18.7';
 
         // Verify the total duration text
         totalDurationTextFinder =
