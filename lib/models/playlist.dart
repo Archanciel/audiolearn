@@ -561,7 +561,7 @@ class Playlist {
 
     for (Audio audio in playableAudioLst) {
       totalRemainingDuration +=
-          (audio.audioDuration - Duration(seconds: audio.audioPositionSeconds));
+          (audio.durationImpactedByPlaySpeed() - Duration(seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed).round()));
     }
 
     return totalRemainingDuration;
