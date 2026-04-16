@@ -2595,7 +2595,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get addPositionToAudioTitleMenu =>
-      'Ajouter la position au titre des audios';
+      'Ajouter ou corriger la position au titre des audios';
 
   @override
   String get moveAudioToPositionMenu => 'Placer l\'audio à la position ...';

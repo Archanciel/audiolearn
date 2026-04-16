@@ -1573,7 +1573,7 @@
     }
   },
   "convertingMp4ToMP3":"Conversion du MP4 importé en MP3 ...",
-  "addPositionToAudioTitleMenu": "Ajouter la position au titre des audios",
+  "addPositionToAudioTitleMenu": "Ajouter ou corriger la position au titre des audios",
   "moveAudioToPositionMenu": "Placer l'audio à la position ...",
   "moveAudioToPosition": "Déplacer l'audio à la position",
   "audioIntPositionLabel": "Position audio entière",

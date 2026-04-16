@@ -4104,7 +4104,7 @@ abstract class AppLocalizations {
   /// No description provided for @addPositionToAudioTitleMenu.
   ///
   /// In en, this message translates to:
-  /// **'Add Position to Audios Title'**
+  /// **'Add or correct Position to Audio Titles'**
   String get addPositionToAudioTitleMenu;
 
   /// No description provided for @moveAudioToPositionMenu.
