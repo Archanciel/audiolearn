@@ -952,21 +952,21 @@ class AudioPlayerVM extends ChangeNotifier {
     // while playing and therefore may not reflect a recent seek.
     double audioPlaySpeed = _currentAudio!.audioPlaySpeed;
     int currentPositionInTenths = _currentAudioPosition.inMilliseconds ~/ 100;
-    int timeUntilEndInTenthsOfSeconds = _commentEndPositionInTenthOfSeconds - currentPositionInTenths;
+    int timeUntilEndInTenthsOfSeconds =
+        _commentEndPositionInTenthOfSeconds - currentPositionInTenths;
 
     if (audioPlaySpeed != 1.0) {
       if (audioPlaySpeed <= 1.5) {
-       timeUntilEndInTenthsOfSeconds  += 10;
+        timeUntilEndInTenthsOfSeconds += 10;
       } else if (audioPlaySpeed < 1.8) {
-       timeUntilEndInTenthsOfSeconds  += 12;
+        timeUntilEndInTenthsOfSeconds += 12;
       } else {
         timeUntilEndInTenthsOfSeconds += 15;
       }
     }
 
     timeUntilEndInTenthsOfSeconds =
-        ((timeUntilEndInTenthsOfSeconds / audioPlaySpeed)
-            .ceil());
+        ((timeUntilEndInTenthsOfSeconds / audioPlaySpeed).ceil());
 
     Duration timeUntilEnd = Duration(
       milliseconds: timeUntilEndInTenthsOfSeconds * 100,
@@ -1021,9 +1021,13 @@ class AudioPlayerVM extends ChangeNotifier {
     }
 
     int correctedPosOrNegPositionModificationInMicroseconds =
-        (posOrNegPositionModificationInSeconds * 1000000 * _currentAudio!.audioPlaySpeed).round();
-    Duration newAudioPosition =
-        _currentAudioPosition + Duration(microseconds: correctedPosOrNegPositionModificationInMicroseconds);
+        (posOrNegPositionModificationInSeconds *
+                1000000 *
+                _currentAudio!.audioPlaySpeed)
+            .round();
+    Duration newAudioPosition = _currentAudioPosition +
+        Duration(
+            microseconds: correctedPosOrNegPositionModificationInMicroseconds);
 
     // Check if the new audio position is within the audio duration.
     // If not, set the audio position to the beginning or the end
@@ -1400,8 +1404,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // next audio is not playxed. When reopening the smartphone after
     // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
-        _currentAudio!.audioDuration.inSeconds;
-
+        ((_currentAudio!.audioDuration.inMilliseconds / 1000) / _currentAudio!.audioPlaySpeed).round();
     // set to false since the audio playing position is set to
     // audio end
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
