@@ -1359,7 +1359,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // next audio is not playxed. When reopening the smartphone after
     // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
-        _currentAudio!.audioDuration.inSeconds;
+        ((_currentAudio!.audioDuration.inMilliseconds / 1000) / _currentAudio!.audioPlaySpeed).round();
 
     // set to false since the audio playing position is set to
     // audio end
