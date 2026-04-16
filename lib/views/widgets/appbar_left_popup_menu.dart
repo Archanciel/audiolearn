@@ -3,6 +3,7 @@ import 'package:audiolearn/utils/duration_expansion.dart';
 import 'package:audiolearn/utils/ui_util.dart';
 import 'package:audiolearn/viewmodels/date_format_vm.dart';
 import 'package:audiolearn/views/playlist_download_view.dart';
+import 'package:audiolearn/views/widgets/move_audio_to_position_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../l10n/app_localizations.dart';
@@ -170,6 +171,12 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 child: Text(AppLocalizations.of(context)!.modifyAudioTitle),
               ),
               PopupMenuItem<AudioPopupMenuAction>(
+                key: const Key('popup_menu_move_audio_to_position'),
+                value: AudioPopupMenuAction.moveAudioToPosition,
+                child:
+                    Text(AppLocalizations.of(context)!.moveAudioToPositionMenu),
+              ),
+              PopupMenuItem<AudioPopupMenuAction>(
                 key: const Key('popup_menu_rename_audio_file'),
                 value: AudioPopupMenuAction.renameAudioFile,
                 child: Text(AppLocalizations.of(context)!.renameAudioFile),
@@ -283,6 +290,29 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                         modifiedAudioTitle;
                   }
                 });
+                break;
+              case AudioPopupMenuAction.moveAudioToPosition:
+                List<HelpItem> audioTitleModificationHelpItemsLst = [
+                  HelpItem(
+                    helpTitle: AppLocalizations.of(context)!
+                        .audioTitleModificationHelpTitle,
+                    helpContent: AppLocalizations.of(context)!
+                        .audioTitleModificationHelpContent,
+                    displayHelpItemNumber: false,
+                  ),
+                ];
+                showDialog<void>(
+                  context: context,
+                  barrierDismissible:
+                      false, // This line prevents the dialog from closing when
+                  //            tapping outside the dialog
+                  builder: (BuildContext context) {
+                    return MoveAudioToPositionDialog(
+                      audio: audio,
+                      helpItemsLst: audioTitleModificationHelpItemsLst,
+                    );
+                  },
+                );
                 break;
               case AudioPopupMenuAction.renameAudioFile:
                 showDialog<void>(
