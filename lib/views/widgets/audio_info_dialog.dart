@@ -686,6 +686,11 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
         (audio.audioDuration.inSeconds / audio.audioPlaySpeed);
 
     if (diff < 1.0 && diff >= 0.0) {
+      // This the case if the audio is at the end, i.e. if the
+      // AudioPlayerVM._setCurrentAudioToEndPosition() method was
+      // called (in case next audio started playing or if the user
+      // clicked on the 'Set audio to end position' button in the
+      // audio player view).)
       return Duration(seconds: (audio.audioPositionSeconds)).HHmmss(
         addRemainingOneDigitTenthOfSecond: true,
       );
