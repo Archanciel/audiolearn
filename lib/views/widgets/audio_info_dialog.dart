@@ -220,13 +220,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.durationImpactedByPlaySpeed().HHmmss(
-            addRemainingOneDigitTenthOfSecond: true,
-          )),
+                addRemainingOneDigitTenthOfSecond: true,
+              )),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
-          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+          value: _createAudioPositionDuration()),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioStateKey'),
           context: context,
@@ -351,13 +351,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.durationImpactedByPlaySpeed().HHmmss(
-            addRemainingOneDigitTenthOfSecond: true,
-          )),
+                addRemainingOneDigitTenthOfSecond: true,
+              )),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
-          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+          value: _createAudioPositionDuration()),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioStateKey'),
           context: context,
@@ -482,13 +482,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.durationImpactedByPlaySpeed().HHmmss(
-            addRemainingOneDigitTenthOfSecond: true,
-          )),
+                addRemainingOneDigitTenthOfSecond: true,
+              )),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
-          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+          value: _createAudioPositionDuration()),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioStateKey'),
           context: context,
@@ -620,13 +620,13 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           context: context,
           label: AppLocalizations.of(context)!.audioDurationLabel,
           value: audio.durationImpactedByPlaySpeed().HHmmss(
-            addRemainingOneDigitTenthOfSecond: true,
-          )),
+                addRemainingOneDigitTenthOfSecond: true,
+              )),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioPositionKey'),
           context: context,
           label: AppLocalizations.of(context)!.audioPositionLabel,
-          value: Duration(seconds: audio.audioPositionSeconds).HHmmss()),
+          value: _createAudioPositionDuration()),
       createInfoRowFunction(
           valueTextWidgetKey: const Key('audioStateKey'),
           context: context,
@@ -679,6 +679,24 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
           value:
               commentVMlistenFalse.getCommentNumber(audio: audio).toString()),
     ];
+  }
+
+  String _createAudioPositionDuration() {
+    final double diff = audio.audioPositionSeconds -
+        (audio.audioDuration.inSeconds / audio.audioPlaySpeed);
+
+    if (diff < 1.0 && diff >= 0.0) {
+      return Duration(seconds: (audio.audioPositionSeconds)).HHmmss(
+        addRemainingOneDigitTenthOfSecond: true,
+      );
+    } else {
+      return Duration(
+              seconds:
+                  (audio.audioPositionSeconds / audio.audioPlaySpeed).round())
+          .HHmmss(
+        addRemainingOneDigitTenthOfSecond: true,
+      );
+    }
   }
 
   String formatDownloadSpeed({
