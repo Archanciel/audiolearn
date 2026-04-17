@@ -48,6 +48,13 @@ class AudioExtractorVM extends ChangeNotifier {
     _commentsLst = commentsLst;
   }
 
+  AudioSegment? _currentSegment = null;
+  AudioSegment? get currentSegment => _currentSegment;
+  set currentSegment(AudioSegment? segment) {
+    _currentSegment = segment;
+    notifyListeners();
+  }
+
   double get totalDuration {
     return _segments
         .where((s) => !s.deleted) // Filtering the not deleted segments

@@ -1547,9 +1547,9 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
   }) {
     double secondsDuration = -1.0;
     if (audioExtractorVM.previewSegmentDuration != null) {
-      secondsDuration = (audioExtractorVM.previewSegmentDuration! /
-              audioExtractorVM.currentAudio.audioPlaySpeed)
-          .roundToDouble();
+      AudioSegment audioSegment = audioExtractorVM.currentSegment!;
+      secondsDuration = (audioSegment.duration / audioSegment.playSpeed) +
+          audioSegment.silenceDuration;
     }
 
     return Column(
@@ -1620,7 +1620,7 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                       Text(
                         key: const Key('extractedAudioDurationTextKey'),
                         TimeFormatUtil.formatSeconds(
-                          (secondsDuration != -1)
+                          (secondsDuration != -1.0)
                               ? secondsDuration
                               : (audioExtractorVM.isMultiAudioMode)
                                   ? audioExtractorVM.totalDurationMultiAudio
@@ -2289,6 +2289,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
     required String audioFilePath,
   }) async {
     final AudioExtractorVM audioExtractorVM = context.read<AudioExtractorVM>();
+    audioExtractorVM.currentSegment =
+        segment; // ✅ Set current segment in VM for player controls
     final ExtractMp3AudioPlayerVM audioPlayerVM =
         context.read<ExtractMp3AudioPlayerVM>();
 
