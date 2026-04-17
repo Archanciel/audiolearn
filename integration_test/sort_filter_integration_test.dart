@@ -10841,6 +10841,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             expectedCommentTitles: expectedDefaultCommentTitles,
             expectedCommentTimes: expectedDefaultCommentTimes,
+            indexList: [
+              1,
+              5,
+              9,
+              12,
+            ],
           );
 
           // Tap the 'Toggle List' button to contract the playlist list
@@ -10940,6 +10946,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             expectedCommentTitles: expectedTitleAscCommentTitles,
             expectedCommentTimes: expectedTitleAscCommentTimes,
+            indexList: [
+              1,
+              4,
+              8,
+              12,
+            ],
           );
 
           // Purge the test playlist directory so that the created test
@@ -11078,7 +11090,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             expectedCommentTitles: expectedTitleAscCommentTitles,
             expectedCommentTimes: expectedTitleAscCommentTimes,
-          );
+             indexList: [
+              1,
+              4,
+              8,
+              12,
+            ],
+         );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
@@ -11164,7 +11182,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             isWarningConfirming: true,
           );
 
-          // Tap the 'Toggle List' button to display the playlist list.
+          // Tap the 'Playlist toggle' button to display the playlist list.
           await tester.tap(find.byKey(const Key('playlist_toggle_button')));
           await tester.pumpAndSettle();
 
@@ -11218,6 +11236,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             expectedCommentTitles: expectedDefaultCommentTitles,
             expectedCommentTimes: expectedDefaultCommentTimes,
+            indexList: [
+              1,
+              4,
+              8,
+              12,
+            ],
           );
 
           // Purge the test playlist directory so that the created test
@@ -16748,6 +16772,7 @@ Future<void> _verifyOrderOfPlaylistAudioComments({
   required WidgetTester tester,
   required List<String> expectedCommentTitles,
   required List<String> expectedCommentTimes,
+  required List<int> indexList,
 }) async {
   // Find the playlist comment list dialog widget
   Finder commentListDialogFinder = find.byType(PlaylistCommentListDialog);
@@ -16762,23 +16787,22 @@ Future<void> _verifyOrderOfPlaylistAudioComments({
       of: listFinder,
       matching: find.byType(GestureDetector));
 
-  int gestureDectectorNumberByCommentLine = 3;
-
   // Since there are 3 GestureDetector per comment item, we need to
   // multiply the comment line index by 3 to get the right index
   // of "Interview de Chat GPT  - IA, intelligence, philosophie,
   // géopolitique, post-vérité..."
 
   for (int i = 0; i < expectedCommentTitles.length; i++) {
+    int index = indexList[i];
     // Since each comment is composed of multiple GestureDetectors,
     // calculate the index for the specific comment.
     final Finder commentTitleFinder = find.descendant(
-      of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+      of: itemsFinder.at(index),
       matching: find.byKey(const Key('commentTitleKey')),
     );
 
     final Finder commentTimeFinder = find.descendant(
-      of: itemsFinder.at(i * gestureDectectorNumberByCommentLine),
+      of: itemsFinder.at(index),
       matching: find.byKey(const Key('commentStartPositionKey')),
     );
 
