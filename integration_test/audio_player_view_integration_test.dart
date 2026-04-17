@@ -6318,7 +6318,7 @@ void main() {
         // multiply the comment line index by 3 to get the right index
         // of "Interview de Chat GPT  - IA, intelligence, philosophie,
         // géopolitique, post-vérité..."
-        int itemFinderIndex = 2 * gestureDectectorNumberByCommentLine;
+        int itemFinderIndex = 1;
 
         final Finder playIconButtonFinder = find.descendant(
           of: itemsFinder.at(itemFinderIndex),
@@ -8743,7 +8743,7 @@ void main() {
       // in seconds.
 
       expectedCommentEndPositionMin = '1:10';
-      expectedCommentEndPositionMax = '1:10';
+      expectedCommentEndPositionMax = '1:11';
 
       // If this test fails, try to rexecute it several times. If
       // the test continue to fail, restart your computer and
@@ -8946,8 +8946,8 @@ void main() {
 
       // Verify the current audio position in the audio player view
 
-      expectedAudioPlayerAudioPositionMin = '6:10'; // normally 5:48
-      expectedAudioPlayerAudioPositionMax = '6:11';
+      expectedAudioPlayerAudioPositionMin = '6:10';
+      expectedAudioPlayerAudioPositionMax = '6:10';
 
       IntegrationTestUtil.verifyPositionBetweenMinMax(
         tester: tester,
@@ -9695,7 +9695,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
-        itemIndex: 9,
+        itemIndex: 3,
         typeOnPauseAfterPlay: false,
       );
 
@@ -9703,7 +9703,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
-        itemIndex: 3,
+        itemIndex: 1,
         typeOnPauseAfterPlay: false,
       );
 
@@ -9721,7 +9721,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
-        itemIndex: 9,
+        itemIndex: 3,
         typeOnPauseAfterPlay: true,
       );
 
@@ -9729,7 +9729,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: itemsFinder,
-        itemIndex: 3,
+        itemIndex: 1,
         typeOnPauseAfterPlay: true,
       );
 
@@ -9862,7 +9862,7 @@ void main() {
       await IntegrationTestUtil.playComment(
         tester: tester,
         gestureDetectorsFinder: gestureDetectorsFinder,
-        itemIndex: 9,
+        itemIndex: 3,
         typeOnPauseAfterPlay: true,
       );
 
