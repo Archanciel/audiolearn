@@ -6102,7 +6102,7 @@ void main() {
         audioDownloadDuration: "0:00:00",
         audioDownloadSpeed: "321 Ko/sec",
         audioDuration: '0:00:16.0',
-        audioPosition: '0:00:05',
+        audioPosition: '0:00:03.3',
         audioState: "En pause",
         lastListenDateTime: '25/08/2024 15:03',
         audioFileName:
