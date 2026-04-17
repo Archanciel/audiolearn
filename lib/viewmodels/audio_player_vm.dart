@@ -1356,10 +1356,10 @@ class AudioPlayerVM extends ChangeNotifier {
 
     // This should fix the problem when the application plays an audio
     // till its end and due to a problem of the audioplayer plugin, the
-    // next audio is not playxed. When reopening the smartphone after
+    // next audio is not played. When reopening the smartphone after
     // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
-        ((_currentAudio!.audioDuration.inMilliseconds / 1000) / _currentAudio!.audioPlaySpeed).round();
+        _currentAudio!.audioDuration.inSeconds;
 
     // set to false since the audio playing position is set to
     // audio end
