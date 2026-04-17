@@ -696,8 +696,8 @@ class AudioInfoDialog extends StatelessWidget with ScreenMixin {
       );
     } else {
       return Duration(
-              seconds:
-                  (audio.audioPositionSeconds / audio.audioPlaySpeed).round())
+              milliseconds:
+                  ((audio.audioPositionSeconds / audio.audioPlaySpeed) * 1000).round())
           .HHmmss(
         addRemainingOneDigitTenthOfSecond: true,
       );
