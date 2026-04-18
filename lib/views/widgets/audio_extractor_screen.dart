@@ -1331,7 +1331,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                         message: AppLocalizations.of(context)!
                             .commentStartPositionTooltip,
                         child: Text(
-                          TimeFormatUtil.formatSeconds(segment.startPosition),
+                          TimeFormatUtil.formatSeconds(
+                              segment.startPosition / segment.playSpeed),
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
