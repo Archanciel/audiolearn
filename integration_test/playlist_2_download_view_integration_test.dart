@@ -45035,7 +45035,10 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        // Necessary, otherwise the test fails. 2 seconds are necessary."
+        // Necessary, otherwise the test fails. 2 seconds are necessary.
+        // Without that, the test passed if break point was set on the
+        // _verifyAndPlayExtractedMp3Method method below, but failed
+        // without break point.
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
 
