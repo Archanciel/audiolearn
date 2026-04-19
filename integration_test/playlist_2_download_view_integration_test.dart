@@ -41307,6 +41307,42 @@ void main() {
           await tester.tap(saveEditedCommentButtonFinder);
           await tester.pumpAndSettle();
 
+          // Verify the displayed comment details in the comment card
+          // after the comment play speed modifications
+          await IntegrationTestUtil.checkExtractionCommentDetails(
+            tester: tester,
+            segmentDetailsList: [
+              {
+                'number': 1,
+                'commentTitle': "First part",
+                'startPosition': '0:14.3',
+                'endPosition': '0:42.9',
+                'playSpeed': 'Play speed: 0.7',
+                'increaseDuration': 'Increase duration: 0:08.0',
+                'reductionPosition': 'Reduction position: 0:25.0',
+                'reductionDuration': 'Reduction duration: 0:05.0',
+                'duration': 'Duration: 0:28.6 + silence 0:01.0',
+              },
+            ],
+          );
+
+          // Now type on the segment play button to play the comment
+          // segment with the modified play speed and verify the played
+          // audio duration
+          Finder playCommentSegmentButtonFinder =
+              find.byKey(const Key('playSegmentButtonKey_1'));
+          await tester.tap(playCommentSegmentButtonFinder);
+          await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(milliseconds: 1500));
+          await tester.pumpAndSettle();
+
+          Text audioDurationText = tester.widget<Text>(
+              find.byKey(const Key('extractedAudioDurationTextKey')));
+          expect(audioDurationText.data, '0:29.6',
+              reason:
+                  'The played audio duration is not correct after the comment play speed modification.');
+
           // Now edit the third comment to save it again after setting
           // its play speed to 1.25. This modification removes the
           // 'Comment not included' message
@@ -41366,6 +41402,52 @@ void main() {
               find.byKey(const Key('saveEditedSegmentButton'));
           await tester.tap(saveEditedCommentButtonFinder);
           await tester.pumpAndSettle();
+
+          // Necessary to drag up vertically to make visible the edit
+          // icon button of the 1st comment
+          await tester.drag(
+            find.byType(AudioExtractorScreen),
+            const Offset(
+                0, -100), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Verify the displayed comment details in the comment card
+          // after the comment play speed modifications
+          await IntegrationTestUtil.checkExtractionCommentDetails(
+            tester: tester,
+            segmentDetailsList: [
+              {
+                'number': 2,
+                'commentTitle':
+                    "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
+                'startPosition': '3:08.8',
+                'endPosition': '3:32.8',
+                'playSpeed': 'Play speed: 1.25',
+                'increaseDuration': 'Increase duration: 0:05.0',
+                'reductionPosition': 'Reduction position: 4:20.0',
+                'reductionDuration': 'Reduction duration: 0:06.0',
+                'duration': 'Duration: 0:24.0',
+              },
+            ],
+          );
+
+          // Now type on the segment play button to play the comment
+          // segment with the modified play speed and verify the played
+          // audio duration
+          playCommentSegmentButtonFinder =
+              find.byKey(const Key('playSegmentButtonKey_2'));
+          await tester.tap(playCommentSegmentButtonFinder);
+          await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(milliseconds: 1500));
+          await tester.pumpAndSettle();
+
+          audioDurationText = tester.widget<Text>(
+              find.byKey(const Key('extractedAudioDurationTextKey')));
+          expect(audioDurationText.data, '0:24.0',
+              reason:
+                  'The played audio duration is not correct after the comment play speed modification.');
 
           // Now, type on the Extract MP3 button
           final Finder extractMp3ButtonFinder =
@@ -44656,6 +44738,50 @@ void main() {
         await tester.tap(saveEditedCommentButtonFinder);
         await tester.pumpAndSettle();
 
+        // Verify the total duration text
+        Finder segmentsDurationTextFinder =
+            find.byKey(const Key('segmentNumberAndDurationKey_3'));
+        expect(
+          tester.widget<Text>(segmentsDurationTextFinder).data,
+          '1 segment(s) - 0:40.9',
+        );
+
+        // Verify the displayed comment details in the comment card
+        // after the comment play speed modifications
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 4.1,
+              'commentTitle': "Seigneur",
+              'startPosition': '0:00.0',
+              'endPosition': '0:40.9',
+              'playSpeed': 'Play speed: 0.7',
+              'increaseDuration': 'Increase duration: 0:05.0',
+              'reductionPosition': 'Reduction position: 0:20.6',
+              'reductionDuration': 'Reduction duration: 0:08.0',
+              'duration': 'Duration: 0:40.9',
+            },
+          ],
+        );
+
+        // Now type on the segment play button to play the comment
+        // segment with the modified play speed and verify the played
+        // audio duration
+        Finder playCommentSegmentButtonFinder =
+            find.byKey(const Key('playSegmentButtonKey_4.1'));
+        await tester.tap(playCommentSegmentButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
+
+        Text audioDurationText = tester.widget<Text>(
+            find.byKey(const Key('extractedAudioDurationTextKey')));
+        expect(audioDurationText.data, '0:40.9',
+            reason:
+                'The played audio duration is not correct after the comment play speed modification.');
+
         // Verifying the content of the comments json file
 
         final String commentsFilePath = path.join(
@@ -44726,6 +44852,15 @@ void main() {
         await Future.delayed(const Duration(milliseconds: 1000));
         await tester.pumpAndSettle();
 
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -200), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
         // Verify the extract comments to MP3 success dialog message
         // and play and pause the extracted MP3 file
         await _verifyAndPlayExtractedMp3Method(
@@ -44790,6 +44925,43 @@ void main() {
         await tester.tap(saveEditedCommentButtonFinder);
         await tester.pumpAndSettle();
 
+        // Necessary to drag down vertically to make totally visible the
+        // 3rd audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -100), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Verify the segment duration text
+        segmentsDurationTextFinder =
+            find.byKey(const Key('segmentNumberAndDurationKey_2'));
+        expect(
+          tester.widget<Text>(segmentsDurationTextFinder).data,
+          '1 segment(s) - 0:17.8',
+        );
+
+        // Verify the displayed comment details in the comment card
+        // after the comment play speed modifications
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 3.1,
+              'commentTitle':
+                  "Père céleste, merci pour cette nouvelle journée que Tu me donnes",
+              'startPosition': '0:00.0',
+              'endPosition': '0:16.8',
+              'playSpeed': 'Play speed: 1.7',
+              'increaseDuration': 'Increase duration: 0:05.5',
+              'reductionPosition': 'Reduction position: 0:20.0',
+              'reductionDuration': 'Reduction duration: 0:08.6',
+              'duration': 'Duration: 0:16.8 + silence 0:01.0',
+            },
+          ],
+        );
+
         totalDurationStr = '2:18.7';
 
         // Verify the total duration text
@@ -44799,6 +44971,23 @@ void main() {
           tester.widget<Text>(totalDurationTextFinder).data,
           'Total duration: $totalDurationStr',
         );
+
+        // Now type on the segment play button to play the comment
+        // segment with the modified play speed and verify the played
+        // audio duration
+        playCommentSegmentButtonFinder =
+            find.byKey(const Key('playSegmentButtonKey_3.1'));
+        await tester.tap(playCommentSegmentButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
+
+        audioDurationText = tester.widget<Text>(
+            find.byKey(const Key('extractedAudioDurationTextKey')));
+        expect(audioDurationText.data, '0:17.8',
+            reason:
+                'The played audio duration is not correct after the comment play speed modification.');
 
         // Now, type on the Save Comments button
         Finder saveCommentButtonFinder =
@@ -44835,6 +45024,19 @@ void main() {
         await tester.pumpAndSettle();
 
         await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -200), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Necessary, otherwise the test fails. 2 seconds are necessary."
+        await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
 
         // Verify the extract comments to MP3 success dialog message
@@ -45529,9 +45731,8 @@ Future<void> _verifyAndPlayExtractedMp3Method({
 
   // Tap pause
   await tester.tap(playPauseButtonFinder);
-  await tester.pumpAndSettle();
+  await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
-  // Scroll to make the message visible
   await tester.ensureVisible(find.text(extractionPlayingMessage));
   await tester.pumpAndSettle();
 
