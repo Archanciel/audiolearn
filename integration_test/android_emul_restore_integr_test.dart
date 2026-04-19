@@ -1330,7 +1330,7 @@ void main() {
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: localPlaylistTitle,
           audioDuration: '0:10:51.9',
-          audioPosition: '0:00:00',
+          audioPosition: '0:00:00.0',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: fileNameExt,

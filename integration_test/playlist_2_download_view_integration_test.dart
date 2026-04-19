@@ -36735,7 +36735,7 @@ void main() {
         playlistInfoPlayableAudioNumber: '2',
         playlistInfoAudioCommentNumber: '3',
         playlistInfoPlayableAudioTotalDuration: '0:00:55',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:55',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:44',
         playlistInfoPlayableAudioTotalFileSize: '422 KB',
       );
 
@@ -36788,7 +36788,7 @@ void main() {
         playlistInfoPlayableAudioNumber: '1',
         playlistInfoAudioCommentNumber: '2',
         playlistInfoPlayableAudioTotalDuration: '0:00:47',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:54',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:43',
         playlistInfoPlayableAudioTotalFileSize: '360 KB',
       );
     });
@@ -36874,7 +36874,7 @@ void main() {
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: localPlaylistTitle,
         audioDuration: '0:00:15.5',
-        audioPosition: '0:00:00',
+        audioPosition: '0:00:00.0',
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: fileName_5,
@@ -37577,7 +37577,7 @@ void main() {
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:05.6',
-        audioPosition: '0:00:00',
+        audioPosition: '0:00:00.0',
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
@@ -37787,7 +37787,7 @@ void main() {
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:00.7',
-        audioPosition: '0:00:00',
+        audioPosition: '0:00:00.0',
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
@@ -38269,7 +38269,7 @@ void main() {
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
         audioDuration: '0:00:05.6',
-        audioPosition: '0:00:00',
+        audioPosition: '0:00:00.0',
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
@@ -38466,7 +38466,7 @@ void main() {
         isAudioPlayable: true,
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
         audioDuration: '0:00:00.7',
-        audioPosition: '0:00:00',
+        audioPosition: '0:00:00.0',
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
@@ -41730,7 +41730,7 @@ void main() {
             audioEnclosingPlaylistTitle: targetPlaylistTitle,
             extractedFromPlaylistTitle: '1 long music',
             audioDuration: '0:00:51.0',
-            audioPosition: '0:00:00',
+            audioPosition: '0:00:00.0',
             audioState: 'Not listened',
             lastListenDateTime: '',
             audioFileName:
@@ -42521,7 +42521,7 @@ void main() {
             audioEnclosingPlaylistTitle: targetPlaylistTitle,
             extractedFromPlaylistTitle: '1 long music',
             audioDuration: '0:00:54.3',
-            audioPosition: '0:00:00',
+            audioPosition: '0:00:00.0',
             audioState: 'Not listened',
             lastListenDateTime: '',
             audioFileName:
@@ -43529,6 +43529,12 @@ void main() {
         await tester.tap(saveEditedCommentButtonFinder);
         await tester.pumpAndSettle();
 
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(0, 300), // Positive value for vertical drag to scroll up
+        );
+        await tester.pumpAndSettle();
+
         await _verifyAllCommentsAfterQuittingAndCommingBackToExtracDialog(
           tester: tester,
           commentNumberTitleBeforeQuittingDialog: 'Comments (3)',
@@ -43545,13 +43551,13 @@ void main() {
             {
               'number': 1,
               'commentTitle': "First part",
-              'startPosition': '0:10.0',
-              'endPosition': '2:20.0',
+              'startPosition': '0:14.3',
+              'endPosition': '3:20.0',
               'playSpeed': 'Play speed: 0.7',
               'increaseDuration': 'Increase duration: 0:08.0',
               'reductionPosition': 'Reduction position: 2:10.1',
               'reductionDuration': 'Reduction duration: 0:09.9',
-              'duration': 'Duration: 2:10.0 + silence 0:05.0',
+              'duration': 'Duration: 3:05.7 + silence 0:05.0',
             },
             {
               'number': 2,
@@ -43569,13 +43575,13 @@ void main() {
               'number': 3,
               'commentTitle':
                   "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-              'startPosition': '3:56.1',
-              'endPosition': '5:20.8',
+              'startPosition': '3:08.9',
+              'endPosition': '4:16.6',
               'playSpeed': 'Play speed: 1.25',
               'increaseDuration': 'Increase duration: 0:09.0',
               'reductionPosition': 'Reduction position: 5:11.0',
               'reductionDuration': 'Reduction duration: 0:09.8',
-              'duration': 'Duration: 1:24.7',
+              'duration': 'Duration: 1:07.8',
             },
           ],
         );
@@ -43616,13 +43622,13 @@ void main() {
             {
               'number': 1,
               'commentTitle': "First part",
-              'startPosition': '0:10.0',
-              'endPosition': '2:20.0',
+              'startPosition': '0:14.3',
+              'endPosition': '3:20.0',
               'playSpeed': 'Play speed: 0.7',
               'increaseDuration': 'Increase duration: 0:08.0',
               'reductionPosition': 'Reduction position: 2:10.1',
               'reductionDuration': 'Reduction duration: 0:09.9',
-              'duration': 'Duration: 2:10.0 + silence 0:05.0',
+              'duration': 'Duration: 3:05.7 + silence 0:05.0',
             },
             {
               'number': 2,
@@ -43640,13 +43646,13 @@ void main() {
               'number': 3,
               'commentTitle':
                   "2nd ce qu'Il a fait pour Moïse, Il peut le faire pour toi",
-              'startPosition': '3:56.1',
-              'endPosition': '5:20.8',
+              'startPosition': '3:08.9',
+              'endPosition': '4:16.6',
               'playSpeed': 'Play speed: 1.25',
               'increaseDuration': 'Increase duration: 0:09.0',
               'reductionPosition': 'Reduction position: 5:11.0',
               'reductionDuration': 'Reduction duration: 0:09.8',
-              'duration': 'Duration: 1:24.7',
+              'duration': 'Duration: 1:07.8',
             },
           ],
           connentDeletedNumberLst: [
