@@ -36734,8 +36734,8 @@ void main() {
         playlistInfoTotalAudioNumber: '2',
         playlistInfoPlayableAudioNumber: '2',
         playlistInfoAudioCommentNumber: '3',
-        playlistInfoPlayableAudioTotalDuration: '0:00:55',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:44',
+        playlistInfoPlayableAudioTotalDuration: '0:00:55.2',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:44.2',
         playlistInfoPlayableAudioTotalFileSize: '422 KB',
       );
 
@@ -36787,8 +36787,8 @@ void main() {
         playlistInfoTotalAudioNumber: '2',
         playlistInfoPlayableAudioNumber: '1',
         playlistInfoAudioCommentNumber: '2',
-        playlistInfoPlayableAudioTotalDuration: '0:00:47',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:43',
+        playlistInfoPlayableAudioTotalDuration: '0:00:47.2',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:43.2',
         playlistInfoPlayableAudioTotalFileSize: '360 KB',
       );
     });
