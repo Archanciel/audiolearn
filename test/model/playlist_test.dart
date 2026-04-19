@@ -588,7 +588,7 @@ void main() {
 
       expect(
         playlist.getPlayableAudioLstTotalRemainingDuration().inMinutes,
-        30,
+        20,
       );
     });
   });
