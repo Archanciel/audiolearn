@@ -54,7 +54,7 @@ class UiUtil {
 
     if (sizeInBytes < 1000000) {
       formattedValueStr =
-          '${sizeInBytes ~/ 1000} K${AppLocalizations.of(context)!.octetShort}';
+          '${(sizeInBytes / 1000).toStringAsFixed(1)} K${AppLocalizations.of(context)!.octetShort}';
     } else {
       formattedValueStr =
           '${(sizeInBytes / 1000000).toStringAsFixed(2)} M${AppLocalizations.of(context)!.octetShort}';
