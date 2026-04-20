@@ -36824,6 +36824,34 @@ void main() {
         playlistInfoPlayableAudioTotalFileSize: '5.64 MB',
       );
     });
+    testWidgets(
+        '''With 41 audio, verify playlist info.  verify bug when tenth of seconds are set
+           to 10 correction.
+''', (WidgetTester tester) async {
+      const String selectedPlaylistTitle = 'Prières 4';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'playlist_info_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'Chap desc',
+        playlistPlayAudioSortFilterParmsName: 'Chap desc',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '54',
+        playlistInfoPlayableAudioNumber: '41',
+        playlistInfoAudioCommentNumber: '46',
+        playlistInfoPlayableAudioTotalDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:29.0',
+        playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
+      );
+    });
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
