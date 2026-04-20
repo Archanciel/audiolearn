@@ -36736,7 +36736,7 @@ void main() {
         playlistInfoAudioCommentNumber: '3',
         playlistInfoPlayableAudioTotalDuration: '0:00:55.2',
         playlistInfoPlayableAudioTotalRemainingDuration: '0:00:44.2',
-        playlistInfoPlayableAudioTotalFileSize: '422 KB',
+        playlistInfoPlayableAudioTotalFileSize: '422.3 KB',
       );
 
       // Now we delete the 'Really short video' audio from the
@@ -36789,9 +36789,47 @@ void main() {
         playlistInfoAudioCommentNumber: '2',
         playlistInfoPlayableAudioTotalDuration: '0:00:47.2',
         playlistInfoPlayableAudioTotalRemainingDuration: '0:00:43.2',
-        playlistInfoPlayableAudioTotalFileSize: '360 KB',
+        playlistInfoPlayableAudioTotalFileSize: '360.8 KB',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
       );
     });
+    testWidgets(
+        '''With 3 audio, verify playlist info.''', (WidgetTester tester) async {
+      const String selectedPlaylistTitle = 'local';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'playlist_info_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'default',
+        playlistPlayAudioSortFilterParmsName: 'default',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '3',
+        playlistInfoPlayableAudioNumber: '3',
+        playlistInfoAudioCommentNumber: '4',
+        playlistInfoPlayableAudioTotalDuration: '0:03:55.6',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:03:55.6',
+        playlistInfoPlayableAudioTotalFileSize: '5.64 MB',
+      );
+    });
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
   });
   group('''Import audios functionality.''', () {
     testWidgets(
