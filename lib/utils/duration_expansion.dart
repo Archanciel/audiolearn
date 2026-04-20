@@ -37,25 +37,36 @@ extension DurationExpansion on Duration {
   String HHmmss({
     bool addRemainingOneDigitTenthOfSecond = false,
   }) {
-    int durationMinute = inMinutes.remainder(60);
-    int durationSecond = inSeconds.remainder(60);
+    int totalMs = inMilliseconds;
     String minusStr = '';
 
-    if (inMicroseconds < 0) {
+    if (totalMs < 0) {
       minusStr = '-';
+      totalMs = totalMs.abs();
     }
 
     if (addRemainingOneDigitTenthOfSecond) {
-      // the case when the method is called in the CommentAddEditDialog
-      // when the user is defining a comment position in tenth of seconds
-      int remainingOneDigitTenthOfSecond =
-          (inMilliseconds.remainder(1000).abs() / 100)
-              .round(); // the remaining tenth of second
+      // Round to nearest tenth of second (100 ms)
+      int roundedMs = ((totalMs + 50) ~/ 100) * 100;
 
-      return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}.$remainingOneDigitTenthOfSecond";
+      int hours = roundedMs ~/ 3600000;
+      int minutes = (roundedMs ~/ 60000) % 60;
+      int seconds = (roundedMs ~/ 1000) % 60;
+      int tenths = (roundedMs % 1000) ~/ 100;
+
+      return "$minusStr$hours:"
+          "${numberFormatTwoInt.format(minutes)}:"
+          "${numberFormatTwoInt.format(seconds)}."
+          "$tenths";
     }
 
-    return "$minusStr${inHours.abs()}:${numberFormatTwoInt.format(durationMinute.abs())}:${numberFormatTwoInt.format(durationSecond.abs())}";
+    int hours = totalMs ~/ 3600000;
+    int minutes = (totalMs ~/ 60000) % 60;
+    int seconds = (totalMs ~/ 1000) % 60;
+
+    return "$minusStr$hours:"
+        "${numberFormatTwoInt.format(minutes)}:"
+        "${numberFormatTwoInt.format(seconds)}";
   }
 
   /// WARNING: this method is callable on a Duration instance only
