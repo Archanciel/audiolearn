@@ -8512,7 +8512,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9237,7 +9237,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9760,7 +9760,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -9920,7 +9920,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "morning _ cinematic video";
           String currentAudioSubTitle =
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -10606,7 +10606,7 @@ void main() {
         // title/subTitle of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11436,7 +11436,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -11890,7 +11890,7 @@ void main() {
         // of the 'S8 audio' playlist
         currentAudioTitle = "morning _ cinematic video";
         currentAudioSubTitle =
-            "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+            "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -12051,7 +12051,7 @@ void main() {
           // of the 'S8 audio' playlist
           String currentAudioTitle = "morning _ cinematic video";
           String currentAudioSubTitle =
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18";
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -14199,7 +14199,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Total saved audio number: 3, total size: 783 KB and total duration: 0:02:08.0."));
+                "Total saved audio number: 3, total size: 783.1 KB and total duration: 0:02:08.0."));
         expect(actualMessage, contains("Save operation real duration: "));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
@@ -14368,7 +14368,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Total saved audio number: 3, total size: 783 KB and total duration: 0:02:08.0."));
+                "Total saved audio number: 3, total size: 783.1 KB and total duration: 0:02:08.0."));
         expect(actualMessage, contains("Save operation real duration: "));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
@@ -14688,7 +14688,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Total saved audio number: 1, total size: 360 KB and total duration: 0:00:59.0."));
+                "Total saved audio number: 1, total size: 360.8 KB and total duration: 0:00:59.0."));
         expect(actualMessage, contains("Save operation real duration: "));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
@@ -14857,7 +14857,7 @@ void main() {
         expect(
             actualMessage,
             contains(
-                "Total saved audio number: 1, total size: 360 KB and total duration: 0:00:59.0."));
+                "Total saved audio number: 1, total size: 360.8 KB and total duration: 0:00:59.0."));
         expect(actualMessage, contains("Save operation real duration: "));
         expect(actualMessage, contains("number of bytes saved per second: "));
         expect(actualMessage, contains("number of created ZIP file(s): 1."));
@@ -18347,7 +18347,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -18431,7 +18431,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:01.5 14 KB converted on 07/09/2025 at 07:37',
+              '0:00:01.5 15.0 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18469,7 +18469,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68 KB converted on 07/09/2025 at 07:37',
+              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18519,7 +18519,7 @@ void main() {
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:06.9',
-            audioFileSize: '68 KB',
+            audioFileSize: '68.9 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -18768,7 +18768,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -18852,7 +18852,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:01.5 14 KB converted on 07/09/2025 at 07:37',
+              '0:00:01.5 15.0 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18891,7 +18891,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68 KB converted on 07/09/2025 at 07:37',
+              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18941,7 +18941,7 @@ void main() {
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:06.9',
-            audioFileSize: '68 KB',
+            audioFileSize: '68.9 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -19190,7 +19190,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -19257,7 +19257,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:01.5 14 KB converted on 07/09/2025 at 07:37',
+              '0:00:01.5 15.0 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19295,7 +19295,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68 KB converted on 07/09/2025 at 07:37',
+              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19338,7 +19338,7 @@ void main() {
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:06.9',
-            audioFileSize: '68 KB',
+            audioFileSize: '68.9 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -19585,7 +19585,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -19652,7 +19652,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:01.5 14 KB converted on 07/09/2025 at 07:37',
+              '0:00:01.5 15.0 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19691,7 +19691,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68 KB converted on 07/09/2025 at 07:37',
+              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19734,7 +19734,7 @@ void main() {
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
             audioDuration: '0:00:06.9',
-            audioFileSize: '68 KB',
+            audioFileSize: '68.9 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -19970,8 +19970,8 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
-              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61.4 KB at 20.2 KB/sec on 10/01/2024 at 18:18",
               "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
@@ -20871,8 +20871,8 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
-              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61.4 KB at 20.2 KB/sec on 10/01/2024 at 18:18",
               "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
@@ -21275,8 +21275,8 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
-              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61.4 KB at 20.2 KB/sec on 10/01/2024 at 18:18",
               "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
@@ -22233,8 +22233,8 @@ void main() {
               "Jancovici m'explique l’importance des ordres de grandeur face au changement climatique",
             ];
             List<String> audioSubTitles = [
-              "0:00:47.2 360 KB at 283 KB/sec on 10/01/2024 at 18:18",
-              "0:00:10.0 61 KB at 20 KB/sec on 10/01/2024 at 18:18",
+              "0:00:47.2 360.8 KB at 283.1 KB/sec on 10/01/2024 at 18:18",
+              "0:00:10.0 61.4 KB at 20.2 KB/sec on 10/01/2024 at 18:18",
               "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
             ];
 
@@ -22837,7 +22837,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
+            '0:02:39.6 2.59 MB at 502.3 KB/sec on 11/02/2025 at 09:00',
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -23013,7 +23013,7 @@ void main() {
           ];
 
           List<String> audioSubTitles = [
-            '0:02:39.6 2.59 MB at 502 KB/sec on 11/02/2025 at 09:00',
+            '0:02:39.6 2.59 MB at 502.3 KB/sec on 11/02/2025 at 09:00',
           ];
 
           _verifyRestoredPlaylistAndAudio(
@@ -24305,9 +24305,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -24655,9 +24655,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -25006,9 +25006,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -25355,9 +25355,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -28308,9 +28308,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -28658,9 +28658,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -29439,9 +29439,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -29634,9 +29634,9 @@ void main() {
             ];
 
             List<String> audioSubTitles = [
-              '0:00:24.1 11 KB at 7 KB/sec on 18/05/2025 at 16:40',
-              "0:00:58.9 360 KB at 175 KB/sec on 18/05/2025 at 16:40",
-              "0:00:09.9 61 KB at 30 KB/sec on 18/05/2025 at 16:40",
+              '0:00:24.1 11.2 KB at 7.5 KB/sec on 18/05/2025 at 16:40',
+              "0:00:58.9 360.8 KB at 175.5 KB/sec on 18/05/2025 at 16:40",
+              "0:00:09.9 61.3 KB at 30.7 KB/sec on 18/05/2025 at 16:40",
             ];
 
             _verifyRestoredPlaylistAndAudio(
@@ -34959,7 +34959,7 @@ void main() {
         ],
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:20",
         totalSavedMessage:
-            "Total saved audio number: 2, total size: 861 KB and total duration: 0:01:47.6.",
+            "Total saved audio number: 2, total size: 861.2 KB and total duration: 0:01:47.6.",
         savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'audioLearn_mp3_from_2026-03-02_20_20_15_on_',
         expectedMp3ZipContentLst: [
@@ -34985,7 +34985,7 @@ void main() {
         ],
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:29",
         savedAudioMessage:
-            "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
+            "Total saved audio number: 1, total size: 10.6 KB and total duration: 0:00:01.3",
         savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'Local_mp3_from_2026-03-02_20_29_26_on_',
       );
@@ -35123,7 +35123,7 @@ void main() {
         ],
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:20",
         totalSavedMessage:
-            "Total saved audio number: 4, total size: 899 KB and total duration: 0:01:52.5.",
+            "Total saved audio number: 4, total size: 899.8 KB and total duration: 0:01:52.5.",
         savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: 'audioLearn_mp3_from_2026-03-02_20_20_15_on_',
         expectedMp3ZipContentLst: [
@@ -35154,7 +35154,7 @@ void main() {
         ],
         oldestAudioDownloadDateTimeStr: "02/03/2026 20:49",
         savedAudioMessage:
-            "Total saved audio number: 1, total size: 10 KB and total duration: 0:00:01.3",
+            "Total saved audio number: 1, total size: 10.6 KB and total duration: 0:00:01.3",
         savedMp3DirectoryPath: "$saveZipFilePath${path.separator}MP3",
         mp3ZipNameFirstPart: "Dieu je T'adore_mp3_from_2026-03-02_20_49_53_on_",
         dragToBottom: true,
@@ -36944,7 +36944,7 @@ void main() {
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: fileName_5,
-        audioFileSize: '155 KB',
+        audioFileSize: '155.1 KB',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
@@ -36956,7 +36956,7 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:15.5 155 KB imported on ${DateFormat('dd/MM/yyyy').format(importDateTime)} at ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
+          '0:00:15.5 155.1 KB imported on ${DateFormat('dd/MM/yyyy').format(importDateTime)} at ${DateFormat('HH:mm').format(importDateTime)}', // this is the imported date time
         ],
         firstAudioListTileIndex: 3,
       );
@@ -37609,8 +37609,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -37647,7 +37647,7 @@ void main() {
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56 KB',
+        audioFileSize: '56.4 KB',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
@@ -37818,9 +37818,9 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -37857,7 +37857,7 @@ void main() {
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6 KB',
+        audioFileSize: '6.9 KB',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
@@ -38318,8 +38318,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 3,
       );
@@ -38339,7 +38339,7 @@ void main() {
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56 KB',
+        audioFileSize: '56.4 KB',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
@@ -38514,9 +38514,9 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 3,
       );
@@ -38536,7 +38536,7 @@ void main() {
         audioState: 'Not listened',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6 KB',
+        audioFileSize: '6.9 KB',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
@@ -38730,8 +38730,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:11.8 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:11.8 117 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -38837,8 +38837,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:10.4 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:10.4 104 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -42674,7 +42674,7 @@ void main() {
             lastListenDateTime: '',
             audioFileName:
                 '260126-192653-Quand Dieu transforme l’épreuve en victoire 26-01-26.mp3',
-            audioFileSize: '434 KB',
+            audioFileSize: '434.9 KB',
             isMusicQuality: false, // Is music quality
             audioPlaySpeed: '1.0',
             audioVolume: '50.0 %',
