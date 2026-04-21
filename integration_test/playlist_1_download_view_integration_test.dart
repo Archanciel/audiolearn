@@ -6100,14 +6100,14 @@ void main() {
         copiedFromPlaylistTitle: '',
         copiedToPlaylistTitle: localAudioTargetOnePlaylistTitle,
         audioDownloadDuration: "0:00:00",
-        audioDownloadSpeed: "321 Ko/sec",
+        audioDownloadSpeed: "321.1 Ko/sec",
         audioDuration: '0:00:16.0',
         audioPosition: '0:00:03.3',
         audioState: "En pause",
         lastListenDateTime: '25/08/2024 15:03',
         audioFileName:
             '230628-033811-audio learn test short video one 23-06-10.mp3',
-        audioFileSize: '143 Ko',
+        audioFileSize: '143.7 Ko',
         isMusicQuality: false,
         audioPlaySpeed: '1.5',
         audioVolume: '50.0 %',
@@ -13341,7 +13341,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "L’uniforme arrive en France en 2024";
         String currentAudioSubTitle =
-            "0:00:18.4 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
+            "0:00:18.4 183.6 KB at 127.1 KB/sec on 12/08/2025 at 16:29";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13486,7 +13486,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "L’uniforme arrive en France en 2024";
         String currentAudioSubTitle =
-            "0:00:18.4 183 KB at 127 KB/sec on 12/08/2025 at 16:29";
+            "0:00:18.4 183.6 KB at 127.1 KB/sec on 12/08/2025 at 16:29";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13683,7 +13683,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:15.5 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:15.5 155.1 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -13846,7 +13846,7 @@ void main() {
         // of the 'S8 audio' playlist
         String currentAudioTitle = "bbb";
         String currentAudioSubTitle =
-            "0:00:15.5 155 KB converted on 25/08/2025 at 17:53";
+            "0:00:15.5 155.1 KB converted on 25/08/2025 at 17:53";
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
