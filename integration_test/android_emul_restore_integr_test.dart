@@ -1860,7 +1860,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:05.6 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -1880,7 +1880,7 @@ void main() {
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56 KB',
+          audioFileSize: '56.4 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -2053,7 +2053,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.7 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2073,7 +2073,7 @@ void main() {
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6 KB',
+          audioFileSize: '6.9 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -2362,7 +2362,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:07.1 56 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:07.1 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2382,7 +2382,7 @@ void main() {
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56 KB',
+          audioFileSize: '56.4 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
@@ -2596,7 +2596,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.9 6 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.9 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2616,7 +2616,7 @@ void main() {
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6 KB',
+          audioFileSize: '6.9 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',

@@ -13107,7 +13107,7 @@ Future<void> _createCommentUnderPlaySpeed({
 
   expect(
     tester.widget<Text>(commentStartTextWidgetFinder).data!,
-    commentStartAndEndInitialPosition, // '1:31'
+    commentStartAndEndInitialPosition,
   );
   expect(
     tester.widget<Text>(commentEndTextWidgetFinder).data!,
