@@ -36735,7 +36735,7 @@ void main() {
         playlistInfoPlayableAudioNumber: '2',
         playlistInfoAudioCommentNumber: '3',
         playlistInfoPlayableAudioTotalDuration: '0:00:55.2',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:44.2',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:43.2',
         playlistInfoPlayableAudioTotalFileSize: '422.3 KB',
       );
 
@@ -36826,8 +36826,7 @@ void main() {
     });
     testWidgets(
         '''With 41 audio, verify playlist info.  verify bug when tenth of seconds are set
-           to 10 correction.
-''', (WidgetTester tester) async {
+           to 10 correction.''', (WidgetTester tester) async {
       const String selectedPlaylistTitle = 'Prières 4';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -36848,7 +36847,7 @@ void main() {
         playlistInfoPlayableAudioNumber: '41',
         playlistInfoAudioCommentNumber: '46',
         playlistInfoPlayableAudioTotalDuration: '0:56:32.0',
-        playlistInfoPlayableAudioTotalRemainingDuration: '0:00:29.0',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:02:54.2',
         playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
       );
     });

@@ -560,8 +560,19 @@ class Playlist {
     Duration totalRemainingDuration = Duration.zero;
 
     for (Audio audio in playableAudioLst) {
-      totalRemainingDuration +=
-          (audio.durationImpactedByPlaySpeed() - Duration(seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed).round()));
+      if (!audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
+          audio.audioPositionSeconds > 0) {
+        continue;
+      } else {
+        if (audio.audioPositionSeconds > 0) {
+          totalRemainingDuration += (audio.durationImpactedByPlaySpeed() -
+              Duration(
+                  seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed)
+                      .round()));
+        } else {
+          totalRemainingDuration += audio.durationImpactedByPlaySpeed();
+        }
+      }
     }
 
     return totalRemainingDuration;
