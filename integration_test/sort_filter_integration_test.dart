@@ -8094,6 +8094,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(appScreenNavigationButton);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
+          // Necessary, otherwise the test fails. 1 seconds are necessary.
+          // Without that, the test passed if break point was set on the
+          // checkDropdopwnButtonSelectedTitle method call below, but failed
+          // without break point.
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+
           // Verify that the dropdown button has been updated with the
           // 'appliqué' sort/filter parms selected
           IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
@@ -8490,6 +8497,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               find.byKey(const ValueKey('playlistDownloadViewIconButton'));
           await tester.tap(appScreenNavigationButton);
           await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Necessary, otherwise the test fails. 1 seconds are necessary.
+          // Without that, the test passed if break point was set on the
+          // checkDropdopwnButtonSelectedTitle method call below, but failed
+          // without break point.
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
 
           // Verify that the dropdown button has been updated with the
           // 'appliqué' sort/filter parms selected
