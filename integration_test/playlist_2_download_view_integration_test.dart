@@ -4599,7 +4599,7 @@ void main() {
       String currentAudioTitle =
           "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour";
       String currentAudioSubTitle =
-          "0:00:28.6 463 KB at 193 KB/sec on 04/09/2025 at 08:48";
+          "0:00:28.6 463.4 KB at 193.5 KB/sec on 04/09/2025 at 08:48";
 
       // Verify that the current audio is displayed with the correct
       // title and subtitle color
@@ -4646,8 +4646,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
@@ -4657,21 +4657,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 07/09/2025 at 17:22",
-        "0:00:38.10 Listened on 07/09/2025 at 17:21",
+        "0:00:07.0 Listened on 07/09/2025 at 17:22",
+        "0:00:39.0 Listened on 07/09/2025 at 17:21",
         "0:10:55.2 Listened on 19/08/2024 at 14:46",
         "0:05:11.2 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Not listened",
@@ -4679,15 +4679,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 00/00/0000",
-        "0:00:38.10 Video upload date: 00/00/0000",
+        "0:00:07.0 Video upload date: 00/00/0000",
+        "0:00:39.0 Video upload date: 00/00/0000",
         "0:05:11.2 Video upload date: 23/09/2023",
         "0:10:55.2 Video upload date: 10/09/2023",
         "0:05:11.2 Video upload date: 12/06/2022",
@@ -4697,8 +4697,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       DateTime now = DateTime.now();
@@ -4736,8 +4736,8 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
@@ -4747,21 +4747,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 09/07/2025 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 09/07/2025 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 08/19/2024 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 09/07/2025 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 09/07/2025 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 03/16/2024 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 09/07/2025 at 17:22",
-        "0:00:38.10 Listened on 09/07/2025 at 17:21",
+        "0:00:07.0 Listened on 09/07/2025 at 17:22",
+        "0:00:39.0 Listened on 09/07/2025 at 17:21",
         "0:10:55.2 Listened on 08/19/2024 at 14:46",
         "0:05:11.2 Listened on 03/16/2024 at 17:09",
         "0:05:11.2 Not listened",
@@ -4769,15 +4769,15 @@ void main() {
 
       audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 00/00/0000",
-        "0:00:38.10 Video upload date: 00/00/0000",
+        "0:00:07.0 Video upload date: 00/00/0000",
+        "0:00:39.0 Video upload date: 00/00/0000",
         "0:05:11.2 Video upload date: 09/23/2023",
         "0:10:55.2 Video upload date: 09/10/2023",
         "0:05:11.2 Video upload date: 06/12/2022",
@@ -4787,8 +4787,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
       ];
 
       // Verifying initial MM/dd/yyyy date format application
@@ -4824,8 +4824,8 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
@@ -4835,21 +4835,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 2025/09/07 at 17:22",
-        "0:00:38.10 Listened on 2025/09/07 at 17:21",
+        "0:00:07.0 Listened on 2025/09/07 at 17:22",
+        "0:00:39.0 Listened on 2025/09/07 at 17:21",
         "0:10:55.2 Listened on 2024/08/19 at 14:46",
         "0:05:11.2 Listened on 2024/03/16 at 17:09",
         "0:05:11.2 Not listened",
@@ -4857,15 +4857,15 @@ void main() {
 
       audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 0000/00/00",
-        "0:00:38.10 Video upload date: 0000/00/00",
+        "0:00:07.0 Video upload date: 0000/00/00",
+        "0:00:39.0 Video upload date: 0000/00/00",
         "0:05:11.2 Video upload date: 2023/09/23",
         "0:10:55.2 Video upload date: 2023/09/10",
         "0:05:11.2 Video upload date: 2022/06/12",
@@ -4875,8 +4875,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
       ];
 
       // Verifying initial yyyy/MM/dd date format application
@@ -4912,8 +4912,8 @@ void main() {
       );
 
       audioSubTitles = [
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
@@ -4923,21 +4923,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 07/09/2025 at 17:22",
-        "0:00:38.10 Listened on 07/09/2025 at 17:21",
+        "0:00:07.0 Listened on 07/09/2025 at 17:22",
+        "0:00:39.0 Listened on 07/09/2025 at 17:21",
         "0:10:55.2 Listened on 19/08/2024 at 14:46",
         "0:05:11.2 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Not listened",
@@ -4945,15 +4945,15 @@ void main() {
 
       audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 00/00/0000",
-        "0:00:38.10 Video upload date: 00/00/0000",
+        "0:00:07.0 Video upload date: 00/00/0000",
+        "0:00:39.0 Video upload date: 00/00/0000",
         "0:05:11.2 Video upload date: 23/09/2023",
         "0:10:55.2 Video upload date: 10/09/2023",
         "0:05:11.2 Video upload date: 12/06/2022",
@@ -4963,8 +4963,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       // Verifying initial dd/MM/yyyy date format application
@@ -5030,8 +5030,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
@@ -5041,21 +5041,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 09/07/2025 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 09/07/2025 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 08/19/2024 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 09/07/2025 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 09/07/2025 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 03/16/2024 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 09/07/2025 at 17:22",
-        "0:00:38.10 Listened on 09/07/2025 at 17:21",
+        "0:00:07.0 Listened on 09/07/2025 at 17:22",
+        "0:00:39.0 Listened on 09/07/2025 at 17:21",
         "0:10:55.2 Listened on 08/19/2024 at 14:46",
         "0:05:11.2 Listened on 03/16/2024 at 17:09",
         "0:05:11.2 Not listened",
@@ -5063,15 +5063,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 00/00/0000",
-        "0:00:38.10 Video upload date: 00/00/0000",
+        "0:00:07.0 Video upload date: 00/00/0000",
+        "0:00:39.0 Video upload date: 00/00/0000",
         "0:05:11.2 Video upload date: 09/23/2023",
         "0:10:55.2 Video upload date: 09/10/2023",
         "0:05:11.2 Video upload date: 06/12/2022",
@@ -5081,8 +5081,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 01/07/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 01/08/2024 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 12/26/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 09/07/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 09/07/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 09/07/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 09/07/2025 at 16:52",
       ];
 
       // Verifying initial MM/dd/yyyy date format application
@@ -5145,8 +5145,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
@@ -5156,21 +5156,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 2025/09/07 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 2024/08/19 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 2025/09/07 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 2024/03/16 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 2025/09/07 at 17:22",
-        "0:00:38.10 Listened on 2025/09/07 at 17:21",
+        "0:00:07.0 Listened on 2025/09/07 at 17:22",
+        "0:00:39.0 Listened on 2025/09/07 at 17:21",
         "0:10:55.2 Listened on 2024/08/19 at 14:46",
         "0:05:11.2 Listened on 2024/03/16 at 17:09",
         "0:05:11.2 Not listened",
@@ -5178,15 +5178,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 0000/00/00",
-        "0:00:38.10 Video upload date: 0000/00/00",
+        "0:00:07.0 Video upload date: 0000/00/00",
+        "0:00:39.0 Video upload date: 0000/00/00",
         "0:05:11.2 Video upload date: 2023/09/23",
         "0:10:55.2 Video upload date: 2023/09/10",
         "0:05:11.2 Video upload date: 2022/06/12",
@@ -5196,8 +5196,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 2024/01/07 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 2024/01/08 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 2023/12/26 at 09:45",
-        "0:00:06.10 55 KB converted on 2025/09/07 at 16:55",
-        "0:00:38.10 311 KB imported on 2025/09/07 at 16:52",
+        "0:00:07.0 55.9 KB converted on 2025/09/07 at 16:55",
+        "0:00:39.0 311.6 KB imported on 2025/09/07 at 16:52",
       ];
 
       // Verifying initial yyyy/MM/dd date format application
@@ -5258,8 +5258,8 @@ void main() {
       const String youtubePlaylistTitle = 'S8 audio';
 
       List<String> audioSubTitles = [
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
@@ -5269,21 +5269,21 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45 Audio downl duration: 0:00:01",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35 Audio downl duration: 0:00:01",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55 Audio downl duration: 0:00:00",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52 Audio downl duration: 0:00:00",
       ];
 
       List<String> audioSubTitlesWithAudioRemainingDuration = [
-        "0:00:06.10 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
+        "0:00:07.0 Remaining 00:00:03 Listened on 07/09/2025 at 17:22",
         "0:10:55.2 Remaining 00:00:04 Listened on 19/08/2024 at 14:46",
-        "0:00:38.10 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
+        "0:00:39.0 Remaining 00:00:34 Listened on 07/09/2025 at 17:21",
         "0:05:11.2 Remaining 00:00:38 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Remaining 00:06:29 Not listened",
       ];
 
       List<String> audioSubTitlesLastListenedDateTimeDescending = [
-        "0:00:06.10 Listened on 07/09/2025 at 17:22",
-        "0:00:38.10 Listened on 07/09/2025 at 17:21",
+        "0:00:07.0 Listened on 07/09/2025 at 17:22",
+        "0:00:39.0 Listened on 07/09/2025 at 17:21",
         "0:10:55.2 Listened on 19/08/2024 at 14:46",
         "0:05:11.2 Listened on 16/03/2024 at 17:09",
         "0:05:11.2 Not listened",
@@ -5291,15 +5291,15 @@ void main() {
 
       List<String> audioSubTitlesTitleAsc = [
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       List<String> audioSubTitlesVideoUploadDate = [
-        "0:00:06.10 Video upload date: 00/00/0000",
-        "0:00:38.10 Video upload date: 00/00/0000",
+        "0:00:07.0 Video upload date: 00/00/0000",
+        "0:00:39.0 Video upload date: 00/00/0000",
         "0:05:11.2 Video upload date: 23/09/2023",
         "0:10:55.2 Video upload date: 10/09/2023",
         "0:05:11.2 Video upload date: 12/06/2022",
@@ -5309,8 +5309,8 @@ void main() {
         "0:10:55.2 4.99 MB at 2.55 MB/sec on 07/01/2024 at 08:16",
         "0:05:11.2 2.37 MB at 1.69 MB/sec on 08/01/2024 at 16:35",
         "0:05:11.2 2.37 MB at 1.36 MB/sec on 26/12/2023 at 09:45",
-        "0:00:06.10 55 KB converted on 07/09/2025 at 16:55",
-        "0:00:38.10 311 KB imported on 07/09/2025 at 16:52",
+        "0:00:07.0 55.9 KB converted on 07/09/2025 at 16:55",
+        "0:00:39.0 311.6 KB imported on 07/09/2025 at 16:52",
       ];
 
       DateTime now = DateTime.now();
@@ -5366,7 +5366,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5467,7 +5467,7 @@ void main() {
         String newAudioToSelectTitle =
             '6-audio learn test short video two 23-06-10';
         String newAudioToSelectSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:23';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:23';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5496,7 +5496,7 @@ void main() {
 
         newAudioToSelectTitle = '7-audio learn test short video two 23-06-10';
         String newAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:22';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:22';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5527,7 +5527,7 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 600));
         await tester.pumpAndSettle();
 
-        currentAudioSubTitle = '0:00:09.9 61 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5557,7 +5557,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5570,7 +5570,7 @@ void main() {
         String newAudioToSelectTitle =
             '8-audio learn test short video two 23-06-10';
         String newAudioToSelectSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:21';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:21';
 
         // Go to audio player view to select another audio
         await _selectNewAudioInAudioPlayerViewAndReturnToPlaylistDownloadView(
@@ -5597,7 +5597,7 @@ void main() {
           offsetValue: 300.0,
         );
 
-        currentAudioSubTitle = '0:00:09.9 61 Ko importé le 30/10/2024 à 08:24';
+        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:24';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5624,7 +5624,7 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 600));
         await tester.pumpAndSettle();
 
-        currentAudioSubTitle = '0:00:09.9 61 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5658,7 +5658,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5755,7 +5755,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5815,7 +5815,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5876,7 +5876,7 @@ void main() {
         String currentAudioTitle =
             '99-audio learn test short video two 23-06-10';
         String currentAudioSubTitle =
-            '0:00:09.9 61 Ko importé le 30/10/2024 à 08:19';
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:19';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -10038,7 +10038,7 @@ void main() {
           String currentAudioTitle =
               "What place Maria Valtorta takes in your spiritual journey";
           String currentAudioSubTitle =
-              "0:04:49.1 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48";
+              "0:04:49.1 2.20 MB at 595.4 KB/sec on 03/06/2025 at 16:48";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
@@ -12165,7 +12165,7 @@ void main() {
           String currentAudioTitle =
               "What place Maria Valtorta takes in your spiritual journey";
           String currentAudioSubTitle =
-              "0:04:49.1 2.20 MB at 595 KB/sec on 03/06/2025 at 16:48";
+              "0:04:49.1 2.20 MB at 595.4 KB/sec on 03/06/2025 at 16:48";
 
           // Verify that the current audio is displayed with the correct
           // title and subtitle color
