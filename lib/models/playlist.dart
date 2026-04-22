@@ -560,20 +560,19 @@ class Playlist {
     Duration totalRemainingDuration = Duration.zero;
 
     for (Audio audio in playableAudioLst) {
-      if (!audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd &&
-          audio.audioPositionSeconds > 0) {
-        continue;
-      } else {
-        if (audio.audioPositionSeconds > 0) {
-          totalRemainingDuration += (audio.durationImpactedByPlaySpeed() -
-              Duration(
-                  seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed)
-                      .round()));
-          // print('${audio.validVideoTitle}} $totalRemainingDuration');
-        } else {
+      if (!audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd) {
+        if (audio.audioPositionSeconds == 0) {
           totalRemainingDuration += audio.durationImpactedByPlaySpeed();
           // print('${audio.validVideoTitle}} ${audio.durationImpactedByPlaySpeed()}} $totalRemainingDuration');
+        } else {
+          continue;
         }
+      } else {
+        totalRemainingDuration += (audio.durationImpactedByPlaySpeed() -
+            Duration(
+                seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed)
+                    .round()));
+        // print('${audio.validVideoTitle}} $totalRemainingDuration');
       }
     }
 
