@@ -569,8 +569,10 @@ class Playlist {
               Duration(
                   seconds: (audio.audioPositionSeconds / audio.audioPlaySpeed)
                       .round()));
+          // print('${audio.validVideoTitle}} $totalRemainingDuration');
         } else {
           totalRemainingDuration += audio.durationImpactedByPlaySpeed();
+          // print('${audio.validVideoTitle}} ${audio.durationImpactedByPlaySpeed()}} $totalRemainingDuration');
         }
       }
     }
