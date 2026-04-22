@@ -5527,7 +5527,8 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 600));
         await tester.pumpAndSettle();
 
-        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle =
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5597,7 +5598,8 @@ void main() {
           offsetValue: 300.0,
         );
 
-        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:24';
+        currentAudioSubTitle =
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:24';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -5624,7 +5626,8 @@ void main() {
         await tester.drag(listFinder, const Offset(0, 600));
         await tester.pumpAndSettle();
 
-        currentAudioSubTitle = '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
+        currentAudioSubTitle =
+            '0:00:09.9 61.4 Ko importé le 30/10/2024 à 08:26';
 
         // Verify that the current audio is displayed with the correct
         // title and subtitle color
@@ -36798,8 +36801,8 @@ void main() {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets(
-        '''With 3 audio, verify playlist info.''', (WidgetTester tester) async {
+    testWidgets('''With 3 audio, verify playlist info.''',
+        (WidgetTester tester) async {
       const String selectedPlaylistTitle = 'local';
 
       await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
@@ -36850,13 +36853,36 @@ void main() {
         playlistInfoPlayableAudioTotalRemainingDuration: '0:02:54.2',
         playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
       );
-    });
+
+      // Now rewind all audio to start position and verify that the
+      // playlist info is updated accordingly
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: selectedPlaylistTitle,
+        numberOfRewindedAudio: 40,
+      );
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'Chap desc',
+        playlistPlayAudioSortFilterParmsName: 'Chap desc',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '54',
+        playlistInfoPlayableAudioNumber: '41',
+        playlistInfoAudioCommentNumber: '46',
+        playlistInfoPlayableAudioTotalDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
+      );
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
         rootPath: kApplicationPathWindowsTest,
       );
+    });
   });
   group('''Import audios functionality.''', () {
     testWidgets(
