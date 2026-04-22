@@ -3007,4 +3007,8 @@ class AppLocalizationsFr extends AppLocalizations {
       Object playlist, Object positionFrom, Object positionTo) {
     return 'La playlist $playlist a été déplacée de la position $positionFrom à la position $positionTo.';
   }
+
+  @override
+  String get moveAudioToPositionErrorMessage =>
+      'La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\".';
 }

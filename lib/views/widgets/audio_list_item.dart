@@ -344,7 +344,7 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                 displayHelpItemNumber: false,
               ),
             ];
-            showDialog<void>(
+            showDialog<bool>(
               context: context,
               barrierDismissible:
                   false, // This line prevents the dialog from closing when
@@ -355,7 +355,15 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
                   helpItemsLst: audioTitleModificationHelpItemsLst,
                 );
               },
-            );
+            ).then((value) {
+              if (value == true) {
+                // Value is true if a warning message must
+                // be displayed
+                warningMessageVM.setError(
+                  errorType: ErrorType.moveAudioToPositionError,
+                );
+              }
+            });
             break;
           case AudioPopupMenuAction.renameAudioFile:
             showDialog<void>(

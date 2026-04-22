@@ -4771,6 +4771,12 @@ abstract class AppLocalizations {
   /// **'The playlist \"{playlist}\" was moved from position {positionFrom} to position {positionTo}.'**
   String movedPlaylistMessage(
       Object playlist, Object positionFrom, Object positionTo);
+
+  /// No description provided for @moveAudioToPositionErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".'**
+  String get moveAudioToPositionErrorMessage;
 }
 
 class _AppLocalizationsDelegate

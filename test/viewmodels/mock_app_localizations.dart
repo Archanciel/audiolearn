@@ -3096,4 +3096,7 @@ class MockAppLocalizations extends AppLocalizations {
     Object positionTo,
   ) =>
       "The playlist $playlist was moved from position $positionFrom to position $positionTo.";
+
+  @override
+  String get moveAudioToPositionErrorMessage => "Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".";
 }

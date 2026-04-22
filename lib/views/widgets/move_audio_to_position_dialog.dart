@@ -84,11 +84,9 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
         if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.enter ||
               event.logicalKey == LogicalKeyboardKey.numpadEnter) {
-            // executing the same code as in the audioModification
-            // TextButton onPressed callback
-            _moveAudioToPosition(context);
+            bool doDisplayWarning = _moveAudioToPosition(context);
 
-            Navigator.of(context).pop(_audioPositionTextEditingController.text);
+            Navigator.of(context).pop(doDisplayWarning);
           }
         }
       },
@@ -154,9 +152,9 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
             onPressed: _audioPositionTextEditingController.text.trim().isEmpty
                 ? null // This disables the button
                 : () {
-                    _moveAudioToPosition(context);
-                    Navigator.of(context)
-                        .pop(_audioPositionTextEditingController.text);
+                    bool doDisplayWarning = _moveAudioToPosition(context);
+                    
+                    Navigator.of(context).pop(doDisplayWarning);
                   },
             child: Text(
               AppLocalizations.of(context)!.moveAudioToPositionButton,
@@ -185,7 +183,7 @@ class _MoveAudioToPositionDialogState extends State<MoveAudioToPositionDialog>
     );
   }
 
-  void _moveAudioToPosition(BuildContext context) {
+  bool _moveAudioToPosition(BuildContext context) {
     PlaylistListVM playlistListVMlistendFalse = Provider.of<PlaylistListVM>(
       context,
       listen: false,
