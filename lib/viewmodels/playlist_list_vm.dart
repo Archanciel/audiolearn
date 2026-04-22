@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:archive/archive.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -942,7 +943,8 @@ class PlaylistListVM extends ChangeNotifier {
       );
       _updateAndSavePlaylistOrder();
 
-      if ((selectedPlaylistIndexBeforeMoving - _getSelectedPlaylistIndex()).abs() >
+      if ((selectedPlaylistIndexBeforeMoving - _getSelectedPlaylistIndex())
+              .abs() >
           1) {
         _warningMessageVM.signalPlaylistMovePosition(
           playlistTitle: _uniqueSelectedPlaylist!.title,
@@ -1128,7 +1130,8 @@ class PlaylistListVM extends ChangeNotifier {
       );
       _updateAndSavePlaylistOrder();
 
-      if ((_getSelectedPlaylistIndex() - selectedPlaylistIndexBeforeMoving).abs() >
+      if ((_getSelectedPlaylistIndex() - selectedPlaylistIndexBeforeMoving)
+              .abs() >
           1) {
         _warningMessageVM.signalPlaylistMovePosition(
           playlistTitle: _uniqueSelectedPlaylist!.title,
@@ -6361,10 +6364,11 @@ class PlaylistListVM extends ChangeNotifier {
   /// augment till the start of the list.
   ///
   /// Example: "Mon Titre" becomes "1_Mon Titre"
-  void addNumericPrefixesToPlaylistAudioTitles({
+  bool addNumericPrefixesToPlaylistAudioTitles({
     required Playlist playlist,
     required String sortFilterParametersAppliedName,
     required String sortFilterParametersDefaultName,
+    required bool wasCalledFromAudioMenu,
   }) {
     String selectedPlaylistAudioSortFilterParmsName =
         getSelectedPlaylistAudioSortFilterParmsNameForView(
@@ -6393,21 +6397,74 @@ class PlaylistListVM extends ChangeNotifier {
     int counter = 1;
     final RegExp regex = RegExp(r'^(\d+)_');
 
-    for (Audio audio in sortFilteredPlaylistPlayableAudiosLst.reversed) {
-      // Add position prefix if the audio valid video title doesn't already
-      // start with a number followed by underscore. Othrwise, update the existing
-      // prefix to the new position number.
-      if (!regex.hasMatch(audio.validVideoTitle)) {
-        audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
-        _logger.i('  [$counter] ${audio.validVideoTitle}');
-      } else {
-        String titleWithoutPrefix =
-            audio.validVideoTitle.replaceFirst(regex, '');
-        audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
-        _logger.i('  [$counter] ${audio.validVideoTitle} (already had prefix)');
-      }
+    if (wasCalledFromAudioMenu) {
+      SortingItem sortingItem =
+          audioSortFilterParameters.selectedSortItemLst[0];
 
-      counter++;
+      if (sortingItem.sortingOption == SortingOption.chapterAudioTitle) {
+        if (sortingItem.isAscending) {
+          for (Audio audio in sortFilteredPlaylistPlayableAudiosLst) {
+            // Add position prefix if the audio valid video title doesn't already
+            // start with a number followed by underscore. Othrwise, update the existing
+            // prefix to the new position number.
+            if (!regex.hasMatch(audio.validVideoTitle)) {
+              audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
+              _logger.i('  [$counter] ${audio.validVideoTitle}');
+            } else {
+              String titleWithoutPrefix =
+                  audio.validVideoTitle.replaceFirst(regex, '');
+              audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
+              _logger.i(
+                  '  [$counter] ${audio.validVideoTitle} (already had prefix)');
+            }
+
+            counter++;
+          }
+        } else {
+          for (Audio audio in sortFilteredPlaylistPlayableAudiosLst.reversed) {
+            // Add position prefix if the audio valid video title doesn't already
+            // start with a number followed by underscore. Othrwise, update the existing
+            // prefix to the new position number.
+            if (!regex.hasMatch(audio.validVideoTitle)) {
+              audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
+              _logger.i('  [$counter] ${audio.validVideoTitle}');
+            } else {
+              String titleWithoutPrefix =
+                  audio.validVideoTitle.replaceFirst(regex, '');
+              audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
+              _logger.i(
+                  '  [$counter] ${audio.validVideoTitle} (already had prefix)');
+            }
+
+            counter++;
+          }
+        }
+      } else {
+        // Returning true will display a warning because the sort item
+        // applied to the playlist audio list is not the chapter audio
+        // title which is the only sort item that allows to add numeric
+        // prefixes to the audio valid video titles in order to keep
+        // the audio order in the playlist.
+        return true;
+      }
+    } else {
+      for (Audio audio in sortFilteredPlaylistPlayableAudiosLst) {
+        // Add position prefix if the audio valid video title doesn't already
+        // start with a number followed by underscore. Othrwise, update the existing
+        // prefix to the new position number.
+        if (!regex.hasMatch(audio.validVideoTitle)) {
+          audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
+          _logger.i('  [$counter] ${audio.validVideoTitle}');
+        } else {
+          String titleWithoutPrefix =
+              audio.validVideoTitle.replaceFirst(regex, '');
+          audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
+          _logger
+              .i('  [$counter] ${audio.validVideoTitle} (already had prefix)');
+        }
+
+        counter++;
+      }
     }
 
     _writePlaylistToFile(
@@ -6415,6 +6472,10 @@ class PlaylistListVM extends ChangeNotifier {
     );
 
     notifyListeners();
+
+    return false; // Returning false will not display a warning because the
+    //               numeric prefixes are added to the audio valid video
+    //               titles in order to modify the audio order in the playlist.
   }
 
   List<String> getConvertedAudioFileNamesInPlaylist({
@@ -6442,7 +6503,7 @@ class PlaylistListVM extends ChangeNotifier {
   /// Example: If playlist contains [5_A, 4_B, 3_C, 2_D, 1_E] and we copy NewAudio
   /// to the playlist and then move it to position 2, the result will be
   /// the result will be [6_A, 5_B, 4_C, 3_D, 2_NewAudio, 1_E].
-  void moveAudioToPosition({
+  bool moveAudioToPosition({
     required Audio audio,
     required int position,
     required String sortFilterParametersAppliedName,
@@ -6468,15 +6529,26 @@ class PlaylistListVM extends ChangeNotifier {
       position = ((position - 2) <= -1) ? 0 : --position;
     }
 
+    String selectedPlaylistAudioSortFilterParmsName =
+        getSelectedPlaylistAudioSortFilterParmsNameForView(
+            audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+            translatedAppliedSortFilterParmsName:
+                sortFilterParametersAppliedName);
+
+    if (selectedPlaylistAudioSortFilterParmsName.isEmpty) {
+      // display warning
+    }
+
     // Remove existing prefix if present
     String titleWithoutPrefix = audio.validVideoTitle.replaceFirst(regex, '');
 
     audio.validVideoTitle = '${position}_$titleWithoutPrefix';
 
-    addNumericPrefixesToPlaylistAudioTitles(
+    return addNumericPrefixesToPlaylistAudioTitles(
       playlist: playlist,
       sortFilterParametersAppliedName: sortFilterParametersAppliedName,
       sortFilterParametersDefaultName: sortFilterParametersDefaultName,
+      wasCalledFromAudioMenu: true,
     );
   }
 }

@@ -431,6 +431,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.sortFilterParametersAppliedName,
               sortFilterParametersDefaultName:
                   AppLocalizations.of(context)!.sortFilterParametersDefaultName,
+              wasCalledFromAudioMenu: false,
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:
@@ -1597,8 +1598,7 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
     if (parsedPosition == null) {
       return InvalidValueState
           .playlistPositionFormatInvalid; // This will prevent the dialog from closing
-    } else if (parsedPosition.abs() >
-        selectablePlaylistsNumber) {
+    } else if (parsedPosition.abs() > selectablePlaylistsNumber) {
       return InvalidValueState.playlistPositionTooBig;
     }
 

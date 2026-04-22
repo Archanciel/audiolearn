@@ -290,6 +290,10 @@ enum ErrorType {
 
   playlistPositionTooBig, // The case if the entered playlist position is
   // bigger than the number of playlists in the playlist list.
+
+  moveAudioToPositionError, // The case if the user tries to move an audio
+  // to a position when the SF parms applied to the playlist are not the
+  // chapter ascending or descending.
 }
 
 /// This VM (View Model) class is part of the MVVM architecture.
