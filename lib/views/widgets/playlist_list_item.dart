@@ -431,7 +431,6 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
                   AppLocalizations.of(context)!.sortFilterParametersAppliedName,
               sortFilterParametersDefaultName:
                   AppLocalizations.of(context)!.sortFilterParametersDefaultName,
-              wasCalledFromAudioMenu: false,
             );
             break;
           case PlaylistPopupMenuAction.displayPlaylistAudioComments:

@@ -6368,7 +6368,6 @@ class PlaylistListVM extends ChangeNotifier {
     required Playlist playlist,
     required String sortFilterParametersAppliedName,
     required String sortFilterParametersDefaultName,
-    required bool wasCalledFromAudioMenu,
   }) {
     String selectedPlaylistAudioSortFilterParmsName =
         getSelectedPlaylistAudioSortFilterParmsNameForView(
@@ -6397,46 +6396,26 @@ class PlaylistListVM extends ChangeNotifier {
     int counter = 1;
     final RegExp regex = RegExp(r'^(\d+)_');
 
-    if (wasCalledFromAudioMenu) {
-      if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
-        for (Audio audio in sortFilteredPlaylistPlayableAudiosLst) {
-          // Add position prefix if the audio valid video title doesn't already
-          // start with a number followed by underscore. Othrwise, update the existing
-          // prefix to the new position number.
-          if (!regex.hasMatch(audio.validVideoTitle)) {
-            audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
-            _logger.i('  [$counter] ${audio.validVideoTitle}');
-          } else {
-            String titleWithoutPrefix =
-                audio.validVideoTitle.replaceFirst(regex, '');
-            audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
-            _logger.i(
-                '  [$counter] ${audio.validVideoTitle} (already had prefix)');
-          }
-
-          counter++;
+    if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
+      for (Audio audio in sortFilteredPlaylistPlayableAudiosLst) {
+        // Add position prefix if the audio valid video title doesn't already
+        // start with a number followed by underscore. Othrwise, update the existing
+        // prefix to the new position number.
+        if (!regex.hasMatch(audio.validVideoTitle)) {
+          audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
+          _logger.i('  [$counter] ${audio.validVideoTitle}');
+        } else {
+          String titleWithoutPrefix =
+              audio.validVideoTitle.replaceFirst(regex, '');
+          audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
+          _logger
+              .i('  [$counter] ${audio.validVideoTitle} (already had prefix)');
         }
-      } else {
-        for (Audio audio in sortFilteredPlaylistPlayableAudiosLst.reversed) {
-          // Add position prefix if the audio valid video title doesn't already
-          // start with a number followed by underscore. Othrwise, update the existing
-          // prefix to the new position number.
-          if (!regex.hasMatch(audio.validVideoTitle)) {
-            audio.validVideoTitle = '${counter}_${audio.validVideoTitle}';
-            _logger.i('  [$counter] ${audio.validVideoTitle}');
-          } else {
-            String titleWithoutPrefix =
-                audio.validVideoTitle.replaceFirst(regex, '');
-            audio.validVideoTitle = '${counter}_$titleWithoutPrefix';
-            _logger.i(
-                '  [$counter] ${audio.validVideoTitle} (already had prefix)');
-          }
 
-          counter++;
-        }
+        counter++;
       }
     } else {
-      for (Audio audio in sortFilteredPlaylistPlayableAudiosLst) {
+      for (Audio audio in sortFilteredPlaylistPlayableAudiosLst.reversed) {
         // Add position prefix if the audio valid video title doesn't already
         // start with a number followed by underscore. Othrwise, update the existing
         // prefix to the new position number.
@@ -6536,7 +6515,6 @@ class PlaylistListVM extends ChangeNotifier {
         playlist: playlist,
         sortFilterParametersAppliedName: sortFilterParametersAppliedName,
         sortFilterParametersDefaultName: sortFilterParametersDefaultName,
-        wasCalledFromAudioMenu: true,
       );
 
       return false; // Returning false will not display a warning because the
