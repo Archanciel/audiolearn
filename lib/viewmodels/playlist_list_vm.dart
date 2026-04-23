@@ -6483,15 +6483,6 @@ class PlaylistListVM extends ChangeNotifier {
         ? int.parse(regex.firstMatch(audio.validVideoTitle)!.group(1)!)
         : playableAudioLstLength; // If no prefix, assume it's at the end
 
-    if (position > initialPosition) {
-      position = ((position - initialPosition) == 1 &&
-              position < playableAudioLstLength)
-          ? position
-          : ++position;
-    } else if (position < initialPosition) {
-      position = ((position - 2) <= -1) ? 0 : --position;
-    }
-
     String selectedPlaylistAudioSortFilterParmsName =
         getSelectedPlaylistAudioSortFilterParmsNameForView(
             audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
@@ -6502,6 +6493,20 @@ class PlaylistListVM extends ChangeNotifier {
         getAudioSortFilterParameters(
       audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
     );
+
+    if (position > initialPosition) {
+      position = ((position - initialPosition) == 1 &&
+              position < playableAudioLstLength)
+          ? position
+          // : ++position;
+          : position;
+    } else if (position < initialPosition) {
+      if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
+        position = ((position - 2) <= -1) ? 0 : position;
+      } else {
+        position = ((position - 2) <= -1) ? 0 : --position;
+      }
+    }
 
     SortingItem sortingItem = audioSortFilterParameters.selectedSortItemLst[0];
 
