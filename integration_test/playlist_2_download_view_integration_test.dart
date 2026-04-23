@@ -40277,7 +40277,8 @@ void main() {
     });
   });
   group('Position setting to Audio validVideoTitle tests', () {
-    testWidgets('''Playlist item menu "Add Position to Audio's Title" test.''',
+    testWidgets(
+        '''Playlist item menu default "Add or correct Position to Audio's Title" test.''',
         (WidgetTester tester) async {
       // Purge the test playlist directory if it exists so that the
       // playlist list is empty
@@ -40326,11 +40327,586 @@ void main() {
       // Verify the presence of the positioned audio in the in the
       // playlist audio list
 
-      final List<String> audioPositionedTitles = [
+      List<String> audioPositionedTitles = [
         "27_on va prier maintenant ensemble",
         "26_Ne laissez pas l’inquiétude remplir votre vie",
         "25_Nouveau jour pour le Seigneur",
         "24_Seigneur, ce matin",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist item menu chap asc "Add or correct Position to Audio's Title" test.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 2';
+
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
+
+      // Select 'chap asc' sort filter parameter
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'chap asc',
+      );
+
+      // Type on the Playlists button to display the playlists list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      List<String> audioPositionedTitles = [
+        "1_Dieu cherche ceux qui rêvent de Son apparitaion",
+        "2_Dieu dit",
+        "3_Gloire au Père, au Fils,et au Saint-Esprit",
+        "4_Je te demande Ton soutien chaque jour de cette semaine",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "24_Seigneur, une nouvelle journée commence",
+        "25_Tu devrais chercher et te soumettre dans tes prières",
+        "26_Un amour si profond qu'il ne crie pas",
+        "27_Ô Vierge Marie",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist item menu chap desc "Add or correct Position to Audio's Title" test.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 2';
+
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
+
+      // Select 'chap desc' sort filter parameter
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'chap desc',
+      );
+
+      // Type on the Playlists button to display the playlists list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      List<String> audioPositionedTitles = [
+        "27_Ô Vierge Marie",
+        "26_Un amour si profond qu'il ne crie pas",
+        "25_Tu devrais chercher et te soumettre dans tes prières",
+        "24_Seigneur, une nouvelle journée commence",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "4_Je te demande Ton soutien chaque jour de cette semaine",
+        "3_Gloire au Père, au Fils,et au Saint-Esprit",
+        "2_Dieu dit",
+        "1_Dieu cherche ceux qui rêvent de Son apparitaion",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist item menu applied "Add or correct Position to Audio's Title" test. The applied
+           sort filter parameter sorts the audios on ascending audio duration.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 2';
+
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
+
+      // Select 'applied' sort filter parameter
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'applied',
+      );
+
+      // Type on the Playlists button to display the playlists list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      List<String> audioPositionedTitles = [
+        "1_Merci infiniment mon Dieu, je T'aime",
+        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "3_Seigneur, une nouvelle journée commence",
+        "4_Nouveau jour pour le Seigneur",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "24_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "25_Les commandements de Jésus (version pratique)",
+        "26_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+        "27_L'amour doit remplacer la peur",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist item menu Sei Jés a "Add or correct Position to Audio's Title" test. The Sei Jés a
+           sort filter parameter filter the audios whose title contains Seigneur or Jésus and sorts the
+           audios on ascending audio file size.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 2';
+
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
+
+      // Select 'Sei Jés a' sort filter parameter
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'Sei Jés a',
+      );
+
+      // Type on the Playlists button to display the playlists list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      List<String> audioPositionedTitles = [
+        "1_Seigneur, une nouvelle journée commence",
+        "2_Nouveau jour pour le Seigneur",
+        "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "4_Seigneur tout puissant",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "8_Seigneur, ce matin",
+        "9_Prière au Seigneur et à Jésus",
+        "10_Les commandements de Jésus (version pratique)",
+        "11_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist item menu Sei Jés d "Add or correct Position to Audio's Title" test. The Sei Jés d
+           sort filter parameter filter the audios whose title contains Seigneur or Jésus and sorts the
+           audios on descending audio file size.''',
+        (WidgetTester tester) async {
+      // Purge the test playlist directory if it exists so that the
+      // playlist list is empty
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+
+      // Copy the test initial audio data to the app dir
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}position_to_audo_title_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      _loadSettingsMap();
+
+      final SettingsDataService settingsDataService = SettingsDataService(
+        isTest: true,
+      );
+
+      // Load the settings from the json file. This is necessary
+      // otherwise the ordered playlist titles will remain empty
+      // and the playlist list will not be filled with the
+      // playlists available in the app test dir
+      await settingsDataService.loadSettingsFromFile(
+          settingsJsonPathFileName:
+              "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+      await app.main();
+      await tester.pumpAndSettle();
+
+      const String playlistToPositionAudioTitles = 'Prières 2';
+
+      // Select the playlistToPositionAudioTitles playlist
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle: playlistToPositionAudioTitles,
+      );
+
+      // Select 'Sei Jés d' sort filter parameter
+
+      // Type on the Playlists button to hide the playlist view
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+        tester: tester,
+        sortFilterParmsName: 'Sei Jés d',
+      );
+
+      // Type on the Playlists button to display the playlists list
+      await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+      await tester.pumpAndSettle();
+
+      await IntegrationTestUtil.typeOnPlaylistMenuItem(
+        tester: tester,
+        playlistTitle: playlistToPositionAudioTitles,
+        playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+      );
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      List<String> audioPositionedTitles = [
+        "11_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+        "10_Les commandements de Jésus (version pratique)",
+        "9_Prière au Seigneur et à Jésus",
+        "8_Seigneur, ce matin",
+      ];
+
+      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+        tester: tester,
+        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+        firstAudioListTileIndex: 2,
+      );
+
+      final Finder listFinder = find.byKey(const Key('audio_list'));
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -2000));
+      await tester.pumpAndSettle();
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
+      // Verify the presence of the positioned audio in the in the
+      // playlist audio list
+
+      audioPositionedTitles = [
+        "4_Seigneur tout puissant",
+        "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+        "2_Nouveau jour pour le Seigneur",
+        "1_Seigneur, une nouvelle journée commence",
       ];
 
       IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
