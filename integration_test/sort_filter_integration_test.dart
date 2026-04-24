@@ -1940,6 +1940,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
             await tester.pumpAndSettle();
 
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
             // Tap on the Imported checkbox to unselect it. This deselect
             // Imported without reselect Downloaded since the Converted
             // checkbox remains selected.
@@ -1953,22 +1960,27 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
             await tester.pumpAndSettle();
 
-            // Tap on the Extracted checkbox to select it. This deselect
-            // Extracted without reselect Downloaded since the Converted
-            // checkbox remains selected.
+            // Tap on the Extracted checkbox to select it.
             await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Exclude ignore case checkbox to unselect it
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Ignore case checkbox to unselect it
             await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Search in video compact description checkbox to unselect it
+            // Tap on the Include description checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInVideoCompactDescription')));
             await tester.pumpAndSettle();
 
-            // Tap on the Search in Youtube compact description checkbox to unselect it
+            // Tap on the Include Youtube channel checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInYoutubeChannelName')));
             await tester.pumpAndSettle();
@@ -3544,9 +3556,23 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterPlayableCheckbox')));
             await tester.pumpAndSettle();
 
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
             // Tap on the Imported checkbox to unselect it. This deselect
             // Imported.
             await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
+            await tester.pumpAndSettle();
+
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
             await tester.pumpAndSettle();
 
             // Tap on the Downloaded checkbox to unselect it. This deselects
@@ -3554,16 +3580,16 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Exclude ignore case checkbox to unselect it
+            // Tap on the Ignore case checkbox to unselect it
             await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Search in video compact description checkbox to unselect it
+            // Tap on the Include description checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInVideoCompactDescription')));
             await tester.pumpAndSettle();
 
-            // Tap on the Search in Youtube compact description checkbox to unselect it
+            // Tap on the Include Youtube channel checkbox to unselect it
             await tester
                 .tap(find.byKey(const Key('searchInYoutubeChannelName')));
             await tester.pumpAndSettle();
