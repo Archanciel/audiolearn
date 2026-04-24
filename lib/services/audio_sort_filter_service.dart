@@ -1226,7 +1226,7 @@ class AudioSortFilterService {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
             isAudioFiltered = false;
-            break;
+            continue;
           }
         }
       } // end of for loop on filterSentenceLst
