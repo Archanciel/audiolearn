@@ -40914,7 +40914,7 @@ void main() {
         audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
         firstAudioListTileIndex: 2,
       );
- 
+
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -41325,8 +41325,8 @@ void main() {
       // Find the audio list widget using its key
       listFinder = find.byKey(const Key('audio_list'));
 
-      // Perform the scroll down action
-      await tester.drag(listFinder, const Offset(0, -3000));
+      // Perform the scroll up action
+      await tester.drag(listFinder, const Offset(0, 500));
       await tester.pumpAndSettle();
 
       // Now we want to tap the popup menu of the Audio ListTile
@@ -41383,28 +41383,13 @@ void main() {
       await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
       await tester.pumpAndSettle();
 
-      // Verify the the modified ordered audio titles
+      // Verify the displayed warning
 
-      audioPositionedTitles = [
-        "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-        "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-        "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-        "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-      ];
-
-      // Find the audio list widget using its key
-      listFinder = find.byKey(const Key('audio_list'));
-
-      // Perform the scroll up action
-      await tester.drag(listFinder, const Offset(0, 500));
-      await tester.pumpAndSettle();
-
-      IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+      // Verify the displayed warning  dialog
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
-        audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-        firstAudioListTileIndex: 0,
+        warningDialogMessage:
+            "Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".",
       );
 
       // Purge the test playlist directory so that the created test
