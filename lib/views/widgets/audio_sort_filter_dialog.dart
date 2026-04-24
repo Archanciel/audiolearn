@@ -74,6 +74,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
   late bool _isAnd;
   late bool _isOr;
   late bool _ignoreCase;
+  late bool _filterAudios;
+  late bool _filterComments;
   late bool _searchInVideoCompactDescription;
   late bool _searchInYoutubeChannelName;
   late bool _filterMusicQuality;
@@ -251,6 +253,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _isAnd = (audioSortDefaultFilterParameters.sentencesCombination ==
         SentencesCombination.and);
     _isOr = !_isAnd;
+    _filterAudios = audioSortDefaultFilterParameters.filterAudios;
+    _filterComments = audioSortDefaultFilterParameters.filterComments;
     _filterMusicQuality = audioSortDefaultFilterParameters.filterMusicQuality;
     _filterSpokenQuality = audioSortDefaultFilterParameters.filterSpokenQuality;
     _filterFullyListened = audioSortDefaultFilterParameters.filterFullyListened;
@@ -328,6 +332,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _searchInVideoCompactDescription = true;
     _isAnd = true;
     _isOr = false;
+    _filterAudios = true;
+    _filterComments = true;
     _filterMusicQuality = false;
     _filterFullyListened = true;
     _filterPartiallyListened = true;
@@ -376,6 +382,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     _isAnd = (audioSortFilterParameters.sentencesCombination ==
         SentencesCombination.and);
     _isOr = !_isAnd;
+    _filterAudios = audioSortFilterParameters.filterAudios;
+    _filterComments = audioSortFilterParameters.filterComments;
     _filterMusicQuality = audioSortFilterParameters.filterMusicQuality;
     _filterFullyListened = audioSortFilterParameters.filterFullyListened;
     _filterPartiallyListened =
@@ -583,6 +591,9 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                               : null,
                         ),
                       ],
+                    ),
+                    _buildAudioOrCommentCheckboxes(
+                      context: context,
                     ),
                     Tooltip(
                       message: AppLocalizations.of(context)!
@@ -1431,6 +1442,68 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               },
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Row _buildAudioOrCommentCheckboxes({
+    required BuildContext context,
+  }) {
+    return Row(
+      children: [
+        Text(AppLocalizations.of(context)!.audioSearch),
+        Checkbox(
+          key: const Key('filterAudioSearchCheckbox'),
+          value: _filterAudios,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterAudios = newValue!;
+            });
+
+            if (!_filterAudios) {
+              // If the Audios checkbox is unchecked, the Comments
+              // checkbox must be checked since it makes no sense
+              // to have both unchecked
+              _filterComments = true;
+              _searchInYoutubeChannelName = false;
+              _searchInVideoCompactDescription = false;
+            } else {
+              // If the Audios checkbox is checked, the search in
+              // YouTube channel name and video compact description
+              // must be activated since it makes sense to search in
+              // these fields when the audio title search is activated
+              _searchInYoutubeChannelName = true;
+              _searchInVideoCompactDescription = true;
+            }
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
+        ),
+        Text(AppLocalizations.of(context)!.commentSearch),
+        Checkbox(
+          key: const Key('filterCommentSearchCheckbox'),
+          value: _filterComments,
+          onChanged: (bool? newValue) {
+            setState(() {
+              _filterComments = newValue!;
+            });
+
+            if (!_filterComments) {
+              // If the Comments checkbox is unchecked, the Audios
+              // checkbox must be checked since it makes no sense
+              // to have both unchecked
+              _filterAudios = true;
+              _searchInYoutubeChannelName = true;
+              _searchInVideoCompactDescription = true;
+            }
+
+            // now clicking on Enter works since the
+            // Checkbox is not focused anymore
+            _audioTitleSearchSentenceFocusNode.requestFocus();
+          },
         ),
       ],
     );
@@ -2516,6 +2589,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
           AppLocalizations.of(context)!.searchInYoutubeChannelName,
       'searchAsWellInVideoCompactDescription':
           AppLocalizations.of(context)!.searchInVideoCompactDescription,
+      'filterAudios': AppLocalizations.of(context)!.audioSearch,
+      'filterComments': AppLocalizations.of(context)!.commentSearch,
       'filterMusicQuality': AppLocalizations.of(context)!.audioMusicQuality,
       'filterSpokenQuality': AppLocalizations.of(context)!.audioSpokenQuality,
       'filterFullyListened': AppLocalizations.of(context)!.fullyListened,
@@ -2734,6 +2809,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       ignoreCase: _ignoreCase,
       searchAsWellInYoutubeChannelName: _searchInYoutubeChannelName,
       searchAsWellInVideoCompactDescription: _searchInVideoCompactDescription,
+      filterAudios: _filterAudios,
+      filterComments: _filterComments,
       filterMusicQuality: _filterMusicQuality,
       filterSpokenQuality: _filterSpokenQuality,
       filterFullyListened: _filterFullyListened,

@@ -323,6 +323,12 @@ class AudioSortFilterParameters {
   // If true, the search is also done in the video compact description.
   final bool searchAsWellInVideoCompactDescription;
 
+  // If true, only audios are selected.
+  final bool filterAudios;
+
+  // If true, only comments are selected.
+  final bool filterComments;
+
   // If true, only audio with music quality are selected.
   final bool filterMusicQuality;
 
@@ -391,6 +397,8 @@ class AudioSortFilterParameters {
     this.ignoreCase = true,
     this.searchAsWellInYoutubeChannelName = true,
     this.searchAsWellInVideoCompactDescription = true,
+    this.filterAudios = true,
+    this.filterComments = true,
     this.filterMusicQuality = true,
     this.filterSpokenQuality = true,
     this.filterFullyListened = true,
@@ -429,6 +437,8 @@ class AudioSortFilterParameters {
           json['searchAsWellInYoutubeChannelName'] ?? true,
       searchAsWellInVideoCompactDescription:
           json['searchAsWellInVideoCompactDescription'],
+      filterAudios: json['filterAudios'] ?? true,
+      filterComments: json['filterComments'] ?? true,
       filterMusicQuality: json['filterMusicQuality'],
       filterSpokenQuality: json['filterSpokenQuality'] ?? true,
       filterFullyListened: json['filterFullyListened'],
@@ -472,6 +482,8 @@ class AudioSortFilterParameters {
       'searchAsWellInYoutubeChannelName': searchAsWellInYoutubeChannelName,
       'searchAsWellInVideoCompactDescription':
           searchAsWellInVideoCompactDescription,
+      'filterAudios': filterAudios,
+      'filterComments': filterComments,
       'filterMusicQuality': filterMusicQuality,
       'filterSpokenQuality': filterSpokenQuality,
       'filterFullyListened': filterFullyListened,
@@ -511,6 +523,8 @@ class AudioSortFilterParameters {
             searchAsWellInYoutubeChannelName &&
         other.searchAsWellInVideoCompactDescription ==
             searchAsWellInVideoCompactDescription &&
+        other.filterAudios == filterAudios &&
+        other.filterComments == filterComments &&
         other.filterMusicQuality == filterMusicQuality &&
         other.filterSpokenQuality == filterSpokenQuality &&
         other.filterFullyListened == filterFullyListened &&
@@ -545,6 +559,8 @@ class AudioSortFilterParameters {
       ignoreCase,
       searchAsWellInYoutubeChannelName,
       searchAsWellInVideoCompactDescription,
+      filterAudios,
+      filterComments,
       filterMusicQuality,
       filterSpokenQuality,
       filterFullyListened,
@@ -557,8 +573,6 @@ class AudioSortFilterParameters {
       downloadDateStartRange,
       downloadDateEndRange,
       uploadDateStartRange,
-      uploadDateEndRange,
-      fileSizeStartRangeMB + durationStartRangeSec, // 20 arguments max !
     );
   }
 
@@ -572,6 +586,8 @@ class AudioSortFilterParameters {
       searchAsWellInYoutubeChannelName: searchAsWellInYoutubeChannelName,
       searchAsWellInVideoCompactDescription:
           searchAsWellInVideoCompactDescription,
+      filterAudios: filterAudios,
+      filterComments: filterComments,
       filterMusicQuality: filterMusicQuality,
       filterSpokenQuality: filterSpokenQuality,
       filterFullyListened: filterFullyListened,

@@ -204,6 +204,8 @@ class AudioSortFilterService {
             audioSortFilterParameters.searchAsWellInVideoCompactDescription,
         searchAsWellInYoutubeChannelName:
             audioSortFilterParameters.searchAsWellInYoutubeChannelName,
+        areAudiosFiltered: audioSortFilterParameters.filterAudios,
+        areCommentsFiltered: audioSortFilterParameters.filterComments,
       );
     }
 
@@ -429,6 +431,34 @@ class AudioSortFilterService {
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
+    if (existingAudioSortFilterParms.filterAudios !=
+        newOrModifiedaudioSortFilterParms.filterAudios) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterAudios,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterAudios,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterAudios',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterComments !=
+        newOrModifiedaudioSortFilterParms.filterComments) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterComments,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterComments,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterComments',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
     if (existingAudioSortFilterParms.filterMusicQuality !=
         newOrModifiedaudioSortFilterParms.filterMusicQuality) {
       wasFilterOptionsTitleAddedToDifferencesLst =
@@ -598,7 +628,8 @@ class AudioSortFilterService {
         newOrModifiedaudioSortFilterParms.filterExtracted) {
       wasFilterOptionsTitleAddedToDifferencesLst =
           _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState: existingAudioSortFilterParms.filterExtracted,
+              initialCheckBoxState:
+                  existingAudioSortFilterParms.filterExtracted,
               modifiedCheckBoxState:
                   newOrModifiedaudioSortFilterParms.filterExtracted,
               sortFilterParmsNameTranslationMap:
@@ -983,13 +1014,18 @@ class AudioSortFilterService {
     required bool ignoreCase,
     required bool searchAsWellInVideoCompactDescription,
     required bool searchAsWellInYoutubeChannelName,
+    required bool areAudiosFiltered,
+    required bool areCommentsFiltered,
   }) {
     List<Audio> filteredAudios = [];
 
     for (Audio audio in audioLst) {
       bool isAudioFiltered = false;
+      bool isFilterSentenceInComments = false;
+
       for (String filterSentence in filterSentenceLst) {
-        if (searchAsWellInYoutubeChannelName &&
+        if (areAudiosFiltered &&
+            searchAsWellInYoutubeChannelName &&
             searchAsWellInVideoCompactDescription) {
           // here, the 'Include Youtube channel' and 'Include description'
           // checkboxes are checked, so we need to search in the valid video
@@ -1119,7 +1155,7 @@ class AudioSortFilterService {
             // inequality was found and 'AND' is necessary ..
             break;
           }
-        } else {
+        } else if (areAudiosFiltered) {
           // we need to search in the valid video title only
           if (ignoreCase) {
             if (audio.validVideoTitle
@@ -1149,9 +1185,49 @@ class AudioSortFilterService {
             break;
           }
         }
+
+        if (areCommentsFiltered) {
+          // we need to search in the comments as well
+          List<Comment> audioComments = CommentVM().loadAudioComments(
+            audio: audio,
+          );
+
+          for (Comment comment in audioComments) {
+            if (ignoreCase) {
+              if (comment.title
+                      .toLowerCase()
+                      .contains(filterSentence.toLowerCase()) ||
+                  comment.content
+                      .toLowerCase()
+                      .contains(filterSentence.toLowerCase())) {
+                isFilterSentenceInComments = true;
+                break;
+              }
+            } else {
+              if (comment.title.contains(filterSentence) ||
+                  comment.content.contains(filterSentence)) {
+                isFilterSentenceInComments = true;
+                break;
+              }
+            }
+          }
+
+          if (isFilterSentenceInComments) {
+            // not necessary to test the other filter sentences since
+            // equality was found and 'OR' is sufficient ..
+            isAudioFiltered = true;
+            break;
+          } else if (!isFilterSentenceInComments &&
+              areAudiosFiltered == false) {
+            // not necessary to test the other filter sentences since
+            // inequality was found and 'AND' is necessary ..
+            isAudioFiltered = false;
+            break;
+          }
+        }
       } // end of for loop on filterSentenceLst
 
-      if (isAudioFiltered) {
+      if (isAudioFiltered || isFilterSentenceInComments) {
         // one of the filter sentences was found in the audio
         filteredAudios.add(audio);
       }
@@ -1222,14 +1298,15 @@ class AudioSortFilterService {
       return filteredAudios;
     }
 
-    // If the 'Music qual.' checkbox was set to false (by
+    // If the 'Audios' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audio that are of music quality.
-    if (!audioSortFilterParameters.filterMusicQuality) {
-      filteredAudios = filteredAudios.where((audio) {
-        return !audio.isAudioMusicQuality;
-      }).toList();
-    }
+    // does not contain audio whose video title contains
+    // the search word or sentence.
+    // if (!audioSortFilterParameters.filterAudios) {
+    //   filteredAudios = filteredAudios.where((audio) {
+    //     return !audio.isAudioMusicQuality;
+    //   }).toList();
+    // }
 
     // If the 'Spoken qual.' checkbox was set to false (by
     // default it is set to true), the returned audio list
@@ -1651,21 +1728,24 @@ class AudioSortFilterService {
           return [];
         }
         return audioLst.where((audio) {
-          double doubleDuration = audio.durationImpactedByPlaySpeed().inMilliseconds / 1000;
+          double doubleDuration =
+              audio.durationImpactedByPlaySpeed().inMilliseconds / 1000;
           return (doubleDuration >= startRangeSeconds) &&
               (doubleDuration <= endRangeSeconds);
         }).toList();
       } else {
         // endRangeSeconds == 0
         return audioLst.where((audio) {
-          return audio.durationImpactedByPlaySpeed().inMilliseconds / 1000 >= startRangeSeconds;
+          return audio.durationImpactedByPlaySpeed().inMilliseconds / 1000 >=
+              startRangeSeconds;
         }).toList();
       }
     } else {
       // startRangeSeconds == 0
       if (endRangeSeconds != 0) {
         return audioLst.where((audio) {
-          return audio.durationImpactedByPlaySpeed().inMilliseconds / 1000 <= endRangeSeconds;
+          return audio.durationImpactedByPlaySpeed().inMilliseconds / 1000 <=
+              endRangeSeconds;
         }).toList();
       } else {
         // startRangeSeconds and endRangeSeconds are 0
