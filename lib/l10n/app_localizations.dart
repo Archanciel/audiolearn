@@ -371,7 +371,7 @@ abstract class AppLocalizations {
   /// No description provided for @videoTitleOrDescription.
   ///
   /// In en, this message translates to:
-  /// **'Video title (word or sentence)'**
+  /// **'Search word or sentence'**
   String get videoTitleOrDescription;
 
   /// No description provided for @startDownloadDate.
@@ -4777,6 +4777,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".'**
   String get moveAudioToPositionErrorMessage;
+
+  /// No description provided for @audioSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Audios'**
+  String get audioSearch;
+
+  /// No description provided for @commentSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get commentSearch;
 }
 
 class _AppLocalizationsDelegate

@@ -56,7 +56,7 @@
   "sortDescending": "Desc",
   "filterSentences": "Mots filtre:",
   "filterOptions": "Options filtre:",
-  "videoTitleOrDescription": "Titre vidéo (mot ou phrase)",
+  "videoTitleOrDescription": "Mot ou phrase à chercher",
   "startDownloadDate": "Date début téléch",
   "endDownloadDate": "Date fin téléch",
   "startUploadDate": "Date début mise en ligne",
@@ -1707,5 +1707,7 @@
   "playlistPositionTooBigErrorMessage": "{enteredPosition} dépasse le nombre de playlists ({playlistsNumber}) et n’est donc pas valide pour repositionner la playlist.",
   "playlistPositionTooltip": "Position de la playlist: {playlistPosition}",
   "movedPlaylistMessage": "La playlist {playlist} a été déplacée de la position {positionFrom} à la position {positionTo}.",
-  "moveAudioToPositionErrorMessage": "La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\"."
+  "moveAudioToPositionErrorMessage": "La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\".",
+  "audioSearch": "Audios",
+  "commentSearch": "Commentaires"
 }

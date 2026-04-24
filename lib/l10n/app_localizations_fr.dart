@@ -151,7 +151,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get filterOptions => 'Options filtre:';
 
   @override
-  String get videoTitleOrDescription => 'Titre vidéo (mot ou phrase)';
+  String get videoTitleOrDescription => 'Mot ou phrase à chercher';
 
   @override
   String get startDownloadDate => 'Date début téléch';
@@ -3011,4 +3011,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get moveAudioToPositionErrorMessage =>
       'La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\".';
+
+  @override
+  String get audioSearch => 'Audios';
+
+  @override
+  String get commentSearch => 'Commentaires';
 }
