@@ -1062,10 +1062,11 @@ class AudioSortFilterService {
 
           if (isAudioFiltered &&
               sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter sentences since
+            // not necessary to test the other filter senten ces since
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
+              !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1108,6 +1109,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
+              !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1150,6 +1152,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
+              !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1179,6 +1182,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
+              !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
