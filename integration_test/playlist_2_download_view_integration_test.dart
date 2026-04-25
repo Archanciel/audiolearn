@@ -43459,7 +43459,7 @@ void main() {
 
         // Enter the Audio position
 
-        String audioPosition = '6';
+        String audioPosition = '5';
 
         await tester.enterText(
           textFieldFinder,
@@ -43495,7 +43495,7 @@ void main() {
         // Now we want to move another already positioned audio
 
         audioToPositionTitle =
-            "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+           "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
 
         // First, find the Audio sublist ListTile Text widget
         audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
@@ -43546,13 +43546,13 @@ void main() {
         // Verify the the modified ordered audio titles
 
         audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "4_Prière au Seigneur",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "7_Prière pour Dieu",
+          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+          "5_Prière au Seigneur",
+          "6_Prière pour Dieu",
+          "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
         ];
 
         // Find the audio list widget using its key
