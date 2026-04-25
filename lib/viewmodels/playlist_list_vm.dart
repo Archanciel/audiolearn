@@ -6494,42 +6494,57 @@ class PlaylistListVM extends ChangeNotifier {
       audioSortFilterParametersName: selectedPlaylistAudioSortFilterParmsName,
     );
 
-    if (position > initialPosition) {
-      position = ((position - initialPosition) == 1 &&
-              position < playableAudioLstLength)
-          ? position
-          : ++position;
-          // : position;
-    } else if (position < initialPosition) {
-      if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
-        position = ((position - 2) <= -1) ? 0 : position;
-      } else {
-        position = ((position - 2) <= -1) ? 0 : --position;
-      }
-    }
-
     SortingItem sortingItem = audioSortFilterParameters.selectedSortItemLst[0];
 
-    if (sortingItem.sortingOption == SortingOption.chapterAudioTitle) {
-      // Remove existing prefix if present
-      String titleWithoutPrefix = audio.validVideoTitle.replaceFirst(regex, '');
-
-      audio.validVideoTitle = '${position}_$titleWithoutPrefix';
-
-      addNumericPrefixesToPlaylistAudioTitles(
-        playlist: playlist,
-        sortFilterParametersAppliedName: sortFilterParametersAppliedName,
-        sortFilterParametersDefaultName: sortFilterParametersDefaultName,
-      );
-
-      return false; // Returning false will not display a warning because the
-      //               numeric prefixes are added to the audio valid video
-      //               titles in order to modify the audio order in the playlist.
-    } else {
+    if (sortingItem.sortingOption != SortingOption.chapterAudioTitle) {
       return true; // Returning true will display a warning because the
       //              sort item applied to the playlist audio list is not the
       //              chapter audio title which is the only sort item that allows
       //              to add numeric prefixes to the audio valid video titles.
     }
+
+    if (sortingItem.isAscending) {
+      if (position > initialPosition) {
+        position = ((position - initialPosition) == 1 &&
+                position < playableAudioLstLength)
+            ? position
+            // : ++position;
+            : position;
+      } else if (position < initialPosition) {
+        if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
+          position = ((position - 2) <= -1) ? 0 : position;
+        } else {
+          position = ((position - 2) <= -1) ? 0 : --position;
+        }
+      }
+    } else { // isDescending
+      if (position > initialPosition) {
+        position = ((position - initialPosition) == 1 &&
+                position < playableAudioLstLength)
+            ? position
+            : ++position;
+      } else if (position < initialPosition) {
+        if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
+          position = ((position - 2) <= -1) ? 0 : position;
+        } else {
+          position = ((position - 2) <= -1) ? 0 : --position;
+        }
+      }
+    }
+
+    // Remove existing prefix if present
+    String titleWithoutPrefix = audio.validVideoTitle.replaceFirst(regex, '');
+
+    audio.validVideoTitle = '${position}_$titleWithoutPrefix';
+
+    addNumericPrefixesToPlaylistAudioTitles(
+      playlist: playlist,
+      sortFilterParametersAppliedName: sortFilterParametersAppliedName,
+      sortFilterParametersDefaultName: sortFilterParametersDefaultName,
+    );
+
+    return false; // Returning false will not display a warning because the
+    //               numeric prefixes are added to the audio valid video
+    //               titles in order to modify the audio order in the playlist.
   }
 }
