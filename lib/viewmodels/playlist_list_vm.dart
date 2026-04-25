@@ -6503,32 +6503,20 @@ class PlaylistListVM extends ChangeNotifier {
       //              to add numeric prefixes to the audio valid video titles.
     }
 
-    if (sortingItem.isAscending) {
-      if (position > initialPosition) {
-        position = ((position - initialPosition) == 1 &&
-                position < playableAudioLstLength)
-            ? position
-            // : ++position;
-            : position;
-      } else if (position < initialPosition) {
-        if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
-          position = ((position - 2) <= -1) ? 0 : position;
-        } else {
-          position = ((position - 2) <= -1) ? 0 : --position;
-        }
-      }
-    } else { // isDescending
-      if (position > initialPosition) {
-        position = ((position - initialPosition) == 1 &&
-                position < playableAudioLstLength)
-            ? position
-            : ++position;
-      } else if (position < initialPosition) {
-        if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
-          position = ((position - 2) <= -1) ? 0 : position;
-        } else {
-          position = ((position - 2) <= -1) ? 0 : --position;
-        }
+    final bool isDescending = !sortingItem.isAscending;
+
+    if (position > initialPosition) {
+      position = ((position - initialPosition) == 1 &&
+              position < playableAudioLstLength)
+          ? position
+          : isDescending
+              ? ++position
+              : position;
+    } else if (position < initialPosition) {
+      if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
+        position = ((position - 2) <= -1) ? 0 : position;
+      } else {
+        position = ((position - 2) <= -1) ? 0 : --position;
       }
     }
 
