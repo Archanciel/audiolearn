@@ -6498,8 +6498,8 @@ class PlaylistListVM extends ChangeNotifier {
       position = ((position - initialPosition) == 1 &&
               position < playableAudioLstLength)
           ? position
-          // : ++position;
-          : position;
+          : ++position;
+          // : position;
     } else if (position < initialPosition) {
       if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
         position = ((position - 2) <= -1) ? 0 : position;
