@@ -1037,7 +1037,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enable this checkbox to specify the comment position with precision up to a tenth of second.';
 
   @override
-  String get setCommentPosition => 'Set comment position';
+  String get setCommentPosition => 'Set Comment Position';
 
   @override
   String get commentPosition => 'Position (hh:)mm:ss(.t)';
