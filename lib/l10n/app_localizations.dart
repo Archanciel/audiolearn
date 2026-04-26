@@ -1828,7 +1828,7 @@ abstract class AppLocalizations {
   /// No description provided for @setCommentPosition.
   ///
   /// In en, this message translates to:
-  /// **'Set comment position'**
+  /// **'Set Comment Position'**
   String get setCommentPosition;
 
   /// No description provided for @commentPosition.
