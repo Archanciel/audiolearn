@@ -1839,7 +1839,22 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.drag(
               find.byType(AudioSortFilterDialog),
               const Offset(
-                  0, -600), // Negative value for vertical drag to scroll down
+                  0, -400), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Audios checkbox to unselect it.
+            await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
             );
             await tester.pumpAndSettle();
 
@@ -1861,7 +1876,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'\nFilter options:\n In initial version:\n   Extracted: checked\n In modified version:\n   Extracted: unchecked",
+                  "Sort by:\n Present only in initial version:\n   Audio title asc\n Present only in modified version:\n   Audio title desc\nFilter words:\n Present only in modified version:\n   'Jancovici'\nFilter options:\n In initial version:\n   Audios: checked\n In modified version:\n   Audios: unchecked\n In initial version:\n   Include Youtube channel: checked\n In modified version:\n   Include Youtube\n   channel: unchecked\n In initial version:\n   Include description: checked\n In modified version:\n   Include description: unchecked\n In initial version:\n   Extracted: checked\n In modified version:\n   Extracted: unchecked",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -1882,6 +1897,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               const Offset(
                   0, -300), // Negative value for vertical drag to scroll down
             );
+            await tester.pumpAndSettle();
+
+
+            // Tap on the Comments checkbox to unselect it and reselect the Audios
+            // checkbox as well as the Include Youtube channel checkbox and the Include
+            // description checkbox.
+            await tester.tap(find.byKey(const Key('filterCommentSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
