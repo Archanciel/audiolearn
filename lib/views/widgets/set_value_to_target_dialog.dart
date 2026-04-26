@@ -51,6 +51,9 @@ class SetValueToTargetDialog extends StatefulWidget {
   //                               should close the dialog or not.
   final bool areCheckboxesOnRow;
 
+  final bool isEditableTextFieldSelected; // If true, the passed value contained
+  //                                         in the TextField is selected.
+
   /// If the [passedValueFieldLabel] and the [passedValueStr] are not passed and so
   /// remains both empty, the dialog will not display the passed value field.
   ///
@@ -82,8 +85,8 @@ class SetValueToTargetDialog extends StatefulWidget {
     this.isCursorAtStart = false,
     this.helpItemsLst = const [],
     this.areCheckboxesOnRow = true, // if false, checkboxes are on column
-  }) : isValueStringUsed =
-            passedValueFieldLabel.isNotEmpty;
+    this.isEditableTextFieldSelected = true,
+  }) : isValueStringUsed = passedValueFieldLabel.isNotEmpty;
 
   @override
   State<SetValueToTargetDialog> createState() => _SetValueToTargetDialogState();
@@ -116,6 +119,12 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       // Ensure focus after dialog is fully built
       if (widget.passedValueFieldLabel.isNotEmpty) {
         _focusNodePassedValueTextField.requestFocus();
+        if (widget.isEditableTextFieldSelected) {
+          _passedValueTextEditingController.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: _passedValueTextEditingController.text.length,
+          );
+        }
       }
     });
   }
