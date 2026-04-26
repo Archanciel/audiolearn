@@ -6506,17 +6506,12 @@ class PlaylistListVM extends ChangeNotifier {
     final bool isDescending = !sortingItem.isAscending;
 
     if (position > initialPosition) {
-      position = ((position - initialPosition) == 1 &&
-              position < playableAudioLstLength)
-          ? position
-          : isDescending
-              ? ++position
-              : position;
+      position = isDescending ? ++position : position;
     } else if (position < initialPosition) {
-      if (audioSortFilterParameters.selectedSortItemLst[0].isAscending) {
-        position = ((position - 2) <= -1) ? 0 : position;
-      } else {
+      if (isDescending) {
         position = ((position - 2) <= -1) ? 0 : --position;
+      } else {
+        position = ((position - 2) <= -1) ? 0 : position;
       }
     }
 
