@@ -371,6 +371,34 @@ class AudioSortFilterService {
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
     }
+    if (existingAudioSortFilterParms.filterAudios !=
+        newOrModifiedaudioSortFilterParms.filterAudios) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterAudios,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterAudios,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterAudios',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.filterComments !=
+        newOrModifiedaudioSortFilterParms.filterComments) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms.filterComments,
+              modifiedCheckBoxState:
+                  newOrModifiedaudioSortFilterParms.filterComments,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'filterComments',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
     if (existingAudioSortFilterParms.searchAsWellInYoutubeChannelName !=
         newOrModifiedaudioSortFilterParms.searchAsWellInYoutubeChannelName) {
       wasFilterOptionsTitleAddedToDifferencesLst =
@@ -382,6 +410,22 @@ class AudioSortFilterService {
               sortFilterParmsNameTranslationMap:
                   sortFilterParmsNameTranslationMap,
               optionNameTranslationKey: 'searchAsWellInYoutubeChannelName',
+              differencesLst: differencesLst,
+              wasFilterOptionsTitleAddedToDifferencesLst:
+                  wasFilterOptionsTitleAddedToDifferencesLst);
+    }
+    if (existingAudioSortFilterParms.searchAsWellInVideoCompactDescription !=
+        newOrModifiedaudioSortFilterParms
+            .searchAsWellInVideoCompactDescription) {
+      wasFilterOptionsTitleAddedToDifferencesLst =
+          _addToDifferencesLstOtherOptionCheckboxValueStr(
+              initialCheckBoxState: existingAudioSortFilterParms
+                  .searchAsWellInVideoCompactDescription,
+              modifiedCheckBoxState: newOrModifiedaudioSortFilterParms
+                  .searchAsWellInVideoCompactDescription,
+              sortFilterParmsNameTranslationMap:
+                  sortFilterParmsNameTranslationMap,
+              optionNameTranslationKey: 'searchAsWellInVideoCompactDescription',
               differencesLst: differencesLst,
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
@@ -427,34 +471,6 @@ class AudioSortFilterService {
               sortFilterParmsNameTranslationMap:
                   sortFilterParmsNameTranslationMap,
               optionNameTranslationKey: 'filterNotListened',
-              differencesLst: differencesLst,
-              wasFilterOptionsTitleAddedToDifferencesLst:
-                  wasFilterOptionsTitleAddedToDifferencesLst);
-    }
-    if (existingAudioSortFilterParms.filterAudios !=
-        newOrModifiedaudioSortFilterParms.filterAudios) {
-      wasFilterOptionsTitleAddedToDifferencesLst =
-          _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState: existingAudioSortFilterParms.filterAudios,
-              modifiedCheckBoxState:
-                  newOrModifiedaudioSortFilterParms.filterAudios,
-              sortFilterParmsNameTranslationMap:
-                  sortFilterParmsNameTranslationMap,
-              optionNameTranslationKey: 'filterAudios',
-              differencesLst: differencesLst,
-              wasFilterOptionsTitleAddedToDifferencesLst:
-                  wasFilterOptionsTitleAddedToDifferencesLst);
-    }
-    if (existingAudioSortFilterParms.filterComments !=
-        newOrModifiedaudioSortFilterParms.filterComments) {
-      wasFilterOptionsTitleAddedToDifferencesLst =
-          _addToDifferencesLstOtherOptionCheckboxValueStr(
-              initialCheckBoxState: existingAudioSortFilterParms.filterComments,
-              modifiedCheckBoxState:
-                  newOrModifiedaudioSortFilterParms.filterComments,
-              sortFilterParmsNameTranslationMap:
-                  sortFilterParmsNameTranslationMap,
-              optionNameTranslationKey: 'filterComments',
               differencesLst: differencesLst,
               wasFilterOptionsTitleAddedToDifferencesLst:
                   wasFilterOptionsTitleAddedToDifferencesLst);
