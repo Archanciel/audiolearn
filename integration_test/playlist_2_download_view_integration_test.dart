@@ -36828,7 +36828,7 @@ void main() {
       );
     });
     testWidgets(
-        '''With 41 audio, verify playlist info.  verify bug when tenth of seconds are set
+        '''With 41 audio, verify playlist info. Verifying bug when tenth of seconds are set
            to 10 correction.''', (WidgetTester tester) async {
       const String selectedPlaylistTitle = 'Prières 4';
 
@@ -36874,6 +36874,88 @@ void main() {
         playlistInfoAudioCommentNumber: '46',
         playlistInfoPlayableAudioTotalDuration: '0:56:32.0',
         playlistInfoPlayableAudioTotalRemainingDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
+      );
+
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''With 41 audio after play speed modification in one audio, verify the modified playlist
+           info.''', (WidgetTester tester) async {
+      const String selectedPlaylistTitle = 'Prières 4';
+
+      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+        tester: tester,
+        savedTestDataDirName: 'playlist_info_test',
+        selectedPlaylistTitle: selectedPlaylistTitle,
+        tapOnPlaylistToggleButton: false,
+      );
+
+      // Now rewind all audio to start position and verify that the
+      // playlist info is updated accordingly
+      await _tapOnRewindPlaylistAudioToStartPositionMenu(
+        tester: tester,
+        playlistToRewindTitle: selectedPlaylistTitle,
+        numberOfRewindedAudio: 40,
+      );
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'Chap desc',
+        playlistPlayAudioSortFilterParmsName: 'Chap desc',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '54',
+        playlistInfoPlayableAudioNumber: '41',
+        playlistInfoAudioCommentNumber: '46',
+        playlistInfoPlayableAudioTotalDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:56:32.0',
+        playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
+      );
+
+      // Now change the play speed of the "Omraam Mikhaël Aïvanhov  'Je
+      // vivrai d’après l'amour!'" audio
+
+      // First, get the first downloaded Audio ListTile Text
+      // widget finder and tap on it to open the audio player
+      // view
+      final Finder firstDownloadedAudioListTileTextWidgetFinder =
+          find.text("1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'");
+
+      await tester.tap(firstDownloadedAudioListTileTextWidgetFinder);
+      await IntegrationTestUtil.pumpAndSettleDueToAudioPlayers(
+        tester: tester,
+      );
+
+      // Now open the audio play speed dialog
+      await tester.tap(find.byKey(const Key('setAudioSpeedTextButton')));
+      await tester.pumpAndSettle();
+
+      // Now select the 0.7x play speed
+      await tester.tap(find.text('0.7x'));
+      await tester.pumpAndSettle();
+
+      // And click on the Ok button
+      await tester.tap(find.text('Ok'));
+      await tester.pumpAndSettle();
+
+      // Verify the playlist info dialog content
+      await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
+        tester: tester,
+        playlistTitle: selectedPlaylistTitle,
+        playlistDownloadAudioSortFilterParmsName: 'Chap desc',
+        playlistPlayAudioSortFilterParmsName: 'Chap desc',
+        isPaylistSelected: true,
+        playlistInfoTotalAudioNumber: '54',
+        playlistInfoPlayableAudioNumber: '41',
+        playlistInfoAudioCommentNumber: '46',
+        playlistInfoPlayableAudioTotalDuration: '0:57:40.4',
+        playlistInfoPlayableAudioTotalRemainingDuration: '0:57:40.4',
         playlistInfoPlayableAudioTotalFileSize: '33.50 MB',
       );
 
