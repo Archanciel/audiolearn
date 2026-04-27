@@ -120,6 +120,7 @@ class _SetValueToTargetDialogState extends State<SetValueToTargetDialog>
       if (widget.passedValueFieldLabel.isNotEmpty) {
         _focusNodePassedValueTextField.requestFocus();
         if (widget.isEditableTextFieldSelected) {
+          // Select the text in the TextField if isEditableTextFieldSelected is true
           _passedValueTextEditingController.selection = TextSelection(
             baseOffset: 0,
             extentOffset: _passedValueTextEditingController.text.length,
