@@ -36921,6 +36921,13 @@ void main() {
       // Now change the play speed of the "Omraam Mikhaël Aïvanhov  'Je
       // vivrai d’après l'amour!'" audio
 
+      // Find the audio list widget using its key
+      Finder listFinder = find.byKey(const Key('audio_list'));
+
+      // Perform the scroll down action
+      await tester.drag(listFinder, const Offset(0, -500));
+      await tester.pumpAndSettle();
+
       // First, get the first downloaded Audio ListTile Text
       // widget finder and tap on it to open the audio player
       // view
@@ -36944,6 +36951,10 @@ void main() {
       await tester.tap(find.text('Ok'));
       await tester.pumpAndSettle();
 
+      // Go back to the playlist download view
+      await tester.tap(find.byKey(const Key('playlistDownloadViewIconButton')));
+      await tester.pumpAndSettle();
+      
       // Verify the playlist info dialog content
       await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
         tester: tester,
@@ -42982,8 +42993,7 @@ void main() {
       });
       testWidgets(
           '''Chap desc, moving down 1 position only for already positioned audios, execute a first time the Audio
-           item menu "Move Audio to Position".''',
-          (WidgetTester tester) async {
+           item menu "Move Audio to Position".''', (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -43726,7 +43736,8 @@ void main() {
       });
       testWidgets(
           '''Chap asc, moving up 1 position only for already positioned audios, execute a first time
-           the Audio item menu "Move Audio to Position".''', (WidgetTester tester) async {
+           the Audio item menu "Move Audio to Position".''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
@@ -44021,7 +44032,7 @@ void main() {
         // Now we want to move another already positioned audio
 
         audioToPositionTitle =
-           "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
+            "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
 
         // First, find the Audio sublist ListTile Text widget
         audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
@@ -44102,7 +44113,8 @@ void main() {
       });
       testWidgets(
           '''Chap asc, moving down 1 position only for already positioned audios, execute a first
-           time the Audio item menu "Move Audio to Position".''', (WidgetTester tester) async {
+           time the Audio item menu "Move Audio to Position".''',
+          (WidgetTester tester) async {
         // Purge the test playlist directory if it exists so that the
         // playlist list is empty
         DirUtil.deleteFilesInDirAndSubDirs(
