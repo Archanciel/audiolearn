@@ -1709,5 +1709,6 @@
   "movedPlaylistMessage": "La playlist {playlist} a été déplacée de la position {positionFrom} à la position {positionTo}.",
   "moveAudioToPositionErrorMessage": "La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\".",
   "audioSearch": "Audios",
-  "commentSearch": "Commentaires"
+  "commentSearch": "Commentaires",
+  "duplicateCommentTooltip": "Dupliquer le commentaire. Cela est utile si nous devons diviser le commentaire en deux parties afin de supprimer une portion du commentaire."
 }

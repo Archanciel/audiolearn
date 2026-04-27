@@ -4789,6 +4789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Comments'**
   String get commentSearch;
+
+  /// No description provided for @duplicateCommentTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate the comment. This is useful if we need to devide the comment in two parts in order to eliminate a portion of the comment.'**
+  String get duplicateCommentTooltip;
 }
 
 class _AppLocalizationsDelegate
