@@ -1899,7 +1899,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
             await tester.pumpAndSettle();
 
-
             // Tap on the Comments checkbox to unselect it and reselect the Audios
             // checkbox as well as the Include Youtube channel checkbox and the Include
             // description checkbox.
@@ -1935,10 +1934,6 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Unpictured and reselect Pictured.
             await tester
                 .tap(find.byKey(const Key('filterNotPicturedCheckbox')));
-            await tester.pumpAndSettle();
-
-            // Tap on the Playable checkbox to unselect it
-            await tester.tap(find.byKey(const Key('filterPlayableCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Not playable checkbox to unselect it. This deselect
@@ -1997,7 +1992,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Or checkbox to elect it and unselect the And checkbox.
+            // Tap on the Or checkbox to select it and unselect the And checkbox.
             await tester.tap(find.byKey(const Key('orCheckbox')));
             await tester.pumpAndSettle();
 
@@ -3507,6 +3502,38 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               audioFilterString: 'Jancovici',
             );
 
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -400), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Audios checkbox to unselect it.
+            await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Extracted checkbox to unselect it. This deselect
+            // Extracted without reselect Downloaded since the Converted
+            // checkbox remains selected.
+            await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
+            await tester.pumpAndSettle();
+
             // Click on the "Save" button.
             await tester
                 .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
@@ -3519,7 +3546,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  "Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Jancovici'",
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio asc\n Uniquement en version modifiée:\n   Titre audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Jancovici'\nOptions filtre:\n En version initiale:\n   Audios: coché\n En version modifiée:\n   Audios: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Inclure la description: coché\n En version modifiée:\n   Inclure la description: décoché\n En version initiale:\n   Extrait: coché\n En version modifiée:\n   Extrait: décoché",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -3540,6 +3567,12 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               const Offset(
                   0, -300), // Negative value for vertical drag to scroll down
             );
+            await tester.pumpAndSettle();
+
+            // Tap on the Comments checkbox to unselect it and reselect the Audios
+            // checkbox as well as the Include Youtube channel checkbox and the Include
+            // description checkbox.
+            await tester.tap(find.byKey(const Key('filterCommentSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
@@ -3577,9 +3610,19 @@ void playlistDownloadViewSortFilterIntegrationTest() {
                 .tap(find.byKey(const Key('filterNotPlayableCheckbox')));
             await tester.pumpAndSettle();
 
-            // Tap on the Playable checkbox to unselect it. This deselect
-            // Playable and reselect Not playable
-            await tester.tap(find.byKey(const Key('filterPlayableCheckbox')));
+            // Scrolling down the sort filter dialog so that the checkboxes
+            // are visible and so accessible by the integration test.
+            // WARNING: Scrolling down must be done before setting sort
+            // options, otherwise, it does not work.
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
+            await tester.pumpAndSettle();
+
+            // Tap on the Downloaded checkbox to unselect it
+            await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
             await tester.pumpAndSettle();
 
             await tester.drag(
@@ -3590,7 +3633,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Imported checkbox to unselect it. This deselect
-            // Imported.
+            // Imported without reselect Downloaded since the Converted
+            // checkbox remains selected.
             await tester.tap(find.byKey(const Key('filterImportedCheckbox')));
             await tester.pumpAndSettle();
 
@@ -3601,13 +3645,23 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             );
             await tester.pumpAndSettle();
 
-            // Tap on the Downloaded checkbox to unselect it. This deselects
-            // Downloaded and reselects Imported.
-            await tester.tap(find.byKey(const Key('filterDownloadedCheckbox')));
+            // Tap on the Extracted checkbox to select it.
+            await tester.tap(find.byKey(const Key('filterExtractedCheckbox')));
+            await tester.pumpAndSettle();
+
+            await tester.drag(
+              find.byType(AudioSortFilterDialog),
+              const Offset(
+                  0, -200), // Negative value for vertical drag to scroll down
+            );
             await tester.pumpAndSettle();
 
             // Tap on the Ignore case checkbox to unselect it
             await tester.tap(find.byKey(const Key('ignoreCaseCheckbox')));
+            await tester.pumpAndSettle();
+
+            // Tap on the Or checkbox to select it and unselect the And checkbox.
+            await tester.tap(find.byKey(const Key('orCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Include description checkbox to unselect it
@@ -3750,7 +3804,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'ATTENTION: le paramètre de tri/filtre "$saveAsTitle" a été modifié. Voulez-vous mettre à jour le paramètre de tri/filtre existant en cliquant sur "Confirmer", ou le sauver sous un nom différent ou annuler l\'operation d\'édition, cela en cliquant sur "Annuler" ?',
               confirmDialogMessage:
-                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Ignorer la casse: coché\n En version modifiée:\n   Ignorer la casse: décoché\n En version initiale:\n   Inclure la chaîne Youtube: coché\n En version modifiée:\n   Inclure la chaîne\n   Youtube: décoché\n En version initiale:\n   Q. orale: coché\n En version modifiée:\n   Q. orale: décoché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Jouable: coché\n En version modifiée:\n   Jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version initiale:\n   Importé: coché\n En version modifiée:\n   Importé: décoché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:06:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:08:00",
+                  "Trier par:\n Uniquement en version initiale:\n   Titre audio desc\n Uniquement en version modifiée:\n   Titre audio asc,\n   Chapitre audio asc,\n   Date mise en ligne vidéo desc,\n   Durée audio asc,\n   Durée audio écoutable\n   restante asc,\n   Vitesse téléch audio desc,\n   Durée téléch audio desc\nMots filtre:\n Uniquement en version modifiée:\n   'Marine Le Pen',\n   'Emmanuel Macron'\nOptions filtre:\n En version initiale:\n   Audios: décoché\n En version modifiée:\n   Audios: coché\n En version initiale:\n   Commentaires: coché\n En version modifiée:\n   Commentaires: décoché\n En version initiale:\n   Inclure la chaîne\n   Youtube: décoché\n En version modifiée:\n   Inclure la chaîne Youtube: coché\n En version initiale:\n   Inclure la description: décoché\n En version modifiée:\n   Inclure la description: coché\n En version initiale:\n   Q. orale: coché\n En version modifiée:\n   Q. orale: décoché\n En version initiale:\n   Non com.: coché\n En version modifiée:\n   Non com.: décoché\n En version initiale:\n   Sans ph.: coché\n En version modifiée:\n   Sans ph.: décoché\n En version initiale:\n   Non jouable: coché\n En version modifiée:\n   Non jouable: décoché\n En version initiale:\n   Téléchargé: coché\n En version modifiée:\n   Téléchargé: décoché\n En version initiale:\n   Importé: coché\n En version modifiée:\n   Importé: décoché\n En version initiale:\n   Extrait: décoché\n En version modifiée:\n   Extrait: coché\n En version modifiée:\n   Date début téléch: 26/12/2023\n En version modifiée:\n   Date fin téléch: 06/01/2024\n En version modifiée:\n   Date début mise en\n   ligne: 12/06/2022\n En version modifiée:\n   Date fin mise en\n   ligne: 19/09/2023\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Début: 2.37\n En version modifiée:\n   Intervalle taille fichier (MB)\n   Fin: 2.8\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Début: 00:06:00\n En version modifiée:\n   Intervalle durée audio (hh:mm:ss)\n   Fin: 00:08:00",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
