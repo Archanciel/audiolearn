@@ -1284,5 +1284,6 @@
   "movedPlaylistMessage": "The playlist \"{playlist}\" was moved from position {positionFrom} to position {positionTo}.",
   "moveAudioToPositionErrorMessage": "Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".",
   "audioSearch": "Audios",
-  "commentSearch": "Comments"
+  "commentSearch": "Comments",
+  "duplicateCommentTooltip": "Duplicate the comment. This is useful if we need to devide the comment in two parts in order to eliminate a portion of the comment."
 }

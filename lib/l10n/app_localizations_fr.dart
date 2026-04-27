@@ -3017,4 +3017,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commentSearch => 'Commentaires';
+
+  @override
+  String get duplicateCommentTooltip =>
+      'Dupliquer le commentaire. Cela est utile si nous devons diviser le commentaire en deux parties afin de supprimer une portion du commentaire.';
 }

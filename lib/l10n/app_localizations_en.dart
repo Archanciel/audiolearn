@@ -2981,4 +2981,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentSearch => 'Comments';
+
+  @override
+  String get duplicateCommentTooltip =>
+      'Duplicate the comment. This is useful if we need to devide the comment in two parts in order to eliminate a portion of the comment.';
 }

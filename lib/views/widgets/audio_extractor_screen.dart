@@ -1279,16 +1279,20 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                 CircleAvatar(
                   radius: 18, // ✅ Full size!
                   backgroundColor: const Color.fromARGB(255, 27, 131, 31),
-                  child: IconButton(
-                    key: Key('duplicateSegmentButtonKey_$displayedIndex'),
-                    icon: const Icon(
-                      Icons.add,
-                      size: 16,
-                      color: Colors.white,
+                  child: Tooltip(
+                    message: AppLocalizations.of(context)!
+                        .duplicateCommentTooltip,
+                    child: IconButton(
+                      key: Key('duplicateSegmentButtonKey_$displayedIndex'),
+                      icon: const Icon(
+                        Icons.add,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: onDuplicate,
                     ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: onDuplicate,
                   ),
                 ),
               ],
