@@ -583,9 +583,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                           onChanged: (_audioTitleFilterSentencesLst.isNotEmpty)
                               ? (bool? newValue) {
                                   setState(() {
-                                    _modifyIgnoreCaseCheckBox(
-                                      newValue,
-                                    );
+                                    _ignoreCase = newValue!;
                                   });
                                 }
                               : null,
@@ -617,9 +615,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                                 (_audioTitleFilterSentencesLst.isNotEmpty)
                                     ? (bool? newValue) {
                                         setState(() {
-                                          _modifySearchInYoutubeChannelNameCheckbox(
-                                            newValue,
-                                          );
+                                          _searchInYoutubeChannelName = newValue!;
                                         });
                                       }
                                     : null,
@@ -649,9 +645,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                                 (_audioTitleFilterSentencesLst.isNotEmpty)
                                     ? (bool? newValue) {
                                         setState(() {
-                                          _modifySearchInVideoCompactDescriptionCheckbox(
-                                            newValue,
-                                          );
+                                          _searchInVideoCompactDescription = newValue!;
                                         });
                                       }
                                     : null,
@@ -755,7 +749,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                   key: const Key('deleteSaveAsNameIconButton'),
                   onPressed: () async {
                     _clearSortFilterSaveAsNameField();
-                    _sortFilterSaveAsUniqueNameFocusNode.requestFocus();
                     setState(() {}); // necessary to update Delete button color
                   },
                   padding: const EdgeInsets.all(0),
@@ -824,10 +817,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               setState(() {
                 _resetSortFilterOptions();
               });
-
-              // now clicking on Enter works since the
-              // Checkbox is not focused anymore
-              _audioTitleSearchSentenceFocusNode.requestFocus();
             },
           ),
         ),
@@ -1399,10 +1388,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 setState(() {
                   _filterFullyListened = newValue!;
                 });
-
-                // now clicking on Enter works since the
-                // Checkbox is not focused anymore
-                _audioTitleSearchSentenceFocusNode.requestFocus();
               },
             ),
           ],
@@ -1417,10 +1402,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 setState(() {
                   _filterPartiallyListened = newValue!;
                 });
-
-                // now clicking on Enter works since the
-                // Checkbox is not focused anymore
-                _audioTitleSearchSentenceFocusNode.requestFocus();
               },
             ),
           ],
@@ -1435,10 +1416,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 setState(() {
                   _filterNotListened = newValue!;
                 });
-
-                // now clicking on Enter works since the
-                // Checkbox is not focused anymore
-                _audioTitleSearchSentenceFocusNode.requestFocus();
               },
             ),
           ],
@@ -1476,10 +1453,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               _searchInYoutubeChannelName = true;
               _searchInVideoCompactDescription = true;
             }
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         Text(AppLocalizations.of(context)!.commentSearch),
@@ -1499,10 +1472,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               _searchInYoutubeChannelName = true;
               _searchInVideoCompactDescription = true;
             }
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
       ],
@@ -1529,10 +1498,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               // to have both unchecked
               _filterSpokenQuality = true;
             }
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         Text(AppLocalizations.of(context)!.audioSpokenQuality),
@@ -1550,10 +1515,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
               // to have both unchecked
               _filterMusicQuality = true;
             }
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
       ],
@@ -1580,10 +1541,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterNotCommented = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         Text(AppLocalizations.of(context)!.notCommented),
@@ -1601,10 +1558,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterCommented = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
       ],
@@ -1631,10 +1584,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterNotPictured = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         Text(AppLocalizations.of(context)!.notPictured),
@@ -1652,10 +1601,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterPictured = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
       ],
@@ -1682,10 +1627,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterNotPlayable = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
         Text(AppLocalizations.of(context)!.notPlayable),
@@ -1703,10 +1644,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _filterPlayable = true;
               }
             });
-
-            // now clicking on Enter works since the
-            // Checkbox is not focused anymore
-            _audioTitleSearchSentenceFocusNode.requestFocus();
           },
         ),
       ],
@@ -1737,7 +1674,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       _filterConverted = true;
                     }
                   });
-                  _audioTitleSearchSentenceFocusNode.requestFocus();
                 },
               ),
             ],
@@ -1762,7 +1698,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       _filterDownloaded = true;
                     }
                   });
-                  _audioTitleSearchSentenceFocusNode.requestFocus();
                 },
               ),
             ],
@@ -1788,7 +1723,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       _filterDownloaded = true;
                     }
                   });
-                  _audioTitleSearchSentenceFocusNode.requestFocus();
                 },
               ),
             ],
@@ -1814,7 +1748,6 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                       _filterDownloaded = true;
                     }
                   });
-                  _audioTitleSearchSentenceFocusNode.requestFocus();
                 },
               ),
             ],
@@ -1824,24 +1757,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
     );
   }
 
-  void _modifySearchInYoutubeChannelNameCheckbox(bool? newValue) {
-    _searchInYoutubeChannelName = newValue!;
-
-    // now clicking on Enter works since the
-    // Checkbox is not focused anymore
-    _audioTitleSearchSentenceFocusNode.requestFocus();
-  }
-
   void _modifySearchInVideoCompactDescriptionCheckbox(bool? newValue) {
     _searchInVideoCompactDescription = newValue!;
-
-    // now clicking on Enter works since the
-    // Checkbox is not focused anymore
-    _audioTitleSearchSentenceFocusNode.requestFocus();
-  }
-
-  void _modifyIgnoreCaseCheckBox(bool? newValue) {
-    _ignoreCase = newValue!;
 
     // now clicking on Enter works since the
     // Checkbox is not focused anymore
