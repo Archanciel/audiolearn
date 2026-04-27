@@ -63,6 +63,13 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
               widget.audio.validVideoTitle;
           break;
       }
+
+      _focusNodeAudioModificationTextField.requestFocus();
+      // Select the text in the TextField
+      _audioModificationTextEditingController.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: _audioModificationTextEditingController.text.length,
+      );
     });
   }
 
