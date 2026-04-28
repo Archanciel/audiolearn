@@ -2392,7 +2392,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               audioFilterString: 'Marine Le Pen',
             );
 
-            // Tap on the 'and / or' checkbox set sentence combination
+            // Tap on the 'and' checkbox to set sentence combination
             // to 'or' instead of 'and'
             await tester.tap(find.byKey(const Key('andCheckbox')));
             await tester.pumpAndSettle();
