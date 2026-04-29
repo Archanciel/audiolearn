@@ -1078,7 +1078,7 @@ class AudioSortFilterService {
 
           if (isAudioFiltered &&
               sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter senten ces since
+            // not necessary to test the other filter sentences since
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
@@ -1212,37 +1212,54 @@ class AudioSortFilterService {
             audio: audio,
           );
 
-          for (Comment comment in audioComments) {
-            if (ignoreCase) {
-              if (comment.title
-                      .toLowerCase()
-                      .contains(filterSentence.toLowerCase()) ||
-                  comment.content
-                      .toLowerCase()
-                      .contains(filterSentence.toLowerCase())) {
-                isFilterSentenceInComments = true;
-                break;
+          for (String filterSentence in filterSentenceLst) {
+            for (Comment comment in audioComments) {
+              if (ignoreCase) {
+                String filterSentenceInLowerCase = filterSentence.toLowerCase();
+                if (comment.title
+                        .toLowerCase()
+                        .contains(filterSentenceInLowerCase) ||
+                    comment.content
+                        .toLowerCase()
+                        .contains(filterSentenceInLowerCase)) {
+                  isFilterSentenceInComments = true;
+                } else {
+                  isFilterSentenceInComments = false;
+                }
+              } else {
+                if (comment.title.contains(filterSentence) ||
+                    comment.content.contains(filterSentence)) {
+                  isFilterSentenceInComments = true;
+                } else {
+                  isFilterSentenceInComments = false;
+                }
               }
-            } else {
-              if (comment.title.contains(filterSentence) ||
-                  comment.content.contains(filterSentence)) {
-                isFilterSentenceInComments = true;
+
+              if (isFilterSentenceInComments && areAudiosFiltered == true) {
+                // not necessary to test the other filter sentences since
+                // equality was found and 'OR' is sufficient ..
+                isAudioFiltered = true;
                 break;
+              } else if (!isFilterSentenceInComments &&
+                  areAudiosFiltered == false) {
+                // not necessary to test the other filter sentences since
+                // inequality was found and 'AND' is necessary ..
+                isAudioFiltered = false;
+                continue;
               }
             }
-          }
 
-          if (isFilterSentenceInComments) {
-            // not necessary to test the other filter sentences since
-            // equality was found and 'OR' is sufficient ..
-            isAudioFiltered = true;
-            break;
-          } else if (!isFilterSentenceInComments &&
-              areAudiosFiltered == false) {
-            // not necessary to test the other filter sentences since
-            // inequality was found and 'AND' is necessary ..
-            isAudioFiltered = false;
-            continue;
+            if (isFilterSentenceInComments &&
+                sentencesCombination == SentencesCombination.or) {
+              // not necessary to test the other filter sentences since
+              // equality was found and 'OR' is sufficient ..
+              break;
+            } else if (!isFilterSentenceInComments &&
+                sentencesCombination == SentencesCombination.and) {
+              // not necessary to test the other filter sentences since
+              // inequality was found and 'AND' is necessary ..
+              break;
+            }
           }
         }
       } // end of for loop on filterSentenceLst
