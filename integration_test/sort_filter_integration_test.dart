@@ -1844,7 +1844,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Audios checkbox to unselect it.
-            await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterAudioSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Scrolling down the sort filter dialog so that the checkboxes
@@ -1902,7 +1903,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Tap on the Comments checkbox to unselect it and reselect the Audios
             // checkbox as well as the Include Youtube channel checkbox and the Include
             // description checkbox.
-            await tester.tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
@@ -3514,7 +3516,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             await tester.pumpAndSettle();
 
             // Tap on the Audios checkbox to unselect it.
-            await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterAudioSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Scrolling down the sort filter dialog so that the checkboxes
@@ -3572,7 +3575,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             // Tap on the Comments checkbox to unselect it and reselect the Audios
             // checkbox as well as the Include Youtube channel checkbox and the Include
             // description checkbox.
-            await tester.tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+            await tester
+                .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
             await tester.pumpAndSettle();
 
             // Tap on the Music qual. checkbox to unselect it
@@ -11210,13 +11214,13 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             tester: tester,
             expectedCommentTitles: expectedTitleAscCommentTitles,
             expectedCommentTimes: expectedTitleAscCommentTimes,
-             indexList: [
+            indexList: [
               1,
               4,
               8,
               12,
             ],
-         );
+          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
@@ -16855,6 +16859,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
       });
+      group('''TO DEFINE Converted/Extracted related checkboxes. Look at Unselect Downloaded then ... above.''', () {
+      });
+      group('''Audios/Comments related checkboxes''', () {});
     });
   });
 }
