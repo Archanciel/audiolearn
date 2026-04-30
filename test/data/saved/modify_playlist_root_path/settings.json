@@ -33,6 +33,8 @@
             "ignoreCase": true,
             "searchAsWellInYoutubeChannelName": true,
             "searchAsWellInVideoCompactDescription": true,
+            "filterAudios": true,
+            "filterComments": true,
             "filterMusicQuality": true,
             "filterSpokenQuality": true,
             "filterFullyListened": true,
