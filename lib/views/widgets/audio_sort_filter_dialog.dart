@@ -1791,6 +1791,10 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 _audioTitleFilterSentencesLst[index].isNotEmpty
                     ? setState(() {
                         _audioTitleFilterSentencesLst.removeAt(index);
+                        if (_audioTitleFilterSentencesLst.length == 1) {
+                          _isAnd = true;
+                          _isOr = false;
+                        }
                       })
                     : null; // required in order to be able to test if the
                 //             IconButton is disabled or not
