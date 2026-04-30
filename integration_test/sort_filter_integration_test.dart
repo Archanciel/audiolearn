@@ -1063,6 +1063,186 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
+        testWidgets(
+            '''Tapping on clear search word/sentence suppression icon button in a SF parms in which
+               2 search words or sentences exist and the "or" checkbox is selected and verifying the
+               state of the "and" (checked) and of the "or" (unchecked) checkboxes in the case where
+               only 1 search element remains. Verify also that both checkboxes are disabled.
+               SF parms name: "janco surpo o".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService();
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'janco surpo o' sort/filter item
+          final Finder titleAscDropDownTextFinder =
+              find.text('janco surpo o').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'janco surpo o'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now type on the clear search word icon button in order to
+          // remove the 'janco' search word
+          final Finder clearSearchWordIconButtonFinder =
+              find.byKey(const Key('removeSentenceIconButton')).first;
+          await tester.tap(clearSearchWordIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Verify that the 'and' checkbox is now selected and disabled
+
+          // Retrieve the Checkbox widgets by key
+          final Checkbox andCheckbox = tester.widget<Checkbox>(
+            find.byKey(const Key('andCheckbox')),
+          );
+          final Checkbox orCheckbox = tester.widget<Checkbox>(
+            find.byKey(const Key('orCheckbox')),
+          );
+
+          // Verify 'and' is checked
+          expect(andCheckbox.value, isTrue);
+
+          // Verify both are disabled (onChanged is null)
+          expect(andCheckbox.onChanged, isNull);
+          expect(orCheckbox.onChanged, isNull);
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''Tapping on clear search word/sentence suppression icon button in a SF parms in which
+               2 search words or sentences exist and the "and" checkbox is selected and verifying the
+               state of the "and" (checked) and of the "or" (unchecked) checkboxes in the case where
+               only 1 search element remains. Verify also that both checkboxes are disabled.
+               SF parms name: "janco surpo a".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          // Copy the test initial audio data to the app dir
+          DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+            sourceRootPath:
+                "$kDownloadAppTestSavedDataDir${path.separator}sort_and_filter_audio_dialog_widget_test",
+            destinationRootPath: kApplicationPathWindowsTest,
+          );
+
+          final SettingsDataService settingsDataService = SettingsDataService();
+
+          // Load the settings from the json file. This is necessary
+          // otherwise the ordered playlist titles will remain empty
+          // and the playlist list will not be filled with the
+          // playlists available in the download app test dir
+          await settingsDataService.loadSettingsFromFile(
+              settingsJsonPathFileName:
+                  "$kApplicationPathWindowsTest${path.separator}$kSettingsFileName");
+
+          await app.main();
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          final Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          final Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // And find the 'janco surpo o' sort/filter item
+          final Finder titleAscDropDownTextFinder =
+              find.text('janco surpo a').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Now open the audio popup menu in order to modify the 'janco surpo o'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Now type on the clear search word icon button in order to
+          // remove the 'janco' search word
+          final Finder clearSearchWordIconButtonFinder =
+              find.byKey(const Key('removeSentenceIconButton')).first;
+          await tester.tap(clearSearchWordIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Verify that the 'and' checkbox is now selected and disabled
+
+          // Retrieve the Checkbox widgets by key
+          final Checkbox andCheckbox = tester.widget<Checkbox>(
+            find.byKey(const Key('andCheckbox')),
+          );
+          final Checkbox orCheckbox = tester.widget<Checkbox>(
+            find.byKey(const Key('orCheckbox')),
+          );
+
+          // Verify 'and' is checked
+          expect(andCheckbox.value, isTrue);
+
+          // Verify both are disabled (onChanged is null)
+          expect(andCheckbox.onChanged, isNull);
+          expect(orCheckbox.onChanged, isNull);
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
       });
       group(
           '''Audio download, video upload, audio file size, duration based sort/filter
@@ -17041,14 +17221,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Find and tap on the 'listenedNoCom' sort/filter item
-          Finder titleAscDropDownTextFinder = find.text('1 sentence 2 words').last;
+          Finder titleAscDropDownTextFinder =
+              find.text('1 sentence 2 words').last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
           // Verify the audioTitles selected by applying the 'listenedNoCom'
           // sort/filter parms
-          List<String> audioTitleToCopyLst = [
-          ];
+          List<String> audioTitleToCopyLst = [];
 
           // Verify the displayed audio list after selecting the 'listenedNoCom'
           // Sort/Filter parms.
@@ -17198,8 +17378,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''2 words and with Comments only selected. The 2 search words are "vraiment" and
                "recommander" and "and" is selected. 0 S8 playlist audios are selected. SF parms
-               name: "2 words com and".''',
-            (WidgetTester tester) async {
+               name: "2 words com and".''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -17241,8 +17420,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Verify the audioTitles selected by applying the 'listenedNoCom'
           // sort/filter parms
-          List<String> audioTitleToCopyLst = [
-          ];
+          List<String> audioTitleToCopyLst = [];
 
           // Verify the displayed audio list after selecting the 'listenedNoCom'
           // Sort/Filter parms.
@@ -17260,8 +17438,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''2 words or with Comments only selected. The 2 search words are "vraiment" and
                "recommander" and "or" is selected. 2 S8 playlist audios are selected. SF parms
-               name: "2 words com or".''',
-            (WidgetTester tester) async {
+               name: "2 words com or".''', (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -17565,8 +17742,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.pumpAndSettle();
 
           // Find and tap on the 'listenedNoCom' sort/filter item
-          Finder titleAscDropDownTextFinder =
-              find.text('2 words').last;
+          Finder titleAscDropDownTextFinder = find.text('2 words').last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
