@@ -17002,6 +17002,68 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           );
         });
         testWidgets(
+            '''1 search sentence 2 words with Comments only selected. The unique search sentence is
+               "vraiment recommander". Only 0 audio is selected since none have this sentence anywhere.
+               SF parms name: "1 sentence 2 words".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('1 sentence 2 words').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
             '''2 words or descr with Audios and Comments selected. The 2 search words are "vraiment" and
                "recommander" and or is selected. "Include description" is selected. 4 S8 playlist audios
                are selected. SF parms name: "2 words or descr".''',
