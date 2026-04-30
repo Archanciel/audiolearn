@@ -16866,7 +16866,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''1 search sentence with Audios and Comments selected. The unique search sentence is "à
                recommander". Only one audio is selected whose unique comment title contains the "à recommander"
-               sentence.''', (WidgetTester tester) async {
+               sentence. SF parms name: "à recommander".''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -16934,7 +16935,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         testWidgets(
             '''1 search sentence with Comments only selected. The unique search sentence is "à
                recommander". Only one audio is selected whose unique comment title contains the
-               "à recommander" sentence.''', (WidgetTester tester) async {
+               "à recommander" sentence. SF parms name: "à recom1".''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -17001,8 +17003,9 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         testWidgets(
             '''2 words or descr with Audios and Comments selected. The 2 search words are "vraiment" and
-               "recommander" and or is selected. Include description is selected. 4 S8 playlist audios
-               are selected.''', (WidgetTester tester) async {
+               "recommander" and or is selected. "Include description" is selected. 4 S8 playlist audios
+               are selected. SF parms name: "2 words or descr".''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -17067,8 +17070,404 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
         testWidgets(
             '''2 words or with Audios and Comments selected. The 2 search words are "vraiment" and
-               "recommander" and or is selected. Include description is not selected. 3 S8 playlist
-               audios are selected.''', (WidgetTester tester) async {
+               "recommander" and or is selected. "Include description" is not selected. 3 S8 playlist
+               audios are selected. SF parms name: "2 words or".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('2 words or').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "3 fois où Aurélien Barrau tire à balles réelles sur les riches",
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''2 words and with Comments only selected. The 2 search words are "vraiment" and
+               "recommander" and "and" is selected. 0 S8 playlist audios are selected. SF parms
+               name: "2 words com and".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('2 words com and').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''2 words or with Comments only selected. The 2 search words are "vraiment" and
+               "recommander" and "or" is selected. 2 S8 playlist audios are selected. SF parms
+               name: "2 words com or".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('2 words com or').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "3 fois où Aurélien Barrau tire à balles réelles sur les riches",
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''1 words + 1 sentence or with Audios and Comments selected. The 2 search elements are "vraiment" and
+               "à recommander" and "or" is selected. "Include description" is not selected. 3 S8 playlist audios are
+               selected. SF parms name: "2 words notincl".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('2 words notincl').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
+            "3 fois où Aurélien Barrau tire à balles réelles sur les riches",
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''1 words with Audios and Comments selected. The unique search word is "économiste".
+               2 S8 playlist audios are selected. SF parms name: "économiste". The selected audio
+               "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet" has 2 comments and
+               the unique search word "économiste" is only contained in the second comment content.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          await tester.drag(
+            find.byKey(const Key('sort_filter_parms_dropdown_button')),
+            const Offset(0, -600), // negative Y = scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('économiste').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
+            "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet",
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''1 words with Comments only selected. The unique search word is "économiste".
+               1 S8 playlist audio is selected. SF parms name: "écono2".''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String playlistTitle = 'S8 audio'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: playlistTitle,
+          );
+
+          // Tap the 'Toggle List' button to hide the list. If the list
+          // is not opened, checking that a ListTile with the title of
+          // the playlist was added to the list will fail
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now tap on the current dropdown button item to open the dropdown
+          // button items list
+
+          Finder dropDownButtonFinder =
+              find.byKey(const Key('sort_filter_parms_dropdown_button'));
+
+          Finder dropDownButtonTextFinder = find.descendant(
+            of: dropDownButtonFinder,
+            matching: find.byType(Text),
+          );
+
+          await tester.tap(dropDownButtonTextFinder);
+          await tester.pumpAndSettle();
+
+          await tester.drag(
+            find.byKey(const Key('sort_filter_parms_dropdown_button')),
+            const Offset(0, -600), // negative Y = scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find and tap on the 'listenedNoCom' sort/filter item
+          Finder titleAscDropDownTextFinder = find.text('écono2').last;
+          await tester.tap(titleAscDropDownTextFinder);
+          await tester.pumpAndSettle();
+
+          // Verify the audioTitles selected by applying the 'listenedNoCom'
+          // sort/filter parms
+          List<String> audioTitleToCopyLst = [
+            "L'argument anti-nuke qui m'inquiète le plus par Y.Rousselet",
+          ];
+
+          // Verify the displayed audio list after selecting the 'listenedNoCom'
+          // Sort/Filter parms.
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+          );
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+        testWidgets(
+            '''1 word + 1 sentence or with Audios and Comments selected. The 2 search elements are "vraiment"
+               and "à recommander" and or is selected. "Include description" is selected. 4 S8 playlist audios
+               are selected. SF parms name: "2 words".''',
+            (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -17105,13 +17504,14 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           // Find and tap on the 'listenedNoCom' sort/filter item
           Finder titleAscDropDownTextFinder =
-              find.text('2 words or').last;
+              find.text('2 words').last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
           // Verify the audioTitles selected by applying the 'listenedNoCom'
           // sort/filter parms
           List<String> audioTitleToCopyLst = [
+            "Janco démolit le débat nucléaire_renouvelable",
             "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
             "Ce qui va vraiment sauver notre espèce par Jancovici et Barrau",
             "3 fois où Aurélien Barrau tire à balles réelles sur les riches",
