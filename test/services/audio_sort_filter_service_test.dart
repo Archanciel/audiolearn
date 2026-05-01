@@ -15154,10 +15154,11 @@ void main() {
 
       AudioSortFilterParameters audioSortFilterParameters =
           AudioSortFilterParameters(
-              selectedSortItemLst: [],
-              sentencesCombination: SentencesCombination.and,
-              filterMusicQuality: false,
-              filterSpokenQuality: true);
+        selectedSortItemLst: [],
+        sentencesCombination: SentencesCombination.and,
+        filterMusicQuality: false,
+        filterSpokenQuality: true,
+      );
 
       List<Audio> actualFilteredAudioLst =
           audioSortFilterService.filterOnOtherOptions(
