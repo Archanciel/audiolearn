@@ -611,14 +611,14 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                               },
                             ),
                             value: _searchInYoutubeChannelName,
-                            onChanged:
-                                (_audioTitleFilterSentencesLst.isNotEmpty)
-                                    ? (bool? newValue) {
-                                        setState(() {
-                                          _searchInYoutubeChannelName = newValue!;
-                                        });
-                                      }
-                                    : null,
+                            onChanged: (_audioTitleFilterSentencesLst
+                                    .isNotEmpty)
+                                ? (bool? newValue) {
+                                    setState(() {
+                                      _searchInYoutubeChannelName = newValue!;
+                                    });
+                                  }
+                                : null,
                           ),
                         ],
                       ),
@@ -645,7 +645,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                                 (_audioTitleFilterSentencesLst.isNotEmpty)
                                     ? (bool? newValue) {
                                         setState(() {
-                                          _searchInVideoCompactDescription = newValue!;
+                                          _searchInVideoCompactDescription =
+                                              newValue!;
                                         });
                                       }
                                     : null,
@@ -1457,23 +1458,22 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
         ),
         Text(AppLocalizations.of(context)!.commentSearch),
         Checkbox(
-          key: const Key('filterCommentSearchCheckbox'),
-          value: _filterComments,
-          onChanged: (bool? newValue) {
-            setState(() {
-              _filterComments = newValue!;
-            });
+            key: const Key('filterCommentSearchCheckbox'),
+            value: _filterComments,
+            onChanged: (bool? newValue) {
+              setState(() {
+                _filterComments = newValue!;
+              });
 
-            if (!_filterComments) {
-              // If the Comments checkbox is unchecked, the Audios
-              // checkbox must be checked since it makes no sense
-              // to have both unchecked
-              _filterAudios = true;
-              _searchInYoutubeChannelName = true;
-              _searchInVideoCompactDescription = true;
-            }
-          },
-        ),
+              if (!_filterComments && !_filterAudios) {
+                // If the Comments checkbox is unchecked, the Audios
+                // checkbox must be checked since it makes no sense
+                // to have both unchecked
+                _searchInYoutubeChannelName = true;
+                _searchInVideoCompactDescription = true;
+                _filterAudios = true;
+              }
+            }),
       ],
     );
   }
