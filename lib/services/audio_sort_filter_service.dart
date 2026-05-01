@@ -1047,8 +1047,8 @@ class AudioSortFilterService {
           // checkboxes are checked, so we need to search in the valid video
           // title as well as in the Youtube channel name as well as in the
           // compact video description.
-          String? filterSentenceInLowerCase;
           if (ignoreCase) {
+            String? filterSentenceInLowerCase;
             // computing the filter sentence in lower case makes
             // sense when we are analysing the two fields in order
             // to avoid computing twice the same thing
@@ -1125,7 +1125,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
-              !areCommentsFiltered &&
+              // !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1168,7 +1168,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
-              !areCommentsFiltered &&
+              // !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1198,7 +1198,7 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
-              !areCommentsFiltered &&
+              // !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1335,15 +1335,14 @@ class AudioSortFilterService {
       return filteredAudios;
     }
 
-    // If the 'Audios' checkbox was set to false (by
+    // If the 'Music qual.' checkbox was set to false (by
     // default it is set to true), the returned audio list
-    // does not contain audio whose video title contains
-    // the search word or sentence.
-    // if (!audioSortFilterParameters.filterAudios) {
-    //   filteredAudios = filteredAudios.where((audio) {
-    //     return !audio.isAudioMusicQuality;
-    //   }).toList();
-    // }
+    // does not contain audio that are of music quality.
+    if (!audioSortFilterParameters.filterMusicQuality) {
+      filteredAudios = filteredAudios.where((audio) {
+        return !audio.isAudioMusicQuality;
+      }).toList();
+    }
 
     // If the 'Spoken qual.' checkbox was set to false (by
     // default it is set to true), the returned audio list
