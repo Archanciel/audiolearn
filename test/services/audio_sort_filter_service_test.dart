@@ -172,8 +172,8 @@ void main() {
     });
     test('filter by <tendance crypto> AND <en 2024>', () {
       List<Audio> expectedFilteredAudios = [
-        audioOne,
-        audioTwo,
+        audioOne, // validVideoTitle: 'Sur quelle tendance crypto investir en 2024 ?'
+        audioTwo, // validVideoTitle: 'Tendance crypto en accélération en 2024'
       ];
 
       List<Audio> filteredAudioLst = audioSortFilterService
