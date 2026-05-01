@@ -605,6 +605,7 @@ void addThreePlayableAudio(Playlist playlist) {
       audioDuration: Duration(minutes: 10),
       audioPlaySpeed: 1.5);
   audio.audioPositionSeconds = 300;
+  audio.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = true;
   playlist.addPlayableAudio(audio);
 
   Audio audio2 = Audio(
@@ -617,6 +618,7 @@ void addThreePlayableAudio(Playlist playlist) {
       audioDuration: Duration(minutes: 20),
       audioPlaySpeed: 1.5);
   audio2.audioPositionSeconds = 600;
+  audio2.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = true;
   playlist.addPlayableAudio(audio2);
 
   Audio audio3 = Audio(
@@ -629,6 +631,7 @@ void addThreePlayableAudio(Playlist playlist) {
       audioDuration: Duration(minutes: 30),
       audioPlaySpeed: 1.5);
   audio3.audioPositionSeconds = 900;
+  audio3.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = true;
   playlist.addPlayableAudio(audio3);
 }
 
