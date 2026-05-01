@@ -1174,7 +1174,7 @@ class AudioSortFilterService {
             // inequality was found and 'AND' is necessary ..
             break;
           }
-        } else if (areAudiosFiltered) {
+        } else if (areAudiosFiltered) { // searchAsWellInYoutubeChannelName && searchAsWellInVideoCompactDescription are both false 
           // we need to search in the valid video title only
           if (ignoreCase) {
             if (audio.validVideoTitle
@@ -1198,7 +1198,6 @@ class AudioSortFilterService {
             // equality was found and 'OR' is sufficient ..
             break;
           } else if (!isAudioFiltered &&
-              // !areCommentsFiltered &&
               sentencesCombination == SentencesCombination.and) {
             // not necessary to test the other filter sentences since
             // inequality was found and 'AND' is necessary ..
@@ -1260,15 +1259,15 @@ class AudioSortFilterService {
               // inequality was found and 'AND' is necessary ..
               break;
             }
-          }
+          } // end of for loop on filterSentenceLst for comments
         }
-      } // end of for loop on filterSentenceLst
+      } // end of for loop on filterSentenceLst for audio
 
       if (isAudioFiltered || isFilterSentenceInComments) {
         // one of the filter sentences was found in the audio
         filteredAudios.add(audio);
       }
-    }
+    } // end of for loop on audioLst
 
     return filteredAudios;
   }
