@@ -4970,14 +4970,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           });
         });
       });
-    });
-    group(
-        '''Testing Audios/Comment selection/deselection impacts to the "Include
+      group(
+          '''Testing Audios/Comment selection/deselection impacts to the "Include
           Youtube channel" and "Include description" checkboxes.''', () {
         testWidgets(
-            '''1 search sentence with Audios and Comments selected. The unique search sentence is "à
-               recommander". Only one audio is selected whose unique comment title contains the "à recommander"
-               sentence. SF parms name: "à recommander".''',
+            '''Comments unchecked then rechecked. SF parms name: "1 sentence 2 words".''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -5013,28 +5010,32 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropDownButtonTextFinder);
           await tester.pumpAndSettle();
 
-          await tester.drag(
-            find.byKey(const Key('sort_filter_parms_dropdown_button')),
-            const Offset(0, -300), // negative Y = scroll down
-          );
-          await tester.pumpAndSettle();
-
           // Find and tap on the 'listenedNoCom' sort/filter item
-          Finder titleAscDropDownTextFinder = find.text('à recommander').last;
+          Finder titleAscDropDownTextFinder = find.text('1 sentence 2 words');
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
 
-          // Verify the audioTitles selected by applying the 'listenedNoCom'
-          // sort/filter parms
-          List<String> audioTitleToCopyLst = [
-            "3 fois où un économiste m'a ouvert les yeux (Giraud, Lefournier, Porcher)",
-          ];
+          // Now open the audio popup menu in order to modify the 'Title asc'
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
 
-          // Verify the displayed audio list after selecting the 'listenedNoCom'
-          // Sort/Filter parms.
-          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+          // Verify that 'Include Youtube channel' checkbox is checked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
             tester: tester,
-            audioOrPlaylistTitlesOrderedLst: audioTitleToCopyLst,
+            isChecked: true,
+          );
+
+          // Now uncheck the 'Comments' checkbox
+          await tester
+              .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' checkbox is checked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: true,
           );
 
           // Purge the test playlist directory so that the created test
@@ -5043,8 +5044,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
             rootPath: kApplicationPathWindowsTest,
           );
         });
-
-          });
+      });
+    });
     group('''Saving defined sort/filter parms in sort/filter dialog in relation
              with Sort/filter dropdown button test''', () {
       testWidgets(
@@ -17907,6 +17908,30 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
     });
   });
+}
+
+void _verifyYoutubeChannelAndDescriptionCheckbox({
+  required WidgetTester tester,
+  required bool isChecked,
+}) {
+  // Verify that 'Include Youtube channel' checkbox is checked
+  final Checkbox includeYoutubeChannelCheckbox = tester.widget<Checkbox>(
+    find.byKey(const Key('searchInYoutubeChannelName')),
+  );
+
+  // Verify that 'Include description' checkbox is checked
+  final Checkbox includeVideoCompactDescriptionCheckbox =
+      tester.widget<Checkbox>(
+    find.byKey(const Key('searchInVideoCompactDescription')),
+  );
+
+  if (isChecked) {
+    expect(includeYoutubeChannelCheckbox.value, isTrue);
+    expect(includeVideoCompactDescriptionCheckbox.value, isTrue);
+  } else {
+    expect(includeYoutubeChannelCheckbox.value, isFalse);
+    expect(includeVideoCompactDescriptionCheckbox.value, isFalse);
+  }
 }
 
 Future<void> _selectSortByOption({
