@@ -1311,7 +1311,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             items: dropdownMenuItems,
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
-              _updatePlaylistSortedFilteredAudioList(
+              int filteredAudioNumber =_updatePlaylistSortedFilteredAudioList(
                   playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse);
             },
             hint: Text(
@@ -1348,7 +1348,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
-    _updatePlaylistSortedFilteredAudioList(
+    int filterAudioNumber = _updatePlaylistSortedFilteredAudioList(
         playlistListVMlistenFalseOrTrue: playlistListVMlistenFalseOrTrue,
         searchSentence: searchSentence,
         notifyListeners: notifyListeners); // If true, causes displayed audio
@@ -1386,13 +1386,13 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// Updates the sorted and filtered playable audio list of the selected
   /// playlist according to the sort and filter parameters selected in the
   /// dropdown button list as well as the entered search sentence.
-  void _updatePlaylistSortedFilteredAudioList({
+  int _updatePlaylistSortedFilteredAudioList({
     required PlaylistListVM playlistListVMlistenFalseOrTrue,
     String searchSentence = '',
     bool notifyListeners = true,
   }) {
     if (_selectedSortFilterParametersName == null) {
-      return;
+      return 0;
     }
 
     AudioSortFilterParameters audioSortFilterParameters =
@@ -1400,15 +1400,17 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       audioSortFilterParametersName: _selectedSortFilterParametersName!,
     );
 
-    playlistListVMlistenFalseOrTrue
-        .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
-      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      sortFilteredSelectedPlaylistPlayableAudio: playlistListVMlistenFalseOrTrue
+    List<Audio> selectedPlaylistPlayableAudioApplyingSortFilterParameters = playlistListVMlistenFalseOrTrue
           .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
         audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
         passedAudioSortFilterParameters: audioSortFilterParameters,
         passedAudioSortFilterParametersName: _selectedSortFilterParametersName!,
-      ),
+      );
+
+    playlistListVMlistenFalseOrTrue
+        .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      sortFilteredSelectedPlaylistPlayableAudio: selectedPlaylistPlayableAudioApplyingSortFilterParameters,
       audioSortFilterParms: audioSortFilterParameters,
       audioSortFilterParmsName: _selectedSortFilterParametersName!,
       searchSentence: searchSentence,
@@ -1416,6 +1418,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     );
 
     _wasSortFilterAudioSettingsApplied = true;
+
+    return selectedPlaylistPlayableAudioApplyingSortFilterParameters.length;
   }
 
   List<DropdownMenuItem<String>> _buildSortFilterParmsDropdownMenuItemsLst({
@@ -1430,41 +1434,32 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
             .map(
               (String audioSortFilterParametersName) => DropdownMenuItem(
                 value: audioSortFilterParametersName,
-                child: Tooltip(
-                  message:
-                      "$audioSortFilterParametersName (${playlistListVMlistenFalse.getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-                            audioLearnAppViewType:
-                                AudioLearnAppViewType.playlistDownloadView,
-                            passedAudioSortFilterParametersName:
-                                audioSortFilterParametersName,
-                          ).length.toString()})",
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: kDropdownMenuItemMaxWidth,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(audioSortFilterParametersName),
-                        ),
-                        (audioSortFilterParametersName ==
-                                _selectedSortFilterParametersName)
-                            ? _buildSortFilterParmsDropdownItemEditIconButton(
-                                playlistListVMlistenFalse:
-                                    playlistListVMlistenFalse,
-                                audioSortFilterParametersName:
-                                    audioSortFilterParametersName,
-                                audioSortFilterParametersMap:
-                                    audioSortFilterParametersMap,
-                                audioSortFilterParametersNamesLst:
-                                    audioSortFilterParametersNamesLst,
-                                warningMessageVMlistenFalse:
-                                    warningMessageVMlistenFalse,
-                              )
-                            : const SizedBox.shrink(),
-                      ],
-                    ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: kDropdownMenuItemMaxWidth,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(audioSortFilterParametersName),
+                      ),
+                      (audioSortFilterParametersName ==
+                              _selectedSortFilterParametersName)
+                          ? _buildSortFilterParmsDropdownItemEditIconButton(
+                              playlistListVMlistenFalse:
+                                  playlistListVMlistenFalse,
+                              audioSortFilterParametersName:
+                                  audioSortFilterParametersName,
+                              audioSortFilterParametersMap:
+                                  audioSortFilterParametersMap,
+                              audioSortFilterParametersNamesLst:
+                                  audioSortFilterParametersNamesLst,
+                              warningMessageVMlistenFalse:
+                                  warningMessageVMlistenFalse,
+                            )
+                          : const SizedBox.shrink(),
+                    ],
                   ),
                 ),
               ),
