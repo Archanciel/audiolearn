@@ -4972,9 +4972,8 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group(
           '''Testing Audios/Comment selection/deselection impacts to the "Include
-          Youtube channel" and "Include description" checkboxes.''', () {
-        testWidgets(
-            '''Comments unchecked then rechecked. SF parms name: "1 sentence 2 words".''',
+             Youtube channel" and "Include description" checkboxes.''', () {
+        testWidgets('''SF parms name: "1 sentence 2 words". ''',
             (WidgetTester tester) async {
           // Purge the test playlist directory if it exists so that the
           // playlist list is empty
@@ -5021,7 +5020,16 @@ void playlistDownloadViewSortFilterIntegrationTest() {
           await tester.tap(dropdownItemEditIconButtonFinder);
           await tester.pumpAndSettle();
 
-          // Verify that 'Include Youtube channel' checkbox is checked
+          // Verify that the 'Comments' checkbox is checked
+          expect(
+              tester
+                  .widget<Checkbox>(
+                      find.byKey(const Key('filterCommentSearchCheckbox')))
+                  .value,
+              isTrue);
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes are checked
           _verifyYoutubeChannelAndDescriptionCheckbox(
             tester: tester,
             isChecked: true,
@@ -5032,7 +5040,117 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
           await tester.pumpAndSettle();
 
-          // Verify that 'Include Youtube channel' checkbox is checked
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes remain checked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: true,
+          );
+
+          // Now recheck the 'Comments' checkbox and uncheck the
+          // 'Include Youtube channel' and 'Include description'
+          // checkboxes
+
+          await tester
+              .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.byKey(const Key('searchInYoutubeChannelName')));
+          await tester.pumpAndSettle();
+
+          await tester
+              .tap(find.byKey(const Key('searchInVideoCompactDescription')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes are unchecked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: false,
+          );
+
+          // Now uncheck the 'Comments' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // remain unchecked
+
+          await tester
+              .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes remain unchecked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: false,
+          );
+
+          // Now recheck the 'Comments' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // remain unchecked
+
+          await tester
+              .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes remain unchecked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: false,
+          );
+
+          // Now uncheck the 'Audios' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // remain unchecked
+
+          await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes remain unchecked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: false,
+          );
+
+          // Now recheck the 'Audios' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // are checked
+
+          await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes were checked again
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: true,
+          );
+
+          // Now uncheck the 'Audios' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // are unchecked
+
+          await tester.tap(find.byKey(const Key('filterAudioSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes were unchecked
+          _verifyYoutubeChannelAndDescriptionCheckbox(
+            tester: tester,
+            isChecked: false,
+          );
+
+          // Now uncheck the 'Comments' checkbox and ensure that the
+          // 'Include Youtube channel' and 'Include description' checkboxes
+          // remain checked
+
+          await tester
+              .tap(find.byKey(const Key('filterCommentSearchCheckbox')));
+          await tester.pumpAndSettle();
+
+          // Verify that 'Include Youtube channel' and 'Include
+          // description' checkboxes remain checked
           _verifyYoutubeChannelAndDescriptionCheckbox(
             tester: tester,
             isChecked: true,
