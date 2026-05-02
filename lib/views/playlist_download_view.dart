@@ -45,7 +45,8 @@ class PlaylistDownloadView extends StatefulWidget {
   final double playlistItemHeight = (ScreenMixin.isHardwarePc() ? 51 : 85);
   final bool isTest;
   late _PlaylistDownloadViewState _playlistDownloadViewState;
-  _PlaylistDownloadViewState get playlistDownloadViewState => _playlistDownloadViewState;
+  _PlaylistDownloadViewState get playlistDownloadViewState =>
+      _playlistDownloadViewState;
 
   PlaylistDownloadView({
     super.key,
@@ -56,7 +57,8 @@ class PlaylistDownloadView extends StatefulWidget {
   });
 
   @override
-  State<PlaylistDownloadView> createState() => _playlistDownloadViewState =_PlaylistDownloadViewState();
+  State<PlaylistDownloadView> createState() =>
+      _playlistDownloadViewState = _PlaylistDownloadViewState();
 }
 
 class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
@@ -73,6 +75,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   bool _containsURL = false;
   Timer? _debounce;
   late PlaylistListVM _playlistListVMlistenTrue;
+  int _selectedSortFilterAudioNumber = 0;
 
   @override
   initState() {
@@ -113,7 +116,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
 
   /// Deselects then reselects the currently selected playlist,
   /// exactly as if the user clicked the playlist checkbox twice.
-  /// 
+  ///
   /// This method is called when the playlists root dir is changed
   /// by the application settings screen.
   Future<void> reselectCurrentPlaylist() async {
@@ -1303,21 +1306,38 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                               .sortFilterParametersAppliedName,
                     )
                     .isEmpty)
-                ? null // causes the default sort filter parms to be applied
-                //        and its name to be displayed
+                ? null
                 : _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
                   ),
             items: dropdownMenuItems,
+            // Displays a tooltip with the audio count only on the selected item
+            selectedItemBuilder: (BuildContext context) {
+              return audioSortFilterParametersNamesLst.map((String name) {
+                return Tooltip(
+                  message: '$name ($_selectedSortFilterAudioNumber)',
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(maxWidth: kDropdownMenuItemMaxWidth),
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                );
+              }).toList();
+            },
             onChanged: (value) {
               _selectedSortFilterParametersName = value;
-              int filteredAudioNumber =_updatePlaylistSortedFilteredAudioList(
-                  playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse);
+              setState(() {
+                _selectedSortFilterAudioNumber =
+                    _updatePlaylistSortedFilteredAudioList(
+                  playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
+                );
+              });
             },
-            hint: Text(
-              sortFilterDefaultMenuItemNameCorrespondingToLanguage,
-            ),
-            underline: Container(), // suppresses the underline
+            hint: Text(sortFilterDefaultMenuItemNameCorrespondingToLanguage),
+            underline: Container(),
           ),
         ),
       ],
@@ -1341,22 +1361,16 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '';
 
     if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
-      // _isSearchSentenceApplied is true means that the user clicked on
-      // the searchSentence button. Its value is set to false only after the
-      // youtubeUrlOrSearchTextField was emptied by the user of if the
-      // user did paste a URL on it.
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
-    int filterAudioNumber = _updatePlaylistSortedFilteredAudioList(
-        playlistListVMlistenFalseOrTrue: playlistListVMlistenFalseOrTrue,
-        searchSentence: searchSentence,
-        notifyListeners: notifyListeners); // If true, causes displayed audio
-    //                                        list update.
-    //                         If false, avoids rebuilding the widget and
-    //                         avoids integration test failure
+    _selectedSortFilterAudioNumber = _updatePlaylistSortedFilteredAudioList(
+      playlistListVMlistenFalseOrTrue: playlistListVMlistenFalseOrTrue,
+      searchSentence: searchSentence,
+      notifyListeners: notifyListeners,
+    );
 
-    return _selectedSortFilterParametersName!; // is not null
+    return _selectedSortFilterParametersName!;
   }
 
   /// This method is called by the _scrollToCurrentAudioItem() method when the
@@ -1400,17 +1414,19 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       audioSortFilterParametersName: _selectedSortFilterParametersName!,
     );
 
-    List<Audio> selectedPlaylistPlayableAudioApplyingSortFilterParameters = playlistListVMlistenFalseOrTrue
-          .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
-        audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-        passedAudioSortFilterParameters: audioSortFilterParameters,
-        passedAudioSortFilterParametersName: _selectedSortFilterParametersName!,
-      );
+    List<Audio> selectedPlaylistPlayableAudioApplyingSortFilterParameters =
+        playlistListVMlistenFalseOrTrue
+            .getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
+      audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
+      passedAudioSortFilterParameters: audioSortFilterParameters,
+      passedAudioSortFilterParametersName: _selectedSortFilterParametersName!,
+    );
 
     playlistListVMlistenFalseOrTrue
         .setSortFilterForSelectedPlaylistPlayableAudiosAndParms(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
-      sortFilteredSelectedPlaylistPlayableAudio: selectedPlaylistPlayableAudioApplyingSortFilterParameters,
+      sortFilteredSelectedPlaylistPlayableAudio:
+          selectedPlaylistPlayableAudioApplyingSortFilterParameters,
       audioSortFilterParms: audioSortFilterParameters,
       audioSortFilterParmsName: _selectedSortFilterParametersName!,
       searchSentence: searchSentence,
