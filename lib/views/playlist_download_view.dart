@@ -1373,16 +1373,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
 
-    String searchSentence = '';
-
-    if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
-      // _isSearchSentenceApplied is true means that the user clicked on
-      // the searchSentence button. Its value is set to false only after the
-      // youtubeUrlOrSearchTextField was emptied by the user of if the
-      // user did paste a URL on it.
-      searchSentence = _playlistUrlOrSearchController.text;
-    }
-
     return _selectedSortFilterParametersName!;
   }
 
