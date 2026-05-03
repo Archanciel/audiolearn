@@ -1320,9 +1320,23 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                   child: ConstrainedBox(
                     constraints:
                         BoxConstraints(maxWidth: kDropdownMenuItemMaxWidth),
-                    child: Text(
-                      name,
-                      overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(name),
+                        ),
+                        _buildSortFilterParmsDropdownItemEditIconButton(
+                          playlistListVMlistenFalse: playlistListVMlistenFalse,
+                          audioSortFilterParametersName: name,
+                          audioSortFilterParametersMap:
+                              audioSortFilterParametersMap,
+                          audioSortFilterParametersNamesLst:
+                              audioSortFilterParametersNamesLst,
+                          warningMessageVMlistenFalse:
+                              warningMessageVMlistenFalse,
+                        ),
+                      ],
                     ),
                   ),
                 );
