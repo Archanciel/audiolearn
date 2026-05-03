@@ -1306,7 +1306,8 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                               .sortFilterParametersAppliedName,
                     )
                     .isEmpty)
-                ? null
+                ? null // causes the default sort filter parms to be applied
+                //        and its name to be displayed
                 : _applySortFilterParmsNameChange(
                     playlistListVMlistenFalseOrTrue: playlistListVMlistenFalse,
                   ),
@@ -1361,6 +1362,10 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     String searchSentence = '';
 
     if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
+      // _isSearchSentenceApplied is true means that the user clicked on
+      // the searchSentence button. Its value is set to false only after the
+      // youtubeUrlOrSearchTextField was emptied by the user of if the
+      // user did paste a URL on it.
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
