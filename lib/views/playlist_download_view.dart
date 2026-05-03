@@ -1364,12 +1364,6 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       searchSentence = _playlistUrlOrSearchController.text;
     }
 
-    _selectedSortFilterAudioNumber = _updatePlaylistSortedFilteredAudioList(
-      playlistListVMlistenFalseOrTrue: playlistListVMlistenFalseOrTrue,
-      searchSentence: searchSentence,
-      notifyListeners: notifyListeners,
-    );
-
     return _selectedSortFilterParametersName!;
   }
 
