@@ -17232,7 +17232,174 @@ void playlistDownloadViewSortFilterIntegrationTest() {
       });
       group(
           '''TO DEFINE Converted/Extracted related checkboxes. Look at Unselect Downloaded then ... above.''',
-          () {});
+          () {
+        testWidgets(
+            '''Converted checkbox true and Extracted checkbox false in order to filter
+             only the converted audio. Create and then edit a named and saved 'Converted'
+             filter parms. Then verifying that the corresponding sort/filter dropdown
+             button item is applied to the playlist download view list of audio.''',
+            (WidgetTester tester) async {
+          // Purge the test playlist directory if it exists so that the
+          // playlist list is empty
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+
+          const String localPlaylistTitle = 'Conv extr test'; // local playlist
+
+          await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+            tester: tester,
+            savedTestDataDirName: 'audio_filter_dialog_test',
+            selectedPlaylistTitle: localPlaylistTitle,
+          );
+
+          // Now open the audio popup menu
+          await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+          await tester.pumpAndSettle();
+
+          // Find the sort/filter audio menu item and tap on it to
+          // open the audio sort filter dialog
+          await tester.tap(
+              find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+          await tester.pumpAndSettle();
+
+          // Type 'Converted' in the 'Save as' TextField
+
+          String saveAsTitle = 'Converted';
+
+          await tester.enterText(
+              find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+              saveAsTitle);
+          await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+          // Scrolling down the sort filter dialog so that the 'Converted' /
+          // 'Extracted' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Unselect the 'Extracted', 'Downloaded' and 'Import' checkboxes
+
+          // Find the 'Extracted' checkbox widget
+          Finder checkboxWidgetFinder =
+              find.byKey(const Key('filterExtractedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(checkboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Find the 'Downloaded' checkbox widget
+          checkboxWidgetFinder =
+              find.byKey(const Key('filterDownloadedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(checkboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Find the 'Import.' checkbox widget
+          checkboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
+
+          // Tap the checkbox to unselect it
+          await tester.tap(checkboxWidgetFinder);
+          await tester.pumpAndSettle();
+
+          // Click on the "Save" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the newly created sort/filter parms
+          await tester
+              .tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+          await tester.pumpAndSettle();
+
+          // Tap the 'Toggle List' button to avoid displaying the list
+          // of playlists which may hide the audio title we want to
+          // tap on
+          await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+          await tester.pumpAndSettle();
+
+          // Now verify the playlist download view state with the 'Converted'
+          // sort/filter parms applied
+
+          // Verify that the dropdown button has been updated with the
+          // 'Converted' sort/filter parms selected
+          IntegrationTestUtil.checkDropdopwnButtonSelectedTitle(
+            tester: tester,
+            dropdownButtonSelectedTitle: saveAsTitle,
+          );
+
+          // And verify the order of the playlist audio titles
+
+          List<String> audioTitlesFilteredByPictured = [
+            "Mon Dieu et Jésus, je Vous adore",
+          ];
+
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioTitlesFilteredByPictured,
+          );
+
+          // Now open the audio popup menu in order to edit the 'Converted'
+          // sort/filter parms
+          final Finder dropdownItemEditIconButtonFinder = find.byKey(
+              const Key('sort_filter_parms_dropdown_item_edit_icon_button'));
+          await tester.tap(dropdownItemEditIconButtonFinder);
+          await tester.pumpAndSettle();
+
+          // Scrolling down the sort filter dialog so that the 'Downloaded' /
+          // 'Imported' checkbox are visible and so accessible by the integration test
+          await tester.drag(
+            find.byType(AudioSortFilterDialog),
+            const Offset(
+                0, -300), // Negative value for vertical drag to scroll down
+          );
+          await tester.pumpAndSettle();
+
+          // Find the 'Extracted' checkbox widget and verify it is
+          // not selected
+          checkboxWidgetFinder =
+              find.byKey(const Key('filterExtractedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(checkboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Downloaded' checkbox widget and verify it is
+          // not selected
+          checkboxWidgetFinder =
+              find.byKey(const Key('filterDownloadedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(checkboxWidgetFinder).value,
+            false,
+          );
+
+          // Find the 'Imported' checkbox widget and verify it is not
+          // selected
+          checkboxWidgetFinder =
+              find.byKey(const Key('filterImportedCheckbox'));
+
+          expect(
+            tester.widget<Checkbox>(checkboxWidgetFinder).value,
+            false,
+          );
+
+          // Click on the "Cancel" button. This closes the sort/filter dialog
+          // and updates the sort/filter playlist download view dropdown
+          // button with the modified sort/filter parms
+          await tester.tap(find.byKey(const Key('cancelSortFilterButton')));
+          await tester.pumpAndSettle();
+
+          // Purge the test playlist directory so that the created test
+          // files are not uploaded to GitHub
+          DirUtil.deleteFilesInDirAndSubDirs(
+            rootPath: kApplicationPathWindowsTest,
+          );
+        });
+      });
       group('''Audios/Comments related checkboxes''', () {
         testWidgets(
             '''1 search sentence with Audios and Comments selected. The unique search sentence is "à
