@@ -17442,11 +17442,11 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await tester.drag(
             find.byKey(const Key('sort_filter_parms_dropdown_button')),
-            const Offset(0, -300), // negative Y = scroll down
+            const Offset(0, -600), // negative Y = scroll down
           );
           await tester.pumpAndSettle();
 
-          // Find and tap on the 'listenedNoCom' sort/filter item
+          // Find and tap on the 'à recommander' sort/filter item
           Finder titleAscDropDownTextFinder = find.text('à recommander').last;
           await tester.tap(titleAscDropDownTextFinder);
           await tester.pumpAndSettle();
@@ -17511,7 +17511,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await tester.drag(
             find.byKey(const Key('sort_filter_parms_dropdown_button')),
-            const Offset(0, -300), // negative Y = scroll down
+            const Offset(0, -600), // negative Y = scroll down
           );
           await tester.pumpAndSettle();
 
@@ -17963,7 +17963,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await tester.drag(
             find.byKey(const Key('sort_filter_parms_dropdown_button')),
-            const Offset(0, -600), // negative Y = scroll down
+            const Offset(0, -700), // negative Y = scroll down
           );
           await tester.pumpAndSettle();
 
@@ -18032,7 +18032,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
 
           await tester.drag(
             find.byKey(const Key('sort_filter_parms_dropdown_button')),
-            const Offset(0, -600), // negative Y = scroll down
+            const Offset(0, -700), // negative Y = scroll down
           );
           await tester.pumpAndSettle();
 
