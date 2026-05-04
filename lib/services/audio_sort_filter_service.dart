@@ -1034,240 +1034,235 @@ class AudioSortFilterService {
     required bool areCommentsFiltered,
   }) {
     List<Audio> filteredAudios = [];
+    bool isFilterSentenceInComments = false;
 
-    for (Audio audio in audioLst) {
-      bool isAudioFiltered = false;
-      bool isFilterSentenceInComments = false;
-
-      for (String filterSentence in filterSentenceLst) {
-        if (areAudiosFiltered &&
-            searchAsWellInYoutubeChannelName &&
-            searchAsWellInVideoCompactDescription) {
-          // here, the 'Include Youtube channel' and 'Include description'
-          // checkboxes are checked, so we need to search in the valid video
-          // title as well as in the Youtube channel name as well as in the
-          // compact video description.
-          if (ignoreCase) {
-            String? filterSentenceInLowerCase;
-            // computing the filter sentence in lower case makes
-            // sense when we are analysing the two fields in order
-            // to avoid computing twice the same thing
-            filterSentenceInLowerCase = filterSentence.toLowerCase();
-            if (audio.validVideoTitle
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase) ||
-                audio.youtubeVideoChannel
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase) ||
-                audio.compactVideoDescription
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          } else {
-            if (audio.validVideoTitle.contains(filterSentence) ||
-                audio.youtubeVideoChannel.contains(filterSentence) ||
-                audio.compactVideoDescription.contains(filterSentence)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          }
-
-          if (isAudioFiltered &&
-              sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter sentences since
-            // equality was found and 'OR' is sufficient ..
-            break;
-          } else if (!isAudioFiltered &&
-              !areCommentsFiltered &&
-              sentencesCombination == SentencesCombination.and) {
-            // not necessary to test the other filter sentences since
-            // inequality was found and 'AND' is necessary ..
-            break;
-          }
-        } else if (searchAsWellInYoutubeChannelName &&
-            !searchAsWellInVideoCompactDescription) {
-          // here, the 'Include Youtube channel' checkbox is checked,
-          // but the 'Include description' is not checked, so we need to
-          // search in the as well as in the Youtube channel but not in
-          // the compact video description.
-          String? filterSentenceInLowerCase;
-          if (ignoreCase) {
-            // computing the filter sentence in lower case makes
-            // sense when we are analysing the two fields in order
-            // to avoid computing twice the same thing
-            filterSentenceInLowerCase = filterSentence.toLowerCase();
-            if (audio.validVideoTitle
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase) ||
-                audio.youtubeVideoChannel
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          } else {
-            if (audio.validVideoTitle.contains(filterSentence) ||
-                audio.youtubeVideoChannel.contains(filterSentence)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          }
-
-          if (isAudioFiltered &&
-              sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter sentences since
-            // equality was found and 'OR' is sufficient ..
-            break;
-          } else if (!isAudioFiltered &&
-              // !areCommentsFiltered &&
-              sentencesCombination == SentencesCombination.and) {
-            // not necessary to test the other filter sentences since
-            // inequality was found and 'AND' is necessary ..
-            break;
-          }
-        } else if (!searchAsWellInYoutubeChannelName &&
-            searchAsWellInVideoCompactDescription) {
-          // here, the 'Include Youtube channel' checkbox is not checked
-          // but the 'Include description'checkbox is checked, so we need
-          // to search in the valid video title as well as in the compact
-          // video description, but not in the Youtube channel name.
-          String? filterSentenceInLowerCase;
-          if (ignoreCase) {
-            // computing the filter sentence in lower case makes
-            // sense when we are analysing the two fields in order
-            // to avoid computing twice the same thing
-            filterSentenceInLowerCase = filterSentence.toLowerCase();
-            if (audio.validVideoTitle
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase) ||
-                audio.compactVideoDescription
-                    .toLowerCase()
-                    .contains(filterSentenceInLowerCase)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          } else {
-            if (audio.validVideoTitle.contains(filterSentence) ||
-                audio.compactVideoDescription.contains(filterSentence)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          }
-
-          if (isAudioFiltered &&
-              sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter sentences since
-            // equality was found and 'OR' is sufficient ..
-            break;
-          } else if (!isAudioFiltered &&
-              // !areCommentsFiltered &&
-              sentencesCombination == SentencesCombination.and) {
-            // not necessary to test the other filter sentences since
-            // inequality was found and 'AND' is necessary ..
-            break;
-          }
-        } else if (areAudiosFiltered) { // searchAsWellInYoutubeChannelName && searchAsWellInVideoCompactDescription are both false 
-          // we need to search in the valid video title only
-          if (ignoreCase) {
-            if (audio.validVideoTitle
-                .toLowerCase()
-                .contains(filterSentence.toLowerCase())) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          } else {
-            if (audio.validVideoTitle.contains(filterSentence)) {
-              isAudioFiltered = true;
-            } else {
-              isAudioFiltered = false;
-            }
-          }
-
-          if (isAudioFiltered &&
-              sentencesCombination == SentencesCombination.or) {
-            // not necessary to test the other filter sentences since
-            // equality was found and 'OR' is sufficient ..
-            break;
-          } else if (!isAudioFiltered &&
-              sentencesCombination == SentencesCombination.and) {
-            // not necessary to test the other filter sentences since
-            // inequality was found and 'AND' is necessary ..
-            break;
-          }
-        }
-
-        if (areCommentsFiltered) {
-          // we need to search in the comments as well
-          List<Comment> audioComments = CommentVM().loadAudioComments(
-            audio: audio,
-          );
-
-          for (String filterSentence in filterSentenceLst) {
-            for (Comment comment in audioComments) {
-              if (ignoreCase) {
-                String filterSentenceInLowerCase = filterSentence.toLowerCase();
-                if (comment.title
-                        .toLowerCase()
-                        .contains(filterSentenceInLowerCase) ||
-                    comment.content
-                        .toLowerCase()
-                        .contains(filterSentenceInLowerCase)) {
-                  isFilterSentenceInComments = true;
-                } else {
-                  isFilterSentenceInComments = false;
-                }
-              } else {
-                if (comment.title.contains(filterSentence) ||
-                    comment.content.contains(filterSentence)) {
-                  isFilterSentenceInComments = true;
-                } else {
-                  isFilterSentenceInComments = false;
-                }
-              }
-
-              if (isFilterSentenceInComments && areAudiosFiltered == true) {
-                // not necessary to test the other filter sentences since
-                // equality was found and 'OR' is sufficient ..
+    if (areAudiosFiltered) {
+      for (Audio audio in audioLst) {
+        bool isAudioFiltered = false;
+        for (String filterSentence in filterSentenceLst) {
+          if (areAudiosFiltered &&
+              searchAsWellInYoutubeChannelName &&
+              searchAsWellInVideoCompactDescription) {
+            // here, the 'Include Youtube channel' and 'Include description'
+            // checkboxes are checked, so we need to search in the valid video
+            // title as well as in the Youtube channel name as well as in the
+            // compact video description.
+            if (ignoreCase) {
+              String? filterSentenceInLowerCase;
+              // computing the filter sentence in lower case makes
+              // sense when we are analysing the two fields in order
+              // to avoid computing twice the same thing
+              filterSentenceInLowerCase = filterSentence.toLowerCase();
+              if (audio.validVideoTitle
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  audio.youtubeVideoChannel
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  audio.compactVideoDescription
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase)) {
                 isAudioFiltered = true;
-                break;
-              } else if (!isFilterSentenceInComments &&
-                  areAudiosFiltered == false) {
-                // not necessary to test the other filter sentences since
-                // inequality was found and 'AND' is necessary ..
+              } else {
                 isAudioFiltered = false;
-                continue;
+              }
+            } else {
+              if (audio.validVideoTitle.contains(filterSentence) ||
+                  audio.youtubeVideoChannel.contains(filterSentence) ||
+                  audio.compactVideoDescription.contains(filterSentence)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
               }
             }
 
-            if (isFilterSentenceInComments &&
+            if (isAudioFiltered &&
                 sentencesCombination == SentencesCombination.or) {
               // not necessary to test the other filter sentences since
               // equality was found and 'OR' is sufficient ..
               break;
-            } else if (!isFilterSentenceInComments &&
+            } else if (!isAudioFiltered &&
                 sentencesCombination == SentencesCombination.and) {
               // not necessary to test the other filter sentences since
               // inequality was found and 'AND' is necessary ..
               break;
             }
-          } // end of for loop on filterSentenceLst for comments
-        }
-      } // end of for loop on filterSentenceLst for audio
+          } else if (searchAsWellInYoutubeChannelName &&
+              !searchAsWellInVideoCompactDescription) {
+            // here, the 'Include Youtube channel' checkbox is checked,
+            // but the 'Include description' is not checked, so we need to
+            // search in the as well as in the Youtube channel but not in
+            // the compact video description.
+            String? filterSentenceInLowerCase;
+            if (ignoreCase) {
+              // computing the filter sentence in lower case makes
+              // sense when we are analysing the two fields in order
+              // to avoid computing twice the same thing
+              filterSentenceInLowerCase = filterSentence.toLowerCase();
+              if (audio.validVideoTitle
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  audio.youtubeVideoChannel
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            } else {
+              if (audio.validVideoTitle.contains(filterSentence) ||
+                  audio.youtubeVideoChannel.contains(filterSentence)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            }
 
-      if (isAudioFiltered || isFilterSentenceInComments) {
-        // one of the filter sentences was found in the audio
-        filteredAudios.add(audio);
-      }
-    } // end of for loop on audioLst
+            if (isAudioFiltered &&
+                sentencesCombination == SentencesCombination.or) {
+              // not necessary to test the other filter sentences since
+              // equality was found and 'OR' is sufficient ..
+              break;
+            } else if (!isAudioFiltered &&
+                sentencesCombination == SentencesCombination.and) {
+              // not necessary to test the other filter sentences since
+              // inequality was found and 'AND' is necessary ..
+              break;
+            }
+          } else if (!searchAsWellInYoutubeChannelName &&
+              searchAsWellInVideoCompactDescription) {
+            // here, the 'Include Youtube channel' checkbox is not checked
+            // but the 'Include description'checkbox is checked, so we need
+            // to search in the valid video title as well as in the compact
+            // video description, but not in the Youtube channel name.
+            String? filterSentenceInLowerCase;
+            if (ignoreCase) {
+              // computing the filter sentence in lower case makes
+              // sense when we are analysing the two fields in order
+              // to avoid computing twice the same thing
+              filterSentenceInLowerCase = filterSentence.toLowerCase();
+              if (audio.validVideoTitle
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  audio.compactVideoDescription
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            } else {
+              if (audio.validVideoTitle.contains(filterSentence) ||
+                  audio.compactVideoDescription.contains(filterSentence)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            }
+
+            if (isAudioFiltered &&
+                sentencesCombination == SentencesCombination.or) {
+              // not necessary to test the other filter sentences since
+              // equality was found and 'OR' is sufficient ..
+              break;
+            } else if (!isAudioFiltered &&
+                sentencesCombination == SentencesCombination.and) {
+              // not necessary to test the other filter sentences since
+              // inequality was found and 'AND' is necessary ..
+              break;
+            }
+          } else if (areAudiosFiltered) {
+            // searchAsWellInYoutubeChannelName && searchAsWellInVideoCompactDescription are both false
+            // we need to search in the valid video title only
+            if (ignoreCase) {
+              if (audio.validVideoTitle
+                  .toLowerCase()
+                  .contains(filterSentence.toLowerCase())) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            } else {
+              if (audio.validVideoTitle.contains(filterSentence)) {
+                isAudioFiltered = true;
+              } else {
+                isAudioFiltered = false;
+              }
+            }
+
+            if (isAudioFiltered &&
+                sentencesCombination == SentencesCombination.or) {
+              // not necessary to test the other filter sentences since
+              // equality was found and 'OR' is sufficient ..
+              break;
+            } else if (!isAudioFiltered &&
+                sentencesCombination == SentencesCombination.and) {
+              // not necessary to test the other filter sentences since
+              // inequality was found and 'AND' is necessary ..
+              break;
+            }
+          }
+        } // end of for loop on filterSentenceLst for audio
+
+        if (isAudioFiltered) {
+          // one of the filter sentences was found in the audio
+          filteredAudios.add(audio);
+        }
+      } // end of for loop on audioLst
+    }
+
+    if (areCommentsFiltered) {
+      audioLst.removeWhere((audio) => filteredAudios.contains(audio));
+
+      for (Audio audio in audioLst) {
+        bool isFilterSentenceInComments = false;
+        List<Comment> audioComments = CommentVM().loadAudioComments(
+          audio: audio,
+        );
+
+        for (String filterSentence in filterSentenceLst) {
+          for (Comment comment in audioComments) {
+            if (ignoreCase) {
+              String filterSentenceInLowerCase = filterSentence.toLowerCase();
+              if (comment.title
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase) ||
+                  comment.content
+                      .toLowerCase()
+                      .contains(filterSentenceInLowerCase)) {
+                isFilterSentenceInComments = true;
+              } else {
+                isFilterSentenceInComments = false;
+              }
+            } else {
+              if (comment.title.contains(filterSentence) ||
+                  comment.content.contains(filterSentence)) {
+                isFilterSentenceInComments = true;
+              } else {
+                isFilterSentenceInComments = false;
+              }
+            }
+          }
+
+          if (isFilterSentenceInComments &&
+              sentencesCombination == SentencesCombination.or) {
+            // not necessary to test the other filter sentences since
+            // equality was found and 'OR' is sufficient ..
+            break;
+          } else if (!isFilterSentenceInComments &&
+              sentencesCombination == SentencesCombination.and) {
+            // not necessary to test the other filter sentences since
+            // inequality was found and 'AND' is necessary ..
+            break;
+          }
+        } // end of for loop on filterSentenceLst for comments
+
+        if (isFilterSentenceInComments) {
+          // one of the filter sentences was found in the audio
+          filteredAudios.add(audio);
+        }
+      } // end of for loop on audioLst
+    }
 
     return filteredAudios;
   }
