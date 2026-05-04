@@ -1098,6 +1098,88 @@
             "fileSizeEndRangeMB": 0.0,
             "durationStartRangeSec": 0,
             "durationEndRangeSec": 0
+        },
+        "audOr": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "audioDownloadDate",
+                    "isAscending": false
+                }
+            ],
+            "filterSentenceLst": [
+                "à recommander",
+                "vraiment"
+            ],
+            "sentencesCombination": 1,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": true,
+            "searchAsWellInVideoCompactDescription": true,
+            "filterAudios": true,
+            "filterComments": false,
+            "filterMusicQuality": true,
+            "filterSpokenQuality": true,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": true,
+            "filterNotPlayable": true,
+            "filterDownloaded": true,
+            "filterImported": true,
+            "filterConverted": true,
+            "filterExtracted": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.0,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
+        },
+        "comOr": {
+            "selectedSortItemLst": [
+                {
+                    "sortingOption": "audioDownloadDate",
+                    "isAscending": false
+                }
+            ],
+            "filterSentenceLst": [
+                "à recommander",
+                "vraiment"
+            ],
+            "sentencesCombination": 1,
+            "ignoreCase": true,
+            "searchAsWellInYoutubeChannelName": false,
+            "searchAsWellInVideoCompactDescription": false,
+            "filterAudios": false,
+            "filterComments": true,
+            "filterMusicQuality": true,
+            "filterSpokenQuality": true,
+            "filterFullyListened": true,
+            "filterPartiallyListened": true,
+            "filterNotListened": true,
+            "filterCommented": true,
+            "filterNotCommented": true,
+            "filterPictured": true,
+            "filterNotPictured": true,
+            "filterPlayable": true,
+            "filterNotPlayable": true,
+            "filterDownloaded": true,
+            "filterImported": true,
+            "filterConverted": true,
+            "filterExtracted": true,
+            "downloadDateStartRange": null,
+            "downloadDateEndRange": null,
+            "uploadDateStartRange": null,
+            "uploadDateEndRange": null,
+            "fileSizeStartRangeMB": 0.0,
+            "fileSizeEndRangeMB": 0.0,
+            "durationStartRangeSec": 0,
+            "durationEndRangeSec": 0
         }
     },
     "searchHistoryOfAudioSortFilterSettings": "[]"
