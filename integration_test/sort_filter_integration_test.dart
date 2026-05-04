@@ -2498,7 +2498,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Filter words:\n Present only in modified version:\n   'Jancovici ',\n   'Marine Le Pen '\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or",
+                  "Filter words:\n Present only in modified version:\n   'Jancovici ',\n   'Marine Le Pen '\nFilter options:\n In initial version:\n   and/or: and\n In modified version:\n   and/or: or",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -2589,7 +2589,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               confirmDialogTitleOne:
                   'WARNING: the sort/filter parameters "$saveAsTitle" were modified. Do you want to update the existing sort/filter parms by clicking on "Confirm", or to save it with a different name or cancel the Save operation, this by clicking on "Cancel" ?',
               confirmDialogMessage:
-                  "Filter words:\n Present only in modified version:\n   'Jancovici',\n   'Marine Le Pen'\nFilter options:\n In initial version:\n   and / or: and\n In modified version:\n   and / or: or",
+                  "Filter words:\n Present only in modified version:\n   'Jancovici',\n   'Marine Le Pen'\nFilter options:\n In initial version:\n   and/or: and\n In modified version:\n   and/or: or",
               confirmOrCancelAction: true, // Confirm button is tapped
             );
 
@@ -4167,7 +4167,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
               audioFilterString: 'Marine Le Pen',
             );
 
-            // Tap on the 'and / or' checkbox set sentence combination
+            // Tap on the 'and/or' checkbox set sentence combination
             // to 'or' instead of 'and'
             await tester.tap(find.byKey(const Key('andCheckbox')));
             await tester.pumpAndSettle();

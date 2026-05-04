@@ -2500,7 +2500,7 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
       'valueInModifiedVersionTitle':
           "${AppLocalizations.of(context)!.valueInModifiedVersionTitle}:",
       'sentencesCombination':
-          "${AppLocalizations.of(context)!.and} / ${AppLocalizations.of(context)!.or}",
+          "${AppLocalizations.of(context)!.and}/${AppLocalizations.of(context)!.or}",
       'and': AppLocalizations.of(context)!.and,
       'or': AppLocalizations.of(context)!.or,
       'ignoreCase': AppLocalizations.of(context)!.ignoreCase,
