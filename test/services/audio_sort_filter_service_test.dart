@@ -145,12 +145,7 @@ void main() {
     audioType: AudioType.downloaded,
   );
 
-  List<Audio> audioLst = [
-    audioOne,
-    audioTwo,
-    audioThree,
-    audioFour,
-  ];
+  List<Audio> audioLst = [];
 
   group('filter test: ignoring case, filter audio list on validVideoTitle only',
       () {
@@ -159,6 +154,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -201,17 +204,18 @@ void main() {
 
       List<Audio> filteredAudioLst = audioSortFilterService
           .filterOnVideoTitleAndDescriptionAndYoutubeChannelOptions(
-              audioLst: audioLst,
-              filterSentenceLst: [
-                'tendance crypto',
-                'en 2024',
-              ],
-              sentencesCombination: SentencesCombination.or,
-              ignoreCase: true,
-              searchAsWellInVideoCompactDescription: false,
-              searchAsWellInYoutubeChannelName: false,
-              areAudiosFiltered: true,
-              areCommentsFiltered: true);
+        audioLst: audioLst,
+        filterSentenceLst: [
+          'tendance crypto',
+          'en 2024',
+        ],
+        sentencesCombination: SentencesCombination.or,
+        ignoreCase: true,
+        searchAsWellInVideoCompactDescription: false,
+        searchAsWellInYoutubeChannelName: false,
+        areAudiosFiltered: true,
+        areCommentsFiltered: true,
+      );
 
       expect(filteredAudioLst, expectedFilteredAudios);
     });
@@ -383,6 +387,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -605,6 +617,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -710,6 +730,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -832,6 +860,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -924,6 +960,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
@@ -15113,6 +15157,14 @@ void main() {
     SettingsDataService settingsDataService = SettingsDataService();
 
     setUp(() async {
+      // Necessary, otherwise the tests fail
+      audioLst = [
+        audioOne,
+        audioTwo,
+        audioThree,
+        audioFour,
+      ];
+
       // Load the settings from the json file. This is necessary
       // otherwise the ordered playlist titles will remain empty
       // and the playlist list will not be filled with the
