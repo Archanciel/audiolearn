@@ -1039,8 +1039,7 @@ class AudioSortFilterService {
       for (Audio audio in audioLst) {
         bool isAudioFiltered = false;
         for (String filterSentence in filterSentenceLst) {
-          if (areAudiosFiltered &&
-              searchAsWellInYoutubeChannelName &&
+          if (searchAsWellInYoutubeChannelName &&
               searchAsWellInVideoCompactDescription) {
             // here, the 'Include Youtube channel' and 'Include description'
             // checkboxes are checked, so we need to search in the valid video
@@ -1170,7 +1169,7 @@ class AudioSortFilterService {
               // inequality was found and 'AND' is necessary ..
               break;
             }
-          } else if (areAudiosFiltered) {
+          } else {
             // searchAsWellInYoutubeChannelName && searchAsWellInVideoCompactDescription are both false
             // we need to search in the valid video title only
             if (ignoreCase) {
