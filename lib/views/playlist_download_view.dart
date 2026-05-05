@@ -1823,6 +1823,11 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                             .sortFilterParametersAppliedName,
                   );
                   _wasSortFilterAudioSettingsApplied = true;
+
+                  setState(() {
+                    // Update the count from the already-computed returned list
+                    _selectedSortFilterAudioNumber = returnedAudioList.length;
+                  });
                 }
               });
               focusNode.requestFocus();
