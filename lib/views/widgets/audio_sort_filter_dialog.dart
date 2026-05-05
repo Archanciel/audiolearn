@@ -1667,11 +1667,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 onChanged: (bool? newValue) {
                   setState(() {
                     _filterDownloaded = newValue!;
-                    if (!_filterExtracted &&
-                        !_filterConverted &&
-                        !_filterImported) {
-                      _filterImported = true;
+                    if (!_filterImported &&
+                        !_filterImported &&
+                        !_filterExtracted &&
+                        !_filterConverted) {
                       _filterConverted = true;
+                      _filterExtracted = true;
                     }
                   });
                 },
@@ -1691,11 +1692,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 onChanged: (bool? newValue) {
                   setState(() {
                     _filterImported = newValue!;
-                    if (!_filterExtracted &&
-                        !_filterConverted &&
-                        !_filterDownloaded) {
+                    if (!_filterImported &&
+                        !_filterDownloaded &&
+                        !_filterExtracted &&
+                        !_filterConverted) {
                       _filterConverted = true;
-                      _filterDownloaded = true;
+                      _filterExtracted = true;
                     }
                   });
                 },
@@ -1715,12 +1717,12 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                 onChanged: (bool? newValue) {
                   setState(() {
                     _filterConverted = newValue!;
-                    if (!_filterExtracted &&
-                        !_filterConverted &&
+                    if (!_filterConverted &&
+                        !_filterExtracted &&
                         !_filterImported &&
                         !_filterDownloaded) {
-                      _filterImported = true;
                       _filterDownloaded = true;
+                      _filterImported = true;
                     }
                   });
                 },
@@ -1744,8 +1746,8 @@ class _AudioSortFilterDialogState extends State<AudioSortFilterDialog>
                         !_filterConverted &&
                         !_filterImported &&
                         !_filterDownloaded) {
-                      _filterImported = true;
                       _filterDownloaded = true;
+                      _filterImported = true;
                     }
                   });
                 },
