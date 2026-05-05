@@ -1034,7 +1034,6 @@ class AudioSortFilterService {
     required bool areCommentsFiltered,
   }) {
     List<Audio> filteredAudios = [];
-    bool isFilterSentenceInComments = false;
 
     if (areAudiosFiltered) {
       for (Audio audio in audioLst) {
