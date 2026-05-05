@@ -1463,21 +1463,17 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                       Expanded(
                         child: Text(audioSortFilterParametersName),
                       ),
-                      (audioSortFilterParametersName ==
-                              _selectedSortFilterParametersName)
-                          ? _buildSortFilterParmsDropdownItemEditIconButton(
-                              playlistListVMlistenFalse:
-                                  playlistListVMlistenFalse,
-                              audioSortFilterParametersName:
-                                  audioSortFilterParametersName,
-                              audioSortFilterParametersMap:
-                                  audioSortFilterParametersMap,
-                              audioSortFilterParametersNamesLst:
-                                  audioSortFilterParametersNamesLst,
-                              warningMessageVMlistenFalse:
-                                  warningMessageVMlistenFalse,
-                            )
-                          : const SizedBox.shrink(),
+                      _buildSortFilterParmsDropdownItemEditIconButton(
+                        playlistListVMlistenFalse: playlistListVMlistenFalse,
+                        audioSortFilterParametersName:
+                            audioSortFilterParametersName,
+                        audioSortFilterParametersMap:
+                            audioSortFilterParametersMap,
+                        audioSortFilterParametersNamesLst:
+                            audioSortFilterParametersNamesLst,
+                        warningMessageVMlistenFalse:
+                            warningMessageVMlistenFalse,
+                      ),
                     ],
                   ),
                 ),
