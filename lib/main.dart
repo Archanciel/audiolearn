@@ -119,14 +119,17 @@ class MainApp extends StatelessWidget with ScreenMixin {
       settingsDataService: _settingsDataService,
     );
 
-    final TextToSpeechVM textToSpeechVM = TextToSpeechVM();
-
     final PlaylistListVM playlistListVM = PlaylistListVM(
       warningMessageVM: warningMessageVM,
       audioDownloadVM: audioDownloadVM,
       commentVM: commentVM,
       pictureVM: pictureVM,
       settingsDataService: _settingsDataService,
+    );
+
+    final TextToSpeechVM textToSpeechVM = TextToSpeechVM(
+      playlistListVM: playlistListVM,
+      commentVM: commentVM,
     );
 
     final AudioPlayerVM audioPlayerVM = AudioPlayerVM(

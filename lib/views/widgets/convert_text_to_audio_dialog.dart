@@ -629,6 +629,9 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 (existingMp3FileNames.isEmpty)
+                    // if no converted files exist in the playlist, the select
+                    // file to replace button is not displayed and the user can
+                    // directly enter the new file name
                     ? const SizedBox.shrink()
                     : Center(
                         child: Column(
@@ -648,6 +651,8 @@ class _ConvertTextToAudioDialogState extends State<ConvertTextToAudioDialog>
                                         _Mp3FileSelectionDialog(
                                       themeProviderVM: themeProviderVM,
                                       mp3FileNames: existingMp3FileNames,
+                                      textToSpeechVM: textToSpeechVMlistenTrue,
+                                      targetPlaylist: targetPlaylist,
                                     ),
                                   );
 
@@ -888,10 +893,14 @@ class FilterAndSortAudioParameters {
 class _Mp3FileSelectionDialog extends StatefulWidget {
   final ThemeProviderVM themeProviderVM;
   final List<String> mp3FileNames;
+  final TextToSpeechVM textToSpeechVM;
+  final Playlist targetPlaylist;
 
   const _Mp3FileSelectionDialog({
     required this.themeProviderVM,
     required this.mp3FileNames,
+    required this.textToSpeechVM,
+    required this.targetPlaylist,
   });
 
   @override
@@ -901,6 +910,42 @@ class _Mp3FileSelectionDialog extends StatefulWidget {
 
 class _Mp3FileSelectionDialogState extends State<_Mp3FileSelectionDialog> {
   String? _selectedFileName;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  initState() {
+    super.initState();
+
+    _selectedFileName = widget.textToSpeechVM.getFileToUpdateName(
+      playlist: widget.targetPlaylist,
+      mp3FileNames: widget.mp3FileNames,
+    );
+
+    // Scroll to the selected item after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_selectedFileName != null) {
+        final selectedIndex = widget.mp3FileNames.indexOf(_selectedFileName!);
+
+        if (selectedIndex > 0) {
+          // Estimate item height - adjust kEstimatedItemHeight to match
+          // your actual CheckboxListTile height
+          const double kEstimatedItemHeight = 72.0;
+
+          _scrollController.animateTo(
+            selectedIndex * kEstimatedItemHeight,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // Don't forget to dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -941,6 +986,7 @@ class _Mp3FileSelectionDialogState extends State<_Mp3FileSelectionDialog> {
         width: double.maxFinite,
         child: ListView.builder(
           shrinkWrap: true,
+          controller: _scrollController,
           itemCount: widget.mp3FileNames.length,
           itemBuilder: (context, index) {
             final fileName = widget.mp3FileNames[index];
