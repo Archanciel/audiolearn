@@ -6312,8 +6312,6 @@ void main() {
             of: listFinder,
             matching: find.byType(GestureDetector));
 
-        int gestureDectectorNumberByCommentLine = 3;
-
         // Since there are 3 GestureDetector per comment item, we need to
         // multiply the comment line index by 3 to get the right index
         // of "Interview de Chat GPT  - IA, intelligence, philosophie,

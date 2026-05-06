@@ -1,15 +1,23 @@
+import 'package:audiolearn/models/playlist.dart';
 import 'package:audiolearn/viewmodels/audio_player_vm.dart';
 import 'package:flutter/material.dart';
+import '../models/audio.dart';
+import '../models/comment.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
 import '../models/text_to_mp3_audio_file.dart';
 import '../services/text_to_speech_service.dart';
+import 'comment_vm.dart';
+import 'playlist_list_vm.dart';
 import 'warning_message_vm.dart';
 
 class TextToSpeechVM extends ChangeNotifier {
   final TextToSpeechService _ttsService = TextToSpeechService();
   final DirectGoogleTtsService _directGoogleTtsService =
       DirectGoogleTtsService();
+  final PlaylistListVM playlistListVM;
+  final CommentVM commentVM;
+
   String _inputText = '';
   bool _isConverting = false;
   TextToMp3AudioFile? _currentAudioFile;
@@ -29,7 +37,10 @@ class TextToSpeechVM extends ChangeNotifier {
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
 
-  TextToSpeechVM() {
+  TextToSpeechVM({
+    required this.playlistListVM,
+    required this.commentVM,
+  }) {
     // Set up TTS completion listener
     _setupTtsListeners();
   }
@@ -103,6 +114,71 @@ class TextToSpeechVM extends ChangeNotifier {
       _isSpeaking = false;
       notifyListeners();
     }
+  }
+
+  String getFileToUpdateName({
+    required Playlist playlist,
+    required List<String> mp3FileNames,
+  }) {
+    int identicalWordsNumber = 0;
+    String replacedCommentFileName = '';
+
+    for (String fileName in mp3FileNames) {
+      Audio? audio = playlistListVM.getConvertedAudioInPlaylistForFileNName(
+        playlist: playlist,
+        fileName: fileName,
+      );
+
+      if (audio == null) {
+        continue;
+      }
+
+      Comment? lastComment = commentVM.getLastCommentOfAudio(
+        audio: audio,
+      );
+
+      if (lastComment == null) {
+        continue;
+      }
+
+      int countIdenticalWords = _countIdenticalWords(
+        newTxt: inputText,
+        existingTxt: lastComment.content,
+      );
+
+      if (identicalWordsNumber < countIdenticalWords) {
+        replacedCommentFileName = fileName;
+        identicalWordsNumber = countIdenticalWords;
+      }
+    }
+
+    return replacedCommentFileName;
+  }
+
+  int _countIdenticalWords({
+    required String newTxt,
+    required String existingTxt,
+  }) {
+    List<String> wordsOf(String text) => text
+        .toLowerCase()
+        .replaceAll(RegExp(r'[{}]'), '') // remove { markers
+        .split(RegExp(r'\s+'))
+        .where((w) => w.isNotEmpty)
+        .toList();
+
+    List<String> words1 = wordsOf(newTxt);
+    List<String> words2 = wordsOf(existingTxt); // mutable copy for removal
+
+    int count = 0;
+
+    for (String word in words1) {
+      if (words2.contains(word)) {
+        words2.remove(word); // remove to avoid double-counting
+        count++;
+      }
+    }
+
+    return count;
   }
 
   String _convertSingleBracesToQuoted({
