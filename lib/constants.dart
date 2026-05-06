@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 const String kApplicationName = "AudioLearn";
 const String kApplicationNameForAboutView =
     "Audio Learn"; // Enables better readability
-const String kApplicationVersion = "3.2.8";
+const String kApplicationVersion = "3.2.9";
 
 enum PopupMenuButtonType {
   openSortFilterAudioDialog,
