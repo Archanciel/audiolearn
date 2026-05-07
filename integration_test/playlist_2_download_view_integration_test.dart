@@ -49156,13 +49156,7 @@ Future<void> _selectExistingMp3File({
   await tester.tap(replaceFileButtonFinder);
   await tester.pumpAndSettle();
 
-  // Select the 'convertedAudio.mp3' checkbox
-
-  Finder selectConvertedAudioFileCheckboxFinder =
-      find.text('$enteredFileNameNoExt.mp3');
-
-  await tester.tap(selectConvertedAudioFileCheckboxFinder);
-  await tester.pumpAndSettle();
+  // The 'convertedAudio.mp3' checkbox is selected
 
   // Now, tap on the 'Confirm' button to confirm the file selection
   Finder confirmSelectFileButtonFinder =
