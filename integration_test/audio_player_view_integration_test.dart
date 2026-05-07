@@ -13220,6 +13220,15 @@ Future<void> _createCommentUnderPlaySpeed({
                           100 -
                       1000)
               .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false));
+  String modifiedAudioPlayerViewCurrentAudioPositionPlus1 =
+      DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
+          timeWithTenthOfSecondsStr: Duration(
+                  milliseconds: DateTimeUtil.convertToTenthsOfSeconds(
+                              timeString:
+                                  modifiedAudioPlayerViewCurrentAudioPosition) *
+                          100 +
+                      1000)
+              .HHmmssZeroHH(addRemainingOneDigitTenthOfSecond: false));
   String endPositionTextWithSeconds =
       DateTimeUtil.convertTimeWithTenthOfSecToTimeWithSec(
           timeWithTenthOfSecondsStr: endPositionTextWithTenthOfSeconds);
@@ -13229,6 +13238,8 @@ Future<void> _createCommentUnderPlaySpeed({
       modifiedAudioPlayerViewCurrentAudioPosition ==
               endPositionTextWithSeconds ||
           modifiedAudioPlayerViewCurrentAudioPositionMinus1 ==
+              endPositionTextWithSeconds ||
+          modifiedAudioPlayerViewCurrentAudioPositionPlus1 ==
               endPositionTextWithSeconds,
       isTrue); // in case of small delay in stopping the audio after reaching the end position);
 
