@@ -1373,6 +1373,17 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
           AppLocalizations.of(context)!.sortFilterParametersAppliedName,
     );
 
+    String searchSentence = '';
+
+    if (playlistListVMlistenFalseOrTrue.isSearchSentenceApplied) {
+      searchSentence = _playlistUrlOrSearchController.text;
+      _selectedSortFilterAudioNumber = _updatePlaylistSortedFilteredAudioList(
+        playlistListVMlistenFalseOrTrue: playlistListVMlistenFalseOrTrue,
+        searchSentence: searchSentence,
+        notifyListeners: notifyListeners,
+      );
+    }
+
     return _selectedSortFilterParametersName!;
   }
 
