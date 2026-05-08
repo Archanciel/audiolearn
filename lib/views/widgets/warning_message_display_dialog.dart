@@ -139,6 +139,17 @@ class WarningMessageDisplayDialog extends StatelessWidget with ScreenMixin {
             });
 
             return const SizedBox.shrink();
+          case ErrorType.noInternetForConvertingTextToAudio:
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _displayWarningDialog(
+                context: _context,
+                message: AppLocalizations.of(context)!.noInternetForConvertingTextToAudio,
+                warningMessageVM: _warningMessageVM,
+                themeProviderVM: themeProviderVM,
+              );
+            });
+
+            return const SizedBox.shrink();
           case ErrorType.moveAudioToPositionError:
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _displayWarningDialog(

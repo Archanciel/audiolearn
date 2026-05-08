@@ -1710,5 +1710,6 @@
   "moveAudioToPositionErrorMessage": "La modification de la position de l’audio n’est possible que si l’ordre de tri de la playlist est basé sur \"Chapitre audio\".",
   "audioSearch": "Audios",
   "commentSearch": "Commentaires",
-  "duplicateCommentTooltip": "Dupliquer le commentaire. Cela est utile si nous devons diviser le commentaire en deux parties afin de supprimer une portion du commentaire."
+  "duplicateCommentTooltip": "Dupliquer le commentaire. Cela est utile si nous devons diviser le commentaire en deux parties afin de supprimer une portion du commentaire.",
+  "noInternetForConvertingTextToAudio": "Pas d'Internet. Connectez votre appareil et retentez la conversion de texte en audio, laquelle est seulement possible si l'accès à Internet est disponible."
 }
