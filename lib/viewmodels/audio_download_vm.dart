@@ -1202,8 +1202,6 @@ class AudioDownloadVM extends ChangeNotifier {
       errorArgTwo: errorArgTwo,
       errorArgThree: errorArgThree,
     );
-
-    notifyListeners();
   }
 
   void stopDownload() {
