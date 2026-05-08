@@ -128,6 +128,7 @@ class MainApp extends StatelessWidget with ScreenMixin {
     );
 
     final TextToSpeechVM textToSpeechVM = TextToSpeechVM(
+      settingsDataService: _settingsDataService,
       playlistListVM: playlistListVM,
       commentVM: commentVM,
     );

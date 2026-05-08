@@ -2,11 +2,12 @@ import 'dart:io';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'logging_service.dart';
+import 'settings_data_service.dart';
 
 class TextToSpeechService {
   AudioPlayer? _directAudioPlayer;
   FlutterTts? _flutterTts;
-
+  final SettingsDataService _settingsDataService;
   // Track speaking state internally
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
@@ -14,7 +15,9 @@ class TextToSpeechService {
   // Completion callback
   Function()? _onSpeechComplete;
 
-  TextToSpeechService() {
+  TextToSpeechService({
+    required SettingsDataService settingsDataService,
+  }) : _settingsDataService = settingsDataService {
     _directAudioPlayer = AudioPlayer();
     _initializeTts();
   }
@@ -218,31 +221,59 @@ class TextToSpeechService {
           .map((voice) => Map<String, String>.from(voice as Map))
           .toList();
 
-      final List<Map<String, String>> frenchVoices =
-          voices.where((voice) => voice['locale'] == "fr-FR").toList();
-
       Map<String, String>? selectedVoice; // man voice
-      double voiceSpeed; // man voice speed
+      double voiceSpeed = 1.0; // man voice speed
+      Language appLanguage = _settingsDataService.get(
+        settingType: SettingType.language,
+        settingSubType: SettingType.language,
+      );
 
-      if (Platform.isWindows) {
-        if (isVoiceMan) {
-          selectedVoice = frenchVoices[2]; // man voice
-          voiceSpeed = 0.5; // man voice speed
+      if (appLanguage == Language.french) {
+        final List<Map<String, String>> frenchVoices =
+            voices.where((voice) => voice['locale'] == "fr-FR").toList();
+
+        if (Platform.isWindows) {
+          if (isVoiceMan) {
+            selectedVoice = frenchVoices[2]; // man voice
+            voiceSpeed = 0.5; // man voice speed
+          } else {
+            selectedVoice = frenchVoices[0]; // woman voice
+            voiceSpeed = 0.6; // woman voice speed
+          }
         } else {
-          selectedVoice = frenchVoices[0]; // woman voice
-          voiceSpeed = 0.6; // woman voice speed
+          if (isVoiceMan) {
+            selectedVoice = frenchVoices[10]; // man voice
+            voiceSpeed = 0.5; // man voice speed
+          } else {
+            selectedVoice = frenchVoices[5]; // woman voice
+            voiceSpeed = 0.6; // woman voice speed
+          }
         }
-      } else {
-        if (isVoiceMan) {
-          selectedVoice = frenchVoices[10]; // man voice
-          voiceSpeed = 0.5; // man voice speed
+      } else if (appLanguage == Language.english) {
+        final List<Map<String, String>> englishVoices =
+            voices.where((voice) => voice['locale'] == "en-GB").toList();
+
+        if (Platform.isWindows) {
+          if (isVoiceMan) {
+            selectedVoice = englishVoices[0]; // man voice
+            voiceSpeed = 0.5; // man voice speed
+          } else {
+            selectedVoice = englishVoices[1]; // woman voice
+            voiceSpeed = 0.6; // woman voice speed
+          }
         } else {
-          selectedVoice = frenchVoices[5]; // woman voice
-          voiceSpeed = 0.6; // woman voice speed
+          // Android
+          if (isVoiceMan) {
+            selectedVoice = englishVoices[1]; // man voice
+            voiceSpeed = 0.5; // man voice speed
+          } else {
+            selectedVoice = englishVoices[3]; // woman voice
+            voiceSpeed = 0.6; // woman voice speed
+          }
         }
       }
 
-      await _flutterTts!.setVoice(selectedVoice);
+      await _flutterTts!.setVoice(selectedVoice!);
 
       // Configuration française
       await _flutterTts!.setSpeechRate(voiceSpeed);

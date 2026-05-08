@@ -6,15 +6,17 @@ import '../models/comment.dart';
 import '../services/direct_google_tts_service.dart';
 import '../services/logging_service.dart';
 import '../models/text_to_mp3_audio_file.dart';
+import '../services/settings_data_service.dart';
 import '../services/text_to_speech_service.dart';
 import 'comment_vm.dart';
 import 'playlist_list_vm.dart';
 import 'warning_message_vm.dart';
 
 class TextToSpeechVM extends ChangeNotifier {
-  final TextToSpeechService _ttsService = TextToSpeechService();
+  final TextToSpeechService _ttsService;
   final DirectGoogleTtsService _directGoogleTtsService =
       DirectGoogleTtsService();
+  final SettingsDataService settingsDataService;
   final PlaylistListVM playlistListVM;
   final CommentVM commentVM;
 
@@ -38,9 +40,12 @@ class TextToSpeechVM extends ChangeNotifier {
   bool get isSpeaking => _isSpeaking;
 
   TextToSpeechVM({
+    required this.settingsDataService,
     required this.playlistListVM,
     required this.commentVM,
-  }) {
+  }) : _ttsService = TextToSpeechService(
+          settingsDataService: settingsDataService,
+        ) {
     // Set up TTS completion listener
     _setupTtsListeners();
   }
