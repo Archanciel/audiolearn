@@ -3110,4 +3110,8 @@ class MockAppLocalizations extends AppLocalizations {
   @override
   String get duplicateCommentTooltip =>
       "Duplicate the comment. This is useful if we need to devide the comment in two parts in order to eliminate a portion of the comment.";
+
+  @override
+  String get noInternetForConvertingTextToAudio =>
+      "No Internet. Please connect your device and retry the text to audio conversion which is only possible if Internet is available.";
 }

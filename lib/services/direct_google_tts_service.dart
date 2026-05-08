@@ -214,13 +214,8 @@ class DirectGoogleTtsService {
         }
       }
 
-      if (result == null) {
-        warningMessageVMlistenFalse.setError(
-          errorType: ErrorType.noInternet,
-        );
-      }
-
       logInfo('=== CONVERSION MP3 TERMINÉE ===');
+      
       return result;
     } catch (e) {
       logError('Erreur conversion MP3 avec voix', e);

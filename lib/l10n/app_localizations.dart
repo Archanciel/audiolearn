@@ -4795,6 +4795,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Duplicate the comment. This is useful if we need to devide the comment in two parts in order to eliminate a portion of the comment.'**
   String get duplicateCommentTooltip;
+
+  /// No description provided for @noInternetForConvertingTextToAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'No Internet. Please connect your device and retry the text to audio conversion which is only possible if Internet is available.'**
+  String get noInternetForConvertingTextToAudio;
 }
 
 class _AppLocalizationsDelegate

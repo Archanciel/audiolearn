@@ -287,9 +287,15 @@ class TextToSpeechVM extends ChangeNotifier {
       if (audioFile != null) {
         _currentAudioFile = audioFile;
         notifyListeners();
+      } else {
+        warningMessageVMlistenFalse.setError(
+          errorType: ErrorType.noInternetForConvertingTextToAudio,
+        );
       }
     } catch (e) {
-      logInfo('Erreur lors de la conversion: $e');
+      warningMessageVMlistenFalse.setError(
+        errorType: ErrorType.noInternetForConvertingTextToAudio,
+      );
       rethrow;
     } finally {
       _isConverting = false;

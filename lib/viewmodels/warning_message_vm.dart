@@ -269,6 +269,10 @@ enum ErrorType {
   // download a playlist or a single video or to add a new playlist
   // or update an existing playlist.
 
+  noInternetForConvertingTextToAudio, // device not connected. Happens when
+  // trying to convert a text to audio using a Google voice available
+  // on Internet.
+
   errorInPlaylistJsonFile, // Error in the playlist json file.
 
   dateFormatError, // Error in the date format.
