@@ -111,7 +111,7 @@ class DirectGoogleTtsService {
         } else {
           voicesToTry = [
             {'name': 'en-US-Standard-C', 'lang': 'en-US'},
-            {'name': 'en-US-Standard-D', 'lang': 'en-US'},
+            {'name': 'en-US-Standard-E', 'lang': 'en-US'},
           ];
         }
       }
