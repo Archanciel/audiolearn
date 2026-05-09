@@ -280,8 +280,14 @@ class TextToSpeechVM extends ChangeNotifier {
         isForMP3Creation: true,
       );
 
+      Language appLanguage = settingsDataService.get(
+        settingType: SettingType.language,
+        settingSubType: SettingType.language,
+      );
+
       audioFile = await _directGoogleTtsService.convertTextToMP3(
         warningMessageVMlistenFalse: warningMessageVMlistenFalse,
+        appLanguage: appLanguage,
         text: processedText, // Use processedText, not _inputText
         customFileName: fileName,
         mp3FileDirectory: mp3FileDirectory,
