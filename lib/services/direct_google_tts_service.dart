@@ -94,12 +94,12 @@ class DirectGoogleTtsService {
           // Préparer la liste des voix à essayer
           voicesToTry = [
             {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
-            {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
+            {'name': 'fr-FR-Standard-D', 'lang': 'fr-FR'}, // woman voice
           ];
         } else {
           voicesToTry = [
             {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
-            {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
+            {'name': 'fr-FR-Standard-C', 'lang': 'fr-FR'}, // man voice
           ];
         }
       } else if (appLanguage == Language.english) {
