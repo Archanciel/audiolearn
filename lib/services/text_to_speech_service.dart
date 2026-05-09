@@ -7,7 +7,7 @@ import 'settings_data_service.dart';
 class TextToSpeechService {
   AudioPlayer? _directAudioPlayer;
   FlutterTts? _flutterTts;
-  final SettingsDataService _settingsDataService;
+
   // Track speaking state internally
   bool _isSpeaking = false;
   bool get isSpeaking => _isSpeaking;
@@ -15,10 +15,7 @@ class TextToSpeechService {
   // Completion callback
   Function()? _onSpeechComplete;
 
-  TextToSpeechService({
-    required SettingsDataService settingsDataService,
-  }) : _settingsDataService = settingsDataService {
-    _directAudioPlayer = AudioPlayer();
+  TextToSpeechService() {
     _initializeTts();
   }
 
@@ -199,6 +196,7 @@ class TextToSpeechService {
   }
 
   Future<void> speak({
+    required Language appLanguage,
     required String text,
     required bool isVoiceMan,
     required double silenceDurationSeconds,
@@ -223,10 +221,6 @@ class TextToSpeechService {
 
       Map<String, String>? selectedVoice; // man voice
       double voiceSpeed = 1.0; // man voice speed
-      Language appLanguage = _settingsDataService.get(
-        settingType: SettingType.language,
-        settingSubType: SettingType.language,
-      );
 
       if (appLanguage == Language.french) {
         final List<Map<String, String>> frenchVoices =
