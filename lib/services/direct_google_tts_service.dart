@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 import '../models/text_to_mp3_audio_file.dart';
 import '../viewmodels/warning_message_vm.dart';
 import 'logging_service.dart';
+import 'settings_data_service.dart';
 
 class DirectGoogleTtsService {
   final String _apiKey = 'AIzaSyCcj0KjrlTuj8a6JTdowDMODjZSlTGVGvo';
@@ -66,6 +67,7 @@ class DirectGoogleTtsService {
 
   Future<TextToMp3AudioFile?> convertTextToMP3({
     required WarningMessageVM warningMessageVMlistenFalse,
+    required Language appLanguage,
     required String text,
     required String customFileName,
     required String mp3FileDirectory,
@@ -87,23 +89,37 @@ class DirectGoogleTtsService {
 
       List<Map<String, String>>? voicesToTry;
 
-      if (isVoiceMan) {
-        // Préparer la liste des voix à essayer
-        voicesToTry = [
-          {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
-          {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
-        ];
-      } else {
-        voicesToTry = [
-          {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
-          {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
-        ];
+      if (appLanguage == Language.french) {
+        if (isVoiceMan) {
+          // Préparer la liste des voix à essayer
+          voicesToTry = [
+            {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
+            {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
+          ];
+        } else {
+          voicesToTry = [
+            {'name': 'fr-FR-Standard-A', 'lang': 'fr-FR'}, // woman voice
+            {'name': 'fr-FR-Standard-B', 'lang': 'fr-FR'}, // man voice
+          ];
+        }
+      } else if (appLanguage == Language.english) {
+        if (isVoiceMan) {
+          voicesToTry = [
+            {'name': 'en-US-Standard-A', 'lang': 'en-US'},
+            {'name': 'en-US-Standard-B', 'lang': 'en-US'},
+          ];
+        } else {
+          voicesToTry = [
+            {'name': 'en-US-Standard-C', 'lang': 'en-US'},
+            {'name': 'en-US-Standard-D', 'lang': 'en-US'},
+          ];
+        }
       }
 
       TextToMp3AudioFile? result;
 
       // Essayer chaque voix jusqu'à en trouver une qui marche
-      for (final voice in voicesToTry) {
+      for (final voice in voicesToTry!) {
         try {
           logInfo('Tentative avec voix: ${voice['name']}');
 
@@ -215,7 +231,7 @@ class DirectGoogleTtsService {
       }
 
       logInfo('=== CONVERSION MP3 TERMINÉE ===');
-      
+
       return result;
     } catch (e) {
       logError('Erreur conversion MP3 avec voix', e);
