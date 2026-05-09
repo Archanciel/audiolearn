@@ -258,11 +258,11 @@ class TextToSpeechService {
         } else {
           // Android
           if (isVoiceMan) {
-            selectedVoice = englishVoices[1]; // man voice
+            selectedVoice = englishVoices[11]; // man voice
             voiceSpeed = 0.5; // man voice speed
           } else {
             selectedVoice = englishVoices[0]; // woman voice
-            voiceSpeed = 0.6; // woman voice speed
+            voiceSpeed = 0.5; // woman voice speed
           }
         }
       }
