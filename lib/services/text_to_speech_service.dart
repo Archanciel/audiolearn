@@ -261,7 +261,7 @@ class TextToSpeechService {
             selectedVoice = englishVoices[1]; // man voice
             voiceSpeed = 0.5; // man voice speed
           } else {
-            selectedVoice = englishVoices[3]; // woman voice
+            selectedVoice = englishVoices[0]; // woman voice
             voiceSpeed = 0.6; // woman voice speed
           }
         }
