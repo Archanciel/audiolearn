@@ -43,9 +43,7 @@ class TextToSpeechVM extends ChangeNotifier {
     required this.settingsDataService,
     required this.playlistListVM,
     required this.commentVM,
-  }) : _ttsService = TextToSpeechService(
-          settingsDataService: settingsDataService,
-        ) {
+  }) : _ttsService = TextToSpeechService() {
     // Set up TTS completion listener
     _setupTtsListeners();
   }
@@ -105,6 +103,10 @@ class TextToSpeechVM extends ChangeNotifier {
     try {
       // Start speaking with silence support
       await _ttsService.speak(
+        appLanguage: settingsDataService.get(
+          settingType: SettingType.language,
+          settingSubType: SettingType.language,
+        ),
         text: processedText, // Use processedText, not _inputText
         isVoiceMan: isVoiceMan,
         silenceDurationSeconds: _silenceDurationSeconds,
