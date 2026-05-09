@@ -1888,7 +1888,7 @@ class AudioDownloadVM extends ChangeNotifier {
     //                                                 may be modified
     String rejectedImportedFileNamesLst = '';
     String acceptableImportedFileNames = '';
-    bool isImportedMp4ConvertedToMp3InMusicQuality = false;
+    bool isImportedFileInMusicQuality = false;
 
     for (String filePathName in filePathNameToImportLstCopy) {
       String fileName = filePathName.split(path.separator).last;
@@ -1937,7 +1937,7 @@ class AudioDownloadVM extends ChangeNotifier {
           chosenKbps: chosenKbps,
         );
 
-        isImportedMp4ConvertedToMp3InMusicQuality = _isMusicQuality(
+        isImportedFileInMusicQuality = _isMusicQuality(
           bitrate: targetBitrate,
           channels: finalChannels,
         );
@@ -1977,6 +1977,26 @@ class AudioDownloadVM extends ChangeNotifier {
           filePathNameToImportLst.remove(filePathName);
           continue;
         }
+
+        // Determine if the imported MP3 is music quality by probing
+        // its audio attributes
+        final attrs = await _getAudioAttributesWithFfprobe(
+          filePath: filePathName,
+        );
+
+        final int? sourceBps = attrs?.bitrateBps;
+        final int chosenKbps = _chooseTargetKbpsFromSourceBps(
+          sourceBps: sourceBps,
+        );
+        final int finalChannels = _chooseChannels(
+          sourceChannels: attrs?.channels,
+          chosenKbps: chosenKbps,
+        );
+
+        isImportedFileInMusicQuality = _isMusicQuality(
+          bitrate: '${chosenKbps}k',
+          channels: finalChannels,
+        );
 
         acceptableImportedFileNames += "\"$fileName\",\n";
       }
@@ -2033,7 +2053,7 @@ class AudioDownloadVM extends ChangeNotifier {
         // was not converted from mp4 or m4a to mp3
 
         File(filePathName).copySync(targetFilePathName);
-        
+
         existingAudio = targetPlaylist.getAudioByFileNameNoExt(
           audioFileNameNoExt: fileName.replaceFirst('.mp3', ''),
         );
@@ -2072,7 +2092,7 @@ class AudioDownloadVM extends ChangeNotifier {
         );
 
         importedAudio.isAudioMusicQuality =
-            isImportedMp4ConvertedToMp3InMusicQuality;
+            isImportedFileInMusicQuality;
 
         targetPlaylist.addImportedAudio(
           importedAudio,
