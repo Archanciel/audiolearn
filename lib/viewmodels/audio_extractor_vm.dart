@@ -298,20 +298,6 @@ class AudioExtractorVM extends ChangeNotifier {
     required bool inMusicQuality,
     required double totalDuration,
   }) async {
-    AudioSegment? existingAudio = _segments.firstWhereOrNull(
-      (segment) => segment.playSpeed != 1.0,
-    );
-
-    if (existingAudio != null) {
-      _extractionResult = ExtractionResult.error(
-        AppLocalizations.of(context)!
-            .extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne,
-      );
-      notifyListeners();
-
-      return true;
-    }
-
     final String outputPathFileName =
         '${targetPlaylist.downloadPath}${Platform.pathSeparator}$extractedMp3FileName';
 

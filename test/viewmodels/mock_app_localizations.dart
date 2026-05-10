@@ -2882,10 +2882,6 @@ class MockAppLocalizations extends AppLocalizations {
       "End position must be after start position ($startPosition) and not exceed";
 
   @override
-  String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne =>
-      "Extraction to playlist not possible when play speed is different from 1.0 in an extracted comment.";
-
-  @override
   String fadeInExceedsCommentDurationError(
     Object detail,
   ) =>
