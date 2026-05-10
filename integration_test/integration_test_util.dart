@@ -720,6 +720,8 @@ class IntegrationTestUtil {
     bool verifySetValueToTargetDialog = false,
     bool onAndroid = false,
     bool doPurgePicturesDir = false,
+    bool createChapAscSfParms = false,
+    bool createChapDescSfParms = false,
   }) async {
     if (playlistTitlesToDelete.isNotEmpty) {
       // Delete the playlists which are to be deleted
@@ -798,6 +800,98 @@ class IntegrationTestUtil {
     // Tap on the Ok button to launch the restoration.
     await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
     await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    if (createChapAscSfParms) {
+      await _createChapterSfParms(
+        tester: tester,
+        saveAsTitle: 'Chap asc',
+      );
+    }
+
+    if (createChapDescSfParms) {
+      await _createChapterSfParms(
+        tester: tester,
+        saveAsTitle: 'Chap desc',
+      );
+    }
+  }
+
+  static Future<void> _createChapterSfParms({
+    required WidgetTester tester,
+    required String saveAsTitle,
+  }) async {
+    // Tap on the 'OK' button of the confirmation dialog to close it
+    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+    await tester.pumpAndSettle();
+
+    // Open the audio popup menu
+    await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
+    await tester.pumpAndSettle();
+
+    // Find the sort/filter audio menu item and tap on it to
+    // open the audio sort filter dialog
+    await tester
+        .tap(find.byKey(const Key('define_sort_and_filter_audio_menu_item')));
+    await tester.pumpAndSettle();
+
+    // Type the passed SF name in the 'Save as' TextField
+
+    await tester.enterText(
+        find.byKey(const Key('sortFilterSaveAsUniqueNameTextField')),
+        saveAsTitle);
+    await tester.pumpAndSettle();
+
+    // Now select the 'Audio chapter' item in the 'Sort by' dropdown button
+
+    await tester.tap(find.byKey(const Key('sortingOptionDropdownButton')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Audio chapter'));
+    await tester.pumpAndSettle();
+
+    if (saveAsTitle == 'Chap desc') {
+      // Convert ascending to descending sort order of 'Titre audio'.
+      // So, the 'Title asc? sort/filter parms will in fact be descending !!
+      await IntegrationTestUtil.invertSortingItemOrder(
+        tester: tester,
+        sortingItemName: 'Audio chapter',
+      );
+    }
+
+    // Then delete the "Audio download date" descending sort option
+
+    // Find the Text with "Audio downl date" which is located in the
+    // selected sort parameters ListView
+    final Finder textFinder = find.descendant(
+      of: find.byKey(const Key('selectedSortingOptionsListView')),
+      matching: find.text('Audio downl date'),
+    );
+
+    // Then find the ListTile ancestor of the 'Audio downl date' Text
+    // widget. The ascending/descending and remove icon buttons are
+    // contained in their ListTile ancestor
+    final Finder listTileFinder = find.ancestor(
+      of: textFinder,
+      matching: find.byType(ListTile),
+    );
+
+    // Now, within that ListTile, find the sort option delete IconButton
+    // with key 'removeSortingOptionIconButton'
+    final Finder iconButtonFinder = find.descendant(
+      of: listTileFinder,
+      matching: find.byKey(const Key('removeSortingOptionIconButton')),
+    );
+
+    // Tap on the delete icon button to delete the 'Audio downl date'
+    // descending sort option
+    await tester.tap(iconButtonFinder);
+    await tester.pumpAndSettle();
+
+    // Click on the "Save" button. This closes the sort/filter dialog
+    // and updates the sort/filter playlist download view dropdown
+    // button with the newly created sort/filter parms
+    await tester.tap(find.byKey(const Key('saveSortFilterOptionsTextButton')));
+    await tester.pumpAndSettle();
   }
 
   static void expectWithSuccessMessage({
