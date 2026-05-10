@@ -4551,12 +4551,6 @@ abstract class AppLocalizations {
   /// **'Play speed'**
   String get playSpeedLabel;
 
-  /// No description provided for @extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne.
-  ///
-  /// In en, this message translates to:
-  /// **'Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments.'**
-  String get extractionToPlaylistNotPossibleWhenPlaySpeedDiffersFromOne;
-
   /// No description provided for @loadedCommentsFromMultipleAudios.
   ///
   /// In en, this message translates to:
