@@ -45,7 +45,7 @@ dependencies:
   googleapis_auth: ^2.0.0
   audio_video_progress_bar: ^2.0.0
   rxdart: ^0.28.0
-  another_flushbar: ^1.12.29
+  another_flushbar: ^2.0.1
   url_launcher: ^6.3.2
   path: ^1.9.1
   permission_handler: ^12.0.1
