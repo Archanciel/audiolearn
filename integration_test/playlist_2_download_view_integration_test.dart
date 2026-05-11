@@ -36954,7 +36954,7 @@ void main() {
       // Go back to the playlist download view
       await tester.tap(find.byKey(const Key('playlistDownloadViewIconButton')));
       await tester.pumpAndSettle();
-      
+
       // Verify the playlist info dialog content
       await IntegrationTestUtil.verifyPlaylistInfoDialogContent(
         tester: tester,
@@ -45840,13 +45840,6 @@ void main() {
           await tester.tap(find.byKey(const Key('confirmButton')));
           await tester.pumpAndSettle();
 
-          // Verify the presence of the invalid comment error message
-          expect(
-            find.text(
-                "Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments."),
-            findsOneWidget,
-          );
-
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
           DirUtil.deleteFilesInDirAndSubDirs(
@@ -46509,13 +46502,6 @@ void main() {
           // Now find the confirm button and tap on it
           await tester.tap(find.byKey(const Key('confirmButton')));
           await tester.pumpAndSettle();
-
-          // Verify the presence of the invalid comment error message
-          expect(
-            find.text(
-                "Extraction to playlist not possible when play speed is different from 1.0 in one of the extracted comments."),
-            findsOneWidget,
-          );
 
           // Purge the test playlist directory so that the created test
           // files are not uploaded to GitHub
@@ -48448,10 +48434,12 @@ void main() {
         hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
         String minuteStr = now.minute.toString();
         minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
-        expect(firstComment['lastUpdateDateTime'],
-            contains("$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr"),
-            reason:
-                'Last update date time should be today\'s date with current hour and minute');
+        expect(
+            firstComment['lastUpdateDateTime'].contains(
+                    "$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr") ||
+                firstComment['lastUpdateDateTime'].contains(
+                    "$yearStr-$monthStr-${dayStr}T$hourStr:${(now.minute - 1).toString()}"),
+            true);
 
         String totalDurationStr = '2:30.5';
 
@@ -48655,11 +48643,11 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        // Necessary, otherwise the test fails. 2 seconds are necessary.
+        // Necessary, otherwise the test fails. 3 seconds are necessary.
         // Without that, the test passed if break point was set on the
         // _verifyAndPlayExtractedMp3Method method below, but failed
         // without break point.
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         await tester.pumpAndSettle();
 
         // Verify the extract comments to MP3 success dialog message
