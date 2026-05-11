@@ -2161,6 +2161,9 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
                           .disableSortedFilteredPlayableAudioLst();
 
                       showDialog<dynamic>(
+                        barrierDismissible:
+                            false, // This line prevents the dialog from
+                        //                            closing when tapping outside it
                         context: context,
                         builder: (context) => PlaylistOneSelectableDialog(
                           usedFor: PlaylistOneSelectableDialogUsedFor

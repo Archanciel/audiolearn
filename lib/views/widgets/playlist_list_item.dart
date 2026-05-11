@@ -961,6 +961,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
         switch (action) {
           case FilteredAudioAction.moveFilteredAudio:
             showDialog<dynamic>(
+              barrierDismissible: false, // This line prevents the dialog from
+              //                            closing when tapping outside it
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor
@@ -1037,6 +1039,8 @@ class PlaylistListItem extends StatelessWidget with ScreenMixin {
             break;
           case FilteredAudioAction.copyFilteredAudio:
             showDialog<dynamic>(
+              barrierDismissible: false, // This line prevents the dialog from
+              //                            closing when tapping outside it
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor

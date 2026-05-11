@@ -1280,8 +1280,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
                   radius: 18, // ✅ Full size!
                   backgroundColor: const Color.fromARGB(255, 27, 131, 31),
                   child: Tooltip(
-                    message: AppLocalizations.of(context)!
-                        .duplicateCommentTooltip,
+                    message:
+                        AppLocalizations.of(context)!.duplicateCommentTooltip,
                     child: IconButton(
                       key: Key('duplicateSegmentButtonKey_$displayedIndex'),
                       icon: const Icon(
@@ -2044,6 +2044,8 @@ class _AudioExtractorScreenState extends State<AudioExtractorScreen>
       // the audio containing the extracted MP3 as well as the corresponding
       // comments
       showDialog<dynamic>(
+        barrierDismissible: false, // This line prevents the dialog from
+        //                            closing when tapping outside it
         context: context,
         builder: (context) => PlaylistOneSelectableDialog(
           usedFor: PlaylistOneSelectableDialogUsedFor

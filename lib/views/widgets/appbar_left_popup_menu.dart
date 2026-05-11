@@ -374,6 +374,9 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 Audio audio = audioPlayerVMlistenFalse.currentAudio!;
 
                 showDialog<dynamic>(
+                  barrierDismissible:
+                      false, // This line prevents the dialog from
+                  //                            closing when tapping outside it
                   context: context,
                   builder: (context) => PlaylistOneSelectableDialog(
                     usedFor: PlaylistOneSelectableDialogUsedFor
@@ -429,6 +432,9 @@ class AppBarLeftPopupMenuWidget extends StatelessWidget with ScreenMixin {
                 Audio audio = audioPlayerVMlistenFalse.currentAudio!;
 
                 showDialog<dynamic>(
+                  barrierDismissible:
+                      false, // This line prevents the dialog from
+                  //                            closing when tapping outside it
                   context: context,
                   builder: (context) => PlaylistOneSelectableDialog(
                     usedFor: PlaylistOneSelectableDialogUsedFor

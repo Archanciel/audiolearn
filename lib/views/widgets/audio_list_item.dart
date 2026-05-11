@@ -403,6 +403,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
 
             showDialog<dynamic>(
+              barrierDismissible: false, // This line prevents the dialog from
+              //                            closing when tapping outside it
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor
@@ -447,6 +449,8 @@ class AudioListItem extends StatelessWidget with ScreenMixin {
             );
 
             showDialog<dynamic>(
+              barrierDismissible: false, // This line prevents the dialog from
+              //                            closing when tapping outside it
               context: context,
               builder: (context) => PlaylistOneSelectableDialog(
                 usedFor: PlaylistOneSelectableDialogUsedFor
