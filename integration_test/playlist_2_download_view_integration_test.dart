@@ -18350,7 +18350,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 89.1 KB and total duration: 0:00:11.1."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -18472,7 +18472,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
+              '0:00:08.9 89.1 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18499,7 +18499,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:07');
+          expect(aaaAudioDurationStr, '0:09');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -18521,8 +18521,8 @@ void main() {
             audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
-            audioDuration: '0:00:06.9',
-            audioFileSize: '68.9 KB',
+            audioDuration: '0:00:08.9',
+            audioFileSize: '89.1 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -18771,7 +18771,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP all playlists audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 89.1 KB and total duration: 0:00:11.1."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -18894,7 +18894,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
+              '0:00:08.9 89.1 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 3,
           );
@@ -18921,7 +18921,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:07');
+          expect(aaaAudioDurationStr, '0:09');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -18943,8 +18943,8 @@ void main() {
             audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
-            audioDuration: '0:00:06.9',
-            audioFileSize: '68.9 KB',
+            audioDuration: '0:00:08.9',
+            audioFileSize: '89.1 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -19193,7 +19193,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 89.1 KB and total duration: 0:00:11.1."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -19298,7 +19298,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
+              '0:00:08.9 89.1 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19325,7 +19325,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:07');
+          expect(aaaAudioDurationStr, '0:09');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -19340,8 +19340,8 @@ void main() {
             audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
-            audioDuration: '0:00:06.9',
-            audioFileSize: '68.9 KB',
+            audioDuration: '0:00:08.9',
+            audioFileSize: '89.1 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
@@ -19588,7 +19588,7 @@ void main() {
           expect(
               actualMessage,
               contains(
-                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 68.9 KB and total duration: 0:00:08.6."));
+                  "Saved to ZIP file(s) unique playlist audio MP3 files downloaded from $audioOldestDownloadDateToday 00:00.\n\nTotal saved audio number: 1, total size: 89.1 KB and total duration: 0:00:11.1."));
           expect(
               actualMessage, contains("Save operation real duration: 0:00:"));
           expect(actualMessage, contains("number of bytes saved per second: "));
@@ -19694,7 +19694,7 @@ void main() {
           IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
             tester: tester,
             audioSubTitlesAcceptableLst: [
-              '0:00:06.9 68.9 KB converted on 07/09/2025 at 07:37',
+              '0:00:08.9 89.1 KB converted on 07/09/2025 at 07:37',
             ],
             firstAudioListTileIndex: 1,
           );
@@ -19721,7 +19721,7 @@ void main() {
 
           String aaaAudioDurationStr = _extractDuration(aaaAudioTitleText);
 
-          expect(aaaAudioDurationStr, '0:07');
+          expect(aaaAudioDurationStr, '0:09');
 
           // Go back to the playlist download view
           final Finder appScreenNavigationButton =
@@ -19736,8 +19736,8 @@ void main() {
             audioDownloadDateTimeOne:
                 "07/09/2025 07:37", // this is the imported date time
             copiedToPlaylistTitle: 'local',
-            audioDuration: '0:00:06.9',
-            audioFileSize: '68.9 KB',
+            audioDuration: '0:00:08.9',
+            audioFileSize: '89.1 KB',
             isMusicQuality: false, // Is spoken quality
             audioPlaySpeed: '1.25',
             audioVolume: '50.0 %',
