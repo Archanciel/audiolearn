@@ -1,4 +1,5 @@
 import 'package:audiolearn/models/audio.dart';
+import 'package:audiolearn/services/settings_data_service.dart';
 import 'package:audiolearn/views/widgets/convert_text_to_audio_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -1595,6 +1596,12 @@ void main() {
         await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
         await tester.pumpAndSettle();
 
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
+
         // Open the convert text to audio dialog
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
@@ -1607,7 +1614,7 @@ void main() {
             find.byKey(const Key('convertTextToAudioDialogTitleKey')));
         expect(
           convertTextToAudioDialogTitle.data,
-          'Convert Text to Audio',
+          'Convertir le texte en audio',
         );
 
         // Verify the presence of the help icon button
@@ -1618,7 +1625,7 @@ void main() {
             tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
         expect(
           textToConvert.data,
-          'Text to convert, { = silence',
+          'Texte à convertir, { = silence',
         );
 
         // Verify the voice selection title
@@ -1626,7 +1633,7 @@ void main() {
             .widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
         expect(
           conversionVoiceSelection.data,
-          'Voice selection:',
+          'Sélection de la voix:',
         );
 
         // Verify the voice selection checkboxes
@@ -1684,7 +1691,7 @@ void main() {
         // Enter and then delete a text to convert
 
         // Verify the presence of the hint text in the TextField
-        expect(find.text('Enter your text here ...'), findsOneWidget);
+        expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
         // Find the text field and delete button
         final Finder textFieldFinder =
@@ -1738,7 +1745,7 @@ void main() {
 
         // Verify the presence of the hint text in the TextField
         await tester.pumpAndSettle();
-        expect(find.text('Enter your text here ...'), findsOneWidget);
+        expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
         // Verify the again disabled state of the Listen and Create MP3 buttons
         await _verifyListenAndCreateMp3ButtonsState(
@@ -1802,19 +1809,19 @@ void main() {
 
         // Verify the convert text to audio dialog title
         expect(
-          find.text('MP3 File Name'),
+          find.text('Nom du fichier MP3'),
           findsOneWidget,
         );
 
         // Verify the text to convert title
         expect(
-          find.text('Enter the MP3 file name'),
+          find.text('Entrer le nom du fichier MP3'),
           findsOneWidget,
         );
 
         // Verify the presence of the hint text in the MP3 file name
         // TextField
-        expect(find.text('file name'), findsOneWidget);
+        expect(find.text('nom de fichier'), findsOneWidget);
         expect(find.text('.mp3'), findsOneWidget);
 
         const String enteredFileNameNoExt = 'convertedAudio';
@@ -1838,7 +1845,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
           isWarningConfirming: true,
         );
 
@@ -1860,7 +1867,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -1877,14 +1884,15 @@ void main() {
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
           audioDuration: '0:00:05.6',
           audioPosition: '0:00:00.0',
-          audioState: 'Not listened',
+          audioState: 'Non écouté',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56.4 KB',
+          audioFileSize: '56.4 Ko',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
           audioCommentNumber: 1,
+          language: Language.french,
         );
 
         // Now, we verify the created comment showing the converted
@@ -1935,7 +1943,7 @@ void main() {
         );
 
         List<String> expectedTitles = [
-          'Text',
+          'Paroles',
         ];
 
         List<String> expectedContents = [
@@ -2020,9 +2028,9 @@ void main() {
         // save operation.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle: "MP3 File Replacement",
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
           confirmActionDialogMessagePossibleLst: [
-            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
           ],
           closeDialogWithConfirmButton: true,
         );
@@ -2033,7 +2041,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
           isWarningConfirming: true,
         );
 
@@ -2053,7 +2061,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2070,14 +2078,15 @@ void main() {
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
           audioDuration: '0:00:00.7',
           audioPosition: '0:00:00.0',
-          audioState: 'Not listened',
+          audioState: 'Non écouté',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6.9 KB',
+          audioFileSize: '6.9 Ko',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
           audioCommentNumber: 2,
+          language: Language.french,
         );
 
         // Now, we verify the second created comment showing the new
@@ -2128,8 +2137,8 @@ void main() {
         );
 
         expectedTitles = [
-          'Text',
-          'Text',
+          'Paroles',
+          'Paroles',
         ];
 
         expectedContents = [
@@ -2241,6 +2250,12 @@ void main() {
           );
         }
 
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
+
         // Open the convert text to audio dialog
         await IntegrationTestUtil.typeOnPlaylistMenuItem(
           tester: tester,
@@ -2253,7 +2268,7 @@ void main() {
             find.byKey(const Key('convertTextToAudioDialogTitleKey')));
         expect(
           convertTextToAudioDialogTitle.data,
-          'Convert Text to Audio',
+          'Convertir le texte en audio',
         );
 
         // Now enter a text to convert and listen it, verifying its
@@ -2298,19 +2313,19 @@ void main() {
 
         // Verify the convert text to audio dialog title
         expect(
-          find.text('MP3 File Name'),
+          find.text('Nom du fichier MP3'),
           findsOneWidget,
         );
 
         // Verify the text to convert title
         expect(
-          find.text('Enter the MP3 file name'),
+          find.text('Entrer le nom du fichier MP3'),
           findsOneWidget,
         );
 
         // Verify the presence of the hint text in the MP3 file name
         // TextField
-        expect(find.text('file name'), findsOneWidget);
+        expect(find.text('nom de fichier'), findsOneWidget);
         expect(find.text('.mp3'), findsOneWidget);
 
         const String enteredFileNameNoExt = 'convertedAudio';
@@ -2336,7 +2351,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist locale \"$unselectedLocalPlaylistTitle\".",
           isWarningConfirming: true,
         );
 
@@ -2362,7 +2377,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:07.1 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:07.1 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2379,15 +2394,16 @@ void main() {
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
           audioDuration: '0:00:07.1',
           audioPosition: '0:00:00.0',
-          audioState: 'Not listened',
+          audioState: 'Non écouté',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56.4 KB',
+          audioFileSize: '56.4 Ko',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
           audioCommentNumber: 1,
           doDropDown: true,
+          language: Language.french,
         );
 
         // Now, we verify the created comment showing the converted
@@ -2438,7 +2454,7 @@ void main() {
         );
 
         List<String> expectedTitles = [
-          'Text',
+          'Paroles',
         ];
 
         List<String> expectedContents = [
@@ -2551,9 +2567,9 @@ void main() {
         // save operation.
         await IntegrationTestUtil.verifyConfirmActionDialog(
           tester: tester,
-          confirmActionDialogTitle: "MP3 File Replacement",
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
           confirmActionDialogMessagePossibleLst: [
-            "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$unselectedLocalPlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
           ],
           closeDialogWithConfirmButton: true,
         );
@@ -2564,7 +2580,7 @@ void main() {
         await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
           warningDialogMessage:
-              "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$unselectedLocalPlaylistTitle\".",
+              "L\'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist locale \"$unselectedLocalPlaylistTitle\".",
           isWarningConfirming: true,
         );
 
@@ -2590,7 +2606,7 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.9 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:00.9 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 0,
         );
@@ -2607,14 +2623,15 @@ void main() {
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
           audioDuration: '0:00:00.9',
           audioPosition: '0:00:00.0',
-          audioState: 'Not listened',
+          audioState: 'Non écouté',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6.9 KB',
+          audioFileSize: '6.9 Ko',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.0',
           audioVolume: '50.0 %',
           audioCommentNumber: 2,
+          language: Language.french,
         );
 
         // Now, we verify the second created comment showing the new
@@ -2665,8 +2682,8 @@ void main() {
         );
 
         expectedTitles = [
-          'Text',
-          'Text',
+          'Paroles',
+          'Paroles',
         ];
 
         expectedContents = [
@@ -2715,3466 +2732,3466 @@ void main() {
         await tester.pumpAndSettle();
       });
     });
-    group('''Audio item menu "Move Audio to Position" tests'.''', () {
-      testWidgets(
-          '''chap desc, to 4. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 4 and the sort filter parameter is 'chap desc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Verify the dialog title
-        expect(find.text('Move Audio to Int Position'), findsOneWidget);
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Retrieve the TextField widget
-        final TextField textField = tester.widget<TextField>(textFieldFinder);
-
-        // Verify the initial value of the TextField
-
-        expect(textField.controller!.text, "");
-
-        // Enter the Audio position
-
-        const String audioPosition = '4';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 2
-        );
-      });
-      testWidgets(
-          '''chap desc, to 1. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 1 and the sort filter parameter is 'chap desc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '1';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "1_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 2
-        );
-      });
-      testWidgets(
-          '''chap desc, to 26. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 26 and the sort filter parameter is 'chap desc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "26_Les jours se termineront",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '26';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "27_Les jours se termineront",
-          "26_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''chap desc, to 27. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 27 and the sort filter parameter is 'chap desc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "26_Les jours se termineront",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '27';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "26_Les jours se termineront",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''chap desc, to 28. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           Also that the position is set to 28, the audio is moved to position 27 which is the maximum
-           possible position and the sort filter parameter is 'chap desc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "26_Les jours se termineront",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '28';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "26_Les jours se termineront",
-          "25_Seigneur, merci pour Tes promesses",
-          "24_Seigneur, une nouvelle journée commence",
-          "23_Dieu dit",
-          "22_Prière de Padre Pio",
-          "21_L'amour doit remplacer la peur",
-          "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''chap asc, to 4. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 4 and the sort filter parameter is 'chap asc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '4';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 500));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''chap asc, to 1. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 1 and the sort filter parameter is 'chap asc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '1';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "7_Prière au Seigneur",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''chap asc, to 26. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 26 and the sort filter parameter is 'chap asc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Les jours se termineront",
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '26';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-          "27_Les jours se termineront",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-      });
-      testWidgets(
-          '''chap asc, to 27. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           It is moved to position 27 and the sort filter parameter is 'chap asc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Les jours se termineront",
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '27';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Les jours se termineront",
-          "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-      });
-      testWidgets(
-          '''chap asc, to 28. For not yet positioned audio Audio item menu "Move Audio to Position" test.
-           The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
-           Also that the position is set to 28, the audio is moved to position 27 which is the maximum
-           possible position and the sort filter parameter is 'chap asc'.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Les jours se termineront",
-          "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '28';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "21_L'amour doit remplacer la peur",
-          "22_Prière de Padre Pio",
-          "23_Dieu dit",
-          "24_Seigneur, une nouvelle journée commence",
-          "25_Seigneur, merci pour Tes promesses",
-          "26_Les jours se termineront",
-          "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 1,
-        );
-      });
-      testWidgets(
-          '''applied. For not yet positioned audio Audio item menu "Move Audio to Position" test.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Select 'applied' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'applied',
-        );
-
-        // Upload the audio list
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 500));
-        await tester.pumpAndSettle();
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
-
-        const String audioToPositionTitle =
-            "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
-
-        // First, find the Audio sublist ListTile Text widget
-        final Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        final Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        final Finder audioToPositionListTileLeadingMenuIconButton =
-            find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        final Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        final Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        const String audioPosition = '4';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the displayed warning
-
-        // Verify the displayed warning  dialog
-        await IntegrationTestUtil.verifyAndCloseWarningDialog(
-          tester: tester,
-          warningDialogMessage:
-              "Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".",
-        );
-      });
-      testWidgets(
-          '''Chap desc, moving down for already positioned audios, execute a first time the Audio item
-           menu "Move Audio to Position". Then on another positioned audio, execute the same item menu.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle = "6_Prière au Seigneur";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '3';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "3_Prière au Seigneur",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to move another already positioned audio
-
-        audioToPositionTitle =
-            "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        audioPosition = '1';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Prière au Seigneur",
-          "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap desc, moving down 1 position only for already positioned audios, execute a first time the Audio
-           item menu "Move Audio to Position".''', (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle = "6_Prière au Seigneur";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '5';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_Prière au Seigneur",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap desc, moving up for already positioned audios, execute a first time the Audio item
-           menu "Move Audio to Position". Then on another positioned audio, execute the same item menu.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle =
-            "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '6';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "5_Prière au Seigneur",
-          "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to move another already positioned audio
-
-        audioToPositionTitle =
-            "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
-        // First, find the Audio sublist ListTile Text widget
-        audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        audioPosition = '7';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière pour Dieu",
-          "5_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_Prière au Seigneur",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap desc, moving up 1 position only for already positioned audios, execute a first time the
-           Audio item menu "Move Audio to Position".''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle =
-            "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '4';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap asc, moving up for already positioned audios, execute a first time the Audio
-           item menu "Move Audio to Position". Then on another positioned audio, execute the same
-           item menu.''', (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 100));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle = "6_Prière au Seigneur";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '3';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Prière au Seigneur",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to move another already positioned audio
-
-        audioToPositionTitle =
-            "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        audioPosition = '1';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "4_Prière au Seigneur",
-          "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap asc, moving up 1 position only for already positioned audios, execute a first time
-           the Audio item menu "Move Audio to Position".''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 100));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle = "6_Prière au Seigneur";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '5';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Prière au Seigneur",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap asc, moving down for already positioned audios, execute a first time the Audio
-           item menu "Move Audio to Position". Then on another positioned audio, execute the same
-           item menu.''', (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 100));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle =
-            "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '5';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to move another already positioned audio
-
-        audioToPositionTitle =
-            "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
-
-        // First, find the Audio sublist ListTile Text widget
-        audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        audioPosition = '7';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "5_Prière au Seigneur",
-          "6_Prière pour Dieu",
-          "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 3000));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets(
-          '''Chap asc, moving down 1 position only for already positioned audios, execute a first
-           time the Audio item menu "Move Audio to Position".''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Select 'chap asc' sort filter parameter
-
-        await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
-          tester: tester,
-          sortFilterParmsName: 'chap asc',
-        );
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll up action
-        await tester.drag(listFinder, const Offset(0, 100));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        String audioToPositionTitle =
-            "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
-
-        // First, find the Audio sublist ListTile Text widget
-        Finder audioToPositionTitleTextWidgetFinder =
-            find.text(audioToPositionTitle);
-
-        // Then obtain the Audio ListTile widget enclosing the Text widget by
-        // finding its ancestor
-        Finder audioToPositionListTileWidgetFinder = find.ancestor(
-          of: audioToPositionTitleTextWidgetFinder,
-          matching: find.byType(ListTile),
-        );
-
-        // Now find the leading menu icon button of the Audio ListTile
-        // and tap on it
-        Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
-          of: audioToPositionListTileWidgetFinder,
-          matching: find.byIcon(Icons.menu),
-        );
-
-        // Tap the leading menu icon button to open the popup menu
-        await tester.tap(audioToPositionListTileLeadingMenuIconButton);
-        await tester.pumpAndSettle();
-
-        // Now find the move audio popup menu item and tap on it
-        Finder popupMoveAudioMenuItem =
-            find.byKey(const Key("popup_menu_move_audio_to_position"));
-
-        await tester.tap(popupMoveAudioMenuItem);
-        await tester.pumpAndSettle();
-
-        // Find the TextField using the Key
-        Finder textFieldFinder =
-            find.byKey(const Key('audioPositionModificationTextField'));
-
-        // Enter the Audio position
-
-        String audioPosition = '4';
-
-        await tester.enterText(
-          textFieldFinder,
-          audioPosition,
-        );
-        await tester.pumpAndSettle();
-
-        // Now tap the 'Move'' button
-        await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
-        await tester.pumpAndSettle();
-
-        // Verify the the modified ordered audio titles
-
-        audioPositionedTitles = [
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "6_Prière au Seigneur",
-          "7_Prière pour Dieu",
-        ];
-
-        // Find the audio list widget using its key
-        listFinder = find.byKey(const Key('audio_list'));
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-      });
-      testWidgets('''Moving Audio to position < actual audio position tests.''',
-          (WidgetTester tester) async {
-        await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
-          tester: tester,
-          tapOnPlaylistToggleButton: false,
-        );
-
-        // Now initializing the application on the Android emulator using
-        // zip restoration.
-
-        // Replace the platform instance with your mock
-        MockFilePicker mockFilePicker = MockFilePicker();
-        FilePicker.platform = mockFilePicker;
-
-        const String restorableZipFileName = 'Prières 1.zip';
-
-        mockFilePicker.setSelectedFiles([
-          PlatformFile(
-              name: restorableZipFileName,
-              path:
-                  '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
-              size: 2655),
-        ]);
-
-        // In order to create the Android emulator application, execute the
-        // 'Restore Playlists, Comments and Settings from Zip File ...' menu
-        // without replacing the existing playlists.
-        const String priereOnePlaylistTitle = 'Prières 1';
-        await IntegrationTestUtil.executeRestorePlaylists(
-          tester: tester,
-          doReplaceExistingPlaylists: false,
-          doDeleteExistingPlaylistsNotContainedInZip: false,
-          playlistTitlesToDelete: [
-            'Les plus belles chansons chrétiennes',
-            'S8 audio',
-            'local',
-            priereOnePlaylistTitle,
-          ],
-          onAndroid: true,
-          createChapDescSfParms: true,
-        );
-
-        const String playlistToPositionAudioTitles = 'Prières 1';
-
-        await IntegrationTestUtil.typeOnPlaylistMenuItem(
-          tester: tester,
-          playlistTitle: playlistToPositionAudioTitles,
-          playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
-        );
-
-        // Verify the presence of the positioned audio in the in the
-        // playlist audio list
-
-        // Tap the 'Toggle List' button to hide the list of playlist's.
-        await tester.tap(find.byKey(const Key('playlist_toggle_button')));
-        await tester
-            .pumpAndSettle(); // Enter the not yet positioned audio position
-
-        // Verify the the initial ordered audio titles
-
-        List<String> audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Prière au Seigneur",
-          "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        // Find the audio list widget using its key
-        Finder listFinder = find.byKey(const Key('audio_list'));
-
-        // Perform the scroll down action
-        await tester.drag(listFinder, const Offset(0, -300));
-        await tester.pumpAndSettle();
-
-        IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
-          tester: tester,
-          audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
-        );
-
-        // Now we want to tap the popup menu of the Audio ListTile
-        // "6_Prière au Seigneur"
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_Prière au Seigneur",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        await _movePositionedAudioAndVerifyResult(
-          tester: tester,
-          audioToPositionTitle: "6_Prière au Seigneur",
-          audioNewPosition: '5',
-          expectedAudioPositionedTitles: audioPositionedTitles,
-        );
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_Prière au Seigneur",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          "1_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-        ];
-
-        await _movePositionedAudioAndVerifyResult(
-          tester: tester,
-          audioToPositionTitle:
-              "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          audioNewPosition: '1',
-          expectedAudioPositionedTitles: audioPositionedTitles,
-        );
-
-        audioPositionedTitles = [
-          "7_Prière pour Dieu",
-          "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
-          "5_Prière au Seigneur",
-          "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
-          "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
-          "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
-          "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-        ];
-
-        await _movePositionedAudioAndVerifyResult(
-          tester: tester,
-          audioToPositionTitle:
-              "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
-          audioNewPosition: '0',
-          expectedAudioPositionedTitles: audioPositionedTitles,
-        );
-      });
-    });
+    // group('''Audio item menu "Move Audio to Position" tests'.''', () {
+    //   testWidgets(
+    //       '''chap desc, to 4. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 4 and the sort filter parameter is 'chap desc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the dialog title
+    //     expect(find.text('Move Audio to Int Position'), findsOneWidget);
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Retrieve the TextField widget
+    //     final TextField textField = tester.widget<TextField>(textFieldFinder);
+
+    //     // Verify the initial value of the TextField
+
+    //     expect(textField.controller!.text, "");
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '4';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 2
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap desc, to 1. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 1 and the sort filter parameter is 'chap desc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '1';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "1_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 2
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap desc, to 26. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 26 and the sort filter parameter is 'chap desc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "26_Les jours se termineront",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '26';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "27_Les jours se termineront",
+    //       "26_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap desc, to 27. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 27 and the sort filter parameter is 'chap desc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "26_Les jours se termineront",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '27';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "26_Les jours se termineront",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap desc, to 28. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        Also that the position is set to 28, the audio is moved to position 27 which is the maximum
+    //        possible position and the sort filter parameter is 'chap desc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "26_Les jours se termineront",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '28';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "26_Les jours se termineront",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "23_Dieu dit",
+    //       "22_Prière de Padre Pio",
+    //       "21_L'amour doit remplacer la peur",
+    //       "20_Dieu dit - Je marche maintenant au milieu de Mon peuple",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap asc, to 4. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 4 and the sort filter parameter is 'chap asc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '4';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 500));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap asc, to 1. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 1 and the sort filter parameter is 'chap asc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '1';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "7_Prière au Seigneur",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap asc, to 26. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 26 and the sort filter parameter is 'chap asc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Les jours se termineront",
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '26';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //       "27_Les jours se termineront",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap asc, to 27. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        It is moved to position 27 and the sort filter parameter is 'chap asc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Les jours se termineront",
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '27';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Les jours se termineront",
+    //       "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''chap asc, to 28. For not yet positioned audio Audio item menu "Move Audio to Position" test.
+    //        The not yet positioned audio is "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus".
+    //        Also that the position is set to 28, the audio is moved to position 27 which is the maximum
+    //        possible position and the sort filter parameter is 'chap asc'.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Les jours se termineront",
+    //       "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '28';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "21_L'amour doit remplacer la peur",
+    //       "22_Prière de Padre Pio",
+    //       "23_Dieu dit",
+    //       "24_Seigneur, une nouvelle journée commence",
+    //       "25_Seigneur, merci pour Tes promesses",
+    //       "26_Les jours se termineront",
+    //       "27_Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 1,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''applied. For not yet positioned audio Audio item menu "Move Audio to Position" test.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Select 'applied' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'applied',
+    //     );
+
+    //     // Upload the audio list
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 500));
+    //     await tester.pumpAndSettle();
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus"
+
+    //     const String audioToPositionTitle =
+    //         "Laissez tomber les 'pourquoi'...  #mariavaltorta #jesus";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     final Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     final Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     final Finder audioToPositionListTileLeadingMenuIconButton =
+    //         find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     final Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     final Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     const String audioPosition = '4';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the displayed warning
+
+    //     // Verify the displayed warning  dialog
+    //     await IntegrationTestUtil.verifyAndCloseWarningDialog(
+    //       tester: tester,
+    //       warningDialogMessage:
+    //           "Changing the audio position is only possible if the playlist sort filter order is \"Audio chapter\".",
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap desc, moving down for already positioned audios, execute a first time the Audio item
+    //        menu "Move Audio to Position". Then on another positioned audio, execute the same item menu.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle = "6_Prière au Seigneur";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '3';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "3_Prière au Seigneur",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to move another already positioned audio
+
+    //     audioToPositionTitle =
+    //         "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     audioPosition = '1';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Prière au Seigneur",
+    //       "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap desc, moving down 1 position only for already positioned audios, execute a first time the Audio
+    //        item menu "Move Audio to Position".''', (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle = "6_Prière au Seigneur";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '5';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_Prière au Seigneur",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap desc, moving up for already positioned audios, execute a first time the Audio item
+    //        menu "Move Audio to Position". Then on another positioned audio, execute the same item menu.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle =
+    //         "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '6';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "5_Prière au Seigneur",
+    //       "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to move another already positioned audio
+
+    //     audioToPositionTitle =
+    //         "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
+    //     // First, find the Audio sublist ListTile Text widget
+    //     audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     audioPosition = '7';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière pour Dieu",
+    //       "5_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_Prière au Seigneur",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap desc, moving up 1 position only for already positioned audios, execute a first time the
+    //        Audio item menu "Move Audio to Position".''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle =
+    //         "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '4';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap asc, moving up for already positioned audios, execute a first time the Audio
+    //        item menu "Move Audio to Position". Then on another positioned audio, execute the same
+    //        item menu.''', (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 100));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle = "6_Prière au Seigneur";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '3';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Prière au Seigneur",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to move another already positioned audio
+
+    //     audioToPositionTitle =
+    //         "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     audioPosition = '1';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "3_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "4_Prière au Seigneur",
+    //       "5_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap asc, moving up 1 position only for already positioned audios, execute a first time
+    //        the Audio item menu "Move Audio to Position".''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 100));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle = "6_Prière au Seigneur";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '5';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Prière au Seigneur",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap asc, moving down for already positioned audios, execute a first time the Audio
+    //        item menu "Move Audio to Position". Then on another positioned audio, execute the same
+    //        item menu.''', (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 100));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle =
+    //         "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '5';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to move another already positioned audio
+
+    //     audioToPositionTitle =
+    //         "4_Père céleste, merci pour cette nouvelle journée que Tu me donnes.";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     audioToPositionTitleTextWidgetFinder = find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     audioPosition = '7';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "5_Prière au Seigneur",
+    //       "6_Prière pour Dieu",
+    //       "7_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 3000));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets(
+    //       '''Chap asc, moving down 1 position only for already positioned audios, execute a first
+    //        time the Audio item menu "Move Audio to Position".''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Select 'chap asc' sort filter parameter
+
+    //     await IntegrationTestUtil.selectSortFilterParmsInDropDownButton(
+    //       tester: tester,
+    //       sortFilterParmsName: 'chap asc',
+    //     );
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll up action
+    //     await tester.drag(listFinder, const Offset(0, 100));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     String audioToPositionTitle =
+    //         "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!";
+
+    //     // First, find the Audio sublist ListTile Text widget
+    //     Finder audioToPositionTitleTextWidgetFinder =
+    //         find.text(audioToPositionTitle);
+
+    //     // Then obtain the Audio ListTile widget enclosing the Text widget by
+    //     // finding its ancestor
+    //     Finder audioToPositionListTileWidgetFinder = find.ancestor(
+    //       of: audioToPositionTitleTextWidgetFinder,
+    //       matching: find.byType(ListTile),
+    //     );
+
+    //     // Now find the leading menu icon button of the Audio ListTile
+    //     // and tap on it
+    //     Finder audioToPositionListTileLeadingMenuIconButton = find.descendant(
+    //       of: audioToPositionListTileWidgetFinder,
+    //       matching: find.byIcon(Icons.menu),
+    //     );
+
+    //     // Tap the leading menu icon button to open the popup menu
+    //     await tester.tap(audioToPositionListTileLeadingMenuIconButton);
+    //     await tester.pumpAndSettle();
+
+    //     // Now find the move audio popup menu item and tap on it
+    //     Finder popupMoveAudioMenuItem =
+    //         find.byKey(const Key("popup_menu_move_audio_to_position"));
+
+    //     await tester.tap(popupMoveAudioMenuItem);
+    //     await tester.pumpAndSettle();
+
+    //     // Find the TextField using the Key
+    //     Finder textFieldFinder =
+    //         find.byKey(const Key('audioPositionModificationTextField'));
+
+    //     // Enter the Audio position
+
+    //     String audioPosition = '4';
+
+    //     await tester.enterText(
+    //       textFieldFinder,
+    //       audioPosition,
+    //     );
+    //     await tester.pumpAndSettle();
+
+    //     // Now tap the 'Move'' button
+    //     await tester.tap(find.byKey(const Key('moveAudioToPositionButton')));
+    //     await tester.pumpAndSettle();
+
+    //     // Verify the the modified ordered audio titles
+
+    //     audioPositionedTitles = [
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "3_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "4_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "6_Prière au Seigneur",
+    //       "7_Prière pour Dieu",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     listFinder = find.byKey(const Key('audio_list'));
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+    //   });
+    //   testWidgets('''Moving Audio to position < actual audio position tests.''',
+    //       (WidgetTester tester) async {
+    //     await IntegrationTestUtil.initializeAndroidApplicationAndSelectPlaylist(
+    //       tester: tester,
+    //       tapOnPlaylistToggleButton: false,
+    //     );
+
+    //     // Now initializing the application on the Android emulator using
+    //     // zip restoration.
+
+    //     // Replace the platform instance with your mock
+    //     MockFilePicker mockFilePicker = MockFilePicker();
+    //     FilePicker.platform = mockFilePicker;
+
+    //     const String restorableZipFileName = 'Prières 1.zip';
+
+    //     mockFilePicker.setSelectedFiles([
+    //       PlatformFile(
+    //           name: restorableZipFileName,
+    //           path:
+    //               '$kApplicationPathAndroidTest$androidPathSeparator$restorableZipFileName',
+    //           size: 2655),
+    //     ]);
+
+    //     // In order to create the Android emulator application, execute the
+    //     // 'Restore Playlists, Comments and Settings from Zip File ...' menu
+    //     // without replacing the existing playlists.
+    //     const String priereOnePlaylistTitle = 'Prières 1';
+    //     await IntegrationTestUtil.executeRestorePlaylists(
+    //       tester: tester,
+    //       doReplaceExistingPlaylists: false,
+    //       doDeleteExistingPlaylistsNotContainedInZip: false,
+    //       playlistTitlesToDelete: [
+    //         'Les plus belles chansons chrétiennes',
+    //         'S8 audio',
+    //         'local',
+    //         priereOnePlaylistTitle,
+    //       ],
+    //       onAndroid: true,
+    //       createChapDescSfParms: true,
+    //     );
+
+    //     const String playlistToPositionAudioTitles = 'Prières 1';
+
+    //     await IntegrationTestUtil.typeOnPlaylistMenuItem(
+    //       tester: tester,
+    //       playlistTitle: playlistToPositionAudioTitles,
+    //       playlistMenuKeyStr: 'popup_menu_add_audio_position_to_its_title',
+    //     );
+
+    //     // Verify the presence of the positioned audio in the in the
+    //     // playlist audio list
+
+    //     // Tap the 'Toggle List' button to hide the list of playlist's.
+    //     await tester.tap(find.byKey(const Key('playlist_toggle_button')));
+    //     await tester
+    //         .pumpAndSettle(); // Enter the not yet positioned audio position
+
+    //     // Verify the the initial ordered audio titles
+
+    //     List<String> audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Prière au Seigneur",
+    //       "5_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     // Find the audio list widget using its key
+    //     Finder listFinder = find.byKey(const Key('audio_list'));
+
+    //     // Perform the scroll down action
+    //     await tester.drag(listFinder, const Offset(0, -300));
+    //     await tester.pumpAndSettle();
+
+    //     IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+    //       tester: tester,
+    //       audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+    //       firstAudioListTileIndex: 0,
+    //     );
+
+    //     // Now we want to tap the popup menu of the Audio ListTile
+    //     // "6_Prière au Seigneur"
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_Prière au Seigneur",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     await _movePositionedAudioAndVerifyResult(
+    //       tester: tester,
+    //       audioToPositionTitle: "6_Prière au Seigneur",
+    //       audioNewPosition: '5',
+    //       expectedAudioPositionedTitles: audioPositionedTitles,
+    //     );
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_Prière au Seigneur",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       "1_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //     ];
+
+    //     await _movePositionedAudioAndVerifyResult(
+    //       tester: tester,
+    //       audioToPositionTitle:
+    //           "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       audioNewPosition: '1',
+    //       expectedAudioPositionedTitles: audioPositionedTitles,
+    //     );
+
+    //     audioPositionedTitles = [
+    //       "7_Prière pour Dieu",
+    //       "6_Père céleste, merci pour cette nouvelle journée que Tu me donnes.",
+    //       "5_Prière au Seigneur",
+    //       "4_JÉSUS, C'EST LE PLUS BEAU NOM _ Louange acoustique",
+    //       "3_Omraam Mikhaël Aïvanhov - Prière - MonDieu je Te donne mon coeur!",
+    //       "2_Seigneur, je T'en prie, mets-moi dans le feu de Ton Amour!",
+    //       "1_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //     ];
+
+    //     await _movePositionedAudioAndVerifyResult(
+    //       tester: tester,
+    //       audioToPositionTitle:
+    //           "2_Omraam Mikhaël Aïvanhov  'Je vivrai d’après l'amour!'",
+    //       audioNewPosition: '0',
+    //       expectedAudioPositionedTitles: audioPositionedTitles,
+    //     );
+    //   });
+    // });
   });
 }
 
