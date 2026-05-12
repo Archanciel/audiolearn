@@ -37453,8 +37453,9 @@ void main() {
     });
   });
   group('''Convert text to audio.''', () {
-    testWidgets(
-        '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
+    group('''In french language.''', () {
+      testWidgets(
+          '''On selected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
           Stop the text. Then listen the full text and verify the listen duration after which the Stop
           button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
@@ -37463,856 +37464,867 @@ void main() {
 
           Finally, redo a text to speech conversion with a different text and save it to the same MP3 file
           name. Do the same verifications as previously.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+        const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
 
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Verify the convert text to audio dialog title
-      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
-          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
-      expect(
-        convertTextToAudioDialogTitle.data,
-        'Convertir le texte en audio',
-      );
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convertir le texte en audio',
+        );
 
-      // Verify the presence of the help icon button
-      expect(find.byIcon(Icons.help_outline), findsOneWidget);
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
 
-      // Verify the text to convert title
-      final Text textToConvert =
-          tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
-      expect(
-        textToConvert.data,
-        'Texte à convertir, { = silence',
-      );
+        // Verify the text to convert title
+        final Text textToConvert =
+            tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
+        expect(
+          textToConvert.data,
+          'Texte à convertir, { = silence',
+        );
 
-      // Verify the voice selection title
-      final Text conversionVoiceSelection =
-          tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
-      expect(
-        conversionVoiceSelection.data,
-        'Sélection de la voix:',
-      );
+        // Verify the voice selection title
+        final Text conversionVoiceSelection = tester
+            .widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
+        expect(
+          conversionVoiceSelection.data,
+          'Sélection de la voix:',
+        );
 
-      // Verify the voice selection checkboxes
+        // Verify the voice selection checkboxes
 
-      final Finder masculineCheckbox =
-          find.byKey(const Key('masculineVoiceCheckbox'));
-      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+        final Finder masculineCheckbox =
+            find.byKey(const Key('masculineVoiceCheckbox'));
+        Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
 
-      // Initially masculine should be selected
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        true,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        false,
-      );
+        // Initially masculine should be selected
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          true,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          false,
+        );
 
-      // Tap the feminine checkbox
-      await tester.tap(feminineCheckbox);
-      await tester.pump();
+        // Tap the feminine checkbox
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
 
-      // Verify state changed to feminine
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        false,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        true,
-      );
+        // Verify state changed to feminine
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          false,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          true,
+        );
 
-      // Tap masculine checkbox back
-      await tester.tap(masculineCheckbox);
-      await tester.pump();
+        // Tap masculine checkbox back
+        await tester.tap(masculineCheckbox);
+        await tester.pump();
 
-      // Verify state changed back to masculine
-      expect(
-        (tester.widget(masculineCheckbox) as Checkbox).value,
-        true,
-      );
-      expect(
-        (tester.widget(feminineCheckbox) as Checkbox).value,
-        false,
-      );
+        // Verify state changed back to masculine
+        expect(
+          (tester.widget(masculineCheckbox) as Checkbox).value,
+          true,
+        );
+        expect(
+          (tester.widget(feminineCheckbox) as Checkbox).value,
+          false,
+        );
 
-      // Enter and then delete a text to convert
+        // Enter and then delete a text to convert
 
-      // Verify the presence of the hint text in the TextField
-      expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
+        // Verify the presence of the hint text in the TextField
+        expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
-      // Find the text field and delete button
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
-      final Finder textFieldDeleteButtonFFinder =
-          find.byKey(const Key('deleteTextToConvertIconButton'));
+        // Find the text field and delete button
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+        final Finder textFieldDeleteButtonFFinder =
+            find.byKey(const Key('deleteTextToConvertIconButton'));
 
-      // Verify the disabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: false,
-      );
+        // Verify the disabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
+          tester: tester,
+          areEnabled: false,
+        );
 
-      // Enter text in the TextField
-      const testText = 'Ceci est un texte à supprimer.';
-      await tester.enterText(textFieldFinder, testText);
-      await tester.pump();
+        // Enter text in the TextField
+        const testText = 'Ceci est un texte à supprimer.';
+        await tester.enterText(textFieldFinder, testText);
+        await tester.pump();
 
-      // Verify the text was entered
-      expect(find.text(testText), findsOneWidget);
+        // Verify the text was entered
+        expect(find.text(testText), findsOneWidget);
 
-      // Verify the TextField controller has the text
-      final textFieldWidget = tester.widget<TextField>(textFieldFinder);
-      expect(textFieldWidget.controller!.text, testText);
+        // Verify the TextField controller has the text
+        final textFieldWidget = tester.widget<TextField>(textFieldFinder);
+        expect(textFieldWidget.controller!.text, testText);
 
-      // Verify the enabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: true,
-      );
+        // Verify the enabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
+          tester: tester,
+          areEnabled: true,
+        );
 
-      // Tap the delete button
-      await tester.tap(textFieldDeleteButtonFFinder);
-      await tester.pump();
+        // Tap the delete button
+        await tester.tap(textFieldDeleteButtonFFinder);
+        await tester.pump();
 
-      // Verify the text field is now empty
-      expect(textFieldWidget.controller!.text, isEmpty);
-      expect(find.text(testText), findsNothing);
+        // Verify the text field is now empty
+        expect(textFieldWidget.controller!.text, isEmpty);
+        expect(find.text(testText), findsNothing);
 
-      // Verify the TextField is focused after clearing (as per your implementation)
-      expect(
-          tester.binding.focusManager.primaryFocus, textFieldWidget.focusNode);
+        // Verify the TextField is focused after clearing (as per your implementation)
+        expect(tester.binding.focusManager.primaryFocus,
+            textFieldWidget.focusNode);
 
-      // Verify the presence of the hint text in the TextField
-      await tester.pumpAndSettle();
-      expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
-
-      // Verify the again disabled state of the Listen and Create MP3 buttons
-      await _verifyListenAndCreateMp3ButtonsState(
-        tester: tester,
-        areEnabled: false,
-      );
-
-      // Now enter a text to convert and listen it, verifying its
-      // between 8 and 9 second duration
-
-      const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
-      await tester.enterText(textFieldFinder, initialTextToConvertStr);
-      await tester.pump();
-
-      // Tap on the listen button
-      final Finder listenButton = find.byKey(const Key('listen_text_button'));
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Verify button changed to Stop button
-      TextButton stopButtonWidget = tester.widget(listenButton);
-      Row stopButtonRow = stopButtonWidget.child as Row;
-      Icon stopIcon = (stopButtonRow.children[0] as Icon);
-      expect(stopIcon.icon, Icons.stop); // Stop icon
-
-      // Now, tap on the Stop button after 1 seconds
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Verify the Stop button changed back to Listen button
-      TextButton listenButtonWidget = tester.widget(listenButton);
-      Row listenButtonRow = listenButtonWidget.child as Row;
-      Icon listenIcon = (listenButtonRow.children[0] as Icon);
-      expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
-
-      // Now, tap again on the Listen button and let the audio
-      // play to its end
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Add a delay to allow the audio to reach its end and the next audio
-      // to start playing.
-      for (int i = 0; i < 11; i++) {
-        await Future.delayed(const Duration(seconds: 1));
+        // Verify the presence of the hint text in the TextField
         await tester.pumpAndSettle();
-      }
+        expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
-      // Final verification - the Stop button changed to Listen button
-      TextButton finalButtonWidget = tester.widget(listenButton);
-      Row finalButtonRow = finalButtonWidget.child as Row;
-      Icon finalIcon = (finalButtonRow.children[0] as Icon);
-      expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
-
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Verify the convert text to audio dialog title
-      expect(
-        find.text('Nom du fichier MP3'),
-        findsOneWidget,
-      );
-
-      // Verify the text to convert title
-      expect(
-        find.text('Entrer le nom du fichier MP3'),
-        findsOneWidget,
-      );
-
-      // Verify the presence of the hint text in the MP3 file name
-      // TextField
-      expect(find.text('nom de fichier'), findsOneWidget);
-      expect(find.text('.mp3'), findsOneWidget);
-
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
-
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
-
-      // Verify the text was entered
-      expect(find.text(enteredFileNameNoExt), findsOneWidget);
-
-      DateTime now = DateTime.now();
-
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
-        isWarningConfirming: true,
-      );
-
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      Finder cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Find the audio list widget using its key
-      Finder listFinder = find.byKey(const Key('audio_list'));
-
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
-      await tester.pumpAndSettle();
-
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 5,
-      );
-
-      // Go to the audio player view and verify the audio position
-      // and duration of the converted audio
-      await _inAudioPlayerViewVerifyAudioPositionAndDuration(
-        tester: tester,
-        audioTitle: enteredFileNameNoExt,
-        audioStartPosition: '0:00',
-        audioEndPosition: '0:06',
-        audioDuration: '0:06',
-      );
-
-      // Find the audio list widget using its key
-      listFinder = find.byKey(const Key('audio_list'));
-
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
-      await tester.pumpAndSettle();
-
-      // Verifying all audio info dialog fields related of the
-      // textToSpeech audio type
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioType: AudioType.textToSpeech,
-        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTimeOne:
-            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
-        isAudioPlayable: true,
-        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-        audioDuration: '0:00:05.6',
-        audioPosition: '0:00:00.0',
-        audioState: 'Non écouté',
-        lastListenDateTime: '',
-        audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56.4 Ko',
-        isMusicQuality: false, // Is spoken quality
-        audioPlaySpeed: '1.25',
-        audioVolume: '50.0 %',
-        audioCommentNumber: 1,
-        language: Language.french,
-      );
-
-      // Now, we verify the created comment showing the converted
-      // audio text
-
-      // First, find the Youtube playlist audio ListTile Text widget
-      Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
-
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      Finder audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now we want to tap the popup menu of the audioTitle ListTile
-
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      Finder audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
-
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
-
-      // Verify that the audio comments list of the dialog has 1 comment
-      // item
-
-      Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
-
-      // Ensure the list has one child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        1,
-      );
-
-      List<String> expectedTitles = [
-        'Paroles',
-      ];
-
-      List<String> expectedContents = [
-        initialTextToConvertStr,
-      ];
-
-      List<String> expectedStartPositions = [
-        '0:00',
-      ];
-
-      List<String> expectedEndPositions = [
-        '0:06',
-      ];
-
-      List<String> expectedCreationDates = [
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-      ];
-
-      List<String> expectedUpdateDates = [
-        '',
-      ];
-
-      // Verify content of each list item
-      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+        // Verify the again disabled state of the Listen and Create MP3 buttons
+        await _verifyListenAndCreateMp3ButtonsState(
           tester: tester,
-          commentListDialogFinder: audioCommentsLstFinder,
-          commentsNumber: 1,
-          expectedTitlesLst: expectedTitles,
-          expectedContentsLst: expectedContents,
-          expectedStartPositionsLst: expectedStartPositions,
-          expectedEndPositionsLst: expectedEndPositions,
-          expectedCreationDatesLst: expectedCreationDates,
-          expectedUpdateDatesLst: expectedUpdateDates);
+          areEnabled: false,
+        );
 
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 700));
+        // Now enter a text to convert and listen it, verifying its
+        // between 8 and 9 second duration
 
-      // Now, reopen the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
 
-      // Now enter a new text to convert
-      const String nextTextToConvertStr = "un deux trois.";
-      await tester.enterText(textFieldFinder, nextTextToConvertStr);
-      await tester.pump();
+        // Tap on the listen button
+        final Finder listenButton = find.byKey(const Key('listen_text_button'));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
 
-      // Tap the feminine checkbox to change the voice
-      await tester.tap(feminineCheckbox);
-      await tester.pump();
+        // Verify button changed to Stop button
+        TextButton stopButtonWidget = tester.widget(listenButton);
+        Row stopButtonRow = stopButtonWidget.child as Row;
+        Icon stopIcon = (stopButtonRow.children[0] as Icon);
+        expect(stopIcon.icon, Icons.stop); // Stop icon
 
-      // Now click on 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now, tap on the Stop button after 1 seconds
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
 
-      // Enter the same mp3 file name as before
-      mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        // Verify the Stop button changed back to Listen button
+        TextButton listenButtonWidget = tester.widget(listenButton);
+        Row listenButtonRow = listenButtonWidget.child as Row;
+        Icon listenIcon = (listenButtonRow.children[0] as Icon);
+        expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        // Now, tap again on the Listen button and let the audio
+        // play to its end
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
 
-      now = DateTime.now();
+        // Add a delay to allow the audio to reach its end and the next audio
+        // to start playing.
+        for (int i = 0; i < 11; i++) {
+          await Future.delayed(const Duration(seconds: 1));
+          await tester.pumpAndSettle();
+        }
 
-      // Tap on the 'Create MP3' button
-      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Final verification - the Stop button changed to Listen button
+        TextButton finalButtonWidget = tester.widget(listenButton);
+        Row finalButtonRow = finalButtonWidget.child as Row;
+        Icon finalIcon = (finalButtonRow.children[0] as Icon);
+        expect(finalIcon.icon, Icons.volume_up); // Back to Listen icon
 
-      // Now check the confirm dialog which indicates that the saved
-      // file name already exist and ask to confirm or cancel the
-      // save operation.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Remplacement du fichier MP3",
-        confirmActionDialogMessagePossibleLst: [
-          "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
-        ],
-        closeDialogWithConfirmButton: true,
-      );
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Verify the convert text to audio dialog title
+        expect(
+          find.text('Nom du fichier MP3'),
+          findsOneWidget,
+        );
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        // Verify the text to convert title
+        expect(
+          find.text('Entrer le nom du fichier MP3'),
+          findsOneWidget,
+        );
 
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
+        // Verify the presence of the hint text in the MP3 file name
+        // TextField
+        expect(find.text('nom de fichier'), findsOneWidget);
+        expect(find.text('.mp3'), findsOneWidget);
 
-      // Find the audio list widget using its key
-      listFinder = find.byKey(const Key('audio_list'));
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 600));
-      await tester.pumpAndSettle();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 5,
-      );
+        // Verify the text was entered
+        expect(find.text(enteredFileNameNoExt), findsOneWidget);
 
-      // Go to the audio player view and verify the audio position
-      // and duration of the converted audio
-      await _inAudioPlayerViewVerifyAudioPositionAndDuration(
-        tester: tester,
-        audioTitle: enteredFileNameNoExt,
-        audioStartPosition: '0:00',
-        audioEndPosition: '0:01',
-        audioDuration: '0:01',
-      );
+        DateTime now = DateTime.now();
 
-      // Find the audio list widget using its key
-      listFinder = find.byKey(const Key('audio_list'));
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
-      await tester.pumpAndSettle();
-
-      // Verifying all audio info dialog fields related of the
-      // converted audio type
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioType: AudioType.textToSpeech,
-        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTimeOne:
-            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
-        isAudioPlayable: true,
-        audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-        audioDuration: '0:00:00.7',
-        audioPosition: '0:00:00.0',
-        audioState: 'Non écouté',
-        lastListenDateTime: '',
-        audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6.9 Ko',
-        isMusicQuality: false, // Is spoken quality
-        audioPlaySpeed: '1.25',
-        audioVolume: '50.0 %',
-        audioCommentNumber: 2,
-        language: Language.french,
-      );
-
-      // Now, we verify the second created comment showing the new
-      // converted audio text
-
-      // First, find the Youtube playlist audio ListTile Text widget
-      audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
-
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now we want to tap the popup menu of the audioTitle ListTile
-
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
-
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
-
-      // Verify that the audio comments list of the dialog has 2 comment
-      // items
-
-      audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
-
-      // Ensure the list has one child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        2,
-      );
-
-      expectedTitles = [
-        'Paroles',
-        'Paroles',
-      ];
-
-      expectedContents = [
-        initialTextToConvertStr,
-        nextTextToConvertStr,
-      ];
-
-      expectedStartPositions = [
-        '0:00',
-        '0:00',
-      ];
-
-      expectedEndPositions = [
-        '0:06',
-        '0:01',
-      ];
-
-      expectedCreationDates = [
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-      ];
-
-      expectedUpdateDates = [
-        '',
-        '',
-      ];
-
-      // Verify content of each list item
-      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
           tester: tester,
-          commentListDialogFinder: audioCommentsLstFinder,
-          commentsNumber: 2,
-          expectedTitlesLst: expectedTitles,
-          expectedContentsLst: expectedContents,
-          expectedStartPositionsLst: expectedStartPositions,
-          expectedEndPositionsLst: expectedEndPositions,
-          expectedCreationDatesLst: expectedCreationDates,
-          expectedUpdateDatesLst: expectedUpdateDates);
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''After adding a text to speech audio, redo a text to speech conversion with a different text
+        // Find the audio list widget using its key
+        Finder listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 5,
+        );
+
+        // Go to the audio player view and verify the audio position
+        // and duration of the converted audio
+        await _inAudioPlayerViewVerifyAudioPositionAndDuration(
+          tester: tester,
+          audioTitle: enteredFileNameNoExt,
+          audioStartPosition: '0:00',
+          audioEndPosition: '0:06',
+          audioDuration: '0:06',
+        );
+
+        // Find the audio list widget using its key
+        listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        // Verifying all audio info dialog fields related of the
+        // textToSpeech audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTimeOne:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+          audioDuration: '0:00:05.6',
+          audioPosition: '0:00:00.0',
+          audioState: 'Non écouté',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '56.4 Ko',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 1,
+          language: Language.french,
+        );
+
+        // Now, we verify the created comment showing the converted
+        // audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        List<String> expectedTitles = [
+          'Paroles',
+        ];
+
+        List<String> expectedContents = [
+          initialTextToConvertStr,
+        ];
+
+        List<String> expectedStartPositions = [
+          '0:00',
+        ];
+
+        List<String> expectedEndPositions = [
+          '0:06',
+        ];
+
+        List<String> expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        List<String> expectedUpdateDates = [
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 1,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle(const Duration(milliseconds: 700));
+
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Now enter a new text to convert
+        const String nextTextToConvertStr = "un deux trois.";
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
+
+        // Tap the feminine checkbox to change the voice
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
+
+        // Now click on 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Enter the same mp3 file name as before
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        now = DateTime.now();
+
+        // Tap on the 'Create MP3' button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
+          confirmActionDialogMessagePossibleLst: [
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+          ],
+          closeDialogWithConfirmButton: true,
+        );
+
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Find the audio list widget using its key
+        listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 600));
+        await tester.pumpAndSettle();
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 5,
+        );
+
+        // Go to the audio player view and verify the audio position
+        // and duration of the converted audio
+        await _inAudioPlayerViewVerifyAudioPositionAndDuration(
+          tester: tester,
+          audioTitle: enteredFileNameNoExt,
+          audioStartPosition: '0:00',
+          audioEndPosition: '0:01',
+          audioDuration: '0:01',
+        );
+
+        // Find the audio list widget using its key
+        listFinder = find.byKey(const Key('audio_list'));
+
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTimeOne:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
+          audioDuration: '0:00:00.7',
+          audioPosition: '0:00:00.0',
+          audioState: 'Non écouté',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '6.9 Ko',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 2,
+          language: Language.french,
+        );
+
+        // Now, we verify the second created comment showing the new
+        // converted audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 2 comment
+        // items
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          2,
+        );
+
+        expectedTitles = [
+          'Paroles',
+          'Paroles',
+        ];
+
+        expectedContents = [
+          initialTextToConvertStr,
+          nextTextToConvertStr,
+        ];
+
+        expectedStartPositions = [
+          '0:00',
+          '0:00',
+        ];
+
+        expectedEndPositions = [
+          '0:06',
+          '0:01',
+        ];
+
+        expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        expectedUpdateDates = [
+          '',
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 2,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''After adding a text to speech audio, redo a text to speech conversion with a different text
           and save it to the same MP3 file name using the button enabling to select the file in which to
           replace the converted text to audio.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String localEmptyPlaylistTitle = 'empty';
+        const String localEmptyPlaylistTitle = 'empty';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
 
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: localEmptyPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localEmptyPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Now enter a text to convert
+        // Now enter a text to convert
 
-      String initialTextToConvertStr = "{{ un {{{ deux { trois.";
-      Finder textFieldFinder = find.byKey(const Key('textToConvertTextField'));
+        String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
 
-      await tester.enterText(textFieldFinder, initialTextToConvertStr);
-      await tester.pump();
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
 
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Verify the absence of the 'Select existing file' button since
-      // this is the first time we create the text to speech audio
-      expect(
-        find.text('Select existing file'),
-        findsNothing,
-      );
+        // Verify the absence of the 'Select existing file' button since
+        // this is the first time we create the text to speech audio
+        expect(
+          find.text('Select existing file'),
+          findsNothing,
+        );
 
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$localEmptyPlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist locale \"$localEmptyPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now replace the text to convert
+        // Now replace the text to convert
 
-      initialTextToConvertStr = "un deux trois.";
-      textFieldFinder = find.byKey(const Key('textToConvertTextField'));
+        initialTextToConvertStr = "un deux trois.";
+        textFieldFinder = find.byKey(const Key('textToConvertTextField'));
 
-      await tester.enterText(textFieldFinder, initialTextToConvertStr);
-      await tester.pump();
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
 
-      // Now click on 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Tap on the 'Select existing file' button
-      Finder replaceFileButtonFinder =
-          find.byKey(const Key('select_mp3_file_to_replace_button_key'));
-      await tester.tap(replaceFileButtonFinder);
-      await tester.pumpAndSettle();
+        // Tap on the 'Select existing file' button
+        Finder replaceFileButtonFinder =
+            find.byKey(const Key('select_mp3_file_to_replace_button_key'));
+        await tester.tap(replaceFileButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Type on 'Cancel' button
+        // Type on 'Cancel' button
 
-      Finder cancelSelectFileButtonFinder =
-          find.byKey(const Key('cancel_selection_button_key'));
-      await tester.tap(cancelSelectFileButtonFinder);
-      await tester.pumpAndSettle();
+        Finder cancelSelectFileButtonFinder =
+            find.byKey(const Key('cancel_selection_button_key'));
+        await tester.tap(cancelSelectFileButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now reclick on the 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now reclick on the 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Tap on the 'Select existing file' button
-      await _selectExistingMp3File(
-        tester: tester,
-        replaceFileButtonFinder: replaceFileButtonFinder,
-        mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
-        enteredFileNameNoExt: enteredFileNameNoExt,
-      );
+        // Tap on the 'Select existing file' button
+        await _selectExistingMp3File(
+          tester: tester,
+          replaceFileButtonFinder: replaceFileButtonFinder,
+          mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
+          enteredFileNameNoExt: enteredFileNameNoExt,
+        );
 
-      // Tap on the 'Create MP3' button
-      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates that the saved
-      // file name already exist and ask to confirm or cancel the
-      // save operation.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Remplacement du fichier MP3",
-        confirmActionDialogMessagePossibleLst: [
-          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-        ],
-        closeDialogWithConfirmButton: true,
-      );
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
+          confirmActionDialogMessagePossibleLst: [
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$localEmptyPlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+          ],
+          closeDialogWithConfirmButton: true,
+        );
 
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist locale \"$localEmptyPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      Finder cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, reopen the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: localEmptyPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: localEmptyPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Now enter a new text to convert
-      const String nextTextToConvertStr = "un deux trois quatre.";
-      await tester.enterText(textFieldFinder, nextTextToConvertStr);
-      await tester.pump();
+        // Now enter a new text to convert
+        const String nextTextToConvertStr = "un deux trois quatre.";
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
 
-      // Tap the feminine checkbox to change the voice
+        // Tap the feminine checkbox to change the voice
 
-      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+        Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
 
-      await tester.tap(feminineCheckbox);
-      await tester.pump();
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
 
-      // Now click on 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Tap on the 'Select existing file' button
-      await _selectExistingMp3File(
-        tester: tester,
-        replaceFileButtonFinder: replaceFileButtonFinder,
-        mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
-        enteredFileNameNoExt: enteredFileNameNoExt,
-      );
+        // Tap on the 'Select existing file' button
+        await _selectExistingMp3File(
+          tester: tester,
+          replaceFileButtonFinder: replaceFileButtonFinder,
+          mp3FileNameTextFieldFinder: mp3FileNameTextFieldFinder,
+          enteredFileNameNoExt: enteredFileNameNoExt,
+        );
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      // Tap on the 'Create MP3' button
-      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates that the saved
-      // file name already exist and ask to confirm or cancel the
-      // save operation.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Remplacement du fichier MP3",
-        confirmActionDialogMessagePossibleLst: [
-          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-        ],
-        closeDialogWithConfirmButton: true,
-      );
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
+          confirmActionDialogMessagePossibleLst: [
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$localEmptyPlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+          ],
+          closeDialogWithConfirmButton: true,
+        );
 
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$localEmptyPlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist locale \"$localEmptyPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''On unselected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''On unselected playlist, add a text to speech audio. Verify the text to speech dialog appearance.
           Then enter a text with case ( { ) characters. Verify the Listen Create MP3 button state. Listen and
           Stop the text. Then listen the full text and verify the listen duration after which the Stop
           button is reset to the Listen button. Then, create the MP3 audio and verify its presence in the
@@ -38321,736 +38333,744 @@ void main() {
 
           Finally, redo a text to speech conversion with a different text and save it to the same MP3 file
           name. Do the same verifications as previously.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String unselectedLocalPlaylistTitle = 'local';
+        const String unselectedLocalPlaylistTitle = 'local';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
-
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
-
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: unselectedLocalPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
-
-      // Verify the convert text to audio dialog title
-      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
-          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
-      expect(
-        convertTextToAudioDialogTitle.data,
-        'Convertir le texte en audio',
-      );
-
-      // Now enter a text to convert and listen it, verifying its
-      // between 8 and 9 second duration
-
-      // Find the text field finder
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
-
-      const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
-      await tester.enterText(textFieldFinder, initialTextToConvertStr);
-      await tester.pump();
-
-      // Tap on the listen button
-      final Finder listenButton = find.byKey(const Key('listen_text_button'));
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Verify button changed to Stop button
-      TextButton stopButtonWidget = tester.widget(listenButton);
-      Row stopButtonRow = stopButtonWidget.child as Row;
-      Icon stopIcon = (stopButtonRow.children[0] as Icon);
-      expect(stopIcon.icon, Icons.stop); // Stop icon
-
-      // Now, tap on the Stop button after 1 seconds
-      await Future.delayed(const Duration(seconds: 1));
-      await tester.tap(listenButton);
-      await tester.pumpAndSettle();
-
-      // Verify the Stop button changed back to Listen button
-      TextButton listenButtonWidget = tester.widget(listenButton);
-      Row listenButtonRow = listenButtonWidget.child as Row;
-      Icon listenIcon = (listenButtonRow.children[0] as Icon);
-      expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
-
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Verify the convert text to audio dialog title
-      expect(
-        find.text('Nom du fichier MP3'),
-        findsOneWidget,
-      );
-
-      // Verify the text to convert title
-      expect(
-        find.text('Entrer le nom du fichier MP3'),
-        findsOneWidget,
-      );
-
-      // Verify the presence of the hint text in the MP3 file name
-      // TextField
-      expect(find.text('nom de fichier'), findsOneWidget);
-      expect(find.text('.mp3'), findsOneWidget);
-
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
-
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pumpAndSettle();
-
-      // Verify the text was entered
-      expect(find.text(enteredFileNameNoExt), findsOneWidget);
-
-      DateTime now = DateTime.now();
-
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to local playlist \"$unselectedLocalPlaylistTitle\".",
-        isWarningConfirming: true,
-      );
-
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      Finder cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Now select the 'local' playlist
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: unselectedLocalPlaylistTitle,
-      );
-
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 3,
-      );
-
-      // Verifying all audio info dialog fields related of the
-      // converted audio type
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioType: AudioType.textToSpeech,
-        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTimeOne:
-            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
-        isAudioPlayable: true,
-        audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-        audioDuration: '0:00:05.6',
-        audioPosition: '0:00:00.0',
-        audioState: 'Non écouté',
-        lastListenDateTime: '',
-        audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56.4 Ko',
-        isMusicQuality: false, // Is spoken quality
-        audioPlaySpeed: '1.25',
-        audioVolume: '50.0 %',
-        audioCommentNumber: 1,
-        language: Language.french,
-      );
-
-      // Now, we verify the created comment showing the converted
-      // audio text
-
-      // First, find the Youtube playlist audio ListTile Text widget
-      Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
-
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      Finder audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now we want to tap the popup menu of the audioTitle ListTile
-
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      Finder audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      Finder audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
-
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
-
-      // Verify that the audio comments list of the dialog has 1 comment
-      // item
-
-      Finder audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
-
-      // Ensure the list has one child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        1,
-      );
-
-      List<String> expectedTitles = [
-        'Paroles',
-      ];
-
-      List<String> expectedContents = [
-        initialTextToConvertStr,
-      ];
-
-      List<String> expectedStartPositions = [
-        '0:00',
-      ];
-
-      List<String> expectedEndPositions = [
-        '0:06',
-      ];
-
-      List<String> expectedCreationDates = [
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-      ];
-
-      List<String> expectedUpdateDates = [
-        '',
-      ];
-
-      // Verify content of each list item
-      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
           tester: tester,
-          commentListDialogFinder: audioCommentsLstFinder,
-          commentsNumber: 1,
-          expectedTitlesLst: expectedTitles,
-          expectedContentsLst: expectedContents,
-          expectedStartPositionsLst: expectedStartPositions,
-          expectedEndPositionsLst: expectedEndPositions,
-          expectedCreationDatesLst: expectedCreationDates,
-          expectedUpdateDatesLst: expectedUpdateDates);
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle(const Duration(milliseconds: 700));
-
-      // Now unselect the 'local' playlist
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: unselectedLocalPlaylistTitle,
-      );
-
-      // Now, reopen the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: unselectedLocalPlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
-
-      // Now enter a new text to convert
-      const String nextTextToConvertStr = "un deux trois.";
-      await tester.enterText(textFieldFinder, nextTextToConvertStr);
-      await tester.pump();
-
-      // Tap the feminine checkbox to change the voice
-      Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
-      await tester.tap(feminineCheckbox);
-      await tester.pump();
-
-      // Now click on 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Enter the same mp3 file name as before
-      mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
-
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
-
-      // Tap on the 'Create MP3' button
-      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
-
-      // Now check the confirm dialog which indicates that the saved
-      // file name already exist and ask to confirm or cancel the
-      // save operation.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Remplacement du fichier MP3",
-        confirmActionDialogMessagePossibleLst: [
-          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
-        ],
-        closeDialogWithConfirmButton: true,
-      );
-
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
-
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in local playlist \"$unselectedLocalPlaylistTitle\".",
-        isWarningConfirming: true,
-      );
-
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
-
-      // Now select the 'local' playlist
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: unselectedLocalPlaylistTitle,
-      );
-
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 3,
-      );
-
-      // Verifying all audio info dialog fields related of the
-      // converted audio type
-      await IntegrationTestUtil.verifyAudioInfoDialog(
-        tester: tester,
-        audioType: AudioType.textToSpeech,
-        validVideoTitleOrAudioTitle: enteredFileNameNoExt,
-        audioDownloadDateTimeOne:
-            '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
-        isAudioPlayable: true,
-        audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-        audioDuration: '0:00:00.7',
-        audioPosition: '0:00:00.0',
-        audioState: 'Non écouté',
-        lastListenDateTime: '',
-        audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6.9 Ko',
-        isMusicQuality: false, // Is spoken quality
-        audioPlaySpeed: '1.25',
-        audioVolume: '50.0 %',
-        audioCommentNumber: 2,
-        language: Language.french,
-      );
-
-      // Now, we verify the second created comment showing the new
-      // converted audio text
-
-      // First, find the Youtube playlist audio ListTile Text widget
-      audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
-
-      // Then obtain the audio ListTile widget enclosing the Text widget
-      // by finding its ancestor
-      audioTitleTileWidgetFinder = find.ancestor(
-        of: audioTitleTileTextWidgetFinder,
-        matching: find.byType(ListTile),
-      );
-
-      // Now we want to tap the popup menu of the audioTitle ListTile
-
-      // Find the leading menu icon button of the audioTitle ListTile
-      // and tap on it
-      audioTitleTileLeadingMenuIconButton = find.descendant(
-        of: audioTitleTileWidgetFinder,
-        matching: find.byIcon(Icons.menu),
-      );
-
-      // Tap the leading menu icon button to open the popup menu
-      await tester.tap(audioTitleTileLeadingMenuIconButton);
-      await tester.pumpAndSettle();
-
-      // Now find the 'Audio Comments ...' popup menu item and
-      // tap on it
-      audioCommentsPopupMenuItem =
-          find.byKey(const Key("popup_menu_audio_comment"));
-
-      await tester.tap(audioCommentsPopupMenuItem);
-      await tester.pumpAndSettle();
-
-      // Verify that the audio comments list of the dialog has 2 comment
-      // items
-
-      audioCommentsLstFinder = find.byKey(const Key(
-        'audioCommentsListKey',
-      ));
-
-      // Ensure the list has one child widgets
-      expect(
-        tester.widget<ListBody>(audioCommentsLstFinder).children.length,
-        2,
-      );
-
-      expectedTitles = [
-        'Paroles',
-        'Paroles',
-      ];
-
-      expectedContents = [
-        initialTextToConvertStr,
-        nextTextToConvertStr,
-      ];
-
-      expectedStartPositions = [
-        '0:00',
-        '0:00',
-      ];
-
-      expectedEndPositions = [
-        '0:06',
-        '0:01',
-      ];
-
-      expectedCreationDates = [
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-        frenchDateFormatYy.format(DateTime.now()), // created comment
-      ];
-
-      expectedUpdateDates = [
-        '',
-        '',
-      ];
-
-      // Verify content of each list item
-      IntegrationTestUtil.verifyCommentsInCommentListDialog(
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
           tester: tester,
-          commentListDialogFinder: audioCommentsLstFinder,
-          commentsNumber: 2,
-          expectedTitlesLst: expectedTitles,
-          expectedContentsLst: expectedContents,
-          expectedStartPositionsLst: expectedStartPositions,
-          expectedEndPositionsLst: expectedEndPositions,
-          expectedCreationDatesLst: expectedCreationDates,
-          expectedUpdateDatesLst: expectedUpdateDates);
+          language: Language.french,
+        );
 
-      // Now close the comment list dialog
-      await tester.tap(find.byKey(const Key('closeDialogTextButton')));
-      await tester.pumpAndSettle();
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: unselectedLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Converting text containing line breaks without checking the 'Remove line breaks'
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convertir le texte en audio',
+        );
+
+        // Now enter a text to convert and listen it, verifying its
+        // between 8 and 9 second duration
+
+        // Find the text field finder
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
+
+        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        await tester.enterText(textFieldFinder, initialTextToConvertStr);
+        await tester.pump();
+
+        // Tap on the listen button
+        final Finder listenButton = find.byKey(const Key('listen_text_button'));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify button changed to Stop button
+        TextButton stopButtonWidget = tester.widget(listenButton);
+        Row stopButtonRow = stopButtonWidget.child as Row;
+        Icon stopIcon = (stopButtonRow.children[0] as Icon);
+        expect(stopIcon.icon, Icons.stop); // Stop icon
+
+        // Now, tap on the Stop button after 1 seconds
+        await Future.delayed(const Duration(seconds: 1));
+        await tester.tap(listenButton);
+        await tester.pumpAndSettle();
+
+        // Verify the Stop button changed back to Listen button
+        TextButton listenButtonWidget = tester.widget(listenButton);
+        Row listenButtonRow = listenButtonWidget.child as Row;
+        Icon listenIcon = (listenButtonRow.children[0] as Icon);
+        expect(listenIcon.icon, Icons.volume_up); // Back to Listen icon
+
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the convert text to audio dialog title
+        expect(
+          find.text('Nom du fichier MP3'),
+          findsOneWidget,
+        );
+
+        // Verify the text to convert title
+        expect(
+          find.text('Entrer le nom du fichier MP3'),
+          findsOneWidget,
+        );
+
+        // Verify the presence of the hint text in the MP3 file name
+        // TextField
+        expect(find.text('nom de fichier'), findsOneWidget);
+        expect(find.text('.mp3'), findsOneWidget);
+
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pumpAndSettle();
+
+        // Verify the text was entered
+        expect(find.text(enteredFileNameNoExt), findsOneWidget);
+
+        DateTime now = DateTime.now();
+
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist locale \"$unselectedLocalPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now select the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 3,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTimeOne:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
+          audioDuration: '0:00:05.6',
+          audioPosition: '0:00:00.0',
+          audioState: 'Non écouté',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '56.4 Ko',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 1,
+          language: Language.french,
+        );
+
+        // Now, we verify the created comment showing the converted
+        // audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        Finder audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        Finder audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        Finder audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        Finder audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 1 comment
+        // item
+
+        Finder audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          1,
+        );
+
+        List<String> expectedTitles = [
+          'Paroles',
+        ];
+
+        List<String> expectedContents = [
+          initialTextToConvertStr,
+        ];
+
+        List<String> expectedStartPositions = [
+          '0:00',
+        ];
+
+        List<String> expectedEndPositions = [
+          '0:06',
+        ];
+
+        List<String> expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        List<String> expectedUpdateDates = [
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 1,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle(const Duration(milliseconds: 700));
+
+        // Now unselect the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: unselectedLocalPlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
+
+        // Now enter a new text to convert
+        const String nextTextToConvertStr = "un deux trois.";
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
+
+        // Tap the feminine checkbox to change the voice
+        Finder feminineCheckbox = find.byKey(const Key('femineVoiceCheckbox'));
+        await tester.tap(feminineCheckbox);
+        await tester.pump();
+
+        // Now click on 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Enter the same mp3 file name as before
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
+
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
+
+        // Tap on the 'Create MP3' button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
+          confirmActionDialogMessagePossibleLst: [
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$unselectedLocalPlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+          ],
+          closeDialogWithConfirmButton: true,
+        );
+
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
+
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist locale \"$unselectedLocalPlaylistTitle\".",
+          isWarningConfirming: true,
+        );
+
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now select the 'local' playlist
+        await IntegrationTestUtil.selectPlaylist(
+          tester: tester,
+          playlistToSelectTitle: unselectedLocalPlaylistTitle,
+        );
+
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 3,
+        );
+
+        // Verifying all audio info dialog fields related of the
+        // converted audio type
+        await IntegrationTestUtil.verifyAudioInfoDialog(
+          tester: tester,
+          audioType: AudioType.textToSpeech,
+          validVideoTitleOrAudioTitle: enteredFileNameNoExt,
+          audioDownloadDateTimeOne:
+              '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
+          isAudioPlayable: true,
+          audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
+          audioDuration: '0:00:00.7',
+          audioPosition: '0:00:00.0',
+          audioState: 'Non écouté',
+          lastListenDateTime: '',
+          audioFileName: '$enteredFileNameNoExt.mp3',
+          audioFileSize: '6.9 Ko',
+          isMusicQuality: false, // Is spoken quality
+          audioPlaySpeed: '1.25',
+          audioVolume: '50.0 %',
+          audioCommentNumber: 2,
+          language: Language.french,
+        );
+
+        // Now, we verify the second created comment showing the new
+        // converted audio text
+
+        // First, find the Youtube playlist audio ListTile Text widget
+        audioTitleTileTextWidgetFinder = find.text(enteredFileNameNoExt);
+
+        // Then obtain the audio ListTile widget enclosing the Text widget
+        // by finding its ancestor
+        audioTitleTileWidgetFinder = find.ancestor(
+          of: audioTitleTileTextWidgetFinder,
+          matching: find.byType(ListTile),
+        );
+
+        // Now we want to tap the popup menu of the audioTitle ListTile
+
+        // Find the leading menu icon button of the audioTitle ListTile
+        // and tap on it
+        audioTitleTileLeadingMenuIconButton = find.descendant(
+          of: audioTitleTileWidgetFinder,
+          matching: find.byIcon(Icons.menu),
+        );
+
+        // Tap the leading menu icon button to open the popup menu
+        await tester.tap(audioTitleTileLeadingMenuIconButton);
+        await tester.pumpAndSettle();
+
+        // Now find the 'Audio Comments ...' popup menu item and
+        // tap on it
+        audioCommentsPopupMenuItem =
+            find.byKey(const Key("popup_menu_audio_comment"));
+
+        await tester.tap(audioCommentsPopupMenuItem);
+        await tester.pumpAndSettle();
+
+        // Verify that the audio comments list of the dialog has 2 comment
+        // items
+
+        audioCommentsLstFinder = find.byKey(const Key(
+          'audioCommentsListKey',
+        ));
+
+        // Ensure the list has one child widgets
+        expect(
+          tester.widget<ListBody>(audioCommentsLstFinder).children.length,
+          2,
+        );
+
+        expectedTitles = [
+          'Paroles',
+          'Paroles',
+        ];
+
+        expectedContents = [
+          initialTextToConvertStr,
+          nextTextToConvertStr,
+        ];
+
+        expectedStartPositions = [
+          '0:00',
+          '0:00',
+        ];
+
+        expectedEndPositions = [
+          '0:06',
+          '0:01',
+        ];
+
+        expectedCreationDates = [
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+          frenchDateFormatYy.format(DateTime.now()), // created comment
+        ];
+
+        expectedUpdateDates = [
+          '',
+          '',
+        ];
+
+        // Verify content of each list item
+        IntegrationTestUtil.verifyCommentsInCommentListDialog(
+            tester: tester,
+            commentListDialogFinder: audioCommentsLstFinder,
+            commentsNumber: 2,
+            expectedTitlesLst: expectedTitles,
+            expectedContentsLst: expectedContents,
+            expectedStartPositionsLst: expectedStartPositions,
+            expectedEndPositionsLst: expectedEndPositions,
+            expectedCreationDatesLst: expectedCreationDates,
+            expectedUpdateDatesLst: expectedUpdateDates);
+
+        // Now close the comment list dialog
+        await tester.tap(find.byKey(const Key('closeDialogTextButton')));
+        await tester.pumpAndSettle();
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Converting text containing line breaks without checking the 'Remove line breaks'
            ckeckbox.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+        const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
 
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Verify the convert text to audio dialog title
-      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
-          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
-      expect(
-        convertTextToAudioDialogTitle.data,
-        'Convertir le texte en audio',
-      );
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convertir le texte en audio',
+        );
 
-      // Enter a text to convert containing line breaks
+        // Enter a text to convert containing line breaks
 
-      // Find the text field and delete button
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+        // Find the text field and delete button
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
 
-      // Enter text in the TextField
-      const testText =
-          "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
-      await tester.enterText(textFieldFinder, testText);
-      await tester.pump();
+        // Enter text in the TextField
+        const testText =
+            "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+        await tester.enterText(textFieldFinder, testText);
+        await tester.pump();
 
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      DateTime now = DateTime.now();
+        DateTime now = DateTime.now();
 
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Close the warning dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+        // Close the warning dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
 
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      Finder cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Find the audio list widget using its key
-      final Finder listFinder = find.byKey(const Key('audio_list'));
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
 
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
-      await tester.pumpAndSettle();
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
 
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 5,
-      );
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 5,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Converting text containing line breaks with checking the 'Remove line breaks'
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Converting text containing line breaks with checking the 'Remove line breaks'
            ckeckbox.''', (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+        const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
 
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Verify the convert text to audio dialog title
-      final Text convertTextToAudioDialogTitle = tester.widget<Text>(
-          find.byKey(const Key('convertTextToAudioDialogTitleKey')));
-      expect(
-        convertTextToAudioDialogTitle.data,
-        'Convertir le texte en audio',
-      );
+        // Verify the convert text to audio dialog title
+        final Text convertTextToAudioDialogTitle = tester.widget<Text>(
+            find.byKey(const Key('convertTextToAudioDialogTitleKey')));
+        expect(
+          convertTextToAudioDialogTitle.data,
+          'Convertir le texte en audio',
+        );
 
-      // Enter a text to convert containing line breaks
+        // Enter a text to convert containing line breaks
 
-      // Find the text field and delete button
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+        // Find the text field and delete button
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
 
-      // Enter text in the TextField
-      const testText =
-          "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
-      await tester.enterText(textFieldFinder, testText);
-      await tester.pump();
+        // Enter text in the TextField
+        const testText =
+            "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+        await tester.enterText(textFieldFinder, testText);
+        await tester.pump();
 
-      // Check the 'Remove line breaks' checkbox
-      Finder removeLineBreaksCheckbox =
-          find.byKey(const Key('clearEndLineCheckbox'));
-      await tester.tap(removeLineBreaksCheckbox);
-      await tester.pumpAndSettle();
+        // Check the 'Remove line breaks' checkbox
+        Finder removeLineBreaksCheckbox =
+            find.byKey(const Key('clearEndLineCheckbox'));
+        await tester.tap(removeLineBreaksCheckbox);
+        await tester.pumpAndSettle();
 
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      DateTime now = DateTime.now();
+        DateTime now = DateTime.now();
 
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Close the warning dialog
-      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-      await tester.pumpAndSettle();
+        // Close the warning dialog
+        await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+        await tester.pumpAndSettle();
 
-      // Now close the convert text to audio dialog by tapping
-      // the Cancel button
-      Finder cancelButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(cancelButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Cancel button
+        Finder cancelButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(cancelButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Find the audio list widget using its key
-      final Finder listFinder = find.byKey(const Key('audio_list'));
+        // Find the audio list widget using its key
+        final Finder listFinder = find.byKey(const Key('audio_list'));
 
-      // Perform the scroll action
-      await tester.drag(listFinder, const Offset(0, 300));
-      await tester.pumpAndSettle();
+        // Perform the scroll action
+        await tester.drag(listFinder, const Offset(0, 300));
+        await tester.pumpAndSettle();
 
-      // Verify the converted audio sub title in the selected Youtube
-      // playlist audio list. The duration should be shorter than the
-      // previous conversion since the line break characters were removed.
-      IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
-        tester: tester,
-        audioSubTitlesAcceptableLst: [
-          '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
-        ],
-        firstAudioListTileIndex: 5,
-      );
+        // Verify the converted audio sub title in the selected Youtube
+        // playlist audio list. The duration should be shorter than the
+        // previous conversion since the line break characters were removed.
+        IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
+          tester: tester,
+          audioSubTitlesAcceptableLst: [
+            '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
+          ],
+          firstAudioListTileIndex: 5,
+        );
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Convert a long text to audio. Verify the displayed conversion progression.
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+      testWidgets(
+          '''Convert a long text to audio. Verify the displayed conversion progression.
 
            Finally, redo a text to speech conversion with a different long text and save it to the
            same MP3 file name. Do the same verifications as previously.''',
-        (WidgetTester tester) async {
-      // Purge the test playlist directory if it exists so that the
-      // playlist list is empty
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+          (WidgetTester tester) async {
+        // Purge the test playlist directory if it exists so that the
+        // playlist list is empty
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
 
-      const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
+        const String selectedYoutubePlaylistTitle = 'urgent_actus_17-12-2023';
 
-      await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
-        tester: tester,
-        savedTestDataDirName: 'import_audios_integr_test',
-        tapOnPlaylistToggleButton: false,
-      );
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'import_audios_integr_test',
+          tapOnPlaylistToggleButton: false,
+        );
 
-      // First, set the application language to french
-      await IntegrationTestUtil.setApplicationLanguage(
-        tester: tester,
-        language: Language.french,
-      );
+        // First, set the application language to french
+        await IntegrationTestUtil.setApplicationLanguage(
+          tester: tester,
+          language: Language.french,
+        );
 
-      // Open the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Open the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Verify the voice selection title
-      final Text conversionVoiceSelection =
-          tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
-      expect(
-        conversionVoiceSelection.data,
-        'Sélection de la voix:',
-      );
+        // Verify the voice selection title
+        final Text conversionVoiceSelection = tester
+            .widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
+        expect(
+          conversionVoiceSelection.data,
+          'Sélection de la voix:',
+        );
 
-      // Enter the text to convert
+        // Enter the text to convert
 
-      // Find the text field and delete button
-      final Finder textFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+        // Find the text field and delete button
+        final Finder textFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
 
-      // Enter text in the TextField
-      const testText =
-          '''Ceci est un long texte de test pour vérifier la fonctionnalité
+        // Enter text in the TextField
+        const testText =
+            '''Ceci est un long texte de test pour vérifier la fonctionnalité
           de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
           peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
           Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
@@ -39064,70 +39084,72 @@ void main() {
           activés et désactivés aux bons moments, et que le champ de texte peut être effacé
           correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
           que la durée de l'audio correspond à nos attentes.''';
-      await tester.enterText(textFieldFinder, testText);
-      await tester.pump();
+        await tester.enterText(textFieldFinder, testText);
+        await tester.pump();
 
-      // Verify that the text was entered
-      expect(find.text(testText), findsOneWidget);
+        // Verify that the text was entered
+        expect(find.text(testText), findsOneWidget);
 
-      // Now click on 'Create MP3' button to create the audio
-      Finder createMP3ButtonFinder =
-          find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        // Now click on 'Create MP3' button to create the audio
+        Finder createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      const String enteredFileNameNoExt = 'convertedAudio';
-      Finder mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        const String enteredFileNameNoExt = 'convertedAudio';
+        Finder mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pumpAndSettle();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pumpAndSettle();
 
-      const String conversionTextValue = 'Creating MP3';
+        const String conversionTextValue = 'Création du MP3';
 
-      // Tap on the 'Create MP3' button
-      Finder saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
+        // Tap on the 'Create MP3' button
+        Finder saveMP3FileButton =
+            find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
 
-      // Just start the first frame; DO NOT use pumpAndSettle here
-      await tester.pump(const Duration(milliseconds: 50));
+        // Just start the first frame; DO NOT use pumpAndSettle here
+        await tester.pump(const Duration(milliseconds: 50));
 
-      // Wait until the "Creating MP3" text (or key) appears, with timeout
-      await pumpUntilFound(
-        tester: tester,
-        finder: find.byKey(const Key('conversionTextKey')),
-        timeout: const Duration(seconds: 3),
-      );
+        // Wait until the "Creating MP3" text (or key) appears, with timeout
+        await pumpUntilFound(
+          tester: tester,
+          finder: find.byKey(const Key('conversionTextKey')),
+          timeout: const Duration(seconds: 3),
+        );
 
-      // Now assert
-      expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
-      expect(find.text(conversionTextValue), findsOneWidget);
-      await tester.pumpAndSettle();
+        // Now assert
+        expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
+        expect(find.text(conversionTextValue), findsOneWidget);
+        await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now close the convert text to audio dialog by tapping
-      // the Close button
-      Finder closeButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(closeButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Close button
+        Finder closeButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(closeButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Now, reopen the convert text to audio dialog
-      await IntegrationTestUtil.typeOnPlaylistMenuItem(
-        tester: tester,
-        playlistTitle: selectedYoutubePlaylistTitle,
-        playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
-      );
+        // Now, reopen the convert text to audio dialog
+        await IntegrationTestUtil.typeOnPlaylistMenuItem(
+          tester: tester,
+          playlistTitle: selectedYoutubePlaylistTitle,
+          playlistMenuKeyStr: 'popup_menu_convert_text_to_audio_in_playlist',
+        );
 
-      // Now enter a new text to convert
-      const String nextTextToConvertStr =
-          '''Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
+        // Now enter a new text to convert
+        const String nextTextToConvertStr =
+            '''Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
           de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
           peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
           Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
@@ -39141,76 +39163,81 @@ void main() {
           activés et désactivés aux bons moments, et que le champ de texte peut être effacé
           correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
           que la durée de l'audio correspond à nos attentes.''';
-      await tester.enterText(textFieldFinder, nextTextToConvertStr);
-      await tester.pump();
+        await tester.enterText(textFieldFinder, nextTextToConvertStr);
+        await tester.pump();
 
-      // Now click on 'Create MP3' button to create the audio
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
+        // Now click on 'Create MP3' button to create the audio
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
 
-      createMP3ButtonFinder = find.byKey(const Key('create_audio_file_button'));
-      await tester.tap(createMP3ButtonFinder);
-      await tester.pumpAndSettle();
+        createMP3ButtonFinder =
+            find.byKey(const Key('create_audio_file_button'));
+        await tester.tap(createMP3ButtonFinder);
+        await tester.pumpAndSettle();
 
-      mp3FileNameTextFieldFinder =
-          find.byKey(const Key('textToConvertTextField'));
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('textToConvertTextField'));
 
-      // Enter the same mp3 file name as before
-      mp3FileNameTextFieldFinder =
-          find.byKey(const Key('mp3FileNameTextFieldKey'));
+        // Enter the same mp3 file name as before
+        mp3FileNameTextFieldFinder =
+            find.byKey(const Key('mp3FileNameTextFieldKey'));
 
-      await tester.enterText(mp3FileNameTextFieldFinder, enteredFileNameNoExt);
-      await tester.pump();
+        await tester.enterText(
+            mp3FileNameTextFieldFinder, enteredFileNameNoExt);
+        await tester.pump();
 
-      // Tap on the 'Create MP3' button
-      saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
-      await tester.tap(saveMP3FileButton);
-      await Future.delayed(const Duration(seconds: 2));
-      await tester.pumpAndSettle();
+        // Tap on the 'Create MP3' button
+        saveMP3FileButton = find.byKey(const Key('create_mp3_button_key'));
+        await tester.tap(saveMP3FileButton);
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-      // Now check the confirm dialog which indicates that the saved
-      // file name already exist and ask to confirm or cancel the
-      // save operation.
-      await IntegrationTestUtil.verifyConfirmActionDialog(
-        tester: tester,
-        confirmActionDialogTitle: "Remplacement du fichier MP3",
-        confirmActionDialogMessagePossibleLst: [
-          "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
-        ],
-        closeDialogWithConfirmButton: true,
-      );
+        // Now check the confirm dialog which indicates that the saved
+        // file name already exist and ask to confirm or cancel the
+        // save operation.
+        await IntegrationTestUtil.verifyConfirmActionDialog(
+          tester: tester,
+          confirmActionDialogTitle: "Remplacement du fichier MP3",
+          confirmActionDialogMessagePossibleLst: [
+            "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
+          ],
+          closeDialogWithConfirmButton: true,
+        );
 
-      // Wait until the "Creating MP3" text (or key) appears, with timeout
-      await pumpUntilFound(
-        tester: tester,
-        finder: find.byKey(const Key('conversionTextKey')),
-        timeout: const Duration(seconds: 3),
-      );
+        // Wait until the "Creating MP3" text (or key) appears, with timeout
+        await pumpUntilFound(
+          tester: tester,
+          finder: find.byKey(const Key('conversionTextKey')),
+          timeout: const Duration(seconds: 3),
+        );
 
-      // Now assert
-      expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
-      expect(find.text(conversionTextValue), findsOneWidget);
-      await tester.pumpAndSettle();
+        // Now assert
+        expect(find.byKey(const Key('conversionTextKey')), findsOneWidget);
+        expect(find.text(conversionTextValue), findsOneWidget);
+        await tester.pumpAndSettle();
 
-      await IntegrationTestUtil.verifyAndCloseWarningDialog(
-        tester: tester,
-        warningDialogMessage:
-            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
-        isWarningConfirming: true,
-      );
+        await IntegrationTestUtil.verifyAndCloseWarningDialog(
+          tester: tester,
+          warningDialogMessage:
+              "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
+          isWarningConfirming: true,
+        );
 
-      // Now close the convert text to audio dialog by tapping
-      // the Close button
-      closeButtonFinder =
-          find.byKey(const Key('convertTextToAudioCloseButton'));
-      await tester.tap(closeButtonFinder);
-      await tester.pumpAndSettle();
+        // Now close the convert text to audio dialog by tapping
+        // the Close button
+        closeButtonFinder =
+            find.byKey(const Key('convertTextToAudioCloseButton'));
+        await tester.tap(closeButtonFinder);
+        await tester.pumpAndSettle();
 
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
     });
+    group('''In english language.''', () {});
   });
   group('Download URLs from Text File tests', () {
     testWidgets(
