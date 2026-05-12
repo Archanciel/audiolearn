@@ -37478,6 +37478,12 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -37490,7 +37496,7 @@ void main() {
           find.byKey(const Key('convertTextToAudioDialogTitleKey')));
       expect(
         convertTextToAudioDialogTitle.data,
-        'Convert Text to Audio',
+        'Convertir le texte en audio',
       );
 
       // Verify the presence of the help icon button
@@ -37501,7 +37507,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('textToConvertTitleKey')));
       expect(
         textToConvert.data,
-        'Text to convert, { = silence',
+        'Texte à convertir, { = silence',
       );
 
       // Verify the voice selection title
@@ -37509,7 +37515,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
       expect(
         conversionVoiceSelection.data,
-        'Voice selection:',
+        'Sélection de la voix:',
       );
 
       // Verify the voice selection checkboxes
@@ -37559,7 +37565,7 @@ void main() {
       // Enter and then delete a text to convert
 
       // Verify the presence of the hint text in the TextField
-      expect(find.text('Enter your text here ...'), findsOneWidget);
+      expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
       // Find the text field and delete button
       final Finder textFieldFinder =
@@ -37605,7 +37611,7 @@ void main() {
 
       // Verify the presence of the hint text in the TextField
       await tester.pumpAndSettle();
-      expect(find.text('Enter your text here ...'), findsOneWidget);
+      expect(find.text('Entrez votre texte ici ...'), findsOneWidget);
 
       // Verify the again disabled state of the Listen and Create MP3 buttons
       await _verifyListenAndCreateMp3ButtonsState(
@@ -37668,19 +37674,19 @@ void main() {
 
       // Verify the convert text to audio dialog title
       expect(
-        find.text('MP3 File Name'),
+        find.text('Nom du fichier MP3'),
         findsOneWidget,
       );
 
       // Verify the text to convert title
       expect(
-        find.text('Enter the MP3 file name'),
+        find.text('Entrer le nom du fichier MP3'),
         findsOneWidget,
       );
 
       // Verify the presence of the hint text in the MP3 file name
       // TextField
-      expect(find.text('file name'), findsOneWidget);
+      expect(find.text('nom de fichier'), findsOneWidget);
       expect(find.text('.mp3'), findsOneWidget);
 
       const String enteredFileNameNoExt = 'convertedAudio';
@@ -37704,7 +37710,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -37727,8 +37733,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -37762,14 +37768,15 @@ void main() {
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:05.6',
         audioPosition: '0:00:00.0',
-        audioState: 'Not listened',
+        audioState: 'Non écouté',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56.4 KB',
+        audioFileSize: '56.4 Ko',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
         audioCommentNumber: 1,
+        language: Language.french,
       );
 
       // Now, we verify the created comment showing the converted
@@ -37820,7 +37827,7 @@ void main() {
       );
 
       List<String> expectedTitles = [
-        'Text',
+        'Paroles',
       ];
 
       List<String> expectedContents = [
@@ -37900,9 +37907,9 @@ void main() {
       // save operation.
       await IntegrationTestUtil.verifyConfirmActionDialog(
         tester: tester,
-        confirmActionDialogTitle: "MP3 File Replacement",
+        confirmActionDialogTitle: "Remplacement du fichier MP3",
         confirmActionDialogMessagePossibleLst: [
-          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+          "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
         ],
         closeDialogWithConfirmButton: true,
       );
@@ -37913,7 +37920,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -37936,9 +37943,9 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -37972,14 +37979,15 @@ void main() {
         audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
         audioDuration: '0:00:00.7',
         audioPosition: '0:00:00.0',
-        audioState: 'Not listened',
+        audioState: 'Non écouté',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6.9 KB',
+        audioFileSize: '6.9 Ko',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
         audioCommentNumber: 2,
+        language: Language.french,
       );
 
       // Now, we verify the second created comment showing the new
@@ -38030,8 +38038,8 @@ void main() {
       );
 
       expectedTitles = [
-        'Text',
-        'Text',
+        'Paroles',
+        'Paroles',
       ];
 
       expectedContents = [
@@ -38097,6 +38105,12 @@ void main() {
         tester: tester,
         savedTestDataDirName: 'import_audios_integr_test',
         tapOnPlaylistToggleButton: false,
+      );
+
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
       );
 
       // Open the convert text to audio dialog
@@ -38197,7 +38211,7 @@ void main() {
       // save operation.
       await IntegrationTestUtil.verifyConfirmActionDialog(
         tester: tester,
-        confirmActionDialogTitle: "MP3 File Replacement",
+        confirmActionDialogTitle: "Remplacement du fichier MP3",
         confirmActionDialogMessagePossibleLst: [
           "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
         ],
@@ -38267,7 +38281,7 @@ void main() {
       // save operation.
       await IntegrationTestUtil.verifyConfirmActionDialog(
         tester: tester,
-        confirmActionDialogTitle: "MP3 File Replacement",
+        confirmActionDialogTitle: "Remplacement du fichier MP3",
         confirmActionDialogMessagePossibleLst: [
           "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$localEmptyPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
         ],
@@ -38322,6 +38336,12 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -38334,7 +38354,7 @@ void main() {
           find.byKey(const Key('convertTextToAudioDialogTitleKey')));
       expect(
         convertTextToAudioDialogTitle.data,
-        'Convert Text to Audio',
+        'Convertir le texte en audio',
       );
 
       // Now enter a text to convert and listen it, verifying its
@@ -38378,19 +38398,19 @@ void main() {
 
       // Verify the convert text to audio dialog title
       expect(
-        find.text('MP3 File Name'),
+        find.text('Nom du fichier MP3'),
         findsOneWidget,
       );
 
       // Verify the text to convert title
       expect(
-        find.text('Enter the MP3 file name'),
+        find.text('Entrer le nom du fichier MP3'),
         findsOneWidget,
       );
 
       // Verify the presence of the hint text in the MP3 file name
       // TextField
-      expect(find.text('file name'), findsOneWidget);
+      expect(find.text('nom de fichier'), findsOneWidget);
       expect(find.text('.mp3'), findsOneWidget);
 
       const String enteredFileNameNoExt = 'convertedAudio';
@@ -38436,8 +38456,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:05.6 56.4 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 3,
       );
@@ -38454,14 +38474,15 @@ void main() {
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
         audioDuration: '0:00:05.6',
         audioPosition: '0:00:00.0',
-        audioState: 'Not listened',
+        audioState: 'Non écouté',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '56.4 KB',
+        audioFileSize: '56.4 Ko',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
         audioCommentNumber: 1,
+        language: Language.french,
       );
 
       // Now, we verify the created comment showing the converted
@@ -38512,7 +38533,7 @@ void main() {
       );
 
       List<String> expectedTitles = [
-        'Text',
+        'Paroles',
       ];
 
       List<String> expectedContents = [
@@ -38597,7 +38618,7 @@ void main() {
       // save operation.
       await IntegrationTestUtil.verifyConfirmActionDialog(
         tester: tester,
-        confirmActionDialogTitle: "MP3 File Replacement",
+        confirmActionDialogTitle: "Remplacement du fichier MP3",
         confirmActionDialogMessagePossibleLst: [
           "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$unselectedLocalPlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
         ],
@@ -38632,9 +38653,9 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:00.7 6.9 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 3,
       );
@@ -38651,14 +38672,15 @@ void main() {
         audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
         audioDuration: '0:00:00.7',
         audioPosition: '0:00:00.0',
-        audioState: 'Not listened',
+        audioState: 'Non écouté',
         lastListenDateTime: '',
         audioFileName: '$enteredFileNameNoExt.mp3',
-        audioFileSize: '6.9 KB',
+        audioFileSize: '6.9 Ko',
         isMusicQuality: false, // Is spoken quality
         audioPlaySpeed: '1.25',
         audioVolume: '50.0 %',
         audioCommentNumber: 2,
+        language: Language.french,
       );
 
       // Now, we verify the second created comment showing the new
@@ -38709,8 +38731,8 @@ void main() {
       );
 
       expectedTitles = [
-        'Text',
-        'Text',
+        'Paroles',
+        'Paroles',
       ];
 
       expectedContents = [
@@ -38777,6 +38799,12 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -38789,7 +38817,7 @@ void main() {
           find.byKey(const Key('convertTextToAudioDialogTitleKey')));
       expect(
         convertTextToAudioDialogTitle.data,
-        'Convert Text to Audio',
+        'Convertir le texte en audio',
       );
 
       // Enter a text to convert containing line breaks
@@ -38848,8 +38876,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:11.8 117.5 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -38877,6 +38905,12 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -38889,7 +38923,7 @@ void main() {
           find.byKey(const Key('convertTextToAudioDialogTitleKey')));
       expect(
         convertTextToAudioDialogTitle.data,
-        'Convert Text to Audio',
+        'Convertir le texte en audio',
       );
 
       // Enter a text to convert containing line breaks
@@ -38955,8 +38989,8 @@ void main() {
       IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
         tester: tester,
         audioSubTitlesAcceptableLst: [
-          '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-          '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+          '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+          '0:00:10.4 104.1 Ko converti le ${DateFormat('dd/MM/yyyy').format(now)} à ${DateFormat('HH:mm').format(now)}',
         ],
         firstAudioListTileIndex: 5,
       );
@@ -38987,6 +39021,12 @@ void main() {
         tapOnPlaylistToggleButton: false,
       );
 
+      // First, set the application language to french
+      await IntegrationTestUtil.setApplicationLanguage(
+        tester: tester,
+        language: Language.french,
+      );
+
       // Open the convert text to audio dialog
       await IntegrationTestUtil.typeOnPlaylistMenuItem(
         tester: tester,
@@ -38999,7 +39039,7 @@ void main() {
           tester.widget<Text>(find.byKey(const Key('voiceSelectionTitleKey')));
       expect(
         conversionVoiceSelection.data,
-        'Voice selection:',
+        'Sélection de la voix:',
       );
 
       // Enter the text to convert
@@ -39067,7 +39107,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas added to Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été ajouté à la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
@@ -39132,9 +39172,9 @@ void main() {
       // save operation.
       await IntegrationTestUtil.verifyConfirmActionDialog(
         tester: tester,
-        confirmActionDialogTitle: "MP3 File Replacement",
+        confirmActionDialogTitle: "Remplacement du fichier MP3",
         confirmActionDialogMessagePossibleLst: [
-          "The file \"$enteredFileNameNoExt.mp3\" already exists in the playlist \"$selectedYoutubePlaylistTitle\". If you want to replace it with the new version, click on the \"Confirm\" button. Otherwise, click on the \"Cancel\" button and you will be able to define a different file name.",
+          "Le fichier \"$enteredFileNameNoExt.mp3\" existe déjà dans la playlist \"$selectedYoutubePlaylistTitle\". Si vous voulez le remplacer par la nouvelle version, cliquez sur le bouton \"Confirmer\". Sinon, cliquez sur le bouton \"Annuler\" et vous pourrez définir un nom de fichier différent.",
         ],
         closeDialogWithConfirmButton: true,
       );
@@ -39154,7 +39194,7 @@ void main() {
       await IntegrationTestUtil.verifyAndCloseWarningDialog(
         tester: tester,
         warningDialogMessage:
-            "The audio created by the text to MP3 conversion\n\n\"$enteredFileNameNoExt.mp3\"\n\nwas replaced in Youtube playlist \"$selectedYoutubePlaylistTitle\".",
+            "L'audio créé par la conversion de texte en MP3\n\n\"$enteredFileNameNoExt.mp3\"\n\na été remplacé dans la playlist Youtube \"$selectedYoutubePlaylistTitle\".",
         isWarningConfirming: true,
       );
 
