@@ -2389,7 +2389,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Informations sur l\'audio extrait via des commentaires';
 
   @override
-  String get convertedAudioDateTimeLabel => 'Date//heure prem conversion';
+  String get convertedAudioDateTimeLabel => 'Date/heure prem conversion';
 
   @override
   String fromMp3ZipFileUsedToRestoreUniquePlaylist(Object zipFilePathNName) {
