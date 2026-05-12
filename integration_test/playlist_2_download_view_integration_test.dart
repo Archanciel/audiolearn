@@ -36066,7 +36066,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Wait for the comment to finish playing
-        await Future.delayed(const Duration(seconds: 4));
+        await Future.delayed(const Duration(milliseconds: 4500));
         await tester.pumpAndSettle();
 
         // Verify the audio position and remaining duration text
