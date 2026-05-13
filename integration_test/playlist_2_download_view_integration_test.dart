@@ -39118,7 +39118,7 @@ void main() {
         await pumpUntilFound(
           tester: tester,
           finder: find.byKey(const Key('conversionTextKey')),
-          timeout: const Duration(seconds: 3),
+          timeout: const Duration(seconds: 4),
         );
 
         // Now assert
@@ -39359,7 +39359,7 @@ void main() {
         );
 
         // Enter text in the TextField
-        const testText = 'Ceci est un texte à supprimer.';
+        const testText = 'This is a text to delete.';
         await tester.enterText(textFieldFinder, testText);
         await tester.pump();
 
@@ -39401,7 +39401,7 @@ void main() {
         // Now enter a text to convert and listen it, verifying its
         // between 8 and 9 second duration
 
-        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        const String initialTextToConvertStr = "{{ one {{{ two { three.";
         await tester.enterText(textFieldFinder, initialTextToConvertStr);
         await tester.pump();
 
@@ -39514,8 +39514,8 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:05.9 59.3 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:05.9 59.3 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 5,
         );
@@ -39547,12 +39547,12 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:05.6',
+          audioDuration: '0:00:05.9',
           audioPosition: '0:00:00.0',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56.4 KB',
+          audioFileSize: '59.3 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -39654,7 +39654,7 @@ void main() {
         );
 
         // Now enter a new text to convert
-        const String nextTextToConvertStr = "un deux trois.";
+        const String nextTextToConvertStr = "one two three.";
         await tester.enterText(textFieldFinder, nextTextToConvertStr);
         await tester.pump();
 
@@ -39725,9 +39725,9 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 5,
         );
@@ -39759,12 +39759,12 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: selectedYoutubePlaylistTitle,
-          audioDuration: '0:00:00.7',
+          audioDuration: '0:00:01.1',
           audioPosition: '0:00:00.0',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6.9 KB',
+          audioFileSize: '10.8 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -39897,7 +39897,7 @@ void main() {
 
         // Now enter a text to convert
 
-        String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        String initialTextToConvertStr = "{{ one {{{ two { three.";
         Finder textFieldFinder =
             find.byKey(const Key('textToConvertTextField'));
 
@@ -39941,7 +39941,7 @@ void main() {
 
         // Now replace the text to convert
 
-        initialTextToConvertStr = "un deux trois.";
+        initialTextToConvertStr = "one two three.";
         textFieldFinder = find.byKey(const Key('textToConvertTextField'));
 
         await tester.enterText(textFieldFinder, initialTextToConvertStr);
@@ -40023,7 +40023,7 @@ void main() {
         );
 
         // Now enter a new text to convert
-        const String nextTextToConvertStr = "un deux trois quatre.";
+        const String nextTextToConvertStr = "one two three four.";
         await tester.enterText(textFieldFinder, nextTextToConvertStr);
         await tester.pump();
 
@@ -40140,7 +40140,7 @@ void main() {
         final Finder textFieldFinder =
             find.byKey(const Key('textToConvertTextField'));
 
-        const String initialTextToConvertStr = "{{ un {{{ deux { trois.";
+        const String initialTextToConvertStr = "{{ one {{{ two { three.";
         await tester.enterText(textFieldFinder, initialTextToConvertStr);
         await tester.pump();
 
@@ -40234,8 +40234,8 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:05.6 56.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:05.9 59.3 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:05.9 59.3 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 3,
         );
@@ -40250,12 +40250,12 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-          audioDuration: '0:00:05.6',
+          audioDuration: '0:00:05.9',
           audioPosition: '0:00:00.0',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '56.4 KB',
+          audioFileSize: '59.3 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -40363,7 +40363,7 @@ void main() {
         );
 
         // Now enter a new text to convert
-        const String nextTextToConvertStr = "un deux trois.";
+        const String nextTextToConvertStr = "one two three.";
         await tester.enterText(textFieldFinder, nextTextToConvertStr);
         await tester.pump();
 
@@ -40432,9 +40432,9 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:00.7 6.9 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 2)))}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:01.1 10.8 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 3,
         );
@@ -40449,12 +40449,12 @@ void main() {
               '${DateFormat('dd/MM/yyyy').format(now)} ${DateFormat('HH:mm').format(now)}', // this is the imported date time
           isAudioPlayable: true,
           audioEnclosingPlaylistTitle: unselectedLocalPlaylistTitle,
-          audioDuration: '0:00:00.7',
+          audioDuration: '0:00:01.1',
           audioPosition: '0:00:00.0',
           audioState: 'Not listened',
           lastListenDateTime: '',
           audioFileName: '$enteredFileNameNoExt.mp3',
-          audioFileSize: '6.9 KB',
+          audioFileSize: '10.8 KB',
           isMusicQuality: false, // Is spoken quality
           audioPlaySpeed: '1.25',
           audioVolume: '50.0 %',
@@ -40650,8 +40650,8 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:11.8 117.5 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:17.0 170.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:17.0 170.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 5,
         );
@@ -40702,7 +40702,7 @@ void main() {
 
         // Enter text in the TextField
         const testText =
-            "Ô mon cher Ange gardien ! Je t’adresse cette prièrep\nour te demanderdern\nde rester toujours à mes côtés\net de ne jamais cesser\nd’être mon protecteur, jusqu’à ce que je sois appelé\ndans la Maison du Père, où ensemble nous louerons Dieu\nnotre Seigneur pour toute l’Éternité. Amen.";
+            "O my dear Guardian Angel! I offer you this prayer\nto ask you\nto remain always by my side\nand never cease\nbeing my protector, until I am called\nto the House of the Father, where together we shall praise God\nour Lord for all Eternity. Amen.";
         await tester.enterText(textFieldFinder, testText);
         await tester.pump();
 
@@ -40759,8 +40759,8 @@ void main() {
         IntegrationTestUtil.checkAudioSubTitlesOrderInListTile(
           tester: tester,
           audioSubTitlesAcceptableLst: [
-            '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
-            '0:00:10.4 104.1 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
+            '0:00:11.9 119.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now.subtract(const Duration(seconds: 1)))}',
+            '0:00:11.9 119.4 KB converted on ${DateFormat('dd/MM/yyyy').format(now)} at ${DateFormat('HH:mm').format(now)}',
           ],
           firstAudioListTileIndex: 5,
         );
@@ -40814,20 +40814,7 @@ void main() {
 
         // Enter text in the TextField
         const testText =
-            '''Ceci est un long texte de test pour vérifier la fonctionnalité
-          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
-          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
-          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
-          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
-          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
-          que la durée de l'audio correspond à nos attentes.
-          Ceci est un long texte de test pour vérifier la fonctionnalité
-          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
-          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
-          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
-          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
-          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
-          que la durée de l'audio correspond à nos attentes.''';
+            "This is a long test text intended to verify the text-to-audio conversion functionality. The purpose of this test is to ensure that the text can be correctly entered, listened to, and converted into an MP3 file without errors. We will also verify that the listening and MP3 creation buttons are enabled and disabled at the appropriate moments, and that the text field can be properly cleared. Finally, we will test playback of the converted text to ensure that the audio duration matches our expectations.\nThis is a long test text intended to verify the text-to-audio conversion functionality. The purpose of this test is to ensure that the text can be correctly entered, listened to, and converted into an MP3 file without errors. We will also verify that the listening and MP3 creation buttons are enabled and disabled at the appropriate moments, and that the text field can be properly cleared. Finally, we will test playback of the converted text to ensure that the audio duration matches our expectations.";
         await tester.enterText(textFieldFinder, testText);
         await tester.pump();
 
@@ -40862,7 +40849,7 @@ void main() {
         await pumpUntilFound(
           tester: tester,
           finder: find.byKey(const Key('conversionTextKey')),
-          timeout: const Duration(seconds: 3),
+          timeout: const Duration(seconds: 4),
         );
 
         // Now assert
@@ -40893,20 +40880,7 @@ void main() {
 
         // Now enter a new text to convert
         const String nextTextToConvertStr =
-            '''Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
-          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
-          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
-          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
-          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
-          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
-          que la durée de l'audio correspond à nos attentes.
-          Ceci est un nouveau légèrement plus long texte de test pour vérifier la fonctionnalité
-          de conversion de texte en audio. Le but de ce test est de s'assurer que le texte
-          peut être correctement entré, écouté, et converti en un fichier MP3 sans erreurs.
-          Nous allons également vérifier que les boutons d'écoute et de création de MP3 sont
-          activés et désactivés aux bons moments, et que le champ de texte peut être effacé
-          correctement. Enfin, nous allons tester la lecture du texte converti pour s'assurer
-          que la durée de l'audio correspond à nos attentes.''';
+            "This is a long test text intended to verify the text-to-audio conversion functionality. The purpose of this test is to ensure that the text can be correctly entered, listened to, and converted into an MP3 file without errors. We will also verify that the listening and MP3 creation buttons are enabled and disabled at the appropriate moments, and that the text field can be properly cleared. Finally, we will test playback of the converted text to ensure that the audio duration matches our expectations.\nThis is a long test text intended to verify the text-to-audio conversion functionality. The purpose of this test is to ensure that the text can be correctly entered, listened to, and converted into an MP3 file without errors. We will also verify that the listening and MP3 creation buttons are enabled and disabled at the appropriate moments, and that the text field can be properly cleared. Finally, we will test playback of the converted text to ensure that the audio duration matches our expectations.";
         await tester.enterText(textFieldFinder, nextTextToConvertStr);
         await tester.pump();
 
@@ -40952,7 +40926,7 @@ void main() {
         await pumpUntilFound(
           tester: tester,
           finder: find.byKey(const Key('conversionTextKey')),
-          timeout: const Duration(seconds: 3),
+          timeout: const Duration(seconds: 4),
         );
 
         // Now assert
