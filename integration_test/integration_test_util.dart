@@ -801,6 +801,12 @@ class IntegrationTestUtil {
     await tester.tap(find.byKey(const Key('setValueToTargetOkButton')));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
+    if (find.byKey(const Key('warningDialogOkButton')).evaluate().isNotEmpty) {
+      // Tap on the 'OK' button of the confirmation dialog to close it
+      await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
+      await tester.pumpAndSettle();
+    }
+
     if (createChapAscSfParms) {
       await _createChapterSfParms(
         tester: tester,
@@ -820,10 +826,6 @@ class IntegrationTestUtil {
     required WidgetTester tester,
     required String saveAsTitle,
   }) async {
-    // Tap on the 'OK' button of the confirmation dialog to close it
-    await tester.tap(find.byKey(const Key('warningDialogOkButton')).last);
-    await tester.pumpAndSettle();
-
     // Open the audio popup menu
     await tester.tap(find.byKey(const Key('audio_popup_menu_button')));
     await tester.pumpAndSettle();
