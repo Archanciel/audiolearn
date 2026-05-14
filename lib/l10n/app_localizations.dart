@@ -4795,6 +4795,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Internet. Please connect your device and retry the text to audio conversion which is only possible if Internet is available.'**
   String get noInternetForConvertingTextToAudio;
+
+  /// No description provided for @modifyAudioUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Audio URL ...'**
+  String get modifyAudioUrl;
+
+  /// No description provided for @modifyAudioUrlDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify Audio URL'**
+  String get modifyAudioUrlDialogTitle;
+
+  /// No description provided for @modifyAudioUrlTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get modifyAudioUrlTooltip;
+
+  /// No description provided for @modifyAudioUrlDialogComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify the audio URL to its Youtube video URL.'**
+  String get modifyAudioUrlDialogComment;
+
+  /// No description provided for @modifyAudioUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'URL'**
+  String get modifyAudioUrlLabel;
+
+  /// No description provided for @modifyAudioUrlButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify'**
+  String get modifyAudioUrlButton;
 }
 
 class _AppLocalizationsDelegate

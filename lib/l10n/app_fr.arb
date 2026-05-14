@@ -1710,5 +1710,11 @@
   "audioSearch": "Audios",
   "commentSearch": "Commentaires",
   "duplicateCommentTooltip": "Dupliquer le commentaire. Cela est utile si nous devons diviser le commentaire en deux parties afin de supprimer une portion du commentaire.",
-  "noInternetForConvertingTextToAudio": "Pas d'Internet. Connectez votre appareil et retentez la conversion de texte en audio, laquelle est seulement possible si l'accès à Internet est disponible."
+  "noInternetForConvertingTextToAudio": "Pas d'Internet. Connectez votre appareil et retentez la conversion de texte en audio, laquelle est seulement possible si l'accès à Internet est disponible.",
+  "modifyAudioUrl": "Modifier l'URL de l'audio ...",
+  "modifyAudioUrlDialogTitle": "Modifier l'URL de l'audio",
+  "modifyAudioUrlTooltip": "",
+  "modifyAudioUrlDialogComment": "Modify the audio URL to its Youtube video URL.",
+  "modifyAudioUrlLabel": "URL",
+  "modifyAudioUrlButton": "Modify"
 }

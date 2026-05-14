@@ -25,6 +25,7 @@ enum AudioPopupMenuAction {
   displayAudioInfo,
   audioComment,
   modifyAudioTitle,
+  modifyAudioUrl,
   moveAudioToPosition,
   renameAudioFile,
   moveAudioToPlaylist,

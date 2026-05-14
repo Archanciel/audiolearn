@@ -4491,7 +4491,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Select 'applied' sort filter parameter
@@ -4649,7 +4649,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap the popup menu of the Audio ListTile
@@ -4726,7 +4726,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to move another already positioned audio
@@ -4802,7 +4802,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Tap the 'Toggle List' button to redisplay the list of playlist's.
@@ -4880,7 +4880,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap the popup menu of the Audio ListTile
@@ -4957,7 +4957,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Tap the 'Toggle List' button to redisplay the list of playlist's.
@@ -5036,7 +5036,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap the popup menu of the Audio ListTile
@@ -5114,7 +5114,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to move another already positioned audio
@@ -5189,7 +5189,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Tap the 'Toggle List' button to redisplay the list of playlist's.
@@ -5268,7 +5268,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap the popup menu of the Audio ListTile
@@ -5346,7 +5346,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Tap the 'Toggle List' button to redisplay the list of playlist's.
@@ -6225,7 +6225,7 @@ void main() {
         IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
           tester: tester,
           audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
-          firstAudioListTileIndex: 0,
+          firstAudioListTileIndex: 1,
         );
 
         // Now we want to tap the popup menu of the Audio ListTile

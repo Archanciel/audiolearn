@@ -15,6 +15,7 @@ import 'help_dialog.dart';
 enum AudioModificationType {
   renameAudioFile,
   modifyAudioTitle,
+  modifyAudioUrl,
 }
 
 /// This dialog allows the user to rename the audio file or modify its title.
@@ -61,6 +62,10 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
         case AudioModificationType.modifyAudioTitle:
           _audioModificationTextEditingController.text =
               widget.audio.validVideoTitle;
+          break;
+        case AudioModificationType.modifyAudioUrl:
+          _audioModificationTextEditingController.text =
+              widget.audio.videoUrl;
           break;
       }
 
@@ -119,6 +124,17 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
             AppLocalizations.of(context)!.modifyAudioTitleTooltip;
         modificationButtonStr =
             AppLocalizations.of(context)!.modifyAudioTitleButton;
+        flexibleValue = 6;
+        break;
+      case AudioModificationType.modifyAudioUrl:
+        titleStr = AppLocalizations.of(context)!.modifyAudioUrlDialogTitle;
+        commentStr =
+            AppLocalizations.of(context)!.modifyAudioUrlDialogComment;
+        labelStr = AppLocalizations.of(context)!.modifyAudioUrlLabel;
+        labelAndTextFieldTooltipStr =
+            AppLocalizations.of(context)!.modifyAudioUrlTooltip;
+        modificationButtonStr =
+            AppLocalizations.of(context)!.modifyAudioUrlButton;
         flexibleValue = 6;
         break;
     }
@@ -256,6 +272,9 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
       case AudioModificationType.modifyAudioTitle:
         _modifyAudioTitle(context);
         break;
+      case AudioModificationType.modifyAudioUrl:
+        _modifyAudioUrl(context);
+        break;
     }
   }
 
@@ -282,6 +301,19 @@ class _AudioModificationDialogState extends State<AudioModificationDialog>
     audioDownloadVMlistenFalse.modifyAudioTitle(
       audio: widget.audio,
       modifiedAudioTitle: audioTitle,
+    );
+  }
+
+  void _modifyAudioUrl(BuildContext context) {
+    String audioUrl = _audioModificationTextEditingController.text;
+    AudioDownloadVM audioDownloadVMlistenFalse = Provider.of<AudioDownloadVM>(
+      context,
+      listen: false,
+    );
+
+    audioDownloadVMlistenFalse.modifyAudioUrl(
+      audio: widget.audio,
+      modifiedAudioUrl: audioUrl,
     );
   }
 }

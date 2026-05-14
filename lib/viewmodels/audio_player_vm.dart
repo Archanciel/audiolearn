@@ -133,6 +133,11 @@ class AudioPlayerVM extends ChangeNotifier {
   final ValueNotifier<String?> currentAudioTitleNotifier =
       ValueNotifier<String?>(null);
 
+  // This notifier is used to update the audio title with duration
+  // displayed in the audio player view
+  final ValueNotifier<String?> currentAudioUrlNotifier =
+      ValueNotifier<String?>(null);
+
   // This notifier is used to update the audio speed of the audio
   // speed text button displayed in the audio player view
   final ValueNotifier<double> currentAudioPlaySpeedNotifier =
@@ -198,6 +203,7 @@ class AudioPlayerVM extends ChangeNotifier {
     currentAudioPositionNotifier.dispose();
     currentAudioPlayPauseNotifier.dispose();
     currentAudioTitleNotifier.dispose();
+    currentAudioUrlNotifier.dispose();
     currentAudioPlaySpeedNotifier.dispose();
     currentAudioPlayVolumeNotifier.dispose();
 
@@ -315,6 +321,7 @@ class AudioPlayerVM extends ChangeNotifier {
     updateAndSaveCurrentAudio();
 
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioUrlNotifier.value = audio.videoUrl;
     currentAudioPositionNotifier.value = _currentAudioPosition;
 
     // **NEW**: Notify that the current audio has changed
@@ -322,12 +329,13 @@ class AudioPlayerVM extends ChangeNotifier {
     currentAudioChangedNotifier.value = audio;
 
     // Add these lines to ensure Android UI updates. This fix a
-    // bug only applying on Android wheN the playing audio audio
+    // bug only applying on Android when the playing audio audio
     // changes on the playlist download view. Without this, the
     // audio item play/pause icon buttons are not updated.
     await Future.delayed(const Duration(milliseconds: 10));
     currentAudioPlayPauseNotifier.value = !audio.isPaused;
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioUrlNotifier.value = audio.videoUrl;
   }
 
   /// Method called when the user in the PlaylistDownloadView clicks
@@ -766,6 +774,7 @@ class AudioPlayerVM extends ChangeNotifier {
     );
 
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioUrlNotifier.value = currentOrPastPlaylistAudio.videoUrl;
   }
 
   /// Used as well when the user moves or deletes in the audio
@@ -792,6 +801,7 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudioPosition = const Duration(seconds: 0);
 
     currentAudioTitleNotifier.value = null;
+    currentAudioUrlNotifier.value = null;
   }
 
   /// Method called when the user clicks on the audio play icon
@@ -1405,7 +1415,7 @@ class AudioPlayerVM extends ChangeNotifier {
     // a long time, the audio is not positioned at the end of the audio.
     _currentAudio!.audioPositionSeconds =
         _currentAudio!.audioDuration.inSeconds;
-        
+
     // set to false since the audio playing position is set to
     // audio end
     _currentAudio!.isPlayingOrPausedWithPositionBetweenAudioStartAndEnd = false;
@@ -1507,6 +1517,8 @@ class AudioPlayerVM extends ChangeNotifier {
     _currentAudio!.audioPlaySpeed = speed;
     await _audioPlayer!.setPlaybackRate(speed);
     currentAudioTitleNotifier.value = getCurrentAudioTitleWithDuration();
+    currentAudioUrlNotifier.value = _currentAudio!.videoUrl;
+
     currentAudioPositionNotifier.value = _currentAudioPosition;
     updateAndSaveCurrentAudio();
   }

@@ -2985,4 +2985,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noInternetForConvertingTextToAudio =>
       'No Internet. Please connect your device and retry the text to audio conversion which is only possible if Internet is available.';
+
+  @override
+  String get modifyAudioUrl => 'Modify Audio URL ...';
+
+  @override
+  String get modifyAudioUrlDialogTitle => 'Modify Audio URL';
+
+  @override
+  String get modifyAudioUrlTooltip => '';
+
+  @override
+  String get modifyAudioUrlDialogComment =>
+      'Modify the audio URL to its Youtube video URL.';
+
+  @override
+  String get modifyAudioUrlLabel => 'URL';
+
+  @override
+  String get modifyAudioUrlButton => 'Modify';
 }
