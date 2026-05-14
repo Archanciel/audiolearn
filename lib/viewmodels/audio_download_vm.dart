@@ -1158,6 +1158,28 @@ class AudioDownloadVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Method called by the AudioModificationDialog when the user clicks on the
+  /// modify button in order to modify the audio url.
+  void modifyAudioUrl({
+    required Audio audio,
+    required String modifiedAudioUrl,
+  }) {
+    Playlist enclosingPlaylist = audio.enclosingPlaylist!;
+
+    Audio playlistAudio = enclosingPlaylist.playableAudioLst.firstWhere(
+      (entry) => entry == audio,
+    );
+
+    playlistAudio.videoUrl = modifiedAudioUrl;
+
+    JsonDataService.saveToFile(
+      model: enclosingPlaylist,
+      path: enclosingPlaylist.getPlaylistDownloadFilePathName(),
+    );
+
+    notifyListeners();
+  }
+
   /// Since currently only one playlist is selectable, if the playlist
   /// selection status is changed, the playlist json file will be
   /// updated.

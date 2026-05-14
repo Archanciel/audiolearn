@@ -55,7 +55,7 @@ class Audio {
   final String compactVideoDescription;
 
   // Url referencing the video from which rhe audio was extracted
-  final String videoUrl;
+  String videoUrl;
 
   // Audio download date time
   final DateTime audioDownloadDateTime;
