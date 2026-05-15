@@ -170,6 +170,8 @@ class IntegrationTestUtil {
     );
   }
 
+  /// This method executes the playlist menu item corresponding to the
+  /// passed playlist item key string [playlistMenuKeyStr].
   static Future<void> typeOnPlaylistMenuItem({
     required WidgetTester tester,
     required String playlistTitle,
@@ -215,6 +217,8 @@ class IntegrationTestUtil {
     await tester.pumpAndSettle();
   }
 
+  /// This method executes the audio menu item corresponding to the
+  /// passed menu item key string [audioMenuKeyStr].
   static Future<void> typeOnAudioMenuItem({
     required WidgetTester tester,
     required String audioTitle,
