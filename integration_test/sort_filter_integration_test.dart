@@ -17210,7 +17210,7 @@ void playlistDownloadViewSortFilterIntegrationTest() {
         });
       });
       group(
-          '''TO DEFINE Converted/Extracted related checkboxes. Look at Unselect Downloaded then ... above.''',
+          '''Converted/Extracted related checkboxes. Look at Unselect Downloaded then ... above.''',
           () {
         testWidgets(
             '''Converted checkbox true and Extracted checkbox false in order to filter
