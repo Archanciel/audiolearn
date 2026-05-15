@@ -409,8 +409,9 @@ Future<void> main() async {
       );
     });
     testWidgets(
-        '''Playlist 2 short audio: playlist 2nd audio was already downloaded and 
-           was deleted''', (WidgetTester tester) async {
+        '''Playlist 2 short audio: playlist first audio was already downloaded and 
+           was deleted. The test verify that after the download started, the initial
+           'Short' SF parameter was replaced by the 'default' one.''', (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
