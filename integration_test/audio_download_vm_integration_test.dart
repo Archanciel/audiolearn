@@ -547,12 +547,6 @@ Future<void> main() async {
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
-      // Checking if there are 3 files in the directory (1 mp3 and 1 json)
-      // final List<FileSystemEntity> files =
-      //     directory.listSync(recursive: false, followLinks: false);
-
-      // expect(files.length, 2);
-
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -564,7 +558,7 @@ Future<void> main() async {
            was deleted. After the audio_learn_test_download_2_small_vid_1a started
            to be downloaded, the audio_player_view_2_shorts_test playlist was selected.
            The test verifies that the newly selected playlist 'Chap desc' SF parameter
-           is maintened and so not replaced by the 'default' one which only concerns
+           is maintained and so not replaced by the 'default' one which only concerns
            the audio_learn_test_download_2_small_vid_1a playlist.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
@@ -683,11 +677,153 @@ Future<void> main() async {
         audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
       );
 
-      // Checking if there are 3 files in the directory (1 mp3 and 1 json)
-      // final List<FileSystemEntity> files =
-      //     directory.listSync(recursive: false, followLinks: false);
+      // Purge the test playlist directory so that the created test
+      // files are not uploaded to GitHub
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
+    });
+    testWidgets(
+        '''Playlist 2 short audio: playlist first audio was already downloaded and 
+           was deleted. While the audio_learn_test_download_2_small_vid_1a is downloading,
+           the audio_player_view_2_shorts_test playlist is selected.
+           
+           The test verifies that the newly selected playlist 'Chap desc' SF parameter
+           is maintened and so not replaced by the 'default' one which only concerns
+           the audio_learn_test_download_2_small_vid_1a playlist.''',
+        (WidgetTester tester) async {
+      // necessary in case the previous test failed and so did not
+      // delete the its playlist dir
+      DirUtil.deleteFilesInDirAndSubDirs(
+        rootPath: kApplicationPathWindowsTest,
+      );
 
-      // expect(files.length, 2);
+      // Copying the initial local playlist json file with no audio
+      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
+        sourceRootPath:
+            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_test",
+        destinationRootPath: kApplicationPathWindowsTest,
+      );
+
+      AudioDownloadVM audioDownloadVM =
+          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
+        tester: tester,
+        forcedLocale: const Locale('en'),
+      );
+
+      Playlist existingPlaylistBeforeNewDownload =
+          audioDownloadVM.listOfPlaylist[0];
+
+      // Now selecting the existing playlist by tapping on the
+      // playlist checkbox
+      await IntegrationTestUtil.selectPlaylist(
+        tester: tester,
+        playlistToSelectTitle:
+            globalTestPlaylistOneAudioTitle, // audio_learn_test_download_2_small_vid_1a
+        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
+      );
+
+      // Verify its sort filter parameters displayed after the
+      // selected playlist title
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'Short',
+      );
+
+      // Now deleting the already downloaded audio file from the
+      // playlist as well so that it will be redownloaded
+
+      // First, find the Audio sublist ListTile Text widget
+      const String secondAudioToDelete = 'audio learn test short video two';
+
+      Finder targetAudioListTileTextWidgetFinder =
+          find.text(secondAudioToDelete);
+
+      // Then obtain the Audio ListTile widget enclosing the Text widget by
+      // finding its ancestor
+      Finder targetAudioListTileWidgetFinder = find.ancestor(
+        of: targetAudioListTileTextWidgetFinder,
+        matching: find.byType(ListTile),
+      );
+
+      // Now find the leading menu icon button of the Audio ListTile and tap
+      // on it
+      Finder targetAudioListTileLeadingMenuIconButton = find.descendant(
+        of: targetAudioListTileWidgetFinder,
+        matching: find.byIcon(Icons.menu),
+      );
+
+      // Tap the leading menu icon button to open the popup menu
+      await tester.tap(targetAudioListTileLeadingMenuIconButton);
+      await tester.pumpAndSettle();
+
+      // Now find the popup menu delete audio fromplaylist aswell item and tap on it
+      Finder popupDisplayAudioInfoMenuItemFinder =
+          find.byKey(const Key("popup_menu_delete_audio_from_playlist_aswell"));
+
+      await tester.tap(popupDisplayAudioInfoMenuItemFinder);
+      await tester.pumpAndSettle();
+
+      // Now verifying the confirm action dialog title and message
+      // and confirm the deletion
+      await IntegrationTestUtil.verifyConfirmActionDialog(
+        tester: tester,
+        confirmActionDialogTitle:
+            'Confirm deletion of the audio "$secondAudioToDelete" from the Youtube playlist',
+        confirmActionDialogMessagePossibleLst: [
+          'Delete the audio "$secondAudioToDelete" from the playlist "$globalTestPlaylistOneAudioTitle" defined on the Youtube site, otherwise the audio will be downloaded again during the next playlist download. Or click on "Cancel" and choose "Delete Audio ..." instead of "Delete Audio from Playlist as well ...". So, the audio will be removed from the playable audio list, but will remain in the downloaded audio list, which will prevent its re-download.',
+        ],
+        closeDialogWithConfirmButton: true, // Cancel the deletion
+        usePumpAndSettle: true,
+      );
+
+      // Now verifying the warning dialog
+      await IntegrationTestUtil.verifyAndCloseWarningDialog(
+        tester: tester,
+        warningDialogMessage:
+            'If the deleted audio "$secondAudioToDelete" remains in the "$globalTestPlaylistOneAudioTitle" playlist located on Youtube, it will be downloaded again the next time you download the playlist !',
+        isWarningConfirming: false,
+      );
+
+      // Now typing on the download playlist button to download the
+      // new video audios present the recreated playlist.
+      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
+      await tester.pumpAndSettle();
+
+      // Add a delay to allow the download to finish.
+      for (int i = 0; i < 16; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        selectedSortFilterParmsName = tester
+            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+        if (i == 8) {
+          // Check that after some download delay, the sort filter parameters
+          // displayed after the selected playlist title is 'default'
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+          // Select now the other playlist
+          await IntegrationTestUtil.selectPlaylist(
+            tester: tester,
+            playlistToSelectTitle: 'audio_player_view_2_shorts_test',
+            selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
+          );
+        }
+
+        if (i > 8) {
+          // verify that the 'Chap desc' SF parameter of the newly selected playlist
+          // is maintened and so not replaced by the 'default' one which only concerns
+          // the audio_learn_test_download_2_small_vid_1a playlist.
+          expect(
+            selectedSortFilterParmsName.data,
+            'Chap desc',
+          );
+        }
+        await tester.pumpAndSettle();
+      }
 
       // Purge the test playlist directory so that the created test
       // files are not uploaded to GitHub
