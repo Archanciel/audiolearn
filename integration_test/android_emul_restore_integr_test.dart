@@ -6350,7 +6350,7 @@ Future<void> _movePositionedAudioAndVerifyResult({
   IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
     tester: tester,
     audioOrPlaylistTitlesOrderedLst: expectedAudioPositionedTitles,
-    firstAudioListTileIndex: 0,
+    firstAudioListTileIndex: 1,
   );
 }
 
