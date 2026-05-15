@@ -176,7 +176,7 @@ Future<void> main() async {
       );
 
       // Now typing on the download playlist button to download the
-      // 2 video audios present the created playlist.
+      // 2 video audios present in the created playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
       await tester.pumpAndSettle();
 
