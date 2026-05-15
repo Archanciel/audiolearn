@@ -472,6 +472,17 @@ Future<void> main() async {
       await IntegrationTestUtil.selectPlaylist(
         tester: tester,
         playlistToSelectTitle: globalTestPlaylistOneAudioTitle,
+        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
+      );
+
+      // Verify its sort filter parameters displayed after the
+      // selected playlist title
+      Text selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+
+      expect(
+        selectedSortFilterParmsName.data,
+        'Short',
       );
 
       // Now typing on the download playlist button to download the
@@ -482,6 +493,16 @@ Future<void> main() async {
       // Add a delay to allow the download to finish.
       for (int i = 0; i < 6; i++) {
         await Future.delayed(const Duration(seconds: 2));
+        selectedSortFilterParmsName = tester
+          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
+        if (i == 3) {
+          // Check that after some download delay, the sort filter parameters
+          // displayed after the selected playlist title is 'default'
+          expect(
+            selectedSortFilterParmsName.data,
+            'default',
+          );
+        }
         await tester.pumpAndSettle();
       }
 
