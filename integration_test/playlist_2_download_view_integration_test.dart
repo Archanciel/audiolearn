@@ -50452,6 +50452,448 @@ void main() {
       });
     });
   });
+    group('Audio item menu Modify Audio URL test', () {
+      testWidgets(
+          '''Apply adding URL to a .''',
+          (WidgetTester tester) async {
+        const String playlistTitle = "Les prières de cette playlist";
+        const String playlistSubMenuKeyStr =
+            'popup_menu_extract_filtered_audio';
+
+        await IntegrationTestUtil.initializeApplicationAndSelectPlaylist(
+          tester: tester,
+          savedTestDataDirName: 'extract_comments_to_mp3_test',
+          tapOnPlaylistToggleButton: false,
+        );
+
+        // Open the Extract filtered Audios to unique MP3 dialog by clicking
+        // first on the 'Filtered Audio Actions ...' playlist menu item and
+        // then on the 'Extract filtered Audios to unique MP3 ...' sub-menu
+        // item
+        await IntegrationTestUtil.typeOnPlaylistSubMenuItem(
+          tester: tester,
+          playlistTitle: playlistTitle,
+          playlistSubMenuKeyStr: playlistSubMenuKeyStr,
+        );
+
+        // Verify the extract audios to MP3 dialog commentTitle
+        expect(find.text('Audios to MP3'), findsOneWidget);
+
+        // Verify the presence of the help icon button
+        expect(find.byIcon(Icons.help_outline), findsOneWidget);
+
+        // Verify the Comments number commentTitle
+        expect(find.text('Audios (4)'), findsOneWidget);
+
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -1000), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        expect(
+            tester
+                .widget<Text>(
+                  find.byKey(const Key('videoTitleKey_3')),
+                )
+                .data,
+            "Seigneur, je T'en prie, mets moi dans le feu de Ton Amour");
+
+        expect(
+            tester
+                .widget<Text>(
+                  find.byKey(const Key('segmentNumberAndDurationKey_3')),
+                )
+                .data,
+            "1 segment(s) - 0:28.6");
+
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 4.1,
+              'commentTitle': "Seigneur",
+              'startPosition': '0:00.0',
+              'endPosition': '0:28.6',
+              'playSpeed': 'Play speed: 1.0',
+              'increaseDuration': 'Increase duration: 0:00.0',
+              'reductionPosition': 'Reduction position: 0:00.0',
+              'reductionDuration': 'Reduction duration: 0:00.0',
+              'duration': 'Duration: 0:28.6',
+            },
+          ],
+        );
+
+        // Now edit the 'Seigneur' comment to modify its play speed, its increase
+        // duration and reduction position and duration
+
+        // This opens the edit comment dialog
+        Finder editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_4.1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Modify the play speed to 0.7
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '0.7',
+        );
+
+        // Modify the fade-in duration to 0:05.0
+        Finder commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.0');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction position to 0:20.6
+        Finder commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '0:20.6');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction duration to 0:08.0
+        Finder commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:08.0');
+        await tester.pumpAndSettle();
+
+        // Confirm the comment edition by tapping the save button
+        Finder saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the total duration text
+        Finder segmentsDurationTextFinder =
+            find.byKey(const Key('segmentNumberAndDurationKey_3'));
+        expect(
+          tester.widget<Text>(segmentsDurationTextFinder).data,
+          '1 segment(s) - 0:40.9',
+        );
+
+        // Verify the displayed comment details in the comment card
+        // after the comment play speed modifications
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 4.1,
+              'commentTitle': "Seigneur",
+              'startPosition': '0:00.0',
+              'endPosition': '0:40.9',
+              'playSpeed': 'Play speed: 0.7',
+              'increaseDuration': 'Increase duration: 0:05.0',
+              'reductionPosition': 'Reduction position: 0:20.6',
+              'reductionDuration': 'Reduction duration: 0:08.0',
+              'duration': 'Duration: 0:40.9',
+            },
+          ],
+        );
+
+        // Now type on the segment play button to play the comment
+        // segment with the modified play speed and verify the played
+        // audio duration
+        Finder playCommentSegmentButtonFinder =
+            find.byKey(const Key('playSegmentButtonKey_4.1'));
+        await tester.tap(playCommentSegmentButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
+
+        Text audioDurationText = tester.widget<Text>(
+            find.byKey(const Key('extractedAudioDurationTextKey')));
+        expect(audioDurationText.data, '0:40.9',
+            reason:
+                'The played audio duration is not correct after the comment play speed modification.');
+
+        // Verifying the content of the comments json file
+
+        final String commentsFilePath = path.join(
+          'C:',
+          'development',
+          'flutter',
+          'audiolearn',
+          'test',
+          'data',
+          'audio',
+          'playlists',
+          playlistTitle,
+          'comments',
+          "250904-084829-Seigneur, je T'en prie, mets moi dans le feu de Ton Amour 25-09-03.json",
+        );
+
+        File commentsFile = File(commentsFilePath);
+
+        String jsonContent = commentsFile.readAsStringSync();
+        List<dynamic> commentsLst = jsonDecode(jsonContent) as List<dynamic>;
+
+        Map<String, dynamic> firstComment =
+            commentsLst[0] as Map<String, dynamic>;
+
+        expect(firstComment['id'], '_1770663736263469');
+        expect(firstComment['title'], 'Seigneur');
+        expect(firstComment['content'], '');
+        expect(firstComment['commentStartPositionInTenthOfSeconds'], 0);
+        expect(firstComment['commentEndPositionInTenthOfSeconds'], 286);
+        expect(firstComment['silenceDuration'], 0.0);
+        expect(firstComment['playSpeed'], 0.7);
+        expect(firstComment['fadeInDuration'], 5.0);
+        expect(firstComment['soundReductionPosition'], 20.6);
+        expect(firstComment['soundReductionDuration'], 8.0);
+        expect(firstComment['deleted'], false);
+        expect(firstComment['creationDateTime'], '2026-02-09T20:02:16.000');
+        DateTime now = DateTime.now();
+        String yearStr = now.year.toString();
+        String monthStr = now.month.toString();
+        monthStr = (monthStr.length == 1) ? "0$monthStr" : monthStr;
+        String dayStr = now.day.toString();
+        dayStr = (dayStr.length == 1) ? "0$dayStr" : dayStr;
+        String hourStr = now.hour.toString();
+        hourStr = (hourStr.length == 1) ? "0$hourStr" : hourStr;
+        String minuteStr = now.minute.toString();
+        minuteStr = (minuteStr.length == 1) ? "0$minuteStr" : minuteStr;
+        expect(
+            firstComment['lastUpdateDateTime'].contains(
+                    "$yearStr-$monthStr-${dayStr}T$hourStr:$minuteStr") ||
+                firstComment['lastUpdateDateTime'].contains(
+                    "$yearStr-$monthStr-${dayStr}T$hourStr:${(now.minute - 1).toString()}"),
+            true);
+
+        String totalDurationStr = '2:30.5';
+
+        // Verify the total duration text
+        Finder totalDurationTextFinder =
+            find.byKey(const Key('totalSegmentsDurationTextKey'));
+        expect(
+          tester.widget<Text>(totalDurationTextFinder).data,
+          'Total duration: $totalDurationStr',
+        );
+
+        // Now, type on the Extract MP3 button
+        Finder extractMp3ButtonFinder =
+            find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -200), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
+          extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
+          extractedAudioDuration: totalDurationStr,
+        );
+
+        // Necessary to drag up vertically to make visible the edit
+        // icon button of the 3rd audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, 400), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Now edit the 'Père céleste, merci pour cette nouvelle journée que
+        // Tu me donnes' generated comment to modify its play speed, its increase
+        // duration and reduction position and duration
+
+        // This opens the edit comment dialog
+        editCommentIconButtonFinder =
+            find.byKey(const Key('editSegmentButtonKey_3.1'));
+        await tester.tap(editCommentIconButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Modify the play speed to 0.7
+        await _correctPlaySpeedEnterCode(
+          tester: tester,
+          playSpeedValue: '1.7',
+        );
+
+        // Modify the fade-in duration to 0:05.5
+        commentFadeInDurationTextFieldFinder =
+            find.byKey(const Key('fadeInDurationTextField'));
+        await tester.tap(commentFadeInDurationTextFieldFinder);
+        await tester.enterText(commentFadeInDurationTextFieldFinder, '0:05.5');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction position to 0:20
+        commentReductionPositionTextFieldFinder =
+            find.byKey(const Key('soundReductionPositionTextField'));
+        await tester.tap(commentReductionPositionTextFieldFinder);
+        await tester.enterText(
+            commentReductionPositionTextFieldFinder, '0:20.0');
+        await tester.pumpAndSettle();
+
+        // Modify the reduction duration to 0:08.6
+        commentReductionDurationTextFieldFinder =
+            find.byKey(const Key('soundReductionDurationTextField'));
+        await tester.tap(commentReductionDurationTextFieldFinder);
+        await tester.enterText(
+            commentReductionDurationTextFieldFinder, '0:08.6');
+        await tester.pumpAndSettle();
+
+        // Confirm the comment edition by tapping the save button
+        saveEditedCommentButtonFinder =
+            find.byKey(const Key('saveEditedSegmentButton'));
+        await tester.tap(saveEditedCommentButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Necessary to drag down vertically to make totally visible the
+        // 3rd audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -100), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Verify the segment duration text
+        segmentsDurationTextFinder =
+            find.byKey(const Key('segmentNumberAndDurationKey_2'));
+        expect(
+          tester.widget<Text>(segmentsDurationTextFinder).data,
+          '1 segment(s) - 0:17.8',
+        );
+
+        // Verify the displayed comment details in the comment card
+        // after the comment play speed modifications
+        await IntegrationTestUtil.checkExtractionCommentDetails(
+          tester: tester,
+          segmentDetailsList: [
+            {
+              'number': 3.1,
+              'commentTitle':
+                  "Père céleste, merci pour cette nouvelle journée que Tu me donnes",
+              'startPosition': '0:00.0',
+              'endPosition': '0:16.8',
+              'playSpeed': 'Play speed: 1.7',
+              'increaseDuration': 'Increase duration: 0:05.5',
+              'reductionPosition': 'Reduction position: 0:20.0',
+              'reductionDuration': 'Reduction duration: 0:08.6',
+              'duration': 'Duration: 0:16.8 + silence 0:01.0',
+            },
+          ],
+        );
+
+        totalDurationStr = '2:18.7';
+
+        // Verify the total duration text
+        totalDurationTextFinder =
+            find.byKey(const Key('totalSegmentsDurationTextKey'));
+        expect(
+          tester.widget<Text>(totalDurationTextFinder).data,
+          'Total duration: $totalDurationStr',
+        );
+
+        // Now type on the segment play button to play the comment
+        // segment with the modified play speed and verify the played
+        // audio duration
+        playCommentSegmentButtonFinder =
+            find.byKey(const Key('playSegmentButtonKey_3.1'));
+        await tester.tap(playCommentSegmentButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1500));
+        await tester.pumpAndSettle();
+
+        audioDurationText = tester.widget<Text>(
+            find.byKey(const Key('extractedAudioDurationTextKey')));
+        expect(audioDurationText.data, '0:17.8',
+            reason:
+                'The played audio duration is not correct after the comment play speed modification.');
+
+        // Now, type on the Save Comments button
+        Finder saveCommentButtonFinder =
+            find.byKey(const Key('saveCommentsButtonKey'));
+        await tester.tap(saveCommentButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Verify the save comments dialog title
+        expect(find.text('Save Comments'), findsOneWidget);
+
+        // Delete the existing text in the file name text field and enter
+        // a new file name
+        const String firstSavedCommentsName = 'first_saved_comments';
+        Finder saveCommentsFileNameTextFieldFinder =
+            find.byKey(const Key('saveCommentsFileNameTextField'));
+        await tester.tap(saveCommentsFileNameTextFieldFinder);
+        await tester.enterText(saveCommentsFileNameTextFieldFinder, '');
+        await tester.pumpAndSettle();
+        await tester.enterText(
+          saveCommentsFileNameTextFieldFinder,
+          firstSavedCommentsName,
+        );
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+        // Type on the Save button
+        Finder saveButtonButtonFinder =
+            find.byKey(const Key('saveCommentsButtonInSaveCommentsDialogKey'));
+        await tester.tap(saveButtonButtonFinder);
+        await tester.pumpAndSettle();
+
+        // Now, type on the Extract MP3 button
+        extractMp3ButtonFinder = find.byKey(const Key('extractMp3Button'));
+        await tester.tap(extractMp3ButtonFinder);
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await tester.pumpAndSettle();
+
+        // Necessary to drag down vertically to make visible the edit
+        // icon button of the 4th audio comment
+        await tester.drag(
+          find.byType(AudioExtractorScreen),
+          const Offset(
+              0, -200), // Negative value for vertical drag to scroll down
+        );
+        await tester.pumpAndSettle();
+
+        // Necessary, otherwise the test fails. 3 seconds are necessary.
+        // Without that, the test passed if break point was set on the
+        // _verifyAndPlayExtractedMp3Method method below, but failed
+        // without break point.
+        await Future.delayed(const Duration(seconds: 3));
+        await tester.pumpAndSettle();
+
+        // Verify the extract comments to MP3 success dialog message
+        // and play and pause the extracted MP3 file
+        await _verifyAndPlayExtractedMp3Method(
+          tester: tester,
+          extractionSuccessMessage:
+              'Extracted MP3 saved to:\nC:\\development\\flutter\\audiolearn\\test\\data\\audio\\saved\\MP3\\multi_4_audios_4_segments.mp3',
+          extractionPlayingMessage: 'Playing: multi_4_audios_4_segments.mp3',
+          extractedAudioDuration: totalDurationStr,
+        );
+
+        // Purge the test playlist directory so that the created test
+        // files are not uploaded to GitHub
+        DirUtil.deleteFilesInDirAndSubDirs(
+          rootPath: kApplicationPathWindowsTest,
+        );
+      });
+    });
 }
 
 Future<void> verifyCommentAndReturnToPlaylistDownloadView({
