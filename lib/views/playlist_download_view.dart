@@ -374,16 +374,19 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
     }
 
     if (_doNotScroll) {
-      // In this case, the default sort and filter parameters are applied.
-      // This guarantees that the newly downloaded audio will be displayed
-      // at the top of the audio list.
-      _applyDefaultAudioSortFilterParms(
-        playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
-        notifyListeners: false, // was true, but caused error in the
-        //                         application due to the fact that the
-        //                         audio list was updated while the
-        //                         audio list was being built.
-      );
+      if (playlistListVMlistenTrue.uniqueSelectedPlaylist ==
+          playlistListVMlistenTrue.downloadingPlaylist) {
+        // In this case, the default sort and filter parameters are applied.
+        // This guarantees that the newly downloaded audio will be displayed
+        // at the top of the audio list.
+        _applyDefaultAudioSortFilterParms(
+          playlistListVMlistenFalseOrTrue: playlistListVMlistenTrue,
+          notifyListeners: false, // was true, but caused error in the
+          //                         application due to the fact that the
+          //                         audio list was updated while the
+          //                         audio list was being built.
+        );
+      }
 
       if (_audioScrollController.hasClients) {
         _audioScrollController.jumpTo(0.0);

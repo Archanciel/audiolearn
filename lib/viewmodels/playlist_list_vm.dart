@@ -282,6 +282,14 @@ class PlaylistListVM extends ChangeNotifier {
   int _numberOfCreatedZipFiles = 0;
   int get numberOfCreatedZipFiles => _numberOfCreatedZipFiles;
 
+  // This field is used to store the playlist which is currently being
+  // downloaded. In the playlist download view, it is used to determine
+  // if the current sort filter parameters applied to the selected playlist
+  // must be set to default. This is only the case if the the selected
+  // playlist is the playlist being currently downloaded.
+  Playlist? _downloadingPlaylist;
+  Playlist? get downloadingPlaylist => _downloadingPlaylist;
+
   PlaylistListVM({
     required WarningMessageVM warningMessageVM,
     required AudioDownloadVM audioDownloadVM,
@@ -1148,10 +1156,12 @@ class PlaylistListVM extends ChangeNotifier {
   /// playlist download text button. Currently, only one playlist can be selected.
   Future<void> downloadSelectedPlaylist() async {
     List<Playlist> selectedPlaylists = getSelectedPlaylists();
+    _downloadingPlaylist = selectedPlaylists[0];
 
-    for (Playlist playlist in selectedPlaylists) {
-      await _audioDownloadVM.downloadPlaylistAudio(playlistUrl: playlist.url);
-    }
+    await _audioDownloadVM.downloadPlaylistAudio(playlistUrl: _downloadingPlaylist!.url);
+
+    // After downloading the playlist audio, the _downloadedPlaylist is set to null
+    _downloadingPlaylist = null;
 
     getSelectedPlaylistPlayableAudioApplyingSortFilterParameters(
       audioLearnAppViewType: AudioLearnAppViewType.playlistDownloadView,
