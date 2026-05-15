@@ -1678,7 +1678,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildYoutubeUrlOrSearchPlusSelPlaylistTitle(
+          _buildYoutubeUrlOrSearchPlusSelectedPlaylistTitle(
             context: context,
             playlistListVMlistenTrue: playlistListVMlistenTrue,
           ),
@@ -2343,7 +2343,7 @@ class _PlaylistDownloadViewState extends State<PlaylistDownloadView>
   /// {playlistListVMlistenTrue} is the PlaylistListVM with listen set to
   /// true. This is necessary to update the selected playlist title when
   /// the user selects another playlist.
-  Expanded _buildYoutubeUrlOrSearchPlusSelPlaylistTitle({
+  Expanded _buildYoutubeUrlOrSearchPlusSelectedPlaylistTitle({
     required BuildContext context,
     required PlaylistListVM playlistListVMlistenTrue,
   }) {
