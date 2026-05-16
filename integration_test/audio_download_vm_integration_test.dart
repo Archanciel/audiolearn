@@ -78,7 +78,7 @@ Future<void> main() async {
     });
 
     testWidgets(
-        'Playlist 2 short audio in spoken quality: playlist dir not exist',
+        'Playlist 2 short audio spoken quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -240,7 +240,7 @@ Future<void> main() async {
       );
     });
     testWidgets(
-        'Playlist 2 short audio in music quality: playlist dir not exist',
+        'Playlist 2 short audio music quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -409,9 +409,10 @@ Future<void> main() async {
       );
     });
     testWidgets(
-        '''Playlist 2 short audio: playlist first audio was already downloaded and 
-           was deleted. The test verifies that after the download started, the initial
-           'Short' SF parameter was replaced by the 'default' one.''',
+        '''Initial Short -> download. Playlist audio_learn_test_download_2_small_vid_1a
+           first audio was already downloaded and was deleted. The test verifies that after
+           the download started, the stored in playlist 'Short' SF parameter is replaced by
+           the 'default' SF parameter.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -494,11 +495,11 @@ Future<void> main() async {
       await tester.pumpAndSettle();
 
       // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
-        await Future.delayed(const Duration(seconds: 2));
+      for (int i = 0; i < 16; i++) {
+        await Future.delayed(const Duration(milliseconds: 500));
         selectedSortFilterParmsName = tester
             .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
-        if (i == 3) {
+        if (i == 8) {
           // Check that after some download delay, the sort filter parameters
           // displayed after the selected playlist title is 'default'
           expect(
@@ -554,143 +555,15 @@ Future<void> main() async {
       );
     });
     testWidgets(
-        '''Playlist 2 short audio: playlist first audio was already downloaded and 
-           was deleted. After the audio_learn_test_download_2_small_vid_1a started
-           to be downloaded, the audio_player_view_2_shorts_test playlist was selected.
-           The test verifies that the newly selected playlist 'Chap desc' SF parameter
-           is maintained and so not replaced by the 'default' one which only concerns
-           the audio_learn_test_download_2_small_vid_1a playlist.''',
-        (WidgetTester tester) async {
-      // necessary in case the previous test failed and so did not
-      // delete the its playlist dir
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-
-      // Copying the initial local playlist json file with no audio
-      DirUtil.copyFilesFromDirAndSubDirsToDirectory(
-        sourceRootPath:
-            "$kDownloadAppTestSavedDataDir${path.separator}audio_learn_download_2_small_videos_test",
-        destinationRootPath: kApplicationPathWindowsTest,
-      );
-
-      AudioDownloadVM audioDownloadVM =
-          await IntegrationTestUtil.launchIntegrTestAppEnablingInternetAccess(
-        tester: tester,
-        forcedLocale: const Locale('en'),
-      );
-
-      Playlist existingPlaylistBeforeNewDownload =
-          audioDownloadVM.listOfPlaylist[0];
-
-      // Now selecting the existing playlist by tapping on the
-      // playlist checkbox
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle:
-            globalTestPlaylistOneAudioTitle, // audio_learn_test_download_2_small_vid_1a
-        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
-      );
-
-      // Verify its sort filter parameters displayed after the
-      // selected playlist title
-      Text selectedSortFilterParmsName = tester
-          .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
-
-      expect(
-        selectedSortFilterParmsName.data,
-        'Short',
-      );
-
-      // Now typing on the download playlist button to download the
-      // new video audios present the recreated playlist.
-      await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
-      await tester.pumpAndSettle();
-
-      // And select the other playlist
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle: 'audio_player_view_2_shorts_test',
-        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
-      );
-
-      // Add a delay to allow the download to finish.
-      for (int i = 0; i < 6; i++) {
-        await Future.delayed(const Duration(seconds: 2));
-        selectedSortFilterParmsName = tester
-            .widget(find.byKey(const Key('selectedPlaylistSFparmNameText')));
-
-        // verify that the 'Chap desc' SF parameter of the newly selected playlist
-        // is maintened and so not replaced by the 'default' one which only concerns
-        // the audio_learn_test_download_2_small_vid_1a playlist.
-        expect(
-          selectedSortFilterParmsName.data,
-          'Chap desc',
-        );
-        await tester.pumpAndSettle();
-      }
-
-      // Now selecting the existing playlist by tapping on the
-      // playlist checkbox
-      await IntegrationTestUtil.selectPlaylist(
-        tester: tester,
-        playlistToSelectTitle:
-            globalTestPlaylistOneAudioTitle, // audio_learn_test_download_2_small_vid_1a
-        selectPlaylistPumpAndSettleDuration: Duration(milliseconds: 200),
-      );
-
-      // expect(directory.existsSync(), true);
-
-      // Verifying the data of the playlist after downloading it
-
-      Playlist downloadedPlaylist = audioDownloadVM.listOfPlaylist[0];
-
-      _checkDownloadedPlaylist(
-        downloadedPlaylist: existingPlaylistBeforeNewDownload,
-        playlistId: globalTestPlaylistOneAudioId,
-        playlistTitle: globalTestPlaylistOneAudioTitle,
-        playlistUrl: globalTestPlaylistUrl,
-        playlistDir: globalTestPlaylistOneAudioDir,
-        isPlaylistSelected: true,
-      );
-
-      // this check fails if the secondsDelay value is too small
-      expect(audioDownloadVM.isAudioDownloading, false);
-
-      expect(audioDownloadVM.audioDownloadProgress, 1.0);
-      expect(audioDownloadVM.lastSecondAudioDownloadSpeed, 0);
-      expect(audioDownloadVM.isHighQuality, false);
-
-      // downloadedAudioLst contains added Audio's
-      _checkPlaylistDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.downloadedAudioLst[1],
-        downloadedAudioTwo: downloadedPlaylist.downloadedAudioLst[0],
-        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-      );
-
-      // playableAudioLst contains Audio's inserted at list start
-      _checkPlaylistDownloadedAudios(
-        downloadedAudioOne: downloadedPlaylist.playableAudioLst[0],
-        downloadedAudioTwo: downloadedPlaylist.playableAudioLst[1],
-        audioOneFileNamePrefix: todayDownloadDateOnlyFileNamePrefix,
-        audioTwoFileNamePrefix: existingAudioDateOnlyFileNamePrefix,
-      );
-
-      // Purge the test playlist directory so that the created test
-      // files are not uploaded to GitHub
-      DirUtil.deleteFilesInDirAndSubDirs(
-        rootPath: kApplicationPathWindowsTest,
-      );
-    });
-    testWidgets(
-        '''Playlist 2 short audio: playlist first audio was already downloaded and 
-           was deleted. While the audio_learn_test_download_2_small_vid_1a is downloading,
-           the audio_player_view_2_shorts_test playlist is selected.
-           
-           The test verifies that the newly selected playlist 'Chap desc' SF parameter
-           is maintened and so not replaced by the 'default' one which only concerns
-           the audio_learn_test_download_2_small_vid_1a playlist.''',
+        '''While downl., select other playlist. In the 2 short audio initial playlist
+           (audio_learn_test_download_2_small_vid_1a), the second audio was already downloaded
+           and is deleted from the playlist as well before starting the playlist download. Then,
+           while the playlist is downloading and so its 'Short' SF parameter was replaced by
+           the 'default' SF parameter, another playlist (audio_player_view_2_shorts_test)
+           is selected. The test verifies that the newly selected playlist 'Chap desc' SF
+           parameter which was displayed after selecting the other playlist is maintened and so
+           not replaced by the 'default' parameter which only concerns the first downloading
+           (audio_learn_test_download_2_small_vid_1a playlist) downloading status.''',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -805,7 +678,8 @@ Future<void> main() async {
             selectedSortFilterParmsName.data,
             'default',
           );
-          // Select now the other playlist
+          // Select now the other playlist while the firsr playlist
+          // is still downloading
           await IntegrationTestUtil.selectPlaylist(
             tester: tester,
             playlistToSelectTitle: 'audio_player_view_2_shorts_test',
