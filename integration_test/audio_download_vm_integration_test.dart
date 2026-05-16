@@ -77,8 +77,7 @@ Future<void> main() async {
       );
     });
 
-    testWidgets(
-        'Playlist 2 short audio spoken quality: playlist dir not exist',
+    testWidgets('Playlist 2 short audio spoken quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -239,8 +238,7 @@ Future<void> main() async {
         rootPath: kApplicationPathWindowsTest,
       );
     });
-    testWidgets(
-        'Playlist 2 short audio music quality: playlist dir not exist',
+    testWidgets('Playlist 2 short audio music quality: playlist dir not exist',
         (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
@@ -412,8 +410,7 @@ Future<void> main() async {
         '''Initial Short -> download. Playlist audio_learn_test_download_2_small_vid_1a
            first audio was already downloaded and was deleted. The test verifies that after
            the download started, the stored in playlist 'Short' SF parameter is replaced by
-           the 'default' SF parameter.''',
-        (WidgetTester tester) async {
+           the 'default' SF parameter.''', (WidgetTester tester) async {
       // necessary in case the previous test failed and so did not
       // delete the its playlist dir
       DirUtil.deleteFilesInDirAndSubDirs(
@@ -661,6 +658,11 @@ Future<void> main() async {
         isWarningConfirming: false,
       );
 
+      const List<String> audioPositionedTitles = [
+        "2_morning _ cinematic video",
+        "1_Really short video",
+      ];
+
       // Now typing on the download playlist button to download the
       // new video audios present the recreated playlist.
       await tester.tap(find.byKey(const Key('download_sel_playlist_button')));
@@ -694,6 +696,13 @@ Future<void> main() async {
           expect(
             selectedSortFilterParmsName.data,
             'Chap desc',
+          );
+
+          // Verify the newly selected playlist ordered audio titles
+          IntegrationTestUtil.checkAudioOrPlaylistTitlesOrderInListTile(
+            tester: tester,
+            audioOrPlaylistTitlesOrderedLst: audioPositionedTitles,
+            firstAudioListTileIndex: 2,
           );
         }
         await tester.pumpAndSettle();
