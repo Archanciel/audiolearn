@@ -3267,7 +3267,17 @@ class IntegrationTestUtil {
           expect(find.text('Video upload date'), findsNothing);
           expect(find.text('Imported audio date time'), findsOneWidget);
           expect(find.text('Playable'), findsOneWidget);
-          expect(find.text('Video URL'), findsNothing);
+
+          if (videoUrl.isNotEmpty) {
+            expect(
+                find.text('Video URL'), findsOneWidget); // normally, imported
+            // audio should not have a video url but we can have some
+            // cases where it was added using the 'Add audio URL ...'
+            // audio item menu
+          } else {
+            expect(find.text('Video URL'), findsNothing);
+          }
+
           expect(find.text('Compact video description'), findsNothing);
           expect(find.text('Valid video title'), findsNothing);
 
@@ -3435,6 +3445,13 @@ class IntegrationTestUtil {
         final Text validVideoTitleTextWidget =
             tester.widget<Text>(find.byKey(const Key('importedAudioTitleKey')));
         expect(validVideoTitleTextWidget.data, validVideoTitleOrAudioTitle);
+
+        // Verify the video URL of the audio imported if it was added using the 'Add audio URL ...' audio item menu
+        if (videoUrl.isNotEmpty) {
+          final Text videoUrlTextWidget =
+              tester.widget<Text>(find.byKey(const Key('videoUrlKey')));
+          expect(videoUrlTextWidget.data, videoUrl);
+        }
 
         // Verify the audio download date time of the audio
         if (audioDownloadDateTimeOne.isNotEmpty) {
